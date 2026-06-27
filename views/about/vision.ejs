@@ -1,0 +1,475 @@
+<%- include('../partials/header') %>
+
+<section class="vm-hero">
+  <div class="vm-overlay">
+    <div class="vm-container">
+      <span class="vm-badge">Our Purpose & Direction</span>
+      <h1>Vision & Mission</h1>
+      <p><a href="/">Home</a> / Vision & Mission</p>
+    </div>
+  </div>
+</section>
+
+<section class="vm-main-section">
+  <div class="vm-container">
+
+    <div class="vm-heading">
+      <span class="section-tag">Gyan Jyoti International School</span>
+      <h2>Inspiring Students Towards Excellence</h2>
+      <p>
+        We aim to create a learning environment where every student grows with
+        confidence, discipline, creativity and strong moral values.
+      </p>
+    </div>
+
+    <div class="vm-card-grid">
+
+      <div class="vm-card vision-card">
+        <div class="vm-icon">
+          <i class="fas fa-eye"></i>
+        </div>
+
+        <h3>Our Vision</h3>
+
+        <p>
+          Our vision is to provide quality education that develops academic
+          excellence, strong character, confidence and leadership qualities in
+          every student.
+        </p>
+
+        <ul>
+          <li><i class="fas fa-check"></i> Quality education at every level</li>
+          <li><i class="fas fa-check"></i> Strong moral and social values</li>
+          <li><i class="fas fa-check"></i> Confident and responsible citizens</li>
+        </ul>
+      </div>
+
+      <div class="vm-card mission-card">
+        <div class="vm-icon">
+          <i class="fas fa-bullseye"></i>
+        </div>
+
+        <h3>Our Mission</h3>
+
+        <p>
+          Our mission is to nurture students through modern teaching methods,
+          disciplined learning, co-curricular activities and a supportive school
+          environment.
+        </p>
+
+        <ul>
+          <li><i class="fas fa-check"></i> Holistic development of students</li>
+          <li><i class="fas fa-check"></i> Focus on creativity and innovation</li>
+          <li><i class="fas fa-check"></i> Academic growth with discipline</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="vm-values-section">
+  <div class="vm-container">
+
+    <div class="vm-heading">
+      <span class="section-tag">Our Core Values</span>
+      <h2>Values That Shape Our Students</h2>
+      <p>
+        We believe education becomes meaningful when knowledge is supported by
+        values, discipline and responsibility.
+      </p>
+    </div>
+
+    <div class="values-grid">
+
+      <div class="value-box">
+        <i class="fas fa-book-open"></i>
+        <h3>Knowledge</h3>
+        <p>Strong academic foundation with practical understanding.</p>
+      </div>
+
+      <div class="value-box">
+        <i class="fas fa-hands-helping"></i>
+        <h3>Discipline</h3>
+        <p>Respect, responsibility and positive behaviour in daily life.</p>
+      </div>
+
+      <div class="value-box">
+        <i class="fas fa-lightbulb"></i>
+        <h3>Creativity</h3>
+        <p>Encouraging students to think, imagine and innovate.</p>
+      </div>
+
+      <div class="value-box">
+        <i class="fas fa-award"></i>
+        <h3>Excellence</h3>
+        <p>Continuous efforts towards success and personal growth.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="vm-goals-section">
+  <div class="vm-container">
+
+    <div class="goals-wrapper">
+
+      <div class="goals-left">
+        <span class="section-tag">Our Educational Goals</span>
+        <h2>Preparing Students for a Bright Future</h2>
+
+        <p>
+          Gyan Jyoti International School is committed to helping students become
+          confident learners, responsible citizens and successful individuals.
+        </p>
+
+        <div class="goal-list">
+          <div><i class="fas fa-graduation-cap"></i> Academic excellence</div>
+          <div><i class="fas fa-users"></i> Teamwork and leadership</div>
+          <div><i class="fas fa-heart"></i> Moral values and kindness</div>
+          <div><i class="fas fa-globe"></i> Future-ready learning</div>
+        </div>
+      </div>
+
+      <div class="goals-right">
+        <div class="goal-highlight">
+          <h3>50+</h3>
+          <p>Years of educational values and service</p>
+        </div>
+
+        <div class="goal-highlight">
+          <h3>100%</h3>
+          <p>Focus on holistic development</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .vm-container {
+    width: 86%;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .vm-hero {
+    height: 430px;
+    background:
+      linear-gradient(rgba(0,31,63,.78), rgba(0,31,63,.78)),
+      url('/images/school-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vm-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(255,195,0,.35) 2px, transparent 2px),
+      radial-gradient(circle, rgba(255,255,255,.14) 1px, transparent 1px);
+    background-size: 120px 120px, 75px 75px;
+    animation: vmDots 22s linear infinite;
+  }
+
+  @keyframes vmDots {
+    from { transform: translateY(0); }
+    to { transform: translateY(-120px); }
+  }
+
+  .vm-overlay {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .vm-badge,
+  .section-tag {
+    display: inline-block;
+    background: #ffc300;
+    color: #001f3f;
+    padding: 9px 22px;
+    border-radius: 40px;
+    font-weight: 900;
+    margin-bottom: 15px;
+  }
+
+  .vm-hero h1 {
+    color: white;
+    font-size: 64px;
+    font-weight: 900;
+    text-shadow: 0 15px 35px rgba(0,0,0,.38);
+  }
+
+  .vm-hero p,
+  .vm-hero a {
+    color: white;
+    font-size: 18px;
+    margin-top: 8px;
+  }
+
+  .vm-main-section,
+  .vm-goals-section {
+    padding: 85px 0;
+    background: #f5f7fb;
+  }
+
+  .vm-values-section {
+    padding: 85px 0;
+    background: white;
+  }
+
+  .vm-heading {
+    text-align: center;
+    margin-bottom: 55px;
+  }
+
+  .vm-heading h2 {
+    font-size: 46px;
+    color: #001f3f;
+    margin-bottom: 15px;
+  }
+
+  .vm-heading p {
+    max-width: 850px;
+    margin: auto;
+    color: #555;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .vm-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px;
+  }
+
+  .vm-card {
+    background: white;
+    padding: 42px;
+    border-radius: 28px;
+    box-shadow: 0 18px 45px rgba(0,0,0,.13);
+    border-top: 6px solid #ffc300;
+    position: relative;
+    overflow: hidden;
+    transition: .4s;
+  }
+
+  .vm-card::after {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: rgba(255,195,0,.10);
+    border-radius: 50%;
+    right: -120px;
+    top: -120px;
+    transition: .5s;
+  }
+
+  .vm-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 28px 60px rgba(0,0,0,.18);
+  }
+
+  .vm-card:hover::after {
+    transform: scale(1.4);
+  }
+
+  .vm-icon {
+    width: 82px;
+    height: 82px;
+    background: #001f3f;
+    color: #ffc300;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    font-size: 34px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .vm-card h3 {
+    color: #001f3f;
+    font-size: 32px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .vm-card p {
+    color: #444;
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .vm-card ul {
+    list-style: none;
+    position: relative;
+    z-index: 2;
+  }
+
+  .vm-card li {
+    margin-bottom: 12px;
+    color: #333;
+    font-weight: 700;
+  }
+
+  .vm-card li i {
+    color: #ffc300;
+    background: #001f3f;
+    padding: 5px;
+    border-radius: 50%;
+    margin-right: 8px;
+    font-size: 11px;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+  }
+
+  .value-box {
+    background: #f5f7fb;
+    padding: 35px 25px;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 14px 35px rgba(0,0,0,.10);
+    border-top: 5px solid #ffc300;
+    transition: .35s;
+  }
+
+  .value-box:hover {
+    transform: translateY(-10px);
+    background: #001f3f;
+  }
+
+  .value-box:hover h3,
+  .value-box:hover p {
+    color: white;
+  }
+
+  .value-box i {
+    color: #ffc300;
+    font-size: 42px;
+    margin-bottom: 18px;
+  }
+
+  .value-box h3 {
+    color: #001f3f;
+    font-size: 23px;
+    margin-bottom: 12px;
+  }
+
+  .value-box p {
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .goals-wrapper {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .goals-left {
+    background: white;
+    padding: 45px;
+    border-radius: 28px;
+    box-shadow: 0 18px 45px rgba(0,0,0,.13);
+  }
+
+  .goals-left h2 {
+    color: #001f3f;
+    font-size: 42px;
+    margin-bottom: 18px;
+  }
+
+  .goals-left p {
+    color: #444;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+  }
+
+  .goal-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .goal-list div {
+    background: #001f3f;
+    color: white;
+    padding: 14px 16px;
+    border-radius: 16px;
+    font-weight: 800;
+  }
+
+  .goal-list i {
+    color: #ffc300;
+    margin-right: 8px;
+  }
+
+  .goals-right {
+    display: grid;
+    gap: 22px;
+  }
+
+  .goal-highlight {
+    background: linear-gradient(135deg, #001f3f, #004481);
+    color: white;
+    padding: 42px;
+    border-radius: 28px;
+    text-align: center;
+    box-shadow: 0 18px 45px rgba(0,31,63,.25);
+  }
+
+  .goal-highlight h3 {
+    color: #ffc300;
+    font-size: 58px;
+    margin-bottom: 10px;
+  }
+
+  .goal-highlight p {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  @media(max-width: 900px) {
+    .vm-card-grid,
+    .values-grid,
+    .goals-wrapper,
+    .goal-list {
+      grid-template-columns: 1fr;
+    }
+
+    .vm-hero h1 {
+      font-size: 42px;
+    }
+
+    .vm-heading h2,
+    .goals-left h2 {
+      font-size: 34px;
+    }
+  }
+</style>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Gyan Jyoti School' %></title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/responsive.css">
+</head>
+<body>
+
+<!-- Top Header -->
+<div class="top-header">
+    <div class="container">
+        <div class="top-header-left">
+            <span>
+                <i class="fas fa-envelope"></i>
+                <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.email ? schoolInfo.email : 'info@gyanjyoti.com' %>
+            </span>
+
+            <span>
+                <i class="fas fa-phone"></i>
+                <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.phone ? schoolInfo.phone : '+91 98765-43210' %>
+            </span>
+        </div>
+
+        <div class="top-header-right">
+            <% if (typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.socialLinks) { %>
+
+                <% if (schoolInfo.socialLinks.facebook) { %>
+                    <a href="<%= schoolInfo.socialLinks.facebook %>" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                <% } %>
+
+                <% if (schoolInfo.socialLinks.instagram) { %>
+                    <a href="<%= schoolInfo.socialLinks.instagram %>" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                <% } %>
+
+                <% if (schoolInfo.socialLinks.youtube) { %>
+                    <a href="<%= schoolInfo.socialLinks.youtube %>" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                <% } %>
+
+                <% if (schoolInfo.socialLinks.whatsapp) { %>
+                    <a href="<%= schoolInfo.socialLinks.whatsapp %>" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                <% } %>
+
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<!-- Main Header -->
+<header class="main-header">
+    <div class="container">
+
+        <div class="logo-section">
+            <img 
+                src="<%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.logo ? schoolInfo.logo : '/images/logo.png' %>" 
+                alt="School Logo" 
+                class="school-logo"
+            >
+
+            <div class="school-info">
+                <h1>
+                    <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.schoolName ? schoolInfo.schoolName : 'Gyan Jyoti' %>
+                </h1>
+
+                <p>
+                    <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.tagline ? schoolInfo.tagline : 'International School' %>
+                </p>
+
+                <small>
+                    <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.affiliation ? schoolInfo.affiliation : 'CBSE Affiliation No. 1030842' %>
+                </small>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="navbar">
+            <ul class="nav-menu">
+
+                <li>
+                    <a href="/" class="<%= typeof active !== 'undefined' && active === 'home' ? 'active' : '' %>">
+                        HOME
+                    </a>
+                </li>
+
+                <!-- ABOUT -->
+                <li class="dropdown">
+                    <a href="/about" class="<%= typeof active !== 'undefined' && active === 'about' ? 'active' : '' %>">
+                        ABOUT US <i class="fas fa-chevron-down"></i>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="/about/vision">VISION & MISSION</a></li>
+                        <li><a href="/about/founder">FOUNDER'S MESSAGE</a></li>
+                        <li><a href="/about/principal">PRINCIPAL'S MESSAGE</a></li>
+                        <li><a href="/about/advantages">MIS ADVANTAGES</a></li>
+                    </ul>
+                </li>
+
+                <!-- ACADEMICS -->
+                <li class="dropdown">
+                    <a href="/academics">
+  ACADEMICS <i class="fas fa-chevron-down"></i>
+</a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="/academics/10th-toppers">10th Board Toppers</a></li>
+                        <li><a href="/academics/12th-toppers">12th Board Toppers</a></li>
+                        <li><a href="/academics/school-toppers">School Toppers</a></li>
+                        <li><a href="/academics/sports-records">Sports Academic Records</a></li>
+                    </ul>
+                </li>
+
+                <!-- EVENTS -->
+                <li class="dropdown">
+                    <a href="#" class="<%= typeof active !== 'undefined' && active === 'events' ? 'active' : '' %>">
+                        EVENTS & ACTIVITIES <i class="fas fa-chevron-down"></i>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="/events/fun-fiesta">Fun & Fiesta</a></li>
+                        <li><a href="/events/sports">Sports</a></li>
+                        <li><a href="/events/republic-day">Republic Day</a></li>
+                        <li><a href="/events/independence-day">Independence Day</a></li>
+                    </ul>
+                </li>
+
+                <!-- ADMISSION -->
+                <li class="dropdown">
+                    <a href="/admission/process" class="<%= typeof active !== 'undefined' && active === 'admission' ? 'active' : '' %>">
+                        ADMISSION <i class="fas fa-chevron-down"></i>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="/admission/process">Admission Process</a></li>
+                        <li><a href="/admission/enquiry">Enquiry Form</a></li>
+                        <li><a href="/admission/registration">Registration Form</a></li>
+                        <li><a href="/admission/guidelines">Guidelines & Policies</a></li>
+                        <li><a href="/admission/map">Map of School</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="/faculty" class="<%= typeof active !== 'undefined' && active === 'faculty' ? 'active' : '' %>">
+                        FACULTY
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/contact" class="<%= typeof active !== 'undefined' && active === 'contact' ? 'active' : '' %>">
+                        CONTACT US
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+
+    </div>
+</header>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Top Header */
+    .top-header {
+        background: #001f3f;
+        color: white;
+        padding: 12px 0;
+        font-size: 13px;
+    }
+
+    .top-header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .top-header-left {
+        display: flex;
+        gap: 30px;
+    }
+
+    .top-header-left span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .top-header-right {
+        display: flex;
+        gap: 20px;
+    }
+
+    .top-header a {
+        color: white;
+        text-decoration: none;
+        font-size: 15px;
+        transition: 0.3s;
+    }
+
+    .top-header a:hover {
+        color: #ffc300;
+    }
+
+    /* Main Header */
+    .main-header {
+        background: white;
+        padding: 15px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 99999;
+    }
+
+    .main-header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+        overflow: visible;
+    }
+
+    .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        min-width: 300px;
+    }
+
+    .school-logo {
+        height: 70px;
+        width: auto;
+    }
+
+    .school-info h1 {
+        color: #8b0000;
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .school-info p {
+        color: #333;
+        margin: 0;
+        font-size: 12px;
+    }
+
+    .school-info small {
+        color: #666;
+        font-size: 11px;
+    }
+
+    /* Navigation */
+    .navbar {
+        flex: 1;
+        overflow: visible;
+    }
+
+    .nav-menu {
+        list-style: none;
+        display: flex;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+        overflow: visible;
+    }
+
+    .nav-menu > li {
+        position: relative;
+    }
+
+    .nav-menu > li > a {
+        display: block;
+        padding: 15px 18px;
+        color: #333;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 13px;
+        transition: 0.3s;
+        white-space: nowrap;
+    }
+
+    .nav-menu > li > a:hover,
+    .nav-menu > li > a.active {
+        background: #ffc300;
+        color: #001f3f;
+    }
+
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #001f3f;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: none;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.28);
+        min-width: 250px;
+        z-index: 999999;
+        border-top: 4px solid #ffc300;
+        border-radius: 0 0 10px 10px;
+        overflow: hidden;
+    }
+
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-menu li a {
+        display: block;
+        padding: 14px 20px;
+        color: white;
+        background: #001f3f;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+        transition: 0.3s;
+    }
+
+    .dropdown-menu li:last-child a {
+        border-bottom: none;
+    }
+
+    .dropdown-menu li a:hover {
+        background: #ffc300;
+        color: #001f3f;
+        padding-left: 28px;
+    }
+
+    /* Hamburger */
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: #333;
+        margin: 5px 0;
+        transition: 0.3s;
+    }
+</style>

@@ -1,0 +1,449 @@
+<%- include('../partials/header') %>
+
+<section class="acad-hero">
+  <div class="acad-overlay">
+    <div class="acad-container">
+      <img src="/images/logo.png" class="acad-logo" alt="Gyan Jyoti Logo">
+      <span class="acad-badge">Learning With Excellence</span>
+      <h1>Academics</h1>
+      <p><a href="/" style="color:#ffc300">Home</a> / Academics</p>
+    </div>
+  </div>
+</section>
+
+<section class="acad-intro">
+  <div class="acad-container">
+    <div class="acad-heading">
+      <span class="section-tag">Academic Approach</span>
+      <h2>Education That Builds Knowledge, Skills & Confidence</h2>
+      <p>
+        At Gyan Jyoti School, we focus on strong academics, concept-based learning,
+        regular practice, skill development and disciplined examination patterns.
+      </p>
+    </div>
+
+    <div class="acad-grid">
+
+      <div class="acad-card">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <h3>Teaching Method</h3>
+        <p>
+          Our teachers explain every concept in a simple and practical way using
+          classroom interaction, examples, activities and regular revision.
+        </p>
+      </div>
+
+      <div class="acad-card">
+        <i class="fas fa-brain"></i>
+        <h3>Skill Development</h3>
+        <p>
+          Students are encouraged to improve communication, creativity, logical
+          thinking, confidence, discipline and problem-solving skills.
+        </p>
+      </div>
+
+      <div class="acad-card">
+        <i class="fas fa-clipboard-check"></i>
+        <h3>Monthly Tests</h3>
+        <p>
+          Monthly tests are conducted to check students’ understanding and help
+          them improve continuously throughout the academic session.
+        </p>
+      </div>
+
+      <div class="acad-card">
+        <i class="fas fa-calendar-alt"></i>
+        <h3>Quarterly Exams</h3>
+        <p>
+          Quarterly examinations help evaluate performance after every major
+          academic term and prepare students for final assessments.
+        </p>
+      </div>
+
+      <div class="acad-card">
+        <i class="fas fa-award"></i>
+        <h3>Annual Examination</h3>
+        <p>
+          Annual examinations are conducted at the end of the session to assess
+          overall academic progress and learning outcomes.
+        </p>
+      </div>
+
+      <div class="acad-card">
+        <i class="fas fa-user-graduate"></i>
+        <h3>Student Progress</h3>
+        <p>
+          Regular feedback, classwork, homework, tests and parent communication
+          help students improve step by step.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="exam-section">
+  <div class="acad-container">
+    <div class="exam-wrapper">
+
+      <div class="exam-left">
+        <span class="section-tag">Examination System</span>
+        <h2>Regular Assessment For Better Learning</h2>
+        <p>
+          Our examination system is designed to keep students consistent,
+          confident and prepared for academic success.
+        </p>
+
+        <div class="exam-list">
+          <div><i class="fas fa-check-circle"></i> Class tests and oral assessment</div>
+          <div><i class="fas fa-check-circle"></i> Monthly written tests</div>
+          <div><i class="fas fa-check-circle"></i> Quarterly examinations</div>
+          <div><i class="fas fa-check-circle"></i> Half-yearly and annual exams</div>
+          <div><i class="fas fa-check-circle"></i> Result analysis and improvement guidance</div>
+        </div>
+      </div>
+
+      <div class="exam-right">
+        <div class="exam-box">
+          <h3>Monthly</h3>
+          <p>Regular tests for continuous improvement</p>
+        </div>
+
+        <div class="exam-box">
+          <h3>Quarterly</h3>
+          <p>Term-wise evaluation and performance tracking</p>
+        </div>
+
+        <div class="exam-box">
+          <h3>Annual</h3>
+          <p>Final assessment of overall academic growth</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="skills-section">
+  <div class="acad-container">
+
+    <div class="acad-heading">
+      <span class="section-tag">Student Skills</span>
+      <h2>Beyond Books, Towards Real Growth</h2>
+      <p>
+        We believe that education should prepare students not only for exams,
+        but also for life.
+      </p>
+    </div>
+
+    <div class="skills-grid">
+      <div><i class="fas fa-comments"></i><h3>Communication</h3></div>
+      <div><i class="fas fa-lightbulb"></i><h3>Creativity</h3></div>
+      <div><i class="fas fa-users"></i><h3>Teamwork</h3></div>
+      <div><i class="fas fa-star"></i><h3>Confidence</h3></div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .acad-container {
+    width: 86%;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .acad-hero {
+    height: 460px;
+    background:
+      linear-gradient(rgba(0,31,63,.80), rgba(0,31,63,.80)),
+      url('/images/school-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .acad-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(255,195,0,.35) 2px, transparent 2px),
+      radial-gradient(circle, rgba(255,255,255,.15) 1px, transparent 1px);
+    background-size: 120px 120px, 75px 75px;
+    animation: acadDots 22s linear infinite;
+  }
+
+  @keyframes acadDots {
+    from { transform: translateY(0); }
+    to { transform: translateY(-120px); }
+  }
+
+  .acad-overlay {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .acad-logo {
+    width: 115px;
+    height: 115px;
+    object-fit: contain;
+    background: white;
+    padding: 10px;
+    border-radius: 50%;
+    border: 5px solid #ffc300;
+    box-shadow: 0 16px 40px rgba(0,0,0,.28);
+    margin-bottom: 18px;
+  }
+
+  .acad-badge,
+  .section-tag {
+    display: inline-block;
+    background: #ffc300;
+    color: #001f3f;
+    padding: 9px 22px;
+    border-radius: 40px;
+    font-weight: 900;
+    margin-bottom: 15px;
+  }
+
+  .acad-hero h1 {
+    color: white;
+    font-size: 68px;
+    font-weight: 900;
+    text-shadow: 0 15px 35px rgba(0,0,0,.38);
+  }
+
+  .acad-hero p {
+    color: white;
+    font-size: 18px;
+    margin-top: 8px;
+  }
+
+  .acad-intro,
+  .exam-section {
+    padding: 85px 0;
+    background: #f5f7fb;
+  }
+
+  .skills-section {
+    padding: 85px 0;
+    background: white;
+  }
+
+  .acad-heading {
+    text-align: center;
+    margin-bottom: 55px;
+  }
+
+  .acad-heading h2 {
+    font-size: 46px;
+    color: #001f3f;
+    margin-bottom: 15px;
+  }
+
+  .acad-heading p {
+    max-width: 850px;
+    margin: auto;
+    color: #555;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .acad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .acad-card {
+    background: white;
+    padding: 35px;
+    border-radius: 26px;
+    box-shadow: 0 16px 40px rgba(0,0,0,.12);
+    border-top: 5px solid #ffc300;
+    transition: .35s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .acad-card::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    background: rgba(255,195,0,.10);
+    border-radius: 50%;
+    top: -110px;
+    right: -110px;
+    transition: .45s;
+  }
+
+  .acad-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 28px 60px rgba(0,0,0,.18);
+  }
+
+  .acad-card:hover::after {
+    transform: scale(1.5);
+  }
+
+  .acad-card i {
+    color: #ffc300;
+    background: #001f3f;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .acad-card h3 {
+    color: #001f3f;
+    font-size: 25px;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .acad-card p {
+    color: #555;
+    line-height: 1.75;
+    position: relative;
+    z-index: 2;
+  }
+
+  .exam-wrapper {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .exam-left {
+    background: white;
+    padding: 45px;
+    border-radius: 30px;
+    box-shadow: 0 18px 45px rgba(0,0,0,.13);
+  }
+
+  .exam-left h2 {
+    color: #001f3f;
+    font-size: 42px;
+    margin-bottom: 18px;
+  }
+
+  .exam-left p {
+    color: #444;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .exam-list div {
+    background: #001f3f;
+    color: white;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .exam-list i {
+    color: #ffc300;
+    margin-right: 8px;
+  }
+
+  .exam-right {
+    display: grid;
+    gap: 20px;
+  }
+
+  .exam-box {
+    background: linear-gradient(135deg, #001f3f, #004481);
+    color: white;
+    padding: 35px;
+    border-radius: 26px;
+    box-shadow: 0 18px 45px rgba(0,31,63,.25);
+    transition: .35s;
+  }
+
+  .exam-box:hover {
+    transform: translateX(-10px);
+  }
+
+  .exam-box h3 {
+    color: #ffc300;
+    font-size: 34px;
+    margin-bottom: 8px;
+  }
+
+  .exam-box p {
+    line-height: 1.6;
+    opacity: .92;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .skills-grid div {
+    background: #f5f7fb;
+    text-align: center;
+    padding: 35px 20px;
+    border-radius: 24px;
+    box-shadow: 0 14px 35px rgba(0,0,0,.10);
+    border-top: 5px solid #ffc300;
+    transition: .35s;
+  }
+
+  .skills-grid div:hover {
+    background: #001f3f;
+    transform: translateY(-10px);
+  }
+
+  .skills-grid i {
+    color: #ffc300;
+    font-size: 42px;
+    margin-bottom: 16px;
+  }
+
+  .skills-grid h3 {
+    color: #001f3f;
+    font-size: 22px;
+  }
+
+  .skills-grid div:hover h3 {
+    color: white;
+  }
+
+  @media(max-width: 900px) {
+    .acad-grid,
+    .exam-wrapper,
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .acad-hero h1 {
+      font-size: 44px;
+    }
+
+    .acad-heading h2,
+    .exam-left h2 {
+      font-size: 34px;
+    }
+  }
+</style>
+
+<%- include('../partials/footer') %>

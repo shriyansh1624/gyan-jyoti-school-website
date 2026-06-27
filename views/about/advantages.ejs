@@ -1,0 +1,474 @@
+<%- include('../partials/header') %>
+
+<section class="mis-hero">
+  <div class="mis-overlay">
+    <div class="mis-container">
+      <img src="/images/logo.png" class="mis-logo" alt="Gyan Jyoti Logo">
+      <span class="mis-badge">Why Choose Us</span>
+      <h1>MIS Advantages</h1>
+      <p><a href="/">Home</a> / MIS Advantages</p>
+    </div>
+  </div>
+</section>
+
+<section class="mis-intro-section">
+  <div class="mis-container">
+
+    <div class="mis-heading">
+      <span class="section-tag">Gyan Jyoti International School</span>
+      <h2>Education With Modern Facilities & Strong Values</h2>
+      <p>
+        Gyan Jyoti School provides a student-friendly learning environment with
+        experienced faculty, modern campus facilities, discipline, values and
+        continuous academic support.
+      </p>
+    </div>
+
+    <div class="mis-grid">
+
+      <div class="mis-card">
+        <div class="mis-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h3>Experienced Faculty</h3>
+        <p>
+          Dedicated and qualified teachers guide students with personal attention,
+          regular feedback and concept-based learning.
+        </p>
+      </div>
+
+      <div class="mis-card">
+        <div class="mis-icon"><i class="fas fa-school"></i></div>
+        <h3>Modern Campus</h3>
+        <p>
+          A clean, safe and well-managed campus creates a positive environment for
+          learning, activities and overall development.
+        </p>
+      </div>
+
+      <div class="mis-card">
+        <div class="mis-icon"><i class="fas fa-book-open"></i></div>
+        <h3>Quality Education</h3>
+        <p>
+          Strong academic planning, regular tests and structured teaching methods
+          help students perform better in examinations.
+        </p>
+      </div>
+
+      <div class="mis-card">
+        <div class="mis-icon"><i class="fas fa-user-graduate"></i></div>
+        <h3>Student Development</h3>
+        <p>
+          Focus on confidence, communication, leadership, creativity and discipline
+          along with classroom education.
+        </p>
+      </div>
+
+      <div class="mis-card">
+        <div class="mis-icon"><i class="fas fa-flask"></i></div>
+        <h3>Practical Learning</h3>
+        <p>
+          Activities, demonstrations, projects and practical exposure make learning
+          more interesting and meaningful.
+        </p>
+      </div>
+
+      <div class="mis-card">
+        <div class="mis-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3>Safe Environment</h3>
+        <p>
+          Discipline, care and a supportive atmosphere help students learn with
+          confidence and comfort.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="mis-highlight-section">
+  <div class="mis-container">
+    <div class="highlight-wrapper">
+
+      <div class="highlight-left">
+        <span class="section-tag">Our Strengths</span>
+        <h2>Balanced Growth For Every Student</h2>
+        <p>
+          The school focuses on academic success, personality development and moral
+          values so that every student becomes confident and responsible.
+        </p>
+
+        <div class="strength-list">
+          <div><i class="fas fa-check-circle"></i> Regular academic monitoring</div>
+          <div><i class="fas fa-check-circle"></i> Monthly tests and revision</div>
+          <div><i class="fas fa-check-circle"></i> Co-curricular activities</div>
+          <div><i class="fas fa-check-circle"></i> Parent-school communication</div>
+        </div>
+      </div>
+
+      <div class="highlight-right">
+        <div class="stat-box">
+          <h3>50+</h3>
+          <p>Years of educational service</p>
+        </div>
+
+        <div class="stat-box">
+          <h3>100%</h3>
+          <p>Focus on holistic development</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="mis-process-section">
+  <div class="mis-container">
+
+    <div class="mis-heading">
+      <span class="section-tag">Student Support System</span>
+      <h2>How We Help Students Grow</h2>
+    </div>
+
+    <div class="process-grid">
+      <div class="process-step">
+        <span>01</span>
+        <h3>Concept Learning</h3>
+        <p>Teachers explain topics with examples and classroom interaction.</p>
+      </div>
+
+      <div class="process-step">
+        <span>02</span>
+        <h3>Practice & Tests</h3>
+        <p>Regular practice, homework and tests improve performance.</p>
+      </div>
+
+      <div class="process-step">
+        <span>03</span>
+        <h3>Feedback</h3>
+        <p>Students receive guidance for improvement and confidence building.</p>
+      </div>
+
+      <div class="process-step">
+        <span>04</span>
+        <h3>Achievement</h3>
+        <p>Continuous efforts help students achieve academic success.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .mis-container {
+    width: 86%;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .mis-hero {
+    height: 460px;
+    background:
+      linear-gradient(rgba(0,31,63,.82), rgba(0,31,63,.82)),
+      url('/images/school-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mis-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(255,195,0,.35) 2px, transparent 2px),
+      radial-gradient(circle, rgba(255,255,255,.14) 1px, transparent 1px);
+    background-size: 120px 120px, 75px 75px;
+    animation: misDots 22s linear infinite;
+  }
+
+  @keyframes misDots {
+    from { transform: translateY(0); }
+    to { transform: translateY(-120px); }
+  }
+
+  .mis-overlay {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .mis-logo {
+    width: 115px;
+    height: 115px;
+    object-fit: contain;
+    background: white;
+    border-radius: 50%;
+    padding: 8px;
+    border: 5px solid #ffc300;
+    box-shadow: 0 18px 45px rgba(0,0,0,.35);
+    margin-bottom: 18px;
+  }
+
+  .mis-badge,
+  .section-tag {
+    display: inline-block;
+    background: #ffc300;
+    color: #001f3f;
+    padding: 9px 22px;
+    border-radius: 40px;
+    font-weight: 900;
+    margin-bottom: 15px;
+  }
+
+  .mis-hero h1 {
+    color: white;
+    font-size: 66px;
+    font-weight: 900;
+    text-shadow: 0 15px 35px rgba(0,0,0,.4);
+  }
+
+  .mis-hero p,
+  .mis-hero a {
+    color: white;
+    font-size: 18px;
+    margin-top: 8px;
+  }
+
+  .mis-intro-section,
+  .mis-process-section {
+    padding: 85px 0;
+    background: #f5f7fb;
+  }
+
+  .mis-highlight-section {
+    padding: 85px 0;
+    background: white;
+  }
+
+  .mis-heading {
+    text-align: center;
+    margin-bottom: 55px;
+  }
+
+  .mis-heading h2 {
+    font-size: 46px;
+    color: #001f3f;
+    margin-bottom: 15px;
+  }
+
+  .mis-heading p {
+    max-width: 850px;
+    margin: auto;
+    color: #555;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .mis-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .mis-card {
+    background: white;
+    padding: 35px;
+    border-radius: 26px;
+    box-shadow: 0 16px 40px rgba(0,0,0,.12);
+    border-top: 5px solid #ffc300;
+    transition: .35s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mis-card::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    background: rgba(255,195,0,.10);
+    border-radius: 50%;
+    top: -110px;
+    right: -110px;
+    transition: .45s;
+  }
+
+  .mis-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 28px 60px rgba(0,0,0,.18);
+  }
+
+  .mis-card:hover::after {
+    transform: scale(1.5);
+  }
+
+  .mis-icon {
+    width: 72px;
+    height: 72px;
+    background: #001f3f;
+    color: #ffc300;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .mis-card h3 {
+    color: #001f3f;
+    font-size: 25px;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .mis-card p {
+    color: #555;
+    line-height: 1.75;
+    position: relative;
+    z-index: 2;
+  }
+
+  .highlight-wrapper {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .highlight-left {
+    background: #f5f7fb;
+    padding: 45px;
+    border-radius: 30px;
+    box-shadow: 0 18px 45px rgba(0,0,0,.12);
+  }
+
+  .highlight-left h2 {
+    color: #001f3f;
+    font-size: 42px;
+    margin-bottom: 18px;
+  }
+
+  .highlight-left p {
+    color: #444;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .strength-list div {
+    background: #001f3f;
+    color: white;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .strength-list i {
+    color: #ffc300;
+    margin-right: 8px;
+  }
+
+  .highlight-right {
+    display: grid;
+    gap: 22px;
+  }
+
+  .stat-box {
+    background: linear-gradient(135deg, #001f3f, #004481);
+    color: white;
+    padding: 42px;
+    border-radius: 28px;
+    text-align: center;
+    box-shadow: 0 18px 45px rgba(0,31,63,.25);
+  }
+
+  .stat-box h3 {
+    color: #ffc300;
+    font-size: 58px;
+    margin-bottom: 10px;
+  }
+
+  .stat-box p {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .process-step {
+    background: white;
+    padding: 35px 25px;
+    border-radius: 24px;
+    box-shadow: 0 14px 35px rgba(0,0,0,.10);
+    text-align: center;
+    transition: .35s;
+    border-bottom: 5px solid #ffc300;
+  }
+
+  .process-step:hover {
+    transform: translateY(-10px);
+    background: #001f3f;
+  }
+
+  .process-step:hover h3,
+  .process-step:hover p {
+    color: white;
+  }
+
+  .process-step span {
+    display: inline-flex;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    background: #ffc300;
+    color: #001f3f;
+    font-weight: 900;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .process-step h3 {
+    color: #001f3f;
+    margin-bottom: 10px;
+    font-size: 22px;
+  }
+
+  .process-step p {
+    color: #555;
+    line-height: 1.6;
+  }
+
+  @media(max-width: 900px) {
+    .mis-grid,
+    .highlight-wrapper,
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .mis-hero h1 {
+      font-size: 42px;
+    }
+
+    .mis-heading h2,
+    .highlight-left h2 {
+      font-size: 34px;
+    }
+  }
+</style>
+
+<%- include('../partials/footer') %>

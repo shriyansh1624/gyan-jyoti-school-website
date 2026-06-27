@@ -1,0 +1,284 @@
+<%- include('../partials/header') %>
+
+<section class="dev-hero">
+  <div class="dev-container">
+    <span class="dev-badge">Creative Minds Behind The Website</span>
+    <h1>Developer & Management Team</h1>
+    <p>Meet the people who contributed to the digital identity of Gyan Jyoti School.</p>
+  </div>
+</section>
+
+<section class="dev-team-section">
+  <div class="dev-container">
+
+    <div class="dev-heading">
+      <span class="section-tag">Our Team</span>
+      <h2>Founder, Developer & Management</h2>
+      <p>
+        This website is designed with creativity, dedication and a vision to present
+        Gyan Jyoti School in a modern professional way.
+      </p>
+    </div>
+
+    <div class="dev-team-grid">
+
+      <div class="dev-card">
+        <div class="dev-photo portrait-photo">
+          <img src="/images/team/shriyansh.jpg" alt="Mr. Shriyansh Sharma">
+        </div>
+
+        <div class="dev-content">
+          <span class="role-badge">Founder & Developer</span>
+          <h3>Mr. Shriyansh Sharma</h3>
+          <p>
+            Responsible for website design, development, admin dashboard,
+            database integration and overall digital experience.
+          </p>
+
+          <div class="dev-social">
+            <a href="https://www.instagram.com/_shriiiyanshh_?igsh=aXAzY2VoZWF4eGlq" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/shriyansh-sharma-2083363a0?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://wa.me/918878892701" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="dev-card">
+        <div class="dev-photo">
+          <img src="/images/team/satyam.jpg" alt="Mr. Satyam Thakur">
+        </div>
+
+        <div class="dev-content">
+          <span class="role-badge">Co-Founder & Business Head</span>
+          <h3>Mr. Satyam Thakur</h3>
+          <p>
+            Supports management, coordination, planning and communication for
+            smooth website and school-related digital operations.
+          </p>
+
+          <div class="dev-social">
+            <a href="https://www.instagram.com/sattyamm._?igsh=d2Y1MGc5aXNieWY3" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/satyam-thakur-a62074377?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://wa.me/9182260 69044" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+.dev-container{
+  width:86%;
+  max-width:1200px;
+  margin:auto;
+}
+
+.dev-hero{
+  min-height:460px;
+  background:
+    linear-gradient(rgba(0,31,63,.84),rgba(0,31,63,.84)),
+    url('/images/school-bg.jpg');
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:center;
+  text-align:center;
+  color:white;
+  position:relative;
+  overflow:hidden;
+}
+
+.dev-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle,rgba(255,195,0,.35) 2px,transparent 2px),
+    radial-gradient(circle,rgba(255,255,255,.14) 1px,transparent 1px);
+  background-size:120px 120px,75px 75px;
+  animation:devDots 22s linear infinite;
+}
+
+@keyframes devDots{
+  from{transform:translateY(0)}
+  to{transform:translateY(-120px)}
+}
+
+.dev-hero .dev-container{
+  position:relative;
+  z-index:2;
+}
+
+.dev-badge,
+.section-tag{
+  display:inline-block;
+  background:#ffc300;
+  color:#001f3f;
+  padding:9px 22px;
+  border-radius:40px;
+  font-weight:900;
+  margin-bottom:15px;
+}
+
+.dev-hero h1{
+  color:white;
+  font-size:62px;
+  font-weight:900;
+  text-shadow:0 15px 35px rgba(0,0,0,.4);
+}
+
+.dev-hero p{
+  max-width:850px;
+  margin:15px auto 0;
+  font-size:19px;
+  line-height:1.7;
+}
+
+.dev-team-section{
+  padding:85px 0;
+  background:#f5f7fb;
+}
+
+.dev-heading{
+  text-align:center;
+  margin-bottom:55px;
+}
+
+.dev-heading h2{
+  font-size:46px;
+  color:#001f3f;
+  margin-bottom:15px;
+}
+
+.dev-heading p{
+  max-width:850px;
+  margin:auto;
+  color:#555;
+  font-size:18px;
+  line-height:1.7;
+}
+
+.dev-team-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:38px;
+}
+
+.dev-card{
+  background:white;
+  border-radius:32px;
+  overflow:hidden;
+  box-shadow:0 22px 60px rgba(0,0,0,.15);
+  border-top:6px solid #ffc300;
+  transition:.45s;
+}
+
+.dev-card:hover{
+  transform:translateY(-14px) scale(1.02);
+  box-shadow:0 35px 80px rgba(0,0,0,.24);
+}
+
+.dev-photo{
+  height:430px;
+  overflow:hidden;
+  background:#eef3fb;
+  border-bottom:1px solid #eee;
+}
+
+.dev-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  transition:.7s;
+}
+
+/* Shriyansh portrait image ke liye special setting */
+.portrait-photo img{
+  object-fit:cover;
+  object-position:center bottom;
+}
+
+.dev-card:hover .dev-photo img{
+  transform:scale(1.06);
+}
+
+.dev-content{
+  padding:36px 34px 42px;
+  text-align:center;
+}
+
+.role-badge{
+  display:inline-block;
+  background:linear-gradient(135deg,#ffc300,#ffdd55);
+  color:#001f3f;
+  padding:9px 20px;
+  border-radius:30px;
+  font-weight:900;
+  font-size:14px;
+  margin-bottom:16px;
+  box-shadow:0 8px 20px rgba(255,195,0,.35);
+}
+
+.dev-content h3{
+  color:#001f3f;
+  font-size:32px;
+  margin-bottom:14px;
+}
+
+.dev-content p{
+  color:#555;
+  font-size:17px;
+  line-height:1.75;
+  margin-bottom:26px;
+}
+
+.dev-social{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+}
+
+.dev-social a{
+  width:50px;
+  height:50px;
+  background:#001f3f;
+  color:white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  transition:.35s;
+  font-size:20px;
+}
+
+.dev-social a:hover{
+  background:#ffc300;
+  color:#001f3f;
+  transform:translateY(-7px);
+}
+
+@media(max-width:900px){
+  .dev-team-grid{
+    grid-template-columns:1fr;
+  }
+
+  .dev-hero h1{
+    font-size:40px;
+  }
+
+  .dev-heading h2{
+    font-size:34px;
+  }
+
+  .dev-photo{
+    height:380px;
+  }
+}
+</style>
+
+<%- include('../partials/footer') %>

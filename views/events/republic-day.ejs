@@ -1,0 +1,383 @@
+<%- include('../partials/header') %>
+
+<section class="rd-hero">
+  <div class="rd-container">
+    <span class="rd-badge">Pride • Unity • Discipline</span>
+    <h1>Republic Day Celebration</h1>
+    <p>Celebrating patriotism, culture, student talent and respect for the Constitution of India.</p>
+  </div>
+</section>
+
+<section class="rd-intro">
+  <div class="rd-container">
+    <div class="rd-quote-card">
+      <i class="fas fa-quote-left"></i>
+      <h2>“A nation’s strength lies in its educated, disciplined and responsible citizens.”</h2>
+      <p>
+        Republic Day at Gyan Jyoti School is celebrated with flag hoisting, cultural performances,
+        patriotic songs, speeches, dance programs and student competitions.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="rd-gallery-section">
+  <div class="rd-container">
+    <div class="rd-heading">
+      <span class="section-tag">Event Highlights</span>
+      <h2>Moments of Pride & Celebration</h2>
+      <p>Beautiful memories from Republic Day programs and cultural activities.</p>
+    </div>
+
+    <div class="rd-gallery">
+      <div class="gallery-big">
+        <img src="/images/events/republic/republic1.jpg" alt="Republic Day">
+      </div>
+
+      <div class="gallery-small">
+        <img src="/images/events/republic/republic2.jpg" alt="Flag Hoisting">
+        <img src="/images/events/republic/republic3.jpg" alt="Students Performance">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dance-section">
+  <div class="rd-container">
+    <div class="dance-wrapper">
+      <div class="dance-content">
+        <span class="section-tag">Cultural Dance</span>
+        <h2>Patriotic Dance Performances</h2>
+        <p>
+          Students presented energetic dance performances showing love for the nation,
+          unity in diversity and respect for Indian culture.
+        </p>
+
+        <div class="dance-points">
+          <div><i class="fas fa-check-circle"></i> Patriotic group dance</div>
+          <div><i class="fas fa-check-circle"></i> Cultural performances</div>
+          <div><i class="fas fa-check-circle"></i> Student confidence building</div>
+        </div>
+      </div>
+
+      <div class="dance-photo-grid">
+        <img src="/images/events/republic/dance1.jpg" alt="Dance Performance">
+        <img src="/images/events/republic/dance2.jpg" alt="Cultural Dance">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="jrc-section">
+  <div class="rd-container">
+    <div class="rd-heading">
+      <span class="section-tag">JRC Competition</span>
+      <h2>JRC Competition & Student Participation</h2>
+      <p>
+        JRC activities encouraged students to learn teamwork, discipline, leadership and social responsibility.
+      </p>
+    </div>
+
+    <div class="jrc-grid">
+      <div class="jrc-card">
+        <img src="/images/events/republic/jrc1.jpg" alt="JRC Competition">
+        <div>
+          <h3>Team Spirit</h3>
+          <p>Students participated with discipline, confidence and enthusiasm.</p>
+        </div>
+      </div>
+
+      <div class="jrc-card">
+        <img src="/images/events/republic/jrc2.jpg" alt="JRC Activity">
+        <div>
+          <h3>Leadership & Service</h3>
+          <p>JRC competition helped students understand responsibility and service values.</p>
+        </div>
+      </div>
+
+      <div class="jrc-card text-only">
+        <i class="fas fa-medal"></i>
+        <h3>Achievement & Recognition</h3>
+        <p>
+          Participants were appreciated for their dedication, creativity and active involvement
+          in Republic Day and JRC activities.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rd-timeline-section">
+  <div class="rd-container">
+    <div class="rd-heading">
+      <span class="section-tag">Program Flow</span>
+      <h2>Republic Day Program Schedule</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item"><span>01</span><h3>Flag Hoisting</h3><p>National flag hoisting with respect and pride.</p></div>
+      <div class="timeline-item"><span>02</span><h3>National Anthem</h3><p>Students and staff joined together for the anthem.</p></div>
+      <div class="timeline-item"><span>03</span><h3>Speeches & Poems</h3><p>Students shared inspiring thoughts about India.</p></div>
+      <div class="timeline-item"><span>04</span><h3>Dance & JRC Events</h3><p>Cultural performances and student competitions.</p></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rd-container{width:86%;max-width:1200px;margin:auto}
+
+  .rd-hero{
+    min-height:520px;
+    background:
+      linear-gradient(rgba(0,31,63,.84),rgba(0,31,63,.84)),
+      url('/images/events/republic/republic1.jpg');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    text-align:center;
+    color:white;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .rd-hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      radial-gradient(circle,rgba(255,195,0,.35) 2px,transparent 2px),
+      radial-gradient(circle,rgba(255,255,255,.15) 1px,transparent 1px);
+    background-size:120px 120px,75px 75px;
+    animation:moveDots 22s linear infinite;
+  }
+
+  @keyframes moveDots{
+    from{transform:translateY(0)}
+    to{transform:translateY(-120px)}
+  }
+
+  .rd-hero .rd-container{position:relative;z-index:2}
+  .rd-badge,.section-tag{
+    display:inline-block;
+    background:#ffc300;
+    color:#001f3f;
+    padding:9px 22px;
+    border-radius:40px;
+    font-weight:900;
+    margin-bottom:15px;
+  }
+
+  .rd-hero h1{
+    color:white;
+    font-size:66px;
+    font-weight:900;
+    text-shadow:0 15px 35px rgba(0,0,0,.4);
+  }
+
+  .rd-hero p{
+    max-width:850px;
+    margin:14px auto 0;
+    color:white;
+    font-size:19px;
+    line-height:1.7;
+  }
+
+  .rd-intro,.dance-section,.rd-timeline-section{
+    padding:85px 0;
+    background:#f5f7fb;
+  }
+
+  .rd-gallery-section,.jrc-section{
+    padding:85px 0;
+    background:white;
+  }
+
+  .rd-quote-card{
+    background:white;
+    padding:45px;
+    border-radius:30px;
+    box-shadow:0 22px 55px rgba(0,0,0,.13);
+    text-align:center;
+    border-top:6px solid #ffc300;
+  }
+
+  .rd-quote-card i{font-size:52px;color:#ffc300;margin-bottom:18px}
+  .rd-quote-card h2{color:#001f3f;font-size:34px;margin-bottom:15px}
+  .rd-quote-card p{color:#555;font-size:18px;line-height:1.8}
+
+  .rd-heading{text-align:center;margin-bottom:55px}
+  .rd-heading h2{font-size:46px;color:#001f3f;margin-bottom:14px}
+  .rd-heading p{max-width:850px;margin:auto;color:#555;font-size:18px;line-height:1.7}
+
+  .rd-gallery{
+    display:grid;
+    grid-template-columns:1.3fr .7fr;
+    gap:24px;
+  }
+
+  .gallery-big,
+  .gallery-small img,
+  .dance-photo-grid img,
+  .jrc-card{
+    border-radius:26px;
+    overflow:hidden;
+    box-shadow:0 18px 45px rgba(0,0,0,.14);
+    border:5px solid #ffc300;
+  }
+
+  .gallery-big img{
+    width:100%;
+    height:560px;
+    object-fit:cover;
+    transition:.7s;
+  }
+
+  .gallery-small{
+    display:grid;
+    gap:24px;
+  }
+
+  .gallery-small img{
+    width:100%;
+    height:268px;
+    object-fit:cover;
+    transition:.7s;
+  }
+
+  .gallery-big:hover img,
+  .gallery-small img:hover,
+  .dance-photo-grid img:hover{
+    transform:scale(1.06);
+  }
+
+  .dance-wrapper{
+    display:grid;
+    grid-template-columns:.9fr 1.1fr;
+    gap:38px;
+    align-items:center;
+  }
+
+  .dance-content{
+    background:white;
+    padding:45px;
+    border-radius:30px;
+    box-shadow:0 18px 45px rgba(0,0,0,.13);
+  }
+
+  .dance-content h2{font-size:42px;color:#001f3f;margin-bottom:18px}
+  .dance-content p{color:#555;font-size:18px;line-height:1.8;margin-bottom:24px}
+
+  .dance-points div{
+    background:#001f3f;
+    color:white;
+    padding:14px 18px;
+    border-radius:16px;
+    font-weight:800;
+    margin-bottom:12px;
+  }
+
+  .dance-points i{color:#ffc300;margin-right:8px}
+
+  .dance-photo-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+  }
+
+  .dance-photo-grid img{
+    width:100%;
+    height:430px;
+    object-fit:cover;
+  }
+
+  .jrc-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:28px;
+  }
+
+  .jrc-card{
+    background:white;
+    border:none;
+    border-top:6px solid #ffc300;
+    transition:.35s;
+  }
+
+  .jrc-card:hover{
+    transform:translateY(-12px);
+  }
+
+  .jrc-card img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+  }
+
+  .jrc-card div,
+  .jrc-card.text-only{
+    padding:28px;
+  }
+
+  .jrc-card h3{color:#001f3f;font-size:24px;margin-bottom:10px}
+  .jrc-card p{color:#555;line-height:1.7}
+  .jrc-card.text-only{
+    text-align:center;
+  }
+  .jrc-card.text-only i{font-size:48px;color:#ffc300;margin-bottom:18px}
+
+  .timeline{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+  }
+
+  .timeline-item{
+    background:white;
+    padding:30px;
+    border-radius:24px;
+    text-align:center;
+    box-shadow:0 14px 35px rgba(0,0,0,.10);
+    border-bottom:5px solid #ffc300;
+    transition:.35s;
+  }
+
+  .timeline-item:hover{
+    transform:translateY(-10px);
+    background:#001f3f;
+  }
+
+  .timeline-item span{
+    display:inline-flex;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    align-items:center;
+    justify-content:center;
+    background:#ffc300;
+    color:#001f3f;
+    font-weight:900;
+    margin-bottom:16px;
+  }
+
+  .timeline-item h3{color:#001f3f;margin-bottom:10px}
+  .timeline-item p{color:#555;line-height:1.6}
+  .timeline-item:hover h3,.timeline-item:hover p{color:white}
+
+  @media(max-width:900px){
+    .rd-gallery,.dance-wrapper,.jrc-grid,.timeline{
+      grid-template-columns:1fr;
+    }
+
+    .rd-hero h1{font-size:42px}
+    .rd-heading h2,.dance-content h2{font-size:34px}
+
+    .gallery-big img,.gallery-small img,.dance-photo-grid img{
+      height:330px;
+    }
+
+    .dance-photo-grid{grid-template-columns:1fr}
+  }
+</style>
+
+<%- include('../partials/footer') %>

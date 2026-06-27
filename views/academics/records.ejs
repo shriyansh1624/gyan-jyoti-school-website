@@ -1,0 +1,103 @@
+<%- include('../partials/header') %>
+
+<section class="records-hero">
+  <div class="records-overlay">
+    <div class="records-container">
+      <h1><%= heading %></h1>
+      <p><a href="/">Home</a> / <%= heading %></p>
+    </div>
+  </div>
+</section>
+
+<section class="records-section">
+  <div class="records-container">
+
+    <div class="records-heading">
+      <h2><%= heading %></h2>
+      <p><%= intro %></p>
+    </div>
+
+    <% if (records && records.length > 0) { %>
+
+      <div class="records-grid">
+
+        <% records.forEach(record => { %>
+
+          <div class="topper-card">
+
+            <div class="topper-image">
+              <img 
+                src="<%= record.photo || '/images/academic/default-student.jpg' %>" 
+                alt="<%= record.studentName %>"
+              >
+            </div>
+
+            <div class="topper-content">
+
+              <span class="topper-badge">
+                <%= record.rankType %>
+              </span>
+
+              <h3><%= record.studentName %></h3>
+
+              <div class="topper-info">
+
+                <p>
+                  <strong>Class:</strong>
+                  <%= record.className === 'sports' ? 'Sports' : record.className %>
+                </p>
+
+                <% if (record.stream) { %>
+                  <p>
+                    <strong>Stream:</strong>
+                    <%= record.stream %>
+                  </p>
+                <% } %>
+
+                <p>
+                  <strong>Batch:</strong>
+                  <%= record.batch %>
+                </p>
+
+                <p>
+                  <strong>Year:</strong>
+                  <%= record.year %>
+                </p>
+
+                <% if (record.percentage) { %>
+                  <p>
+                    <strong>Percentage:</strong>
+                    <%= record.percentage %>
+                  </p>
+                <% } %>
+
+                <% if (record.achievement) { %>
+                  <p>
+                    <strong>Achievement:</strong>
+                    <%= record.achievement %>
+                  </p>
+                <% } %>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        <% }) %>
+
+      </div>
+
+    <% } else { %>
+
+      <div class="empty-records">
+        <h3>No records added yet.</h3>
+        <p>Please add academic records from MongoDB.</p>
+      </div>
+
+    <% } %>
+
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,377 @@
+<%- include('partials/header') %>
+
+<section class="hero-section">
+  <div class="hero-container">
+
+    <div class="carousel">
+      <div class="carousel-inner" id="carouselInner">
+
+        <% if (sliders && sliders.length > 0) { %>
+          <% sliders.forEach((slider, index) => { %>
+            <div class="carousel-item <%= index === 0 ? 'active' : '' %>" style="background-image:url('<%= slider.image %>');">
+              <div class="carousel-overlay"></div>
+
+              <div class="carousel-content">
+                <h2><%= slider.title %></h2>
+                <p><%= slider.subtitle %></p>
+
+                <a href="<%= slider.buttonLink %>" class="btn-primary">
+                  <%= slider.buttonText %>
+                </a>
+              </div>
+            </div>
+          <% }); %>
+        <% } else { %>
+          <div class="carousel-item active" style="background-image:url('/images/school-bg.jpg');">
+            <div class="carousel-overlay"></div>
+
+            <div class="carousel-content">
+              <h2>Welcome to Gyan Jyoti</h2>
+              <p>Excellence in Education, Character & Culture</p>
+              <a href="/admission/process" class="btn-primary">Start Admission</a>
+            </div>
+          </div>
+        <% } %>
+
+      </div>
+
+      <button class="carousel-btn prev" onclick="changeSlide(-1)">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <button class="carousel-btn next" onclick="changeSlide(1)">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <div class="about-side-panel home-side-panel">
+      <ul>
+        <li><a href="/about/vision">Vision & Mission</a></li>
+        <li><a href="/about/founder">Founder's Message</a></li>
+        <li><a href="/about/principal">Principal's Message</a></li>
+        <li><a href="/about/advantages">MIS Advantages</a></li>
+        <li><a href="/faculty">Staff Directory</a></li>
+        <li><a href="/about/accolades">Developer and Member</a></li>
+        <li><a href="/about/partners">Knowledge Partners</a></li>
+       <li><a href="/fees">Fees Structure</a></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<section class="welcome-section">
+  <div class="container">
+    <h2>Welcome to Gyan Jyoti</h2>
+    <p class="section-subtitle">Excellence in Education, Character & Culture</p>
+
+    <div class="welcome-grid">
+      <div class="welcome-box">
+        <i class="fas fa-graduation-cap"></i>
+        <h3>Quality Education</h3>
+        <p>We provide world-class education with modern teaching methods and updated curriculum.</p>
+      </div>
+
+      <div class="welcome-box">
+        <i class="fas fa-users"></i>
+        <h3>Expert Faculty</h3>
+        <p>Experienced and dedicated teachers committed to student success and development.</p>
+      </div>
+
+      <div class="welcome-box">
+        <i class="fas fa-book"></i>
+        <h3>CBSE Curriculum</h3>
+        <p>Comprehensive curriculum with focus on holistic development and modern education.</p>
+      </div>
+
+      <div class="welcome-box">
+        <i class="fas fa-trophy"></i>
+        <h3>Achievements</h3>
+        <p>Excellence in academics and extracurricular activities with proud track record.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <h2>Join Our Educational Community</h2>
+    <p>Enroll your child today and give them the best education</p>
+    <a href="/admission/process" class="btn-cta">START ADMISSION PROCESS</a>
+  </div>
+</section>
+
+<style>
+.hero-section {
+  padding: 0;
+  margin-top: -10px;
+}
+
+.hero-container {
+  display: flex;
+  min-height: 520px;
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease;
+  width: 100%;
+}
+
+.carousel-item {
+  min-width: 100%;
+  background-size: cover;
+  background-position: center;
+  height: 520px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.carousel-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 31, 63, 0.45);
+}
+
+.carousel-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  padding: 60px;
+  max-width: 620px;
+}
+
+.carousel-content h2 {
+  font-size: 56px;
+  margin-bottom: 20px;
+  color: #fff;
+  font-weight: 800;
+}
+
+.carousel-content p {
+  font-size: 20px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.45);
+  color: white;
+  border: none;
+  font-size: 24px;
+  padding: 15px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.carousel-btn.prev {
+  left: 20px;
+}
+
+.carousel-btn.next {
+  right: 20px;
+}
+
+.home-side-panel {
+  width: 330px;
+  min-height: 520px;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+.welcome-section {
+  padding: 70px 0;
+  background: #f5f5f5;
+}
+
+.welcome-section h2 {
+  text-align: center;
+  font-size: 42px;
+  color: #001f3f;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 45px;
+  font-size: 18px;
+}
+
+.welcome-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.welcome-box {
+  background: white;
+  padding: 35px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  transition: 0.3s;
+}
+
+.welcome-box:hover {
+  transform: translateY(-10px);
+}
+
+.welcome-box i {
+  font-size: 48px;
+  color: #ffc300;
+  margin-bottom: 20px;
+}
+
+.cta-section {
+  background: linear-gradient(135deg, #001f3f, #003d7a);
+  color: white;
+  padding: 70px 0;
+  text-align: center;
+}
+
+.cta-section h2 {
+  font-size: 40px;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.cta-section p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+@media(max-width: 900px) {
+  .hero-container {
+    flex-direction: column;
+  }
+
+  .home-side-panel {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .carousel-content h2 {
+    font-size: 38px;
+  }
+
+}
+.home-side-panel{
+  width:330px;
+  min-height:520px;
+  flex-shrink:0;
+  background:linear-gradient(180deg,#001f3f,#00315f);
+  padding:35px 0;
+  box-shadow:-12px 18px 40px rgba(0,0,0,0.25);
+  animation:homePanelSlide .8s ease-out both;
+  overflow:hidden;
+}
+
+.home-side-panel::before{
+  content:"";
+  display:block;
+  width:78%;
+  height:4px;
+  background:#ffc300;
+  margin:0 auto 25px;
+  border-radius:30px;
+}
+
+.home-side-panel ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.home-side-panel li{
+  position:relative;
+  overflow:hidden;
+}
+
+.home-side-panel li::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:0;
+  height:100%;
+  background:#ffc300;
+  transition:.35s ease;
+}
+
+.home-side-panel li:hover::before{
+  width:100%;
+}
+
+.home-side-panel li a{
+  display:block;
+  position:relative;
+  z-index:2;
+  padding:17px 32px;
+  color:#fff !important;
+  text-transform:uppercase;
+  font-weight:600;
+  letter-spacing:.4px;
+  font-size:15px;
+  text-decoration:none;
+  transition:.35s ease;
+}
+
+.home-side-panel li:hover a{
+  color:#001f3f !important;
+  padding-left:45px;
+}
+
+@keyframes homePanelSlide{
+  from{
+    opacity:0;
+    transform:translateX(120px);
+  }
+  to{
+    opacity:1;
+    transform:translateX(0);
+  }
+}
+
+@media(max-width:900px){
+  .home-side-panel{
+    width:100%;
+    min-height:auto;
+  }
+}
+</style>
+
+<script>
+let slideIndex = 0;
+
+function changeSlide(n) {
+  showSlide(slideIndex += n);
+}
+
+function showSlide(n) {
+  let slides = document.querySelectorAll('.carousel-item');
+  if (!slides.length) return;
+
+  if (n >= slides.length) slideIndex = 0;
+  if (n < 0) slideIndex = slides.length - 1;
+
+  let carousel = document.getElementById('carouselInner');
+  carousel.style.transform = `translateX(-${slideIndex * 100}%)`;
+}
+
+setInterval(() => changeSlide(1), 5000);
+</script>
+
+<%- include('partials/footer') %>

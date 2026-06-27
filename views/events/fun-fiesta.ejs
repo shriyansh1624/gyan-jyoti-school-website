@@ -1,0 +1,495 @@
+<%- include('../partials/header') %>
+
+<section class="ff-hero">
+  <div class="ff-hero-overlay">
+    <div class="container">
+      <span class="ff-badge">Celebrating Creativity & Joy</span>
+      <h1>Fun & Fiesta</h1>
+      <p>
+      <a href="/" style="color:#ffc300">Home</a> / Fun & Fiesta
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="ff-intro">
+  <div class="container">
+    <div class="ff-intro-grid">
+      <div>
+        <span class="section-tag">School Events</span>
+        <h2>Moments of Celebration, Confidence & Talent</h2>
+        <p>
+          Fun & Fiesta brings joy, creativity, music, dance, games and cultural
+          performances together, giving students a platform to express their talent
+          and confidence.
+        </p>
+      </div>
+      <div class="ff-stats">
+  <div>
+    <h3><%= events && events.length ? events.length : 0 %>+</h3>
+    <p>Event Highlights</p>
+  </div>
+
+  <div>
+    <h3>100%</h3>
+    <p>Student Energy</p>
+  </div>
+
+  <div>
+    <h3>∞</h3>
+    <p>Happy Memories</p>
+  </div>
+</div>
+    </div>
+  </div>
+</section>
+
+<section class="ff-timeline-section">
+  <div class="container">
+
+    <div class="ff-heading">
+      <span>Event Gallery</span>
+      <h2>Year Wise Fun & Fiesta Highlights</h2>
+      <p>
+        A glimpse of successful celebrations, performances, activities and joyful
+        school memories.
+      </p>
+    </div>
+
+    <% if (events && events.length > 0) { %>
+
+      <% 
+        const groupedEvents = {};
+        events.forEach(event => {
+          const year = new Date(event.date).getFullYear();
+          if (!groupedEvents[year]) groupedEvents[year] = [];
+          groupedEvents[year].push(event);
+        });
+
+        const years = Object.keys(groupedEvents).sort((a, b) => b - a);
+      %>
+
+      <% years.forEach(year => { %>
+        <div class="ff-year-block">
+          <div class="ff-year-title">
+            <span><%= year %></span>
+            <div></div>
+          </div>
+
+          <div class="ff-event-grid">
+            <% groupedEvents[year].forEach((event, index) => { %>
+
+              <div class="ff-event-card" style="animation-delay:<%= index * 0.12 %>s">
+                <div class="ff-image-wrap">
+                  <img src="<%= event.image || '/images/events/default-event.jpg' %>" alt="<%= event.title %>">
+                  <div class="ff-image-overlay">
+                    <span>Fun & Fiesta</span>
+                  </div>
+                </div>
+
+                <div class="ff-card-content">
+                  <div class="ff-date-chip">
+                    <i class="fas fa-calendar-alt"></i>
+                    <%= new Date(event.date).toLocaleDateString('en-IN', {
+                      day: '2-digit',
+                      month: 'long',
+                      year: 'numeric'
+                    }) %>
+                  </div>
+
+                  <h3><%= event.title %></h3>
+                  <div class="gold-line"></div>
+
+                  <div class="ff-description">
+                    <%- event.description %>
+                  </div>
+
+                  <div class="ff-success-row">
+                    <span><i class="fas fa-star"></i> Successful Celebration</span>
+                    <span><i class="fas fa-users"></i> Student Participation</span>
+                  </div>
+                </div>
+              </div>
+
+            <% }) %>
+          </div>
+        </div>
+      <% }) %>
+
+    <% } else { %>
+      <div class="ff-empty">
+        <i class="fas fa-calendar-plus"></i>
+        <h2>No Fun & Fiesta Events Added Yet</h2>
+        <p>Add event data from MongoDB to display beautiful year-wise event cards here.</p>
+      </div>
+    <% } %>
+
+  </div>
+</section>
+
+<section class="ff-celebration-strip">
+  <div class="container">
+    <h2>Every celebration becomes a memory.</h2>
+    <p>Creativity, confidence, teamwork and happiness come together at Gyan Jyoti.</p>
+  </div>
+</section>
+
+<style>
+  .ff-hero {
+    height: 420px;
+    background:
+      linear-gradient(rgba(0,31,63,.72), rgba(0,31,63,.72)),
+      url('/images/events/fun-fiesta-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ff-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(255,195,0,.35) 2px, transparent 2px),
+      radial-gradient(circle, rgba(255,255,255,.18) 1px, transparent 1px);
+    background-size: 120px 120px, 75px 75px;
+    animation: floatDots 22s linear infinite;
+  }
+
+  @keyframes floatDots {
+    from { transform: translateY(0); }
+    to { transform: translateY(-120px); }
+  }
+
+  .ff-hero-overlay {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .ff-badge {
+    display: inline-block;
+    background: #ffc300;
+    color: #001f3f;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-weight: 800;
+    margin-bottom: 18px;
+    animation: fadeUp .8s ease both;
+  }
+
+  .ff-hero h1 {
+    color: white;
+    font-size: 72px;
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-shadow: 0 16px 40px rgba(0,0,0,.35);
+    animation: fadeUp 1s ease both;
+  }
+
+  .ff-hero p {
+    color: white;
+    font-size: 20px;
+    animation: fadeUp 1.2s ease both;
+  }
+
+  .ff-intro {
+    padding: 75px 0;
+    background: #f5f7fb;
+  }
+
+  .ff-intro-grid {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 45px;
+    align-items: center;
+  }
+
+  .section-tag,
+  .ff-heading span {
+    display: inline-block;
+    color: #001f3f;
+    background: #ffc300;
+    padding: 8px 18px;
+    border-radius: 40px;
+    font-weight: 800;
+    margin-bottom: 15px;
+  }
+
+  .ff-intro h2 {
+    font-size: 44px;
+    color: #001f3f;
+    margin-bottom: 18px;
+    line-height: 1.15;
+  }
+
+  .ff-intro p {
+    font-size: 18px;
+    color: #444;
+    line-height: 1.8;
+  }
+
+  .ff-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .ff-stats div {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.10);
+    border-left: 6px solid #ffc300;
+    transition: .35s;
+  }
+
+  .ff-stats div:hover {
+    transform: translateX(-8px);
+  }
+
+  .ff-stats h3 {
+    font-size: 38px;
+    color: #001f3f;
+    margin-bottom: 5px;
+  }
+
+  .ff-stats p {
+    font-weight: 700;
+    color: #555;
+  }
+
+  .ff-timeline-section {
+    padding: 80px 0;
+    background: white;
+  }
+
+  .ff-heading {
+    text-align: center;
+    margin-bottom: 55px;
+  }
+
+  .ff-heading h2 {
+    font-size: 46px;
+    color: #001f3f;
+    margin-bottom: 15px;
+  }
+
+  .ff-heading p {
+    max-width: 850px;
+    margin: auto;
+    font-size: 18px;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .ff-year-block {
+    margin-bottom: 65px;
+  }
+
+  .ff-year-title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .ff-year-title span {
+    background: #001f3f;
+    color: #ffc300;
+    font-size: 28px;
+    font-weight: 900;
+    padding: 12px 28px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,31,63,.22);
+  }
+
+  .ff-year-title div {
+    flex: 1;
+    height: 3px;
+    background: linear-gradient(90deg, #ffc300, transparent);
+  }
+
+  .ff-event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 35px;
+  }
+
+  .ff-event-card {
+    background: white;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 14px 38px rgba(0,0,0,.13);
+    border: 1px solid #eef2f7;
+    animation: fadeUp .9s ease both;
+    transition: .4s;
+  }
+
+  .ff-event-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 55px rgba(0,0,0,.20);
+  }
+
+  .ff-image-wrap {
+    height: 310px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ff-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .6s;
+  }
+
+  .ff-event-card:hover img {
+    transform: scale(1.08);
+  }
+
+  .ff-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent, rgba(0,31,63,.75));
+    display: flex;
+    align-items: flex-end;
+    padding: 22px;
+  }
+
+  .ff-image-overlay span {
+    background: #ffc300;
+    color: #001f3f;
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-weight: 800;
+  }
+
+  .ff-card-content {
+    padding: 28px;
+  }
+
+  .ff-date-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f3f6fb;
+    color: #001f3f;
+    padding: 9px 14px;
+    border-radius: 30px;
+    font-weight: 800;
+    margin-bottom: 15px;
+  }
+
+  .ff-card-content h3 {
+    color: #001f3f;
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .gold-line {
+    width: 70px;
+    height: 4px;
+    background: #ffc300;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+
+  .ff-description {
+    color: #333;
+    line-height: 1.75;
+    font-size: 16px;
+  }
+
+  .ff-success-row {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .ff-success-row span {
+    background: #001f3f;
+    color: white;
+    padding: 8px 13px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .ff-success-row i {
+    color: #ffc300;
+  }
+
+  .ff-empty {
+    text-align: center;
+    background: #f5f7fb;
+    padding: 55px;
+    border-radius: 22px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.10);
+  }
+
+  .ff-empty i {
+    font-size: 55px;
+    color: #ffc300;
+    margin-bottom: 18px;
+  }
+
+  .ff-empty h2 {
+    color: #001f3f;
+    margin-bottom: 10px;
+  }
+
+  .ff-celebration-strip {
+    padding: 65px 0;
+    background: linear-gradient(135deg, #001f3f, #004481);
+    color: white;
+    text-align: center;
+  }
+
+  .ff-celebration-strip h2 {
+    color: white;
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
+
+  .ff-celebration-strip p {
+    font-size: 18px;
+    opacity: .92;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(45px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media(max-width: 900px) {
+    .ff-intro-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ff-hero h1 {
+      font-size: 48px;
+    }
+
+    .ff-heading h2,
+    .ff-intro h2 {
+      font-size: 34px;
+    }
+
+    .ff-event-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<%- include('../partials/footer') %>

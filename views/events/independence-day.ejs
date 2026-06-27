@@ -1,0 +1,498 @@
+<%- include('../partials/header') %>
+
+<section class="ind-hero">
+  <div class="ind-container">
+    <span class="ind-badge">Freedom • Unity • Pride</span>
+    <h1>Independence Day Celebration</h1>
+    <p>
+      A celebration of patriotism, discipline, cultural talent and respect for our nation.
+    </p>
+  </div>
+</section>
+
+<section class="ind-quote-section">
+  <div class="ind-container">
+    <div class="quote-card">
+      <i class="fas fa-quote-left"></i>
+      <h2>“Freedom is not only a gift, it is a responsibility to build a better nation.”</h2>
+      <p>
+        Independence Day at Gyan Jyoti School inspires students to understand sacrifice,
+        unity, discipline and the value of being responsible citizens of India.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="ind-main-section">
+  <div class="ind-container">
+
+    <div class="section-heading">
+      <span class="section-tag">School Celebration</span>
+      <h2>Patriotic Moments At School</h2>
+      <p>
+        The celebration included flag hoisting, speeches, cultural dance, patriotic songs,
+        school gathering, student participation and committee members’ presence.
+      </p>
+    </div>
+
+    <div class="photo-showcase">
+      <div class="big-photo">
+        <img src="/images/events/independence/hero.jpg" alt="Independence Day">
+      </div>
+
+      <div class="side-photos">
+        <img src="/images/events/independence/students1.jpg" alt="Students">
+        <img src="/images/events/independence/committee1.jpg" alt="Committee Members">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="march-section">
+  <div class="ind-container">
+
+    <div class="march-wrapper">
+      <div class="march-content">
+        <span class="section-tag">JRC & March Past</span>
+        <h2>Interschool March Past Competition</h2>
+        <p>
+          JRC students and school teams participated with discipline, confidence and
+          teamwork. The march past competition reflected unity, coordination and patriotic spirit.
+        </p>
+
+        <div class="point-list">
+          <div><i class="fas fa-check-circle"></i> JRC student participation</div>
+          <div><i class="fas fa-check-circle"></i> Interschool march past competition</div>
+          <div><i class="fas fa-check-circle"></i> Discipline, teamwork and leadership</div>
+        </div>
+      </div>
+
+      <div class="march-images">
+        <img src="/images/events/independence/marchpast1.jpg" alt="March Past">
+        <img src="/images/events/independence/marchpast2.jpg" alt="JRC Competition">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="dance-section">
+  <div class="ind-container">
+
+    <div class="section-heading">
+      <span class="section-tag">Cultural Program</span>
+      <h2>Dance, Songs & Student Performances</h2>
+      <p>
+        Students performed patriotic dances and cultural programs representing
+        freedom, courage, unity and love for the country.
+      </p>
+    </div>
+
+    <div class="event-card-grid">
+      <div class="event-card">
+        <img src="/images/events/independence/dance1.jpg" alt="Dance Performance">
+        <div>
+          <h3>Patriotic Dance</h3>
+          <p>Energetic dance performances filled the school with patriotic spirit.</p>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <img src="/images/events/independence/dance2.jpg" alt="Cultural Dance">
+        <div>
+          <h3>Cultural Presentation</h3>
+          <p>Students showcased creativity, confidence and teamwork on stage.</p>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <img src="/images/events/independence/students2.jpg" alt="Students Gathering">
+        <div>
+          <h3>School Gathering</h3>
+          <p>Teachers, students and committee members gathered for the celebration.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="timeline-section">
+  <div class="ind-container">
+
+    <div class="section-heading">
+      <span class="section-tag">Program Flow</span>
+      <h2>Independence Day Event Schedule</h2>
+    </div>
+
+    <div class="timeline-grid">
+      <div class="timeline-card">
+        <span>01</span>
+        <h3>Flag Hoisting</h3>
+        <p>The national flag was hoisted with pride and respect.</p>
+      </div>
+
+      <div class="timeline-card">
+        <span>02</span>
+        <h3>National Anthem</h3>
+        <p>Students and staff joined together for the anthem.</p>
+      </div>
+
+      <div class="timeline-card">
+        <span>03</span>
+        <h3>March Past</h3>
+        <p>JRC and students participated in disciplined march past.</p>
+      </div>
+
+      <div class="timeline-card">
+        <span>04</span>
+        <h3>Dance & Speeches</h3>
+        <p>Patriotic performances and inspiring speeches were presented.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .ind-container{
+    width:86%;
+    max-width:1200px;
+    margin:auto;
+  }
+
+  .ind-hero{
+    min-height:540px;
+    background:
+      linear-gradient(rgba(0,31,63,.84),rgba(0,31,63,.84)),
+      url('/images/events/independence/hero.jpg');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    text-align:center;
+    color:white;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .ind-hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      radial-gradient(circle,rgba(255,195,0,.35) 2px,transparent 2px),
+      radial-gradient(circle,rgba(255,255,255,.15) 1px,transparent 1px);
+    background-size:120px 120px,75px 75px;
+    animation:moveDots 22s linear infinite;
+  }
+
+  @keyframes moveDots{
+    from{transform:translateY(0)}
+    to{transform:translateY(-120px)}
+  }
+
+  .ind-hero .ind-container{
+    position:relative;
+    z-index:2;
+  }
+
+  .ind-badge,
+  .section-tag{
+    display:inline-block;
+    background:#ffc300;
+    color:#001f3f;
+    padding:9px 22px;
+    border-radius:40px;
+    font-weight:900;
+    margin-bottom:15px;
+  }
+
+  .ind-hero h1{
+    color:white;
+    font-size:66px;
+    font-weight:900;
+    text-shadow:0 15px 35px rgba(0,0,0,.4);
+  }
+
+  .ind-hero p{
+    max-width:850px;
+    margin:14px auto 0;
+    color:white;
+    font-size:19px;
+    line-height:1.7;
+  }
+
+  .ind-quote-section,
+  .march-section,
+  .timeline-section{
+    padding:85px 0;
+    background:#f5f7fb;
+  }
+
+  .ind-main-section,
+  .dance-section{
+    padding:85px 0;
+    background:white;
+  }
+
+  .quote-card{
+    background:white;
+    padding:45px;
+    border-radius:30px;
+    box-shadow:0 22px 55px rgba(0,0,0,.13);
+    text-align:center;
+    border-top:6px solid #ffc300;
+  }
+
+  .quote-card i{
+    font-size:52px;
+    color:#ffc300;
+    margin-bottom:18px;
+  }
+
+  .quote-card h2{
+    color:#001f3f;
+    font-size:34px;
+    margin-bottom:15px;
+  }
+
+  .quote-card p{
+    color:#555;
+    font-size:18px;
+    line-height:1.8;
+  }
+
+  .section-heading{
+    text-align:center;
+    margin-bottom:55px;
+  }
+
+  .section-heading h2{
+    font-size:46px;
+    color:#001f3f;
+    margin-bottom:14px;
+  }
+
+  .section-heading p{
+    max-width:850px;
+    margin:auto;
+    color:#555;
+    font-size:18px;
+    line-height:1.7;
+  }
+
+  .photo-showcase{
+    display:grid;
+    grid-template-columns:1.3fr .7fr;
+    gap:24px;
+  }
+
+  .big-photo,
+  .side-photos img,
+  .march-images img,
+  .event-card{
+    border-radius:28px;
+    overflow:hidden;
+    box-shadow:0 18px 45px rgba(0,0,0,.14);
+    border:5px solid #ffc300;
+  }
+
+  .big-photo img{
+    width:100%;
+    height:560px;
+    object-fit:cover;
+    transition:.7s;
+  }
+
+  .side-photos{
+    display:grid;
+    gap:24px;
+  }
+
+  .side-photos img{
+    width:100%;
+    height:268px;
+    object-fit:cover;
+    transition:.7s;
+  }
+
+  .big-photo:hover img,
+  .side-photos img:hover,
+  .march-images img:hover,
+  .event-card:hover img{
+    transform:scale(1.06);
+  }
+
+  .march-wrapper{
+    display:grid;
+    grid-template-columns:.9fr 1.1fr;
+    gap:38px;
+    align-items:center;
+  }
+
+  .march-content{
+    background:white;
+    padding:45px;
+    border-radius:30px;
+    box-shadow:0 18px 45px rgba(0,0,0,.13);
+  }
+
+  .march-content h2{
+    font-size:42px;
+    color:#001f3f;
+    margin-bottom:18px;
+  }
+
+  .march-content p{
+    color:#555;
+    font-size:18px;
+    line-height:1.8;
+    margin-bottom:24px;
+  }
+
+  .point-list div{
+    background:#001f3f;
+    color:white;
+    padding:14px 18px;
+    border-radius:16px;
+    font-weight:800;
+    margin-bottom:12px;
+  }
+
+  .point-list i{
+    color:#ffc300;
+    margin-right:8px;
+  }
+
+  .march-images{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+  }
+
+  .march-images img{
+    width:100%;
+    height:430px;
+    object-fit:cover;
+  }
+
+  .event-card-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:28px;
+  }
+
+  .event-card{
+    background:white;
+    border:none;
+    border-top:6px solid #ffc300;
+    transition:.35s;
+  }
+
+  .event-card:hover{
+    transform:translateY(-12px);
+  }
+
+  .event-card img{
+    width:100%;
+    height:280px;
+    object-fit:cover;
+    transition:.7s;
+  }
+
+  .event-card div{
+    padding:28px;
+  }
+
+  .event-card h3{
+    color:#001f3f;
+    font-size:24px;
+    margin-bottom:10px;
+  }
+
+  .event-card p{
+    color:#555;
+    line-height:1.7;
+  }
+
+  .timeline-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+  }
+
+  .timeline-card{
+    background:white;
+    padding:30px;
+    border-radius:24px;
+    text-align:center;
+    box-shadow:0 14px 35px rgba(0,0,0,.10);
+    border-bottom:5px solid #ffc300;
+    transition:.35s;
+  }
+
+  .timeline-card:hover{
+    transform:translateY(-10px);
+    background:#001f3f;
+  }
+
+  .timeline-card span{
+    display:inline-flex;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    align-items:center;
+    justify-content:center;
+    background:#ffc300;
+    color:#001f3f;
+    font-weight:900;
+    margin-bottom:16px;
+  }
+
+  .timeline-card h3{
+    color:#001f3f;
+    margin-bottom:10px;
+  }
+
+  .timeline-card p{
+    color:#555;
+    line-height:1.6;
+  }
+
+  .timeline-card:hover h3,
+  .timeline-card:hover p{
+    color:white;
+  }
+
+  @media(max-width:900px){
+    .photo-showcase,
+    .march-wrapper,
+    .event-card-grid,
+    .timeline-grid{
+      grid-template-columns:1fr;
+    }
+
+    .ind-hero h1{
+      font-size:42px;
+    }
+
+    .section-heading h2,
+    .march-content h2{
+      font-size:34px;
+    }
+
+    .big-photo img,
+    .side-photos img,
+    .march-images img{
+      height:330px;
+    }
+
+    .march-images{
+      grid-template-columns:1fr;
+    }
+  }
+</style>
+
+<%- include('../partials/footer') %>

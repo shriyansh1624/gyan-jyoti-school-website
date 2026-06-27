@@ -1,0 +1,665 @@
+<%- include('../partials/header') %>
+
+<section class="principal-hero">
+  <div class="principal-overlay">
+    <div class="principal-container">
+      <span class="principal-badge">Leadership & Guidance</span>
+      <h1>Principal's Message</h1>
+      <p><a href="/">Home</a> / Principal's Message</p>
+    </div>
+  </div>
+</section>
+
+<section class="principal-section">
+  <div class="principal-container">
+
+    <div class="principal-card">
+
+      <div class="principal-profile">
+        <div class="principal-photo">
+          <img src="/images/principal.jpg" alt="Principal">
+        </div>
+
+        <div class="principal-info-box">
+          <h3>Mr. P. K. Naidu</h3>
+          <p>Principal</p>
+          <span>Gyan Jyoti International School</span>
+        </div>
+      </div>
+
+      <div class="principal-message">
+        <span class="section-tag">Message From Principal</span>
+
+        <h2>Building Character, Confidence & Excellence</h2>
+
+        <div class="quote-icon">
+          <i class="fas fa-quote-left"></i>
+        </div>
+
+        <p>
+          At Gyan Jyoti International School, we believe that education is not only
+          about academic excellence but also about building strong character,
+          discipline, confidence and compassion in every child.
+        </p>
+
+        <p>
+          Our mission is to create a nurturing environment where students are
+          encouraged to think creatively, act responsibly and grow into capable
+          future leaders.
+        </p>
+
+        <p>
+          We focus on holistic development through quality education, co-curricular
+          activities, modern teaching methods and moral values that prepare students
+          for real-world challenges.
+        </p>
+
+        <div class="principal-tags">
+          <span><i class="fas fa-check-circle"></i> Discipline</span>
+          <span><i class="fas fa-check-circle"></i> Confidence</span>
+          <span><i class="fas fa-check-circle"></i> Leadership</span>
+          <span><i class="fas fa-check-circle"></i> Excellence</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="principal-values">
+  <div class="principal-container">
+
+    <div class="section-heading">
+      <span class="section-tag">Our Focus</span>
+      <h2>Principal’s Educational Vision</h2>
+      <p>
+        A balanced approach that supports academic learning, moral values and
+        overall personality development.
+      </p>
+    </div>
+
+    <div class="vision-grid">
+      <div class="vision-card">
+        <i class="fas fa-book-reader"></i>
+        <h3>Academic Excellence</h3>
+        <p>Strong foundation and result-oriented learning environment.</p>
+      </div>
+
+      <div class="vision-card">
+        <i class="fas fa-users"></i>
+        <h3>Student Growth</h3>
+        <p>Confidence, communication, creativity and leadership development.</p>
+      </div>
+
+      <div class="vision-card">
+        <i class="fas fa-heart"></i>
+        <h3>Values & Discipline</h3>
+        <p>Respect, responsibility, discipline and moral education.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="principal-contact-section">
+  <div class="principal-container">
+
+    <div class="contact-wrapper">
+
+      <div class="contact-left">
+        <span class="section-tag">Contact Principal</span>
+        <h2>Want to Share a Message?</h2>
+        <p>
+          Parents and students can send their message, feedback or concern directly
+          to the school leadership. Our team will review it carefully.
+        </p>
+
+        <div class="contact-highlights">
+          <div><i class="fas fa-envelope"></i> principal@gyanjyoti.com</div>
+          <div><i class="fas fa-phone"></i> +91 98765-43210</div>
+          <div><i class="fas fa-clock"></i> Mon - Sat, 9:00 AM - 2:00 PM</div>
+        </div>
+      </div>
+
+      <div class="contact-form-card">
+
+        <% if (typeof success !== 'undefined' && success) { %>
+          <div class="success-msg">
+            <i class="fas fa-check-circle"></i>
+            Your message has been sent successfully.
+          </div>
+        <% } %>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="error-msg">
+            <i class="fas fa-exclamation-circle"></i>
+            Please fill all details correctly.
+          </div>
+        <% } %>
+
+        <form action="/contact" method="POST" class="principal-contact-form" novalidate>
+
+          <div class="form-row">
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Full Name"
+              pattern="[A-Za-z\s.]{3,60}"
+              maxlength="60"
+              title="Only letters allowed, minimum 3 characters"
+              autocomplete="name"
+              required
+            >
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              maxlength="80"
+              autocomplete="email"
+              required
+            >
+          </div>
+
+          <div class="form-row">
+            <input
+              type="text"
+              name="phone"
+              placeholder="10 digit mobile number"
+              pattern="[0-9]{10}"
+              maxlength="10"
+              inputmode="numeric"
+              title="Enter exactly 10 digits"
+              autocomplete="tel"
+              required
+            >
+
+            <input
+              type="text"
+              name="subject"
+              value="Message for Principal"
+              readonly
+              maxlength="120"
+            >
+          </div>
+
+          <textarea
+            name="message"
+            placeholder="Write your message..."
+            minlength="5"
+            maxlength="1000"
+            required
+          ></textarea>
+
+          <small class="char-note">
+            Max 1000 characters. Unsafe script text is not allowed.
+          </small>
+
+          <input type="hidden" name="category" value="Principal Message">
+
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .principal-container {
+    width: 86%;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .principal-hero {
+    height: 430px;
+    background:
+      linear-gradient(rgba(0,31,63,.78), rgba(0,31,63,.78)),
+      url('/images/school-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .principal-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(255,195,0,.35) 2px, transparent 2px),
+      radial-gradient(circle, rgba(255,255,255,.14) 1px, transparent 1px);
+    background-size: 120px 120px, 75px 75px;
+    animation: principalDots 22s linear infinite;
+  }
+
+  @keyframes principalDots {
+    from { transform: translateY(0); }
+    to { transform: translateY(-120px); }
+  }
+
+  .principal-overlay {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .principal-badge,
+  .section-tag {
+    display: inline-block;
+    background: #ffc300;
+    color: #001f3f;
+    padding: 9px 22px;
+    border-radius: 40px;
+    font-weight: 900;
+    margin-bottom: 15px;
+  }
+
+  .principal-hero h1 {
+    color: white;
+    font-size: 64px;
+    font-weight: 900;
+    text-shadow: 0 15px 35px rgba(0,0,0,.38);
+  }
+
+  .principal-hero p,
+  .principal-hero a {
+    color: white;
+    font-size: 18px;
+    margin-top: 8px;
+  }
+
+  .principal-section {
+    padding: 85px 0;
+    background: #f5f7fb;
+  }
+
+  .principal-card {
+    background: white;
+    border-radius: 30px;
+    padding: 45px;
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: 45px;
+    align-items: center;
+    box-shadow: 0 22px 55px rgba(0,0,0,.14);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .principal-card::before {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255,195,0,.13);
+    border-radius: 50%;
+    top: -140px;
+    right: -110px;
+  }
+
+  .principal-profile,
+  .principal-message {
+    position: relative;
+    z-index: 2;
+  }
+
+  .principal-photo {
+    height: 430px;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 7px solid #ffc300;
+    box-shadow: 0 18px 45px rgba(0,31,63,.25);
+  }
+
+  .principal-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .7s;
+  }
+
+  .principal-photo:hover img {
+    transform: scale(1.08);
+  }
+
+  .principal-info-box {
+    background: #001f3f;
+    color: white;
+    padding: 22px;
+    border-radius: 20px;
+    margin: -45px 25px 0;
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    box-shadow: 0 14px 30px rgba(0,0,0,.25);
+  }
+
+  .principal-info-box h3 {
+    color: #ffc300;
+    font-size: 26px;
+    margin-bottom: 5px;
+  }
+
+  .principal-info-box p {
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .principal-info-box span {
+    font-size: 13px;
+    opacity: .85;
+  }
+
+  .principal-message h2 {
+    color: #001f3f;
+    font-size: 44px;
+    line-height: 1.18;
+    margin-bottom: 18px;
+  }
+
+  .quote-icon {
+    font-size: 52px;
+    color: #ffc300;
+    margin-bottom: 8px;
+  }
+
+  .principal-message p {
+    color: #444;
+    font-size: 18px;
+    line-height: 1.85;
+    margin-bottom: 16px;
+  }
+
+  .principal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 24px;
+  }
+
+  .principal-tags span {
+    background: #001f3f;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 40px;
+    font-weight: 800;
+  }
+
+  .principal-tags i {
+    color: #ffc300;
+    margin-right: 7px;
+  }
+
+  .principal-values {
+    padding: 80px 0;
+    background: white;
+  }
+
+  .section-heading {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .section-heading h2 {
+    font-size: 46px;
+    color: #001f3f;
+    margin-bottom: 15px;
+  }
+
+  .section-heading p {
+    max-width: 850px;
+    margin: auto;
+    color: #555;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .vision-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .vision-card {
+    background: #f5f7fb;
+    padding: 35px;
+    border-radius: 24px;
+    text-align: center;
+    border-top: 5px solid #ffc300;
+    box-shadow: 0 14px 35px rgba(0,0,0,.10);
+    transition: .35s;
+  }
+
+  .vision-card:hover {
+    transform: translateY(-10px);
+    background: #001f3f;
+  }
+
+  .vision-card:hover h3,
+  .vision-card:hover p {
+    color: white;
+  }
+
+  .vision-card i {
+    color: #ffc300;
+    font-size: 42px;
+    margin-bottom: 18px;
+  }
+
+  .vision-card h3 {
+    color: #001f3f;
+    font-size: 23px;
+    margin-bottom: 12px;
+  }
+
+  .vision-card p {
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .principal-contact-section {
+    padding: 85px 0;
+    background: #f5f7fb;
+  }
+
+  .contact-wrapper {
+    display: grid;
+    grid-template-columns: .9fr 1.1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .contact-left {
+    background: linear-gradient(135deg, #001f3f, #004481);
+    color: white;
+    padding: 45px;
+    border-radius: 28px;
+    box-shadow: 0 20px 50px rgba(0,31,63,.25);
+  }
+
+  .contact-left h2 {
+    color: white;
+    font-size: 42px;
+    margin-bottom: 18px;
+  }
+
+  .contact-left p {
+    font-size: 17px;
+    line-height: 1.8;
+    opacity: .93;
+    margin-bottom: 25px;
+  }
+
+  .contact-highlights div {
+    background: rgba(255,255,255,.10);
+    padding: 14px 16px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  .contact-highlights i {
+    color: #ffc300;
+    margin-right: 10px;
+  }
+
+  .contact-form-card {
+    background: white;
+    padding: 40px;
+    border-radius: 28px;
+    box-shadow: 0 18px 45px rgba(0,0,0,.13);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .contact-form-card input,
+  .contact-form-card textarea {
+    width: 100%;
+    padding: 15px 18px;
+    border: 1px solid #d1d5db;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    font-size: 15px;
+    outline: none;
+    transition: .3s;
+  }
+
+  .contact-form-card textarea {
+    height: 150px;
+    resize: none;
+  }
+
+  .contact-form-card input:focus,
+  .contact-form-card textarea:focus {
+    border-color: #ffc300;
+    box-shadow: 0 0 0 4px rgba(255,195,0,.22);
+  }
+
+  .char-note {
+    display: block;
+    margin-top: -8px;
+    margin-bottom: 18px;
+    color: #666;
+    font-size: 13px;
+  }
+
+  .submit-btn {
+    border: none;
+    background: linear-gradient(135deg, #ffc300, #ffdd55);
+    color: #001f3f;
+    padding: 15px 28px;
+    border-radius: 50px;
+    font-weight: 900;
+    cursor: pointer;
+    font-size: 15px;
+    box-shadow: 0 12px 28px rgba(255,195,0,.35);
+    transition: .35s;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 35px rgba(255,195,0,.45);
+  }
+
+  .submit-btn:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+  }
+
+  .success-msg {
+    background: #d1e7dd;
+    color: #0f5132;
+    padding: 13px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    font-weight: 800;
+  }
+
+  .error-msg {
+    background: #f8d7da;
+    color: #842029;
+    padding: 13px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    font-weight: 800;
+  }
+
+  @media(max-width: 900px) {
+    .principal-card,
+    .vision-grid,
+    .contact-wrapper,
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .principal-hero h1 {
+      font-size: 42px;
+    }
+
+    .principal-message h2,
+    .section-heading h2,
+    .contact-left h2 {
+      font-size: 34px;
+    }
+  }
+</style>
+
+<script>
+  const principalContactForm = document.querySelector('.principal-contact-form');
+
+  if (principalContactForm) {
+    principalContactForm.addEventListener('submit', function(e) {
+      const name = this.name.value.trim();
+      const email = this.email.value.trim();
+      const phone = this.phone.value.trim();
+      const message = this.message.value.trim();
+
+      const nameRegex = /^[A-Za-z\s.]{3,60}$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const unsafeRegex = /<script|<\/script|javascript:|onerror=|onload=|<iframe|<\/iframe/gi;
+
+      if (!nameRegex.test(name)) {
+        alert('Full name should contain only letters and minimum 3 characters.');
+        e.preventDefault();
+        return;
+      }
+
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        e.preventDefault();
+        return;
+      }
+
+      if (!/^[0-9]{10}$/.test(phone)) {
+        alert('Mobile number must be exactly 10 digits.');
+        e.preventDefault();
+        return;
+      }
+
+      if (message.length < 5 || message.length > 1000 || unsafeRegex.test(message)) {
+        alert('Please enter a valid message. Unsafe script text is not allowed.');
+        e.preventDefault();
+        return;
+      }
+
+      const btn = this.querySelector('.submit-btn');
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+      btn.disabled = true;
+    });
+  }
+</script>
+
+<%- include('../partials/footer') %>

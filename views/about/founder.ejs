@@ -1,0 +1,334 @@
+<%- include('../partials/header') %>
+
+<section class="founder-hero">
+  <div class="founder-overlay">
+    <div class="founder-container">
+      <span class="founder-badge">Founder’s Vision</span>
+      <h1>Founder’s Message</h1>
+      <p><a href="/">Home</a> / Founder’s Message</p>
+    </div>
+  </div>
+</section>
+
+<section class="founder-section">
+  <div class="founder-container">
+
+    <div class="founder-card">
+
+      <div class="founder-image-box">
+        <div class="founder-photo">
+          <img src="<%= about && about.image ? about.image : '/images/founder.jpg' %>" alt="Founder Image">
+        </div>
+
+        <div class="founder-info">
+          <h3><%= about && about.author ? about.author : 'Founder' %></h3>
+          <p>Gyan Jyoti School</p>
+        </div>
+      </div>
+
+      <div class="founder-content">
+        <span class="section-tag">Message</span>
+
+        <h2>
+          <%= about && about.title ? about.title : "A Vision for Quality Education" %>
+        </h2>
+
+        <div class="quote-icon">
+          <i class="fas fa-quote-left"></i>
+        </div>
+
+        <p>
+          <%= about && about.content ? about.content : "Gyan Jyoti School was created by Nainpur Vikas Samiti with a vision to provide quality education and holistic development for every child. Our aim is to build confidence, discipline, values and academic excellence in students." %>
+        </p>
+
+        <p>
+          We believe that education is not only about books and examinations, but
+          also about character, creativity, confidence and social responsibility.
+          Gyan Jyoti School continues to work with dedication for the bright future
+          of every student.
+        </p>
+
+        <div class="founder-points">
+          <div><i class="fas fa-check-circle"></i> Quality Education</div>
+          <div><i class="fas fa-check-circle"></i> Character Building</div>
+          <div><i class="fas fa-check-circle"></i> Holistic Development</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="vision-strip">
+  <div class="founder-container">
+    <div class="vision-grid">
+      <div>
+        <i class="fas fa-school"></i>
+        <h3>Established With Purpose</h3>
+        <p>Built with a strong vision to provide meaningful education.</p>
+      </div>
+
+      <div>
+        <i class="fas fa-user-graduate"></i>
+        <h3>Student First Approach</h3>
+        <p>Every child is guided towards confidence and success.</p>
+      </div>
+
+      <div>
+        <i class="fas fa-award"></i>
+        <h3>Excellence & Values</h3>
+        <p>Academic growth with discipline, values and responsibility.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .founder-container {
+    width: 86%;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .founder-hero {
+    height: 430px;
+    background:
+      linear-gradient(rgba(0,31,63,.78), rgba(0,31,63,.78)),
+      url('/images/school-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .founder-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(255,195,0,.35) 2px, transparent 2px),
+      radial-gradient(circle, rgba(255,255,255,.14) 1px, transparent 1px);
+    background-size: 120px 120px, 75px 75px;
+    animation: founderDots 22s linear infinite;
+  }
+
+  @keyframes founderDots {
+    from { transform: translateY(0); }
+    to { transform: translateY(-120px); }
+  }
+
+  .founder-overlay {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .founder-badge,
+  .section-tag {
+    display: inline-block;
+    background: #ffc300;
+    color: #001f3f;
+    padding: 9px 22px;
+    border-radius: 40px;
+    font-weight: 900;
+    margin-bottom: 15px;
+  }
+
+  .founder-hero h1 {
+    color: #fff;
+    font-size: 64px;
+    font-weight: 900;
+    text-shadow: 0 15px 35px rgba(0,0,0,.38);
+  }
+
+  .founder-hero p,
+  .founder-hero a {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 8px;
+  }
+
+  .founder-section {
+    padding: 85px 0;
+    background: #f5f7fb;
+  }
+
+  .founder-card {
+    background: white;
+    border-radius: 30px;
+    padding: 45px;
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: 45px;
+    align-items: center;
+    box-shadow: 0 22px 55px rgba(0,0,0,.14);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .founder-card::before {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    background: rgba(255,195,0,.12);
+    border-radius: 50%;
+    top: -130px;
+    right: -110px;
+  }
+
+  .founder-image-box {
+    position: relative;
+    z-index: 2;
+  }
+
+  .founder-photo {
+    height: 420px;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 7px solid #ffc300;
+    box-shadow: 0 18px 45px rgba(0,31,63,.25);
+  }
+
+  .founder-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .7s;
+  }
+
+  .founder-photo:hover img {
+    transform: scale(1.08);
+  }
+
+  .founder-info {
+    background: #001f3f;
+    color: white;
+    padding: 22px;
+    border-radius: 20px;
+    margin: -45px 25px 0;
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    box-shadow: 0 14px 30px rgba(0,0,0,.25);
+  }
+
+  .founder-info h3 {
+    color: #ffc300;
+    font-size: 24px;
+    margin-bottom: 5px;
+  }
+
+  .founder-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .founder-content h2 {
+    color: #001f3f;
+    font-size: 44px;
+    line-height: 1.18;
+    margin-bottom: 18px;
+  }
+
+  .quote-icon {
+    font-size: 52px;
+    color: #ffc300;
+    margin-bottom: 8px;
+  }
+
+  .founder-content p {
+    color: #444;
+    font-size: 18px;
+    line-height: 1.85;
+    margin-bottom: 16px;
+  }
+
+  .founder-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 24px;
+  }
+
+  .founder-points div {
+    background: #001f3f;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 40px;
+    font-weight: 800;
+  }
+
+  .founder-points i {
+    color: #ffc300;
+    margin-right: 7px;
+  }
+
+  .vision-strip {
+    padding: 75px 0;
+    background: white;
+  }
+
+  .vision-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .vision-grid div {
+    background: #f5f7fb;
+    padding: 35px;
+    border-radius: 24px;
+    text-align: center;
+    border-top: 5px solid #ffc300;
+    box-shadow: 0 14px 35px rgba(0,0,0,.10);
+    transition: .35s;
+  }
+
+  .vision-grid div:hover {
+    transform: translateY(-10px);
+    background: #001f3f;
+  }
+
+  .vision-grid div:hover h3,
+  .vision-grid div:hover p {
+    color: white;
+  }
+
+  .vision-grid i {
+    color: #ffc300;
+    font-size: 42px;
+    margin-bottom: 18px;
+  }
+
+  .vision-grid h3 {
+    color: #001f3f;
+    font-size: 23px;
+    margin-bottom: 12px;
+  }
+
+  .vision-grid p {
+    color: #555;
+    line-height: 1.7;
+  }
+
+  @media(max-width: 900px) {
+    .founder-card,
+    .vision-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .founder-hero h1 {
+      font-size: 42px;
+    }
+
+    .founder-content h2 {
+      font-size: 34px;
+    }
+  }
+</style>
+
+<%- include('../partials/footer') %>

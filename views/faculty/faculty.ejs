@@ -1,0 +1,142 @@
+<%- include('../partials/header') %>
+
+<section class="faculty-hero">
+  <div class="faculty-overlay">
+    <div class="faculty-container">
+      <h1>Faculty</h1>
+      <p><a href="/">Home</a> / Faculty</p>
+    </div>
+  </div>
+</section>
+
+<section class="faculty-page">
+  <div class="faculty-container">
+
+    <div class="faculty-heading">
+      <h2>Top 5 Faculty Members</h2>
+      <p>Meet our highly qualified and experienced educators with strong subject expertise.</p>
+    </div>
+
+    <div class="faculty-grid">
+      <% if (topFaculties && topFaculties.length > 0) { %>
+        <% topFaculties.forEach(faculty => { %>
+          <div class="faculty-card">
+            <div class="faculty-image">
+              <img src="<%= faculty.image || '/images/faculty/default-teacher.jpg' %>" alt="<%= faculty.name %>">
+            </div>
+
+            <div class="faculty-details">
+              <h3><%= faculty.name %></h3>
+
+              <span class="faculty-role">
+                <%= faculty.role %>
+              </span>
+
+              <p>
+                <strong>Specialization:</strong>
+                <%= faculty.specialization || 'Subject Expert' %>
+              </p>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div class="empty-box">
+          Top faculty details will be updated soon.
+        </div>
+      <% } %>
+    </div>
+
+  </div>
+</section>
+
+<section class="faculty-page light-section">
+  <div class="faculty-container">
+
+    <div class="faculty-heading">
+      <h2>Section Incharges</h2>
+      <p>Our section incharges guide academic planning and student development across all levels.</p>
+    </div>
+
+    <div class="faculty-grid">
+      <% if (incharges && incharges.length > 0) { %>
+        <% incharges.forEach(faculty => { %>
+          <div class="faculty-card">
+            <div class="faculty-image">
+              <img src="<%= faculty.image || '/images/faculty/default-teacher.jpg' %>" alt="<%= faculty.name %>">
+            </div>
+
+            <div class="faculty-details">
+              <h3><%= faculty.name %></h3>
+
+              <span class="faculty-role">
+                <%= faculty.role %>
+              </span>
+
+              <p>
+                <strong>Department:</strong>
+                <%= faculty.department || 'Academic Department' %>
+              </p>
+
+              <p>
+                <strong>Specialization:</strong>
+                <%= faculty.specialization || 'Academic Coordination' %>
+              </p>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div class="empty-box">
+          Section incharge details will be updated soon.
+        </div>
+      <% } %>
+    </div>
+
+  </div>
+</section>
+
+<section class="faculty-page">
+  <div class="faculty-container">
+
+    <div class="faculty-heading">
+      <h2>Library & Computing Faculty</h2>
+      <p>Supporting reading culture, digital learning, computing skills and academic resources.</p>
+    </div>
+
+    <div class="faculty-grid small-grid">
+      <% if (libraryComputing && libraryComputing.length > 0) { %>
+        <% libraryComputing.forEach(faculty => { %>
+          <div class="faculty-card">
+            <div class="faculty-image">
+              <img src="<%= faculty.image || '/images/faculty/default-teacher.jpg' %>" alt="<%= faculty.name %>">
+            </div>
+
+            <div class="faculty-details">
+              <h3><%= faculty.name %></h3>
+
+              <span class="faculty-role">
+                <%= faculty.role %>
+              </span>
+
+              <p>
+                <strong>Specialization:</strong>
+                <%= faculty.specialization || 'Library & Computing' %>
+              </p>
+
+              <p>
+                <strong>Department:</strong>
+                <%= faculty.department || 'Academic Support' %>
+              </p>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div class="empty-box">
+          Library and computing faculty details will be updated soon.
+        </div>
+      <% } %>
+    </div>
+
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

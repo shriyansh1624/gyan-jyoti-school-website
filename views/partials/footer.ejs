@@ -1,0 +1,167 @@
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About School</h4>
+                <p>Gyan Jyoti International School is committed to providing quality education and holistic development of students.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/vision">About Us</a></li>
+                    <li><a href="#">Academics</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+              <% if (typeof schoolInfo !== 'undefined' && schoolInfo) { %>
+                    <p><i class="fas fa-map-marker-alt"></i> <%= schoolInfo.address %></p>
+                    <p><i class="fas fa-phone"></i> <%= schoolInfo.phone %></p>
+                    <p><i class="fas fa-envelope"></i> <%= schoolInfo.email %></p>
+                <% } %>
+            </div>
+
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="footer-social">
+                   <% if (typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.socialLinks) { %>
+    <a href="<%= schoolInfo.socialLinks.facebook %>" target="_blank"><i class="fab fa-facebook"></i></a>
+    <a href="<%= schoolInfo.socialLinks.instagram %>" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="<%= schoolInfo.socialLinks.youtube %>" target="_blank"><i class="fab fa-youtube"></i></a>
+    <a href="<%= schoolInfo.socialLinks.whatsapp %>" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Gyan Jyoti School. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+        </div>
+    </div>
+</footer>
+
+<!-- WhatsApp Float Button -->
+<% if (typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.socialLinks && schoolInfo.socialLinks.whatsapp) { %>
+    <a href="<%= schoolInfo.socialLinks.whatsapp %>" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+<% } %>
+
+<style>
+    .footer {
+        background: #001f3f;
+        color: white;
+        padding: 50px 0 20px;
+        margin-top: 60px;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .footer-section h4 {
+        color: #ffc300;
+        margin-bottom: 15px;
+        font-size: 15px;
+    }
+
+    .footer-section p {
+        font-size: 13px;
+        line-height: 1.8;
+        color: #ddd;
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-section ul li {
+        margin-bottom: 10px;
+    }
+
+    .footer-section ul li a {
+        color: #ddd;
+        text-decoration: none;
+        transition: 0.3s;
+        font-size: 13px;
+    }
+
+    .footer-section ul li a:hover {
+        color: #ffc300;
+    }
+
+    .footer-social {
+        display: flex;
+        gap: 15px;
+    }
+
+    .footer-social a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: #ffc300;
+        color: #001f3f;
+        border-radius: 50%;
+        transition: 0.3s;
+    }
+
+    .footer-social a:hover {
+        background: white;
+    }
+
+    .footer-bottom {
+        border-top: 1px solid #ffc300;
+        padding-top: 20px;
+        text-align: center;
+        font-size: 12px;
+        color: #ddd;
+    }
+
+    .footer-bottom a {
+        color: #ffc300;
+        text-decoration: none;
+    }
+
+    /* WhatsApp Float Button */
+    .whatsapp-float {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background: #25d366;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 28px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        animation: float 3s ease-in-out infinite;
+        z-index: 999;
+        transition: 0.3s;
+    }
+
+    .whatsapp-float:hover {
+        background: #20ba5a;
+        transform: scale(1.1);
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+</style>
+
+</body>
+</html>

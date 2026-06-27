@@ -1,0 +1,49 @@
+<%- include('partials/header', { schoolInfo: null }) %>
+
+<section class="error-page">
+  <div class="container">
+    <div class="error-box">
+      <h1 class="error-code"><%= typeof error !== 'undefined' && error && error.status ? error.status : 500 %></h1>
+      <h2 class="error-title"><%= typeof message !== 'undefined' ? message : 'Internal Server Error' %></h2>
+
+      <p class="error-desc">
+        Sorry — something went wrong while processing your request.
+      </p>
+
+      <% if (typeof error !== 'undefined' && error && error.stack) { %>
+        <details class="error-stack">
+          <summary>Technical details (only visible in development)</summary>
+          <pre><%= error.stack %></pre>
+        </details>
+      <% } %>
+
+      <div class="error-actions">
+        <a href="/" class="btn-primary">Go to Home</a>
+        <a href="/contact" class="btn-secondary">Contact Support</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .error-page { padding: 80px 0; background: #f9fafb; min-height: calc(100vh - 200px); display:flex; align-items:center; }
+  .error-box { background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.06); width:100%; max-width:900px; margin:0 auto; text-align:center; }
+  .error-code { font-size: 96px; color: #001f3f; margin-bottom: 10px; }
+  .error-title { font-size: 24px; color: #333; margin-bottom: 16px; }
+  .error-desc { color: #666; margin-bottom: 20px; font-size: 16px; }
+  .error-stack { text-align:left; margin: 20px 0; background:#1e1e1e; color:#e6e6e6; border-radius:6px; overflow:auto; }
+  .error-stack pre { padding: 16px; margin:0; white-space:pre-wrap; word-break:break-word; font-size:13px; }
+  .error-actions { margin-top: 20px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .btn-primary { background:#001f3f; color:#fff; padding:10px 18px; border-radius:6px; text-decoration:none; font-weight:600; }
+  .btn-primary:hover { background:#ffc300; color:#001f3f; }
+  .btn-secondary { background:#f1f1f1; color:#001f3f; padding:10px 18px; border-radius:6px; text-decoration:none; font-weight:600; border:1px solid #e0e0e0; }
+  .btn-secondary:hover { background:#e8e8e8; }
+  @media (max-width:768px) {
+    .error-code { font-size: 64px; }
+    .error-box { padding: 24px; }
+  }
+</style>
+
+<%- include('partials/footer', { schoolInfo: null }) %>
+
+
