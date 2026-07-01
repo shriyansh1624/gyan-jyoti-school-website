@@ -275,15 +275,21 @@
   }
 
   .home-carousel-content {
-    position: relative;
-    z-index: 5;
-    width: 92%;
-    max-width: 880px;
-    text-align: center;
-    color: white;
-    padding: 0 30px;
-  }
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 5 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 70px !important;
+  color: white !important;
 
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  transform: none !important;
+}
   .hero-mini-text {
     display: inline-block;
     background: #ffc300;
@@ -812,6 +818,35 @@
       flex-direction: column;
       align-items: center;
     }
+    @media (max-width: 600px) {
+  .home-carousel-content {
+    inset: 0 !important;
+    padding: 0 60px !important;
+    transform: none !important;
+  }
+
+  .home-carousel-content h2 {
+    font-size: 30px !important;
+    line-height: 1.15 !important;
+    margin: 10px 0 12px !important;
+    text-align: center !important;
+  }
+
+  .home-carousel-content p {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+    max-width: 260px !important;
+    margin: 0 auto 20px !important;
+    text-align: center !important;
+  }
+
+  .hero-mini-text {
+    max-width: 230px !important;
+    font-size: 12px !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+}
   }
 </style>
 
