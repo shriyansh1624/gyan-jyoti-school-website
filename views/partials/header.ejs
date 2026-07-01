@@ -256,6 +256,7 @@
       hamburgerBtn.addEventListener('click', function () {
         hamburgerBtn.classList.toggle('active');
         mainNavbar.classList.toggle('open');
+        document.body.classList.toggle('menu-open');
       });
     }
 
@@ -277,6 +278,7 @@
         const clickedInsideHeader = e.target.closest('.main-header');
         if (!clickedInsideHeader && mainNavbar && hamburgerBtn) {
           mainNavbar.classList.remove('open');
+          document.body.classList.remove('menu-open');
           hamburgerBtn.classList.remove('active');
           document.querySelectorAll('.dropdown.open').forEach(function (item) {
             item.classList.remove('open');
