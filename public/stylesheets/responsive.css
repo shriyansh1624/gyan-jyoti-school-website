@@ -791,4 +791,90 @@ table th,
     transition: none !important;
     scroll-behavior: auto !important;
   }
+  /* PHASE 1 MOBILE HERO FINAL FIX */
+
+@media (max-width: 900px) {
+  .home-carousel-content {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 55px !important;
+    text-align: center !important;
+  }
+
+  .home-carousel-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 520px !important;
+    min-height: 520px !important;
+  }
+
+  .home-carousel-content h2 {
+    font-size: 38px !important;
+    line-height: 1.15 !important;
+    margin-bottom: 14px !important;
+  }
+
+  .home-carousel-content p {
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 24px !important;
+  }
+
+  .hero-mini-text {
+    margin-bottom: 14px !important;
+  }
+
+  .home-carousel-btn.prev {
+    left: 14px !important;
+  }
+
+  .home-carousel-btn.next {
+    right: 14px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-carousel-content {
+    padding: 0 50px !important;
+  }
+
+  .home-carousel-item {
+    height: 500px !important;
+    min-height: 500px !important;
+  }
+
+  .home-carousel-content h2 {
+    font-size: 32px !important;
+  }
+
+  .home-carousel-content p {
+    font-size: 15px !important;
+  }
+
+  .home-primary-btn {
+    max-width: 230px !important;
+    width: auto !important;
+    padding: 13px 26px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .home-carousel-content {
+    padding: 0 48px !important;
+  }
+
+  .home-carousel-content h2 {
+    font-size: 28px !important;
+  }
+
+  .home-carousel-btn {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
 }
