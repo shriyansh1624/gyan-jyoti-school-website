@@ -1,377 +1,892 @@
 <%- include('partials/header') %>
 
-<section class="hero-section">
-  <div class="hero-container">
+<section class="home-hero-section">
+  <div class="home-hero-wrapper">
 
-    <div class="carousel">
-      <div class="carousel-inner" id="carouselInner">
+    <div class="home-carousel">
+      <div class="home-carousel-inner" id="carouselInner">
 
-        <% if (sliders && sliders.length > 0) { %>
+        <% if (typeof sliders !== 'undefined' && sliders && sliders.length > 0) { %>
           <% sliders.forEach((slider, index) => { %>
-            <div class="carousel-item <%= index === 0 ? 'active' : '' %>" style="background-image:url('<%= slider.image %>');">
-              <div class="carousel-overlay"></div>
+            <div
+              class="home-carousel-item <%= index === 0 ? 'active' : '' %>"
+              style="background-image:url('<%= slider.image %>');"
+            >
+              <div class="home-carousel-overlay"></div>
 
-              <div class="carousel-content">
+              <div class="home-carousel-content">
+                <span class="hero-mini-text">Welcome To Gyan Jyoti</span>
+
                 <h2><%= slider.title %></h2>
+
                 <p><%= slider.subtitle %></p>
 
-                <a href="<%= slider.buttonLink %>" class="btn-primary">
+                <a href="<%= slider.buttonLink %>" class="home-primary-btn">
                   <%= slider.buttonText %>
                 </a>
               </div>
             </div>
           <% }); %>
         <% } else { %>
-          <div class="carousel-item active" style="background-image:url('/images/school-bg.jpg');">
-            <div class="carousel-overlay"></div>
+          <div class="home-carousel-item active" style="background-image:url('/images/school-bg.jpg');">
+            <div class="home-carousel-overlay"></div>
 
-            <div class="carousel-content">
+            <div class="home-carousel-content">
+              <span class="hero-mini-text">Welcome To Gyan Jyoti</span>
+
               <h2>Welcome to Gyan Jyoti</h2>
+
               <p>Excellence in Education, Character & Culture</p>
-              <a href="/admission/process" class="btn-primary">Start Admission</a>
+
+              <a href="/admission/process" class="home-primary-btn">
+                Start Admission
+              </a>
             </div>
           </div>
         <% } %>
 
       </div>
 
-      <button class="carousel-btn prev" onclick="changeSlide(-1)">
+      <button class="home-carousel-btn prev" type="button" onclick="changeSlide(-1)" aria-label="Previous slide">
         <i class="fas fa-chevron-left"></i>
       </button>
 
-      <button class="carousel-btn next" onclick="changeSlide(1)">
+      <button class="home-carousel-btn next" type="button" onclick="changeSlide(1)" aria-label="Next slide">
         <i class="fas fa-chevron-right"></i>
       </button>
+
+      <div class="home-carousel-dots" id="carouselDots"></div>
     </div>
 
-    <div class="about-side-panel home-side-panel">
+    <aside class="home-side-panel">
+      <div class="home-panel-title">
+        <i class="fas fa-school"></i>
+        <span>Quick Links</span>
+      </div>
+
       <ul>
-        <li><a href="/about/vision">Vision & Mission</a></li>
-        <li><a href="/about/founder">Founder's Message</a></li>
-        <li><a href="/about/principal">Principal's Message</a></li>
-        <li><a href="/about/advantages">MIS Advantages</a></li>
-        <li><a href="/faculty">Staff Directory</a></li>
-        <li><a href="/about/accolades">Developer and Member</a></li>
-        <li><a href="/about/partners">Knowledge Partners</a></li>
-       <li><a href="/fees">Fees Structure</a></li>
+        <li><a href="/about/vision"><i class="fas fa-bullseye"></i> Vision & Mission</a></li>
+        <li><a href="/about/founder"><i class="fas fa-user-tie"></i> Founder's Message</a></li>
+        <li><a href="/about/principal"><i class="fas fa-chalkboard-teacher"></i> Principal's Message</a></li>
+        <li><a href="/about/advantages"><i class="fas fa-star"></i> MIS Advantages</a></li>
+        <li><a href="/faculty"><i class="fas fa-users"></i> Staff Directory</a></li>
+        <li><a href="/about/accolades"><i class="fas fa-code"></i> Developer and Member</a></li>
+        <li><a href="/about/partners"><i class="fas fa-handshake"></i> Knowledge Partners</a></li>
+        <li><a href="/fees"><i class="fas fa-file-invoice"></i> Fees Structure</a></li>
       </ul>
-    </div>
+    </aside>
 
   </div>
 </section>
 
-<section class="welcome-section">
+<section class="home-welcome-section">
   <div class="container">
-    <h2>Welcome to Gyan Jyoti</h2>
-    <p class="section-subtitle">Excellence in Education, Character & Culture</p>
+
+    <div class="home-section-heading">
+      <span>Our Strength</span>
+      <h2>Welcome to Gyan Jyoti</h2>
+      <p>
+        Excellence in Education, Character & Culture — shaping confident,
+        responsible and future-ready students.
+      </p>
+    </div>
 
     <div class="welcome-grid">
+
       <div class="welcome-box">
-        <i class="fas fa-graduation-cap"></i>
+        <div class="welcome-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+
         <h3>Quality Education</h3>
-        <p>We provide world-class education with modern teaching methods and updated curriculum.</p>
+        <p>
+          We provide strong academic learning with modern teaching methods,
+          discipline and regular assessment.
+        </p>
       </div>
 
       <div class="welcome-box">
-        <i class="fas fa-users"></i>
+        <div class="welcome-icon">
+          <i class="fas fa-users"></i>
+        </div>
+
         <h3>Expert Faculty</h3>
-        <p>Experienced and dedicated teachers committed to student success and development.</p>
+        <p>
+          Experienced and dedicated teachers guide students with personal attention
+          and concept clarity.
+        </p>
       </div>
 
       <div class="welcome-box">
-        <i class="fas fa-book"></i>
+        <div class="welcome-icon">
+          <i class="fas fa-book"></i>
+        </div>
+
         <h3>CBSE Curriculum</h3>
-        <p>Comprehensive curriculum with focus on holistic development and modern education.</p>
+        <p>
+          Comprehensive curriculum with focus on holistic development, academics
+          and co-curricular activities.
+        </p>
       </div>
 
       <div class="welcome-box">
-        <i class="fas fa-trophy"></i>
+        <div class="welcome-icon">
+          <i class="fas fa-trophy"></i>
+        </div>
+
         <h3>Achievements</h3>
-        <p>Excellence in academics and extracurricular activities with proud track record.</p>
+        <p>
+          Excellence in academics, sports and cultural activities with a proud
+          track record of success.
+        </p>
       </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="home-stats-section">
+  <div class="container">
+    <div class="stats-grid">
+
+      <div class="stat-card">
+        <h3>50+</h3>
+        <p>Years of Educational Service</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>100%</h3>
+        <p>Focus on Student Growth</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>4</h3>
+        <p>Major Academic Levels</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>24/7</h3>
+        <p>Digital Access & Support</p>
+      </div>
+
     </div>
   </div>
 </section>
 
-<section class="cta-section">
+<section class="home-cta-section">
   <div class="container">
-    <h2>Join Our Educational Community</h2>
-    <p>Enroll your child today and give them the best education</p>
-    <a href="/admission/process" class="btn-cta">START ADMISSION PROCESS</a>
+
+    <div class="home-cta-card">
+      <span>Admissions Open</span>
+
+      <h2>Join Our Educational Community</h2>
+
+      <p>
+        Enroll your child today and give them a learning environment built on
+        education, discipline and values.
+      </p>
+
+      <div class="cta-actions">
+        <a href="/admission/process" class="btn-cta">
+          Start Admission Process
+        </a>
+
+        <a href="/admission/enquiry" class="btn-outline">
+          Send Enquiry
+        </a>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <style>
-.hero-section {
-  padding: 0;
-  margin-top: -10px;
-}
+  .home-hero-section {
+    padding: 0;
+    margin: 0;
+    background: #eef2f7;
+  }
 
-.hero-container {
-  display: flex;
-  min-height: 520px;
-  position: relative;
-  overflow: hidden;
-}
+  .home-hero-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 310px;
+    min-height: 650px;
+    width: 100%;
+    overflow: hidden;
+  }
 
-.carousel {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-}
+  .home-carousel {
+    position: relative;
+    overflow: hidden;
+    min-width: 0;
+  }
 
-.carousel-inner {
-  display: flex;
-  transition: transform 0.5s ease;
-  width: 100%;
-}
+  .home-carousel-inner {
+    display: flex;
+    width: 100%;
+    transition: transform .55s ease;
+  }
 
-.carousel-item {
-  min-width: 100%;
-  background-size: cover;
-  background-position: center;
-  height: 520px;
-  display: flex;
-  align-items: center;
-  position: relative;
-}
+  .home-carousel-item {
+    min-width: 100%;
+    height: 650px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
 
-.carousel-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 31, 63, 0.45);
-}
+  .home-carousel-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(0,31,63,.88), rgba(0,31,63,.58), rgba(0,31,63,.30)),
+      radial-gradient(circle at top right, rgba(255,195,0,.20), transparent 35%);
+    z-index: 1;
+  }
 
-.carousel-content {
-  position: relative;
-  z-index: 2;
-  color: white;
-  padding: 60px;
-  max-width: 620px;
-}
+  .home-carousel-item::after {
+    content: "";
+    position: absolute;
+    inset: -120px 0 0 0;
+    background-image:
+      radial-gradient(circle, rgba(255,195,0,.28) 2px, transparent 2px),
+      radial-gradient(circle, rgba(255,255,255,.16) 1px, transparent 1px);
+    background-size: 135px 135px, 80px 80px;
+    animation: heroParticles 24s linear infinite;
+    z-index: 2;
+    pointer-events: none;
+  }
 
-.carousel-content h2 {
-  font-size: 56px;
-  margin-bottom: 20px;
-  color: #fff;
-  font-weight: 800;
-}
+  @keyframes heroParticles {
+    from { transform: translateY(0); }
+    to { transform: translateY(-130px); }
+  }
 
-.carousel-content p {
-  font-size: 20px;
-  margin-bottom: 30px;
-  line-height: 1.6;
-}
+  .home-carousel-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
 
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.45);
-  color: white;
-  border: none;
-  font-size: 24px;
-  padding: 15px;
-  cursor: pointer;
-  z-index: 5;
-}
+  .home-carousel-content {
+    position: relative;
+    z-index: 5;
+    width: 92%;
+    max-width: 880px;
+    text-align: center;
+    color: white;
+    padding: 0 30px;
+  }
 
-.carousel-btn.prev {
-  left: 20px;
-}
+  .hero-mini-text {
+    display: inline-block;
+    background: #ffc300;
+    color: #001f3f;
+    padding: 9px 22px;
+    border-radius: 50px;
+    font-weight: 900;
+    margin-bottom: 18px;
+    box-shadow: 0 12px 28px rgba(255,195,0,.30);
+  }
 
-.carousel-btn.next {
-  right: 20px;
-}
+  .home-carousel-content h2 {
+    color: white;
+    font-size: 68px;
+    line-height: 1.08;
+    font-weight: 900;
+    margin: 0 0 18px;
+    text-shadow: 0 18px 45px rgba(0,0,0,.45);
+  }
 
-.home-side-panel {
-  width: 330px;
-  min-height: 520px;
-  border-radius: 0;
-  flex-shrink: 0;
-}
+  .home-carousel-content h2::after {
+    content: "";
+    display: block;
+    width: 130px;
+    height: 5px;
+    background: linear-gradient(90deg, #ffc300, #ffdf57);
+    border-radius: 50px;
+    margin: 24px auto 0;
+  }
 
-.welcome-section {
-  padding: 70px 0;
-  background: #f5f5f5;
-}
+  .home-carousel-content p {
+    max-width: 760px;
+    margin: 0 auto 34px;
+    font-size: 22px;
+    line-height: 1.7;
+    color: white;
+  }
 
-.welcome-section h2 {
-  text-align: center;
-  font-size: 42px;
-  color: #001f3f;
-  margin-bottom: 10px;
-}
+  .home-primary-btn,
+  .btn-cta,
+  .btn-outline {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 900;
+    border-radius: 50px;
+    transition: .35s;
+  }
 
-.section-subtitle {
-  text-align: center;
-  color: #666;
-  margin-bottom: 45px;
-  font-size: 18px;
-}
+  .home-primary-btn,
+  .btn-cta {
+    background: linear-gradient(135deg, #ffc300, #ffdf57);
+    color: #001f3f;
+    padding: 16px 38px;
+    box-shadow: 0 16px 38px rgba(255,195,0,.36);
+  }
 
-.welcome-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-}
+  .home-primary-btn:hover,
+  .btn-cta:hover {
+    background: white;
+    color: #001f3f;
+    transform: translateY(-5px);
+    text-decoration: none;
+  }
 
-.welcome-box {
-  background: white;
-  padding: 35px;
-  border-radius: 16px;
-  text-align: center;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-  transition: 0.3s;
-}
+  .btn-outline {
+    border: 2px solid #ffc300;
+    color: white;
+    padding: 14px 34px;
+  }
 
-.welcome-box:hover {
-  transform: translateY(-10px);
-}
+  .btn-outline:hover {
+    background: #ffc300;
+    color: #001f3f;
+    text-decoration: none;
+    transform: translateY(-5px);
+  }
 
-.welcome-box i {
-  font-size: 48px;
-  color: #ffc300;
-  margin-bottom: 20px;
-}
+  .home-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    border: 2px solid rgba(255,255,255,.45);
+    background: rgba(0,31,63,.72);
+    color: white;
+    border-radius: 14px;
+    cursor: pointer;
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    transition: .3s;
+  }
 
-.cta-section {
-  background: linear-gradient(135deg, #001f3f, #003d7a);
-  color: white;
-  padding: 70px 0;
-  text-align: center;
-}
+  .home-carousel-btn:hover {
+    background: #ffc300;
+    color: #001f3f;
+  }
 
-.cta-section h2 {
-  font-size: 40px;
-  margin-bottom: 15px;
-  color: white;
-}
+  .home-carousel-btn.prev {
+    left: 26px;
+  }
 
-.cta-section p {
-  font-size: 18px;
-  margin-bottom: 30px;
-}
+  .home-carousel-btn.next {
+    right: 26px;
+  }
 
-@media(max-width: 900px) {
-  .hero-container {
-    flex-direction: column;
+  .home-carousel-dots {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 12;
+    display: flex;
+    gap: 10px;
+  }
+
+  .home-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #ffc300;
+    background: transparent;
+    cursor: pointer;
+    transition: .3s;
+  }
+
+  .home-dot.active {
+    background: #ffc300;
+    width: 34px;
+    border-radius: 20px;
   }
 
   .home-side-panel {
+    min-height: 650px;
+    background: linear-gradient(180deg, #001f3f, #003d7a);
+    border-left: 5px solid #ffc300;
+    box-shadow: -15px 22px 45px rgba(0,0,0,.28);
+    padding: 32px 0;
+    overflow: hidden;
+  }
+
+  .home-panel-title {
+    width: 84%;
+    margin: 0 auto 24px;
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.16);
+    color: #ffc300;
+    padding: 16px;
+    border-radius: 18px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .home-side-panel ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .home-side-panel li {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .home-side-panel li::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 0;
+    background: #ffc300;
+    transition: .35s;
+  }
+
+  .home-side-panel li:hover::before {
     width: 100%;
-    min-height: auto;
   }
 
-  .carousel-content h2 {
-    font-size: 38px;
+  .home-side-panel li a {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .35px;
+    transition: .35s;
   }
 
-}
-.home-side-panel{
-  width:330px;
-  min-height:520px;
-  flex-shrink:0;
-  background:linear-gradient(180deg,#001f3f,#00315f);
-  padding:35px 0;
-  box-shadow:-12px 18px 40px rgba(0,0,0,0.25);
-  animation:homePanelSlide .8s ease-out both;
-  overflow:hidden;
-}
-
-.home-side-panel::before{
-  content:"";
-  display:block;
-  width:78%;
-  height:4px;
-  background:#ffc300;
-  margin:0 auto 25px;
-  border-radius:30px;
-}
-
-.home-side-panel ul{
-  list-style:none;
-  padding:0;
-  margin:0;
-}
-
-.home-side-panel li{
-  position:relative;
-  overflow:hidden;
-}
-
-.home-side-panel li::before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:0;
-  width:0;
-  height:100%;
-  background:#ffc300;
-  transition:.35s ease;
-}
-
-.home-side-panel li:hover::before{
-  width:100%;
-}
-
-.home-side-panel li a{
-  display:block;
-  position:relative;
-  z-index:2;
-  padding:17px 32px;
-  color:#fff !important;
-  text-transform:uppercase;
-  font-weight:600;
-  letter-spacing:.4px;
-  font-size:15px;
-  text-decoration:none;
-  transition:.35s ease;
-}
-
-.home-side-panel li:hover a{
-  color:#001f3f !important;
-  padding-left:45px;
-}
-
-@keyframes homePanelSlide{
-  from{
-    opacity:0;
-    transform:translateX(120px);
+  .home-side-panel li a i {
+    color: #ffc300;
+    min-width: 18px;
+    transition: .35s;
   }
-  to{
-    opacity:1;
-    transform:translateX(0);
-  }
-}
 
-@media(max-width:900px){
-  .home-side-panel{
-    width:100%;
-    min-height:auto;
+  .home-side-panel li:hover a,
+  .home-side-panel li:hover a i {
+    color: #001f3f;
   }
-}
+
+  .home-side-panel li:hover a {
+    padding-left: 34px;
+  }
+
+  .home-welcome-section {
+    padding: 85px 0;
+    background: #f5f7fb;
+  }
+
+  .home-section-heading {
+    text-align: center;
+    margin-bottom: 55px;
+  }
+
+  .home-section-heading span {
+    display: inline-block;
+    background: #ffc300;
+    color: #001f3f;
+    padding: 9px 22px;
+    border-radius: 50px;
+    font-weight: 900;
+    margin-bottom: 15px;
+  }
+
+  .home-section-heading h2 {
+    color: #001f3f;
+    font-size: 46px;
+    font-weight: 900;
+    margin-bottom: 14px;
+  }
+
+  .home-section-heading p {
+    max-width: 820px;
+    margin: auto;
+    color: #555;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .welcome-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+
+  .welcome-box {
+    background: white;
+    padding: 34px 24px;
+    border-radius: 26px;
+    text-align: center;
+    box-shadow: 0 18px 45px rgba(0,0,0,.11);
+    border-top: 5px solid #ffc300;
+    transition: .35s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .welcome-box::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    background: rgba(255,195,0,.10);
+    border-radius: 50%;
+    top: -120px;
+    right: -120px;
+    transition: .45s;
+  }
+
+  .welcome-box:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 28px 60px rgba(0,0,0,.16);
+  }
+
+  .welcome-box:hover::after {
+    transform: scale(1.5);
+  }
+
+  .welcome-box > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  .welcome-icon {
+    width: 78px;
+    height: 78px;
+    background: #001f3f;
+    color: #ffc300;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 34px;
+  }
+
+  .welcome-box h3 {
+    color: #001f3f;
+    font-size: 23px;
+    margin-bottom: 12px;
+  }
+
+  .welcome-box p {
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .home-stats-section {
+    padding: 75px 0;
+    background: white;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, #001f3f, #004481);
+    color: white;
+    text-align: center;
+    padding: 38px 24px;
+    border-radius: 26px;
+    box-shadow: 0 18px 45px rgba(0,31,63,.22);
+  }
+
+  .stat-card h3 {
+    color: #ffc300;
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+
+  .stat-card p {
+    color: white;
+    line-height: 1.5;
+    font-weight: 700;
+  }
+
+  .home-cta-section {
+    padding: 85px 0;
+    background:
+      linear-gradient(135deg, rgba(0,31,63,.96), rgba(0,68,129,.94)),
+      url('/images/school-bg.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .home-cta-card {
+    text-align: center;
+    color: white;
+    max-width: 980px;
+    margin: auto;
+  }
+
+  .home-cta-card span {
+    display: inline-block;
+    background: #ffc300;
+    color: #001f3f;
+    padding: 9px 22px;
+    border-radius: 50px;
+    font-weight: 900;
+    margin-bottom: 16px;
+  }
+
+  .home-cta-card h2 {
+    color: white;
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .home-cta-card p {
+    color: white;
+    max-width: 780px;
+    margin: 0 auto 28px;
+    line-height: 1.8;
+    font-size: 18px;
+  }
+
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 1100px) {
+    .home-hero-wrapper {
+      grid-template-columns: 1fr 280px;
+    }
+
+    .home-carousel-content h2 {
+      font-size: 56px;
+    }
+
+    .welcome-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .home-hero-wrapper {
+      grid-template-columns: 1fr;
+    }
+
+    .home-carousel-item {
+      height: 540px;
+    }
+
+    .home-side-panel {
+      min-height: auto;
+      border-left: none;
+      border-top: 5px solid #ffc300;
+      padding: 24px 0;
+    }
+
+    .home-side-panel ul {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .home-carousel-content h2 {
+      font-size: 44px;
+    }
+
+    .home-carousel-content p {
+      font-size: 18px;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .home-carousel-item {
+      height: 500px;
+      background-position: center;
+    }
+
+    .home-carousel-content {
+      width: 100%;
+      padding: 0 18px;
+    }
+
+    .hero-mini-text {
+      font-size: 12px;
+      padding: 8px 16px;
+    }
+
+    .home-carousel-content h2 {
+      font-size: 34px;
+      line-height: 1.15;
+    }
+
+    .home-carousel-content p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 26px;
+    }
+
+    .home-primary-btn,
+    .btn-cta,
+    .btn-outline {
+      width: 100%;
+      max-width: 290px;
+      text-align: center;
+      padding: 14px 24px;
+    }
+
+    .home-carousel-btn {
+      width: 42px;
+      height: 42px;
+      font-size: 18px;
+      border-radius: 10px;
+    }
+
+    .home-carousel-btn.prev {
+      left: 10px;
+    }
+
+    .home-carousel-btn.next {
+      right: 10px;
+    }
+
+    .home-side-panel ul {
+      grid-template-columns: 1fr;
+    }
+
+    .home-side-panel li a {
+      font-size: 12px;
+      padding: 15px 22px;
+    }
+
+    .home-section-heading h2,
+    .home-cta-card h2 {
+      font-size: 32px;
+    }
+
+    .home-section-heading p,
+    .home-cta-card p {
+      font-size: 15px;
+    }
+
+    .welcome-grid,
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .home-welcome-section,
+    .home-stats-section,
+    .home-cta-section {
+      padding: 60px 0;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
 </style>
 
 <script>
-let slideIndex = 0;
+  let slideIndex = 0;
+  let slideTimer;
 
-function changeSlide(n) {
-  showSlide(slideIndex += n);
-}
+  function getSlides() {
+    return document.querySelectorAll('.home-carousel-item');
+  }
 
-function showSlide(n) {
-  let slides = document.querySelectorAll('.carousel-item');
-  if (!slides.length) return;
+  function buildDots() {
+    const dotsWrapper = document.getElementById('carouselDots');
+    const slides = getSlides();
 
-  if (n >= slides.length) slideIndex = 0;
-  if (n < 0) slideIndex = slides.length - 1;
+    if (!dotsWrapper || !slides.length) return;
 
-  let carousel = document.getElementById('carouselInner');
-  carousel.style.transform = `translateX(-${slideIndex * 100}%)`;
-}
+    dotsWrapper.innerHTML = '';
 
-setInterval(() => changeSlide(1), 5000);
+    slides.forEach(function (_, index) {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'home-dot' + (index === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to slide ' + (index + 1));
+      dot.onclick = function () {
+        goToSlide(index);
+      };
+      dotsWrapper.appendChild(dot);
+    });
+  }
+
+  function updateDots() {
+    const dots = document.querySelectorAll('.home-dot');
+
+    dots.forEach(function (dot, index) {
+      dot.classList.toggle('active', index === slideIndex);
+    });
+  }
+
+  function showSlide(n) {
+    const slides = getSlides();
+    const carousel = document.getElementById('carouselInner');
+
+    if (!slides.length || !carousel) return;
+
+    if (n >= slides.length) slideIndex = 0;
+    if (n < 0) slideIndex = slides.length - 1;
+
+    carousel.style.transform = 'translateX(-' + (slideIndex * 100) + '%)';
+    updateDots();
+  }
+
+  function changeSlide(n) {
+    showSlide(slideIndex += n);
+    resetTimer();
+  }
+
+  function goToSlide(index) {
+    slideIndex = index;
+    showSlide(slideIndex);
+    resetTimer();
+  }
+
+  function resetTimer() {
+    clearInterval(slideTimer);
+    slideTimer = setInterval(function () {
+      changeSlide(1);
+    }, 5000);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    buildDots();
+    showSlide(0);
+    resetTimer();
+  });
 </script>
 
 <%- include('partials/footer') %>
