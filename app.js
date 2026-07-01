@@ -7,9 +7,6 @@ var session = require('express-session');
 var helmet = require('helmet');
 var rateLimit = require('express-rate-limit');
 var mongoSanitize = require('express-mongo-sanitize');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-const mongoSanitize = require('express-mongo-sanitize');
 const hpp = require('hpp');
 const compression = require('compression');
 require('dotenv').config();
@@ -90,7 +87,6 @@ app.use(session({
     maxAge: 24 * 60 * 60 * 1000
   }
 }));
-
 
 app.use(express.static(path.join(__dirname, 'public')));
 
