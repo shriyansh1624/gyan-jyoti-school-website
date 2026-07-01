@@ -13,102 +13,57 @@
 
 <body>
 
-<!-- TOP HEADER -->
 <div class="top-header">
   <div class="container top-header-container">
-
     <div class="top-header-left">
-      <span>
-        <i class="fas fa-envelope"></i>
-        <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.email ? schoolInfo.email : 'info@gyanjyoti.com' %>
-      </span>
-
-      <span>
-        <i class="fas fa-phone"></i>
-        <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.phone ? schoolInfo.phone : '+91 98765-43210' %>
-      </span>
+      <span><i class="fas fa-envelope"></i> <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.email ? schoolInfo.email : 'info@gyanjyoti.com' %></span>
+      <span><i class="fas fa-phone"></i> <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.phone ? schoolInfo.phone : '+91 98765-43210' %></span>
     </div>
 
     <div class="top-header-right">
       <% if (typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.socialLinks) { %>
-
-        <% if (schoolInfo.socialLinks.facebook) { %>
-          <a href="<%= schoolInfo.socialLinks.facebook %>" target="_blank" aria-label="Facebook">
-            <i class="fab fa-facebook"></i>
-          </a>
-        <% } %>
-
-        <% if (schoolInfo.socialLinks.instagram) { %>
-          <a href="<%= schoolInfo.socialLinks.instagram %>" target="_blank" aria-label="Instagram">
-            <i class="fab fa-instagram"></i>
-          </a>
-        <% } %>
-
-        <% if (schoolInfo.socialLinks.youtube) { %>
-          <a href="<%= schoolInfo.socialLinks.youtube %>" target="_blank" aria-label="YouTube">
-            <i class="fab fa-youtube"></i>
-          </a>
-        <% } %>
-
-        <% if (schoolInfo.socialLinks.whatsapp) { %>
-          <a href="<%= schoolInfo.socialLinks.whatsapp %>" target="_blank" aria-label="WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-          </a>
-        <% } %>
-
+        <% if (schoolInfo.socialLinks.facebook) { %><a href="<%= schoolInfo.socialLinks.facebook %>" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a><% } %>
+        <% if (schoolInfo.socialLinks.instagram) { %><a href="<%= schoolInfo.socialLinks.instagram %>" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a><% } %>
+        <% if (schoolInfo.socialLinks.youtube) { %><a href="<%= schoolInfo.socialLinks.youtube %>" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a><% } %>
+        <% if (schoolInfo.socialLinks.whatsapp) { %><a href="<%= schoolInfo.socialLinks.whatsapp %>" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a><% } %>
       <% } else { %>
         <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
         <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
       <% } %>
     </div>
-
   </div>
 </div>
 
-<!-- MAIN HEADER -->
 <header class="main-header">
   <div class="container main-header-container">
 
     <a href="/" class="logo-section">
-      <img
-        src="<%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.logo ? schoolInfo.logo : '/images/logo.png' %>"
-        alt="Gyan Jyoti School Logo"
-        class="school-logo"
-      >
-
+      <img src="<%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.logo ? schoolInfo.logo : '/images/logo.png' %>" alt="Gyan Jyoti School Logo" class="school-logo">
       <div class="school-info">
-        <h1>
-          <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.schoolName ? schoolInfo.schoolName : 'Gyan Jyoti' %>
-        </h1>
-
-        <p>
-          <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.tagline ? schoolInfo.tagline : 'International School' %>
-        </p>
-
-        <small>
-          <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.affiliation ? schoolInfo.affiliation : 'CBSE Affiliation No. 1030842' %>
-        </small>
+        <h1><%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.schoolName ? schoolInfo.schoolName : 'Gyan Jyoti' %></h1>
+        <p><%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.tagline ? schoolInfo.tagline : 'International School' %></p>
+        <small><%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.affiliation ? schoolInfo.affiliation : 'CBSE Affiliation No. 1030842' %></small>
       </div>
     </a>
 
     <button class="hamburger" type="button" id="hamburgerBtn" aria-label="Open navigation menu">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </button>
 
     <nav class="navbar" id="mainNavbar">
-      <ul class="nav-menu" id="navMenu">
+      <div class="mobile-nav-head">
+        <div class="mobile-brand">
+          <img src="<%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.logo ? schoolInfo.logo : '/images/logo.png' %>" alt="Gyan Jyoti Logo">
+          <div><h3>Gyan Jyoti</h3><p>International School</p></div>
+        </div>
+      </div>
 
-        <li>
-          <a href="/" class="<%= typeof active !== 'undefined' && active === 'home' ? 'active' : '' %>">HOME</a>
-        </li>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="/" class="<%= typeof active !== 'undefined' && active === 'home' ? 'active' : '' %>">HOME</a></li>
 
         <li class="dropdown">
-          <button type="button" class="nav-dropdown-btn <%= typeof active !== 'undefined' && active === 'about' ? 'active' : '' %>">
-            ABOUT US <i class="fas fa-chevron-down"></i>
-          </button>
+          <button type="button" class="nav-dropdown-btn <%= typeof active !== 'undefined' && active === 'about' ? 'active' : '' %>">ABOUT US <i class="fas fa-chevron-down"></i></button>
           <ul class="dropdown-menu">
             <li><a href="/about">ABOUT SCHOOL</a></li>
             <li><a href="/about/vision">VISION & MISSION</a></li>
@@ -120,9 +75,7 @@
         </li>
 
         <li class="dropdown">
-          <button type="button" class="nav-dropdown-btn <%= typeof active !== 'undefined' && active === 'academics' ? 'active' : '' %>">
-            ACADEMICS <i class="fas fa-chevron-down"></i>
-          </button>
+          <button type="button" class="nav-dropdown-btn <%= typeof active !== 'undefined' && active === 'academics' ? 'active' : '' %>">ACADEMICS <i class="fas fa-chevron-down"></i></button>
           <ul class="dropdown-menu">
             <li><a href="/academics">ACADEMICS OVERVIEW</a></li>
             <li><a href="/academics/10th-toppers">10TH BOARD TOPPERS</a></li>
@@ -133,9 +86,7 @@
         </li>
 
         <li class="dropdown">
-          <button type="button" class="nav-dropdown-btn <%= typeof active !== 'undefined' && active === 'events' ? 'active' : '' %>">
-            EVENTS <i class="fas fa-chevron-down"></i>
-          </button>
+          <button type="button" class="nav-dropdown-btn <%= typeof active !== 'undefined' && active === 'events' ? 'active' : '' %>">EVENTS <i class="fas fa-chevron-down"></i></button>
           <ul class="dropdown-menu">
             <li><a href="/events/fun-fiesta">FUN & FIESTA</a></li>
             <li><a href="/events/sports">SPORTS</a></li>
@@ -145,9 +96,7 @@
         </li>
 
         <li class="dropdown">
-          <button type="button" class="nav-dropdown-btn <%= typeof active !== 'undefined' && active === 'admission' ? 'active' : '' %>">
-            ADMISSION <i class="fas fa-chevron-down"></i>
-          </button>
+          <button type="button" class="nav-dropdown-btn <%= typeof active !== 'undefined' && active === 'admission' ? 'active' : '' %>">ADMISSION <i class="fas fa-chevron-down"></i></button>
           <ul class="dropdown-menu">
             <li><a href="/admission/process">ADMISSION PROCESS</a></li>
             <li><a href="/admission/enquiry">ENQUIRY FORM</a></li>
@@ -160,90 +109,20 @@
 
         <li><a href="/faculty" class="<%= typeof active !== 'undefined' && active === 'faculty' ? 'active' : '' %>">FACULTY</a></li>
         <li><a href="/contact" class="<%= typeof active !== 'undefined' && active === 'contact' ? 'active' : '' %>">CONTACT</a></li>
-
       </ul>
     </nav>
-
   </div>
 </header>
 
 <style>
-  * { box-sizing: border-box; }
-  html, body { width: 100%; overflow-x: hidden; }
-  body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; background: #fff; }
-  .container { width: 86%; max-width: 1200px; margin: 0 auto; }
-
-  .top-header { background: #001f3f; color: #fff; font-size: 13px; padding: 10px 0; }
-  .top-header-container { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-  .top-header-left { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
-  .top-header-left span { display: inline-flex; align-items: center; gap: 8px; }
-  .top-header-left i, .top-header-right i { color: #ffc300; }
-  .top-header-right { display: flex; align-items: center; gap: 16px; }
-  .top-header-right a { color: #fff; text-decoration: none; transition: .3s; }
-  .top-header-right a:hover { color: #ffc300; }
-
-  .main-header { position: sticky; top: 0; z-index: 99999; background: #fff; box-shadow: 0 8px 28px rgba(0,0,0,.10); }
-  .main-header-container { display: flex; align-items: center; justify-content: space-between; gap: 22px; min-height: 95px; position: relative; }
-  .logo-section { display: flex; align-items: center; gap: 14px; min-width: 290px; text-decoration: none; }
-  .school-logo { width: 78px; height: 78px; object-fit: contain; background: #fff; border-radius: 50%; padding: 3px; filter: drop-shadow(0 8px 14px rgba(0,0,0,.14)); flex-shrink: 0; }
-  .school-info h1 { margin: 0; color: #8b0000; font-size: 25px; font-weight: 900; line-height: 1.1; }
-  .school-info p { margin: 4px 0 0; color: #333; font-size: 13px; font-weight: 700; }
-  .school-info small { display: block; margin-top: 2px; color: #666; font-size: 11px; }
-
-  .navbar { flex: 1; display: flex; justify-content: flex-end; }
-  .nav-menu { display: flex; align-items: center; justify-content: flex-end; list-style: none; gap: 0; margin: 0; padding: 0; }
-  .nav-menu > li { position: relative; list-style: none; }
-  .nav-menu > li > a, .nav-dropdown-btn { display: flex; align-items: center; gap: 6px; padding: 15px 13px; color: #222; background: transparent; border: none; text-decoration: none; font-size: 12px; font-weight: 900; text-transform: uppercase; cursor: pointer; white-space: nowrap; transition: .3s; font-family: inherit; }
-  .nav-menu > li > a:hover, .nav-menu > li > a.active, .nav-dropdown-btn:hover, .nav-dropdown-btn.active, .dropdown:hover > .nav-dropdown-btn { background: #ffc300; color: #001f3f; text-decoration: none; }
-  .dropdown-menu { position: absolute; top: 100%; left: 0; min-width: 260px; background: #001f3f; list-style: none; padding: 0; margin: 0; display: none; border-top: 4px solid #ffc300; border-radius: 0 0 12px 12px; overflow: hidden; box-shadow: 0 18px 42px rgba(0,0,0,.32); z-index: 999999; }
-  .dropdown:hover > .dropdown-menu { display: block; }
-  .dropdown-menu li a { display: block; padding: 14px 20px; color: #fff; background: #001f3f; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.12); font-size: 12px; font-weight: 800; text-transform: uppercase; white-space: nowrap; transition: .3s; }
-  .dropdown-menu li:last-child a { border-bottom: none; }
-  .dropdown-menu li a:hover { background: #ffc300; color: #001f3f; padding-left: 30px; }
-
-  .hamburger { display: none; width: 46px; height: 42px; border: none; background: #001f3f; border-radius: 10px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; cursor: pointer; flex-shrink: 0; }
-  .hamburger span { width: 24px; height: 3px; background: #ffc300; border-radius: 10px; transition: .3s; }
-  .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-  .hamburger.active span:nth-child(2) { opacity: 0; }
-  .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-  @media (max-width: 1100px) {
-    .main-header-container { width: 94%; }
-    .logo-section { min-width: 250px; }
-    .nav-menu > li > a, .nav-dropdown-btn { padding: 14px 9px; font-size: 11px; }
-  }
-
-  @media (max-width: 900px) {
-    .container { width: 92%; }
-    .top-header-container { flex-direction: column; text-align: center; gap: 8px; }
-    .top-header-left { justify-content: center; gap: 10px; font-size: 12px; }
-    .main-header-container { min-height: 82px; width: 94%; }
-    .logo-section { min-width: auto; flex: 1; gap: 10px; }
-    .school-logo { width: 62px; height: 62px; }
-    .school-info h1 { font-size: 20px; }
-    .school-info p { font-size: 11px; }
-    .school-info small { font-size: 9px; }
-    .hamburger { display: flex; }
-    .navbar { position: absolute; top: 100%; left: 0; right: 0; display: none; width: 100%; background: #fff; border-top: 3px solid #ffc300; box-shadow: 0 18px 35px rgba(0,0,0,.15); max-height: calc(100vh - 100px); overflow-y: auto; }
-    .navbar.open { display: block; }
-    .nav-menu { display: block; width: 100%; padding: 8px 0; }
-    .nav-menu > li { width: 100%; border-bottom: 1px solid #eef2f7; }
-    .nav-menu > li > a, .nav-dropdown-btn { width: 100%; justify-content: space-between; padding: 15px 18px; font-size: 13px; text-align: left; }
-    .dropdown-menu { position: static; display: none; width: 100%; min-width: 100%; border-top: none; border-radius: 0; box-shadow: none; }
-    .dropdown.open > .dropdown-menu { display: block; }
-    .dropdown:hover > .dropdown-menu { display: none; }
-    .dropdown.open:hover > .dropdown-menu { display: block; }
-    .dropdown-menu li a { padding: 13px 28px; font-size: 12px; white-space: normal; }
-  }
-
-  @media (max-width: 480px) {
-    .top-header { display: none; }
-    .main-header-container { min-height: 76px; }
-    .school-logo { width: 54px; height: 54px; }
-    .school-info h1 { font-size: 18px; }
-    .school-info p { font-size: 10px; }
-    .school-info small { display: none; }
-  }
+  *{box-sizing:border-box}html,body{width:100%;overflow-x:hidden}body{margin:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;color:#333;background:#fff}.container{width:86%;max-width:1200px;margin:0 auto}
+  .top-header{background:#001f3f;color:#fff;font-size:13px;padding:10px 0}.top-header-container{display:flex;align-items:center;justify-content:space-between;gap:20px}.top-header-left{display:flex;align-items:center;gap:28px;flex-wrap:wrap}.top-header-left span{display:inline-flex;align-items:center;gap:8px}.top-header-left i,.top-header-right i{color:#ffc300}.top-header-right{display:flex;align-items:center;gap:16px}.top-header-right a{color:#fff;text-decoration:none;transition:.3s}.top-header-right a:hover{color:#ffc300}
+  .main-header{position:sticky;top:0;z-index:99999;background:#fff;box-shadow:0 8px 28px rgba(0,0,0,.10)}.main-header-container{display:flex;align-items:center;justify-content:space-between;gap:22px;min-height:95px;position:relative}.logo-section{display:flex;align-items:center;gap:14px;min-width:290px;text-decoration:none}.school-logo{width:78px;height:78px;object-fit:contain;background:#fff;border-radius:50%;padding:3px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.14));flex-shrink:0}.school-info h1{margin:0;color:#8b0000;font-size:25px;font-weight:900;line-height:1.1}.school-info p{margin:4px 0 0;color:#333;font-size:13px;font-weight:700}.school-info small{display:block;margin-top:2px;color:#666;font-size:11px}
+  .navbar{flex:1;display:flex;justify-content:flex-end}.mobile-nav-head{display:none}.nav-menu{display:flex;align-items:center;justify-content:flex-end;list-style:none;gap:0;margin:0;padding:0}.nav-menu>li{position:relative;list-style:none}.nav-menu>li>a,.nav-dropdown-btn{display:flex;align-items:center;gap:6px;padding:15px 13px;color:#222;background:transparent;border:none;text-decoration:none;font-size:12px;font-weight:900;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:.3s;font-family:inherit}.nav-menu>li>a:hover,.nav-menu>li>a.active,.nav-dropdown-btn:hover,.nav-dropdown-btn.active,.dropdown:hover>.nav-dropdown-btn{background:#ffc300;color:#001f3f;text-decoration:none}.dropdown-menu{position:absolute;top:100%;left:0;min-width:260px;background:#001f3f;list-style:none;padding:0;margin:0;display:none;border-top:4px solid #ffc300;border-radius:0 0 12px 12px;overflow:hidden;box-shadow:0 18px 42px rgba(0,0,0,.32);z-index:999999}.dropdown:hover>.dropdown-menu{display:block}.dropdown-menu li a{display:block;padding:14px 20px;color:#fff;background:#001f3f;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.12);font-size:12px;font-weight:800;text-transform:uppercase;white-space:nowrap;transition:.3s}.dropdown-menu li:last-child a{border-bottom:none}.dropdown-menu li a:hover{background:#ffc300;color:#001f3f;padding-left:30px}
+  .hamburger{display:none;width:54px;height:50px;border:none;background:#001f3f;border-radius:14px;align-items:center;justify-content:center;flex-direction:column;gap:6px;cursor:pointer;flex-shrink:0;box-shadow:0 12px 25px rgba(0,31,63,.22)}.hamburger span{width:27px;height:4px;background:#ffc300;border-radius:10px;transition:.3s}.hamburger.active span:nth-child(1){transform:translateY(10px) rotate(45deg)}.hamburger.active span:nth-child(2){opacity:0}.hamburger.active span:nth-child(3){transform:translateY(-10px) rotate(-45deg)}
+  @media(max-width:1100px){.main-header-container{width:94%}.logo-section{min-width:250px}.nav-menu>li>a,.nav-dropdown-btn{padding:14px 9px;font-size:11px}}
+  @media(max-width:900px){.top-header{display:none}.container{width:92%}.main-header{z-index:9999999}.main-header-container{min-height:88px;width:94%}.logo-section{min-width:0;flex:1;gap:10px}.school-logo{width:66px;height:66px}.school-info h1{font-size:23px}.school-info p{font-size:12px}.school-info small{display:none}.hamburger{display:flex;position:relative;z-index:10000001}.navbar{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;min-height:100vh!important;background:#fff!important;display:block!important;transform:translateX(100%)!important;transition:transform .35s ease!important;z-index:10000000!important;overflow-y:auto!important;padding:110px 0 40px!important;box-shadow:none!important;justify-content:flex-start!important}.navbar.open{transform:translateX(0)!important}.mobile-nav-head{display:block;position:absolute;top:22px;left:22px;right:92px}.mobile-brand{display:flex;align-items:center;gap:12px}.mobile-brand img{width:62px;height:62px;object-fit:contain;border-radius:50%;filter:drop-shadow(0 8px 14px rgba(0,0,0,.15))}.mobile-brand h3{margin:0;color:#8b0000;font-size:24px;line-height:1.05;font-weight:900}.mobile-brand p{margin:5px 0 0;color:#333;font-size:13px;font-weight:700}.nav-menu{display:block!important;width:100%!important;padding:0!important;margin:0!important}.nav-menu>li{width:100%!important;border-bottom:1px solid #e8edf3!important}.nav-menu>li>a,.nav-dropdown-btn{width:100%!important;justify-content:space-between!important;padding:18px 26px!important;font-size:16px!important;text-align:left!important;background:#fff!important;color:#001f3f!important;border-radius:0!important;min-height:58px!important}.nav-menu>li>a.active,.nav-dropdown-btn.active,.nav-menu>li>a:hover,.nav-dropdown-btn:hover{background:#ffc300!important;color:#001f3f!important}.dropdown-menu{position:static!important;display:none!important;width:100%!important;min-width:100%!important;border-top:none!important;border-radius:0!important;box-shadow:none!important;background:#001f3f!important;overflow:visible!important}.dropdown.open>.dropdown-menu{display:block!important}.dropdown:hover>.dropdown-menu{display:none!important}.dropdown.open:hover>.dropdown-menu{display:block!important}.dropdown-menu li a{white-space:normal!important;font-size:14px!important;padding:16px 36px!important;color:#fff!important;background:#001f3f!important;border-bottom:1px solid rgba(255,255,255,.12)!important}.dropdown-menu li a:hover{background:#ffc300!important;color:#001f3f!important;padding-left:42px!important}body.menu-open{overflow:hidden!important;height:100dvh!important}}
+  @media(max-width:480px){.main-header-container{min-height:82px}.school-logo{width:58px;height:58px}.school-info h1{font-size:20px}.school-info p{font-size:11px}.hamburger{width:50px;height:46px}.mobile-brand img{width:56px;height:56px}.mobile-brand h3{font-size:21px}.navbar{padding-top:100px!important}.nav-menu>li>a,.nav-dropdown-btn{font-size:15px!important;padding:17px 22px!important}.dropdown-menu li a{font-size:13px!important;padding:15px 30px!important}}
 </style>
 
 <script>
@@ -251,9 +130,19 @@
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const mainNavbar = document.getElementById('mainNavbar');
     const dropdownButtons = document.querySelectorAll('.nav-dropdown-btn');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+
+    function closeMenu() {
+      if (!hamburgerBtn || !mainNavbar) return;
+      hamburgerBtn.classList.remove('active');
+      mainNavbar.classList.remove('open');
+      document.body.classList.remove('menu-open');
+      document.querySelectorAll('.dropdown.open').forEach(function (item) { item.classList.remove('open'); });
+    }
 
     if (hamburgerBtn && mainNavbar) {
-      hamburgerBtn.addEventListener('click', function () {
+      hamburgerBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
         hamburgerBtn.classList.toggle('active');
         mainNavbar.classList.toggle('open');
         document.body.classList.toggle('menu-open');
@@ -264,27 +153,21 @@
       btn.addEventListener('click', function (e) {
         if (window.innerWidth <= 900) {
           e.preventDefault();
+          e.stopPropagation();
           const parent = btn.closest('.dropdown');
-          document.querySelectorAll('.dropdown.open').forEach(function (item) {
-            if (item !== parent) item.classList.remove('open');
-          });
+          document.querySelectorAll('.dropdown.open').forEach(function (item) { if (item !== parent) item.classList.remove('open'); });
           parent.classList.toggle('open');
         }
       });
     });
 
-    document.addEventListener('click', function (e) {
-      if (window.innerWidth <= 900) {
-        const clickedInsideHeader = e.target.closest('.main-header');
-        if (!clickedInsideHeader && mainNavbar && hamburgerBtn) {
-          mainNavbar.classList.remove('open');
-          document.body.classList.remove('menu-open');
-          hamburgerBtn.classList.remove('active');
-          document.querySelectorAll('.dropdown.open').forEach(function (item) {
-            item.classList.remove('open');
-          });
-        }
-      }
+    navLinks.forEach(function (link) {
+      link.addEventListener('click', function () {
+        if (window.innerWidth <= 900) closeMenu();
+      });
     });
+
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 900) closeMenu(); });
   });
 </script>
