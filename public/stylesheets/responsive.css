@@ -877,4 +877,98 @@ table th,
     height: 40px !important;
   }
 }
+/* FINAL FORCE FIX - MOBILE HOME HERO */
+
+@media (max-width: 900px) {
+  .home-hero-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .home-carousel {
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .home-carousel-item {
+    height: 520px !important;
+    min-height: 520px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+  }
+
+  .home-carousel-content {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 58px !important;
+    text-align: center !important;
+    z-index: 20 !important;
+  }
+
+  .home-carousel-content h2 {
+    font-size: 34px !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+    margin: 0 0 14px !important;
+    white-space: normal !important;
+  }
+
+  .home-carousel-content p {
+    font-size: 15px !important;
+    text-align: center !important;
+    margin: 0 auto 22px !important;
+    max-width: 320px !important;
+  }
+
+  .hero-mini-text {
+    display: inline-block !important;
+    margin: 0 auto 14px !important;
+    max-width: 260px !important;
+    white-space: normal !important;
+  }
+
+  .home-primary-btn {
+    width: auto !important;
+    max-width: 230px !important;
+    padding: 13px 25px !important;
+  }
+
+  .home-carousel-btn.prev {
+    left: 12px !important;
+  }
+
+  .home-carousel-btn.next {
+    right: 12px !important;
+  }
+
+  .home-side-panel {
+    width: 100% !important;
+    min-height: auto !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .home-carousel-content {
+    padding: 0 52px !important;
+  }
+
+  .home-carousel-content h2 {
+    font-size: 30px !important;
+  }
+
+  .home-carousel-item {
+    height: 500px !important;
+    min-height: 500px !important;
+  }
+}
 }
