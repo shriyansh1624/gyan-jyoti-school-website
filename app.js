@@ -27,6 +27,8 @@ var admissionRouter = require('./routes/admission');
 var enquiryRouter = require('./routes/enquiry');
 
 var app = express();
+app.set('trust proxy', 1);
+
 app.use(helmet({
   contentSecurityPolicy: false
 }));
@@ -46,9 +48,10 @@ const limiter = rateLimit({
 app.use(limiter);
 
 const adminLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 10,
-  message: 'Too many login attempts. Please try again later.'
+    windowMs: 5 * 60 * 1000,
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false
 });
 
 app.use('/admin/login', adminLimiter);
@@ -80,6 +83,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'gyan-jyoti-secret-key',
   resave: false,
   saveUninitialized: false,
+  proxy: true,
   cookie: {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
