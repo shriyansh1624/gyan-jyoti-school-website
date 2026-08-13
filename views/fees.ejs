@@ -1,392 +1,2998 @@
+<%
+    /*
+     * =========================================================
+     * SAFE DATA
+     * =========================================================
+     */
+
+    const safeSchoolInfo =
+        typeof schoolInfo !== 'undefined' && schoolInfo
+            ? schoolInfo
+            : {};
+
+    const safeFeeStructures =
+        typeof feeStructures !== 'undefined' && Array.isArray(feeStructures)
+            ? feeStructures
+            : [];
+
+    const currentSession =
+        safeFeeStructures.length && safeFeeStructures[0].session
+            ? safeFeeStructures[0].session
+            : '2026-27';
+
+    const schoolName =
+        safeSchoolInfo.schoolName ||
+        'Gyan Jyoti School';
+
+    const schoolLogo =
+        safeSchoolInfo.logo ||
+        '/images/logo.png';
+
+    const schoolTagline =
+        safeSchoolInfo.tagline ||
+        'International School';
+
+    const schoolAffiliation =
+        safeSchoolInfo.affiliation ||
+        'CBSE Affiliation No. 1030842';
+%>
+
+
 <%- include('partials/header') %>
 
+
+<!-- =========================================================
+     FEES HERO
+========================================================= -->
+
 <section class="fees-hero">
-  <div class="fees-container">
-    <img src="/images/logo.png" class="fees-logo" alt="Gyan Jyoti Logo">
-    <span class="fees-badge">Session 2026-27</span>
-    <h1>Fees Structure</h1>
-    <p>Class-wise fee details with separate PDF download options.</p>
-  </div>
+
+    <div class="fees-orb fees-orb-one"></div>
+    <div class="fees-orb fees-orb-two"></div>
+    <div class="fees-grid-pattern"></div>
+
+    <div class="fees-container fees-hero-content">
+
+        <div class="hero-logo-wrap">
+
+            <img
+                src="<%= schoolLogo %>"
+                class="fees-logo"
+                alt="<%= schoolName %> Logo"
+            >
+
+            <span class="hero-logo-ring"></span>
+
+        </div>
+
+
+        <div class="fees-badge">
+
+            <i class="fas fa-calendar-days"></i>
+
+            SESSION
+
+            <strong>
+                <%= currentSession %>
+            </strong>
+
+        </div>
+
+
+        <h1>
+            Fees Structure
+        </h1>
+
+
+        <p>
+            Transparent and class-wise fee structure
+            for <%= schoolName %>.
+        </p>
+
+
+        <div class="hero-meta">
+
+            <span>
+                <i class="fas fa-school"></i>
+                <%= schoolTagline %>
+            </span>
+
+            <span>
+                <i class="fas fa-certificate"></i>
+                <%= schoolAffiliation %>
+            </span>
+
+        </div>
+
+    </div>
+
 </section>
+
+
+
+<!-- =========================================================
+     MAIN FEES SECTION
+========================================================= -->
 
 <section class="fees-section">
-  <div class="fees-container">
 
-    <div class="fees-heading">
-      <span class="section-tag">Class Wise Fees</span>
-      <h2>Transparent Fee Structure</h2>
-      <p>Choose a section and download only that section’s fee structure.</p>
+    <div class="fees-container">
+
+
+        <!-- =====================================================
+             SECTION HEADING
+        ====================================================== -->
+
+        <div class="fees-heading">
+
+            <div class="heading-top">
+
+                <span class="section-tag">
+
+                    <i class="fas fa-wallet"></i>
+
+                    CLASS WISE FEES
+
+                </span>
+
+                <span class="session-chip">
+
+                    <i class="fas fa-calendar"></i>
+
+                    <%= currentSession %>
+
+                </span>
+
+            </div>
+
+
+            <h2>
+                Transparent Fee Structure
+            </h2>
+
+
+            <p>
+                Select your academic section to view
+                complete fee details.
+            </p>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             QUICK STATS
+        ====================================================== -->
+
+        <% if (safeFeeStructures.length > 0) { %>
+
+            <div class="fees-stats">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Available Sections
+                        </span>
+
+                        <strong>
+                            <%= safeFeeStructures.length %>
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon yellow">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Academic Session
+                        </span>
+
+                        <strong>
+                            <%= currentSession %>
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Fee Information
+                        </span>
+
+                        <strong>
+                            Official
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        <% } %>
+
+
+
+        <!-- =====================================================
+             NO DATA
+        ====================================================== -->
+
+        <% if (safeFeeStructures.length === 0) { %>
+
+            <div class="fees-empty">
+
+                <div class="empty-icon">
+
+                    <i class="fas fa-file-invoice-dollar"></i>
+
+                </div>
+
+
+                <span class="empty-badge">
+                    FEES INFORMATION
+                </span>
+
+
+                <h3>
+                    Fee Structure Currently Unavailable
+                </h3>
+
+
+                <p>
+                    Please contact the school office for
+                    the latest fee information.
+                </p>
+
+
+                <% if (
+                    safeSchoolInfo.phone
+                ) { %>
+
+                    <a
+                        href="tel:<%= safeSchoolInfo.phone %>"
+                        class="empty-contact-btn"
+                    >
+
+                        <i class="fas fa-phone"></i>
+
+                        Contact School
+
+                    </a>
+
+                <% } %>
+
+            </div>
+
+
+        <% } else { %>
+
+
+
+            <!-- =================================================
+                 FEES GRID
+            ================================================== -->
+
+            <div class="fees-grid">
+
+
+                <% safeFeeStructures.forEach(function(fee, index) { %>
+
+
+                    <article
+                        class="fees-card"
+                        id="fee-<%= fee._id %>"
+                    >
+
+
+                        <!-- =====================================
+                             CARD HEADER
+                        ====================================== -->
+
+                        <div class="fees-head">
+
+
+                            <div class="card-number">
+                                <%= String(index + 1).padStart(2, '0') %>
+                            </div>
+
+
+                            <div class="fees-icon">
+
+                                <i class="<%= fee.icon || 'fas fa-graduation-cap' %>"></i>
+
+                            </div>
+
+
+                            <span class="fees-section-label">
+
+                                <i class="fas fa-graduation-cap"></i>
+
+                                <%= fee.section
+                                    ? fee.section
+                                        .replace(/-/g, ' ')
+                                        .toUpperCase()
+                                    : 'ACADEMIC SECTION'
+                                %>
+
+                            </span>
+
+
+                            <h3>
+                                <%= fee.title || 'Fee Structure' %>
+                            </h3>
+
+
+                            <p>
+                                <i class="fas fa-users"></i>
+
+                                <%= fee.classRange || 'Class details' %>
+                            </p>
+
+
+                            <div class="card-session">
+
+                                <i class="fas fa-calendar-days"></i>
+
+                                Session
+
+                                <strong>
+                                    <%= fee.session || currentSession %>
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =====================================
+                             FEE BODY
+                        ====================================== -->
+
+                        <div class="fees-body">
+
+
+                            <% if (
+                                fee.fees &&
+                                Array.isArray(fee.fees) &&
+                                fee.fees.length
+                            ) { %>
+
+
+                                <div class="fee-list">
+
+
+                                    <% fee.fees.forEach(function(item, feeIndex) { %>
+
+
+                                        <div class="fee-row">
+
+
+                                            <div class="fee-row-left">
+
+                                                <span class="fee-row-number">
+                                                    <%= String(feeIndex + 1).padStart(2, '0') %>
+                                                </span>
+
+
+                                                <span class="fee-name">
+
+                                                    <%= item.name || 'Fee' %>
+
+                                                </span>
+
+                                            </div>
+
+
+                                            <strong class="fee-amount">
+
+                                                ₹ <%= Number(
+                                                    item.amount || 0
+                                                ).toLocaleString('en-IN') %>
+
+                                            </strong>
+
+
+                                        </div>
+
+
+                                    <% }); %>
+
+
+                                </div>
+
+
+                            <% } else { %>
+
+
+                                <div class="no-fees">
+
+                                    <i class="fas fa-circle-info"></i>
+
+                                    Fee details not available.
+
+                                </div>
+
+
+                            <% } %>
+
+
+
+                            <!-- =================================
+                                 ANNUAL APPROX
+                            ================================== -->
+
+                            <div class="annual-row">
+
+
+                                <div>
+
+                                    <span class="annual-label">
+
+                                        <i class="fas fa-chart-line"></i>
+
+                                        Annual Approx.
+
+                                    </span>
+
+                                    <small>
+                                        Estimated yearly fee
+                                    </small>
+
+                                </div>
+
+
+                                <strong>
+
+                                    ₹ <%= Number(
+                                        fee.annualApprox || 0
+                                    ).toLocaleString('en-IN') %>
+
+                                </strong>
+
+                            </div>
+
+
+
+                            <!-- =================================
+                                 NOTES
+                            ================================== -->
+
+                            <% if (fee.notes) { %>
+
+                                <div class="fee-notes">
+
+                                    <i class="fas fa-circle-info"></i>
+
+                                    <p>
+                                        <%= fee.notes %>
+                                    </p>
+
+                                </div>
+
+                            <% } %>
+
+
+
+                            <!-- =================================
+                                 DOWNLOAD
+                            ================================== -->
+
+                            <div class="card-actions">
+
+
+                                <button
+                                    type="button"
+                                    class="download-btn"
+                                    onclick="downloadFeeCard('<%= fee._id %>')"
+                                >
+
+                                    <i class="fas fa-file-pdf"></i>
+
+                                    Download PDF
+
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="print-btn"
+                                    onclick="printFeeCard('<%= fee._id %>')"
+                                >
+
+                                    <i class="fas fa-print"></i>
+
+                                    Print
+
+                                </button>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </article>
+
+
+                <% }); %>
+
+
+            </div>
+
+
+        <% } %>
+
+
+
+        <!-- =====================================================
+             IMPORTANT NOTE
+        ====================================================== -->
+
+        <div class="fees-note">
+
+
+            <div class="note-icon">
+
+                <i class="fas fa-circle-info"></i>
+
+            </div>
+
+
+            <div class="note-content">
+
+                <span class="note-label">
+                    IMPORTANT INFORMATION
+                </span>
+
+
+                <h3>
+                    Please Note
+                </h3>
+
+
+                <p>
+                    Transport, uniform, books and other
+                    applicable charges may be separate.
+                    Please contact the school office for
+                    final confirmation of applicable fees.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
     </div>
 
-    <div class="fees-grid">
-
-      <div class="fees-card" id="primary-fees">
-        <div class="fees-head">
-          <i class="fas fa-child"></i>
-          <h3>Primary</h3>
-          <p>Class 1st to 5th</p>
-        </div>
-
-        <table>
-          <tr><td>Admission Fee</td><td>₹ 3,000</td></tr>
-          <tr><td>Monthly Tuition Fee</td><td>₹ 900</td></tr>
-          <tr><td>Exam Fee</td><td>₹ 1,000</td></tr>
-          <tr><td>Activity Fee</td><td>₹ 800</td></tr>
-          <tr class="total"><td>Annual Approx.</td><td>₹ 15,600</td></tr>
-        </table>
-
-        <button onclick="downloadSection('primary-fees')">
-          <i class="fas fa-file-pdf"></i> Download Primary PDF
-        </button>
-      </div>
-
-      <div class="fees-card" id="middle-fees">
-        <div class="fees-head">
-          <i class="fas fa-book-reader"></i>
-          <h3>Middle</h3>
-          <p>Class 6th to 8th</p>
-        </div>
-
-        <table>
-          <tr><td>Admission Fee</td><td>₹ 3,500</td></tr>
-          <tr><td>Monthly Tuition Fee</td><td>₹ 1,100</td></tr>
-          <tr><td>Exam Fee</td><td>₹ 1,200</td></tr>
-          <tr><td>Activity Fee</td><td>₹ 1,000</td></tr>
-          <tr class="total"><td>Annual Approx.</td><td>₹ 18,900</td></tr>
-        </table>
-
-        <button onclick="downloadSection('middle-fees')">
-          <i class="fas fa-file-pdf"></i> Download Middle PDF
-        </button>
-      </div>
-
-      <div class="fees-card" id="secondary-fees">
-        <div class="fees-head">
-          <i class="fas fa-user-graduate"></i>
-          <h3>Secondary</h3>
-          <p>Class 9th to 10th</p>
-        </div>
-
-        <table>
-          <tr><td>Admission Fee</td><td>₹ 4,000</td></tr>
-          <tr><td>Monthly Tuition Fee</td><td>₹ 1,300</td></tr>
-          <tr><td>Exam Fee</td><td>₹ 1,500</td></tr>
-          <tr><td>Lab / Activity Fee</td><td>₹ 1,200</td></tr>
-          <tr class="total"><td>Annual Approx.</td><td>₹ 22,300</td></tr>
-        </table>
-
-        <button onclick="downloadSection('secondary-fees')">
-          <i class="fas fa-file-pdf"></i> Download 9th-10th PDF
-        </button>
-      </div>
-
-      <div class="fees-card" id="senior-fees">
-        <div class="fees-head">
-          <i class="fas fa-graduation-cap"></i>
-          <h3>Senior Secondary</h3>
-          <p>Class 11th to 12th</p>
-        </div>
-
-        <table>
-          <tr><td>Admission Fee</td><td>₹ 5,000</td></tr>
-          <tr><td>Monthly Tuition Fee</td><td>₹ 1,600</td></tr>
-          <tr><td>Exam Fee</td><td>₹ 1,800</td></tr>
-          <tr><td>Lab / Practical Fee</td><td>₹ 2,000</td></tr>
-          <tr class="total"><td>Annual Approx.</td><td>₹ 28,000</td></tr>
-        </table>
-
-        <button onclick="downloadSection('senior-fees')">
-          <i class="fas fa-file-pdf"></i> Download 11th-12th PDF
-        </button>
-      </div>
-
-    </div>
-
-    <div class="fees-note">
-      <h3><i class="fas fa-circle-info"></i> Important Notes</h3>
-      <p>Transport, uniform and books charges may be separate. Please contact school office for final confirmation.</p>
-    </div>
-
-  </div>
 </section>
 
+
+
+<!-- =========================================================
+     PREMIUM FEES CSS
+========================================================= -->
+
 <style>
-  .fees-container{width:86%;max-width:1200px;margin:auto}
 
-  .fees-hero{
-    min-height:460px;
-    background:linear-gradient(rgba(0,31,63,.84),rgba(0,31,63,.84)),url('/images/school-bg.jpg');
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    align-items:center;
-    text-align:center;
-    color:white;
-    position:relative;
-    overflow:hidden;
-  }
+/* =========================================================
+   BASE
+========================================================= */
 
-  .fees-hero::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background-image:radial-gradient(circle,rgba(255,195,0,.35) 2px,transparent 2px);
-    background-size:110px 110px;
-    animation:moveDots 20s linear infinite;
-  }
+.fees-container {
 
-  @keyframes moveDots{
-    from{transform:translateY(0)}
-    to{transform:translateY(-110px)}
-  }
+    width: 88%;
 
-  .fees-hero .fees-container{position:relative;z-index:2}
+    max-width: 1280px;
 
-  .fees-logo{
-    width:125px;
-    height:125px;
-    object-fit:contain;
-    background:white;
-    border-radius:50%;
-    padding:8px;
-    border:5px solid #ffc300;
-    box-shadow:0 18px 45px rgba(0,0,0,.35);
-    margin-bottom:18px;
-  }
+    margin: 0 auto;
 
-  .fees-badge,.section-tag{
-    display:inline-block;
-    background:#ffc300;
-    color:#001f3f;
-    padding:9px 22px;
-    border-radius:40px;
-    font-weight:900;
-    margin-bottom:15px;
-  }
+}
 
-  .fees-hero h1{
-    font-size:66px;
-    font-weight:900;
-    color:white;
-    text-shadow:0 15px 35px rgba(0,0,0,.4);
-  }
 
-  .fees-hero p{
-    font-size:20px;
-    margin-top:12px;
-  }
+.fees-section {
 
-  .fees-section{
-    padding:85px 0;
-    background:#f5f7fb;
-  }
+    background:
+        linear-gradient(
+            180deg,
+            #f4f8fc 0%,
+            #eef3f8 100%
+        );
 
-  .fees-heading{
-    text-align:center;
-    margin-bottom:55px;
-  }
+    padding: 85px 0 100px;
 
-  .fees-heading h2{
-    font-size:46px;
-    color:#001f3f;
-    margin-bottom:12px;
-  }
+    position: relative;
 
-  .fees-heading p{
-    color:#555;
-    font-size:18px;
-  }
+}
 
-  .fees-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:32px;
-  }
 
-  .fees-card{
-    background:white;
-    border-radius:30px;
-    overflow:hidden;
-    box-shadow:0 22px 55px rgba(0,0,0,.13);
-    border-top:6px solid #ffc300;
-    transition:.4s;
-    position:relative;
-  }
+/* =========================================================
+   HERO
+========================================================= */
 
-  .fees-card:hover{
-    transform:translateY(-12px);
-    box-shadow:0 32px 70px rgba(0,0,0,.2);
-  }
+.fees-hero {
 
-  .fees-card::after{
-    content:"";
-    position:absolute;
-    width:250px;
-    height:250px;
-    right:-130px;
-    top:-130px;
-    background:rgba(255,195,0,.12);
-    border-radius:50%;
-  }
+    min-height: 470px;
 
-  .fees-head{
-    background:linear-gradient(135deg,#001f3f,#004481);
-    color:white;
-    padding:32px;
-    text-align:center;
-    position:relative;
-    z-index:2;
-  }
+    position: relative;
 
-  .fees-head i{
-    color:#ffc300;
-    font-size:46px;
-    margin-bottom:15px;
-  }
+    display: flex;
 
-  .fees-head h3{
-    color:white;
-    font-size:32px;
-    margin-bottom:6px;
-  }
+    align-items: center;
 
-  .fees-head p{
-    opacity:.9;
-  }
+    justify-content: center;
 
-  .fees-card table{
-    width:100%;
-    border-collapse:collapse;
-    position:relative;
-    z-index:2;
-  }
+    text-align: center;
 
-  .fees-card td{
-    padding:16px 24px;
-    border-bottom:1px solid #eef2f7;
-    font-weight:700;
-    color:#333;
-  }
+    color: #fff;
 
-  .fees-card td:last-child{
-    text-align:right;
-    color:#001f3f;
-    font-weight:900;
-  }
+    overflow: hidden;
 
-  .fees-card .total td{
-    background:#ffc300;
-    color:#001f3f;
-    font-size:18px;
-    font-weight:900;
-  }
+    background:
 
-  .fees-card button{
-    margin:24px;
-    border:none;
-    background:linear-gradient(135deg,#001f3f,#004481);
-    color:white;
-    padding:14px 22px;
-    border-radius:50px;
-    font-weight:900;
-    cursor:pointer;
-    box-shadow:0 12px 28px rgba(0,31,63,.22);
-    transition:.35s;
-    position:relative;
-    z-index:2;
-  }
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(255,195,0,.16),
+            transparent 28%
+        ),
 
-  .fees-card button:hover{
-    background:#ffc300;
-    color:#001f3f;
-    transform:translateY(-4px);
-  }
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(0,91,160,.55),
+            transparent 30%
+        ),
 
-  .fees-note{
-    margin-top:45px;
-    background:white;
-    padding:35px;
-    border-radius:26px;
-    box-shadow:0 16px 40px rgba(0,0,0,.10);
-    border-left:7px solid #ffc300;
-  }
+        linear-gradient(
+            135deg,
+            #001f3f 0%,
+            #003b6f 55%,
+            #004d89 100%
+        );
 
-  .fees-note h3{
-    color:#001f3f;
-    font-size:26px;
-    margin-bottom:12px;
-  }
+}
 
-  .fees-note i{
-    color:#ffc300;
-  }
 
-  .fees-note p{
-    color:#444;
-    font-size:17px;
-    line-height:1.7;
-  }
+.fees-hero::before {
 
-  @media(max-width:900px){
-    .fees-grid{grid-template-columns:1fr}
-    .fees-hero h1{font-size:42px}
-    .fees-heading h2{font-size:34px}
-  }
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.15),
+            transparent,
+            rgba(0,0,0,.15)
+        );
+
+}
+
+
+.fees-orb {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+}
+
+
+.fees-orb-one {
+
+    width: 500px;
+
+    height: 500px;
+
+    left: -240px;
+
+    top: -250px;
+
+    border:
+        1px solid
+        rgba(255,195,0,.25);
+
+    box-shadow:
+        0 0 0 60px rgba(255,195,0,.04),
+        0 0 0 120px rgba(255,195,0,.025);
+
+}
+
+
+.fees-orb-two {
+
+    width: 420px;
+
+    height: 420px;
+
+    right: -190px;
+
+    bottom: -220px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    box-shadow:
+        0 0 0 70px rgba(255,255,255,.025);
+
+}
+
+
+.fees-grid-pattern {
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: .08;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,.4) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.4) 1px,
+            transparent 1px
+        );
+
+    background-size: 55px 55px;
+
+}
+
+
+.fees-hero-content {
+
+    position: relative;
+
+    z-index: 5;
+
+    padding: 65px 0;
+
+}
+
+
+.hero-logo-wrap {
+
+    width: 125px;
+
+    height: 125px;
+
+    margin:
+        0 auto 25px;
+
+    position: relative;
+
+}
+
+
+.fees-logo {
+
+    width: 125px;
+
+    height: 125px;
+
+    object-fit: contain;
+
+    background: #fff;
+
+    border-radius: 50%;
+
+    padding: 7px;
+
+    border:
+        5px solid
+        #ffc300;
+
+    box-shadow:
+        0 22px 55px
+        rgba(0,0,0,.35);
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+.hero-logo-ring {
+
+    position: absolute;
+
+    inset: -12px;
+
+    border:
+        1px solid
+        rgba(255,195,0,.45);
+
+    border-radius: 50%;
+
+    animation:
+        heroRing 4s linear infinite;
+
+}
+
+
+@keyframes heroRing {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+.fees-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 10px 20px;
+
+    background:
+        rgba(255,195,0,.14);
+
+    border:
+        1px solid
+        rgba(255,195,0,.55);
+
+    color: #ffc300;
+
+    border-radius: 50px;
+
+    font-size: 12px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 18px;
+
+    backdrop-filter: blur(10px);
+
+}
+
+
+.fees-badge strong {
+
+    color: #fff;
+
+}
+
+
+.fees-hero h1 {
+
+    margin: 0;
+
+    font-size: 64px;
+
+    line-height: 1;
+
+    font-weight: 950;
+
+    letter-spacing: -2px;
+
+    text-shadow:
+        0 8px 30px
+        rgba(0,0,0,.25);
+
+}
+
+
+.fees-hero p {
+
+    margin: 18px auto 0;
+
+    max-width: 680px;
+
+    font-size: 18px;
+
+    line-height: 1.7;
+
+    opacity: .92;
+
+}
+
+
+.hero-meta {
+
+    margin-top: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+}
+
+
+.hero-meta span {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 14px;
+
+    border-radius: 50px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    font-size: 12px;
+
+    color: rgba(255,255,255,.9);
+
+}
+
+
+.hero-meta i {
+
+    color: #ffc300;
+
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.fees-heading {
+
+    text-align: center;
+
+    margin-bottom: 40px;
+
+}
+
+
+.heading-top {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+}
+
+
+.section-tag {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    background: #ffc300;
+
+    color: #001f3f;
+
+    padding: 9px 18px;
+
+    border-radius: 50px;
+
+    font-size: 11px;
+
+    font-weight: 950;
+
+    letter-spacing: 1px;
+
+}
+
+
+.session-chip {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 16px;
+
+    border-radius: 50px;
+
+    background: #fff;
+
+    color: #001f3f;
+
+    border:
+        1px solid
+        #dce5ef;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,31,63,.06);
+
+}
+
+
+.session-chip i {
+
+    color: #ffc300;
+
+}
+
+
+.fees-heading h2 {
+
+    margin: 17px 0 9px;
+
+    color: #001f3f;
+
+    font-size: 44px;
+
+    font-weight: 950;
+
+    letter-spacing: -1px;
+
+}
+
+
+.fees-heading p {
+
+    margin: 0;
+
+    color: #708198;
+
+    font-size: 16px;
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.fees-stats {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 35px;
+
+}
+
+
+.stat-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 18px 20px;
+
+    background: #fff;
+
+    border:
+        1px solid
+        #e1e9f1;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(0,31,63,.06);
+
+}
+
+
+.stat-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 16px;
+
+    font-size: 20px;
+
+}
+
+
+.stat-icon.blue {
+
+    color: #0874c9;
+
+    background: #eaf4ff;
+
+}
+
+
+.stat-icon.yellow {
+
+    color: #d89900;
+
+    background: #fff7dc;
+
+}
+
+
+.stat-icon.green {
+
+    color: #009c5a;
+
+    background: #e9fbf2;
+
+}
+
+
+.stat-card span {
+
+    display: block;
+
+    color: #8291a6;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    margin-bottom: 3px;
+
+}
+
+
+.stat-card strong {
+
+    display: block;
+
+    color: #001f3f;
+
+    font-size: 18px;
+
+    font-weight: 950;
+
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.fees-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 30px;
+
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.fees-card {
+
+    background: #fff;
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    border-top:
+        6px solid
+        #ffc300;
+
+    box-shadow:
+        0 20px 65px
+        rgba(0,31,63,.11);
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+
+    position: relative;
+
+}
+
+
+.fees-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 160px;
+
+    height: 160px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(255,195,0,.08);
+
+    right: -80px;
+
+    top: 90px;
+
+    pointer-events: none;
+
+}
+
+
+.fees-card:hover {
+
+    transform:
+        translateY(-9px);
+
+    box-shadow:
+        0 32px 85px
+        rgba(0,31,63,.18);
+
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.fees-head {
+
+    background:
+
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255,195,0,.12),
+            transparent 45%
+        ),
+
+        linear-gradient(
+            135deg,
+            #001f3f,
+            #004481
+        );
+
+    color: #fff;
+
+    text-align: center;
+
+    padding: 35px 25px 32px;
+
+    position: relative;
+
+}
+
+
+.card-number {
+
+    position: absolute;
+
+    right: 20px;
+
+    top: 18px;
+
+    color:
+        rgba(255,255,255,.20);
+
+    font-size: 14px;
+
+    font-weight: 950;
+
+    letter-spacing: 1px;
+
+}
+
+
+.fees-icon {
+
+    width: 72px;
+
+    height: 72px;
+
+    margin:
+        0 auto 17px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,195,0,.13);
+
+    border:
+        1px solid
+        rgba(255,195,0,.35);
+
+}
+
+
+.fees-icon i {
+
+    font-size: 32px;
+
+    color: #ffc300;
+
+}
+
+
+.fees-section-label {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+
+    color: #ffc300;
+
+    margin-bottom: 8px;
+
+}
+
+
+.fees-head h3 {
+
+    margin: 0;
+
+    color: #fff;
+
+    font-size: 31px;
+
+    font-weight: 950;
+
+}
+
+
+.fees-head p {
+
+    margin: 9px 0 0;
+
+    color:
+        rgba(255,255,255,.86);
+
+    font-size: 15px;
+
+}
+
+
+.fees-head p i {
+
+    color: #ffc300;
+
+    margin-right: 5px;
+
+}
+
+
+.card-session {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 17px;
+
+    padding: 7px 13px;
+
+    border-radius: 50px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    color:
+        rgba(255,255,255,.7);
+
+    font-size: 11px;
+
+}
+
+
+.card-session i {
+
+    color: #ffc300;
+
+}
+
+
+.card-session strong {
+
+    color: #fff;
+
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.fees-body {
+
+    background: #fff;
+
+}
+
+
+.fee-list {
+
+    width: 100%;
+
+}
+
+
+.fee-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    min-height: 65px;
+
+    padding: 13px 24px;
+
+    border-bottom:
+        1px solid
+        #edf1f5;
+
+    transition:
+        background .2s ease;
+
+}
+
+
+.fee-row:hover {
+
+    background:
+        #f9fbfd;
+
+}
+
+
+.fee-row-left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 0;
+
+}
+
+
+.fee-row-number {
+
+    width: 30px;
+
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    background: #f0f5fa;
+
+    color: #73869a;
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+}
+
+
+.fee-name {
+
+    color: #263d55;
+
+    font-size: 15px;
+
+    font-weight: 750;
+
+}
+
+
+.fee-amount {
+
+    color: #001f3f;
+
+    font-size: 16px;
+
+    font-weight: 950;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   ANNUAL
+========================================================= */
+
+.annual-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 19px 24px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #ffc300,
+            #ffd33d
+        );
+
+    color: #001f3f;
+
+}
+
+
+.annual-label {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-size: 17px;
+
+    font-weight: 950;
+
+}
+
+
+.annual-label i {
+
+    font-size: 15px;
+
+}
+
+
+.annual-row small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 10px;
+
+    opacity: .65;
+
+    font-weight: 700;
+
+}
+
+
+.annual-row strong {
+
+    font-size: 22px;
+
+    font-weight: 950;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   NOTES
+========================================================= */
+
+.fee-notes {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    padding: 15px 24px;
+
+    background: #fffdf4;
+
+    border-bottom:
+        1px solid
+        #f1ead0;
+
+}
+
+
+.fee-notes i {
+
+    color: #d69c00;
+
+    margin-top: 3px;
+
+}
+
+
+.fee-notes p {
+
+    margin: 0;
+
+    color: #7c6a38;
+
+    font-size: 12px;
+
+    line-height: 1.55;
+
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.card-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 22px 24px;
+
+}
+
+
+.download-btn,
+.print-btn {
+
+    border: none;
+
+    cursor: pointer;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    border-radius: 50px;
+
+    font-family: inherit;
+
+    font-weight: 900;
+
+    transition: .3s;
+
+}
+
+
+.download-btn {
+
+    padding: 14px 20px;
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #001f3f,
+            #004481
+        );
+
+    box-shadow:
+        0 10px 25px
+        rgba(0,31,63,.18);
+
+}
+
+
+.download-btn:hover {
+
+    background: #ffc300;
+
+    color: #001f3f;
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.print-btn {
+
+    width: 46px;
+
+    height: 46px;
+
+    color: #001f3f;
+
+    background: #eef4f9;
+
+}
+
+
+.print-btn:hover {
+
+    background: #001f3f;
+
+    color: #fff;
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.fees-empty {
+
+    background: #fff;
+
+    border-radius: 30px;
+
+    text-align: center;
+
+    padding: 90px 25px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,31,63,.09);
+
+    border:
+        1px solid
+        #e5ecf3;
+
+}
+
+
+.empty-icon {
+
+    width: 95px;
+
+    height: 95px;
+
+    margin:
+        0 auto 23px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #edf5fc,
+            #f6f9fc
+        );
+
+    color: #62809d;
+
+    font-size: 36px;
+
+}
+
+
+.empty-badge {
+
+    display: inline-block;
+
+    padding: 7px 14px;
+
+    background: #fff7d7;
+
+    color: #b58100;
+
+    border-radius: 50px;
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+}
+
+
+.fees-empty h3 {
+
+    color: #001f3f;
+
+    font-size: 28px;
+
+    margin:
+        15px 0 9px;
+
+}
+
+
+.fees-empty p {
+
+    color: #738399;
+
+    margin: 0 0 22px;
+
+}
+
+
+.empty-contact-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 13px 20px;
+
+    border-radius: 50px;
+
+    background: #001f3f;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    font-weight: 800;
+
+}
+
+
+/* =========================================================
+   IMPORTANT NOTE
+========================================================= */
+
+.fees-note {
+
+    margin-top: 42px;
+
+    display: flex;
+
+    gap: 18px;
+
+    align-items: flex-start;
+
+    padding: 26px;
+
+    background: #fff;
+
+    border-radius: 22px;
+
+    border:
+        1px solid
+        #e2eaf2;
+
+    border-left:
+        6px solid
+        #ffc300;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,31,63,.07);
+
+}
+
+
+.note-icon {
+
+    width: 50px;
+
+    height: 50px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: #fff7d8;
+
+    color: #d69b00;
+
+    font-size: 20px;
+
+}
+
+
+.note-label {
+
+    color: #c18b00;
+
+    font-size: 10px;
+
+    font-weight: 950;
+
+    letter-spacing: 1.3px;
+
+}
+
+
+.fees-note h3 {
+
+    margin:
+        4px 0 6px;
+
+    color: #001f3f;
+
+    font-size: 20px;
+
+}
+
+
+.fees-note p {
+
+    margin: 0;
+
+    color: #66768a;
+
+    line-height: 1.7;
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width: 900px) {
+
+    .fees-container {
+
+        width: 92%;
+
+    }
+
+
+    .fees-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .fees-stats {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .fees-hero {
+
+        min-height: 420px;
+
+    }
+
+
+    .fees-hero h1 {
+
+        font-size: 46px;
+
+    }
+
+
+    .fees-heading h2 {
+
+        font-size: 35px;
+
+    }
+
+}
+
+
+@media(max-width: 600px) {
+
+    .fees-section {
+
+        padding:
+            60px 0 75px;
+
+    }
+
+
+    .fees-hero {
+
+        min-height: 390px;
+
+    }
+
+
+    .fees-hero-content {
+
+        padding:
+            50px 0;
+
+    }
+
+
+    .hero-logo-wrap,
+    .fees-logo {
+
+        width: 100px;
+
+        height: 100px;
+
+    }
+
+
+    .fees-hero h1 {
+
+        font-size: 38px;
+
+        letter-spacing: -1px;
+
+    }
+
+
+    .fees-hero p {
+
+        font-size: 15px;
+
+    }
+
+
+    .hero-meta {
+
+        display: none;
+
+    }
+
+
+    .fees-heading h2 {
+
+        font-size: 31px;
+
+    }
+
+
+    .fees-card {
+
+        border-radius: 22px;
+
+    }
+
+
+    .fees-head {
+
+        padding:
+            30px 18px;
+
+    }
+
+
+    .fees-head h3 {
+
+        font-size: 27px;
+
+    }
+
+
+    .fee-row {
+
+        padding:
+            13px 16px;
+
+        gap: 10px;
+
+    }
+
+
+    .fee-name {
+
+        font-size: 14px;
+
+    }
+
+
+    .fee-amount {
+
+        font-size: 14px;
+
+    }
+
+
+    .annual-row {
+
+        padding:
+            17px;
+
+    }
+
+
+    .annual-label {
+
+        font-size: 14px;
+
+    }
+
+
+    .annual-row strong {
+
+        font-size: 17px;
+
+    }
+
+
+    .card-actions {
+
+        padding:
+            18px;
+
+    }
+
+
+    .download-btn {
+
+        flex: 1;
+
+        padding:
+            13px 12px;
+
+        font-size: 12px;
+
+    }
+
+
+    .fees-note {
+
+        padding: 20px;
+
+    }
+
+}
+
+
+@media(max-width: 400px) {
+
+    .fees-hero h1 {
+
+        font-size: 33px;
+
+    }
+
+
+    .fees-heading h2 {
+
+        font-size: 27px;
+
+    }
+
+
+    .fee-row-number {
+
+        display: none;
+
+    }
+
+
+    .fee-row {
+
+        padding:
+            13px 14px;
+
+    }
+
+
+    .annual-row {
+
+        gap: 10px;
+
+    }
+
+
+    .annual-row small {
+
+        display: none;
+
+    }
+
+}
+
+</style>
+
+
+
+
+<style>
+/* ================= PREMIUM FEES UI — FRONTEND ONLY ================= */
+
+.fees-hero{
+    isolation:isolate;
+    min-height:540px!important;
+    background:
+      radial-gradient(circle at 12% 18%,rgba(255,195,0,.20),transparent 25%),
+      radial-gradient(circle at 86% 72%,rgba(0,174,255,.16),transparent 27%),
+      linear-gradient(135deg,#00142c 0%,#002b52 48%,#004b78 100%)!important;
+}
+.fees-hero::after{
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.55;
+    background:
+      radial-gradient(circle at 20% 30%,rgba(255,255,255,.9) 0 1px,transparent 2px),
+      radial-gradient(circle at 70% 20%,rgba(255,195,0,.9) 0 1px,transparent 2px),
+      radial-gradient(circle at 82% 60%,rgba(255,255,255,.7) 0 1px,transparent 2px),
+      radial-gradient(circle at 45% 78%,rgba(255,195,0,.7) 0 1px,transparent 2px);
+    background-size:170px 170px,230px 230px,190px 190px,260px 260px;
+    animation:feeStars 18s linear infinite;
+}
+@keyframes feeStars{from{transform:translate3d(0,0,0)}to{transform:translate3d(80px,-55px,0)}}
+
+.fees-grid-pattern{
+    opacity:.13!important;background-size:42px 42px!important;
+    transform:perspective(500px) rotateX(55deg) scale(1.35);
+    transform-origin:center bottom;
+    mask-image:linear-gradient(to bottom,transparent,#000 25%,#000);
+    animation:feeGrid 14s linear infinite;
+}
+@keyframes feeGrid{from{background-position:0 0}to{background-position:84px 84px}}
+
+.fees-orb-one{
+    width:620px!important;height:620px!important;left:-300px!important;top:-330px!important;
+    border-color:rgba(255,195,0,.32)!important;
+    box-shadow:0 0 0 70px rgba(255,195,0,.045),0 0 0 140px rgba(255,195,0,.025),0 0 80px rgba(255,195,0,.08);
+    animation:feeOrb 9s ease-in-out infinite;
+}
+.fees-orb-two{
+    width:520px!important;height:520px!important;right:-245px!important;bottom:-285px!important;
+    animation:feeOrb 11s 1s ease-in-out infinite reverse;
+}
+@keyframes feeOrb{0%,100%{transform:translate3d(0,0,0) rotate(0)}50%{transform:translate3d(22px,-18px,0) rotate(7deg)}}
+
+.fees-hero-content{z-index:6!important;animation:feeHeroIn .9s ease both}
+@keyframes feeHeroIn{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+
+.hero-logo-wrap{filter:drop-shadow(0 25px 35px rgba(0,0,0,.25))}
+.fees-logo{transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.hero-logo-wrap:hover .fees-logo{transform:scale(1.06) rotate(3deg)}
+.hero-logo-ring{border-style:dashed!important;box-shadow:0 0 35px rgba(255,195,0,.18)}
+
+.fees-badge{
+    box-shadow:inset 0 0 20px rgba(255,195,0,.05),0 12px 35px rgba(0,0,0,.16)!important;
+    animation:badgeFloat 4s ease-in-out infinite;
+}
+@keyframes badgeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+.fees-hero h1{
+    font-size:clamp(48px,6vw,78px)!important;letter-spacing:-3px!important;
+    text-shadow:0 3px 0 rgba(255,255,255,.04),0 20px 60px rgba(0,0,0,.35)!important;
+}
+.fees-hero h1::after{
+    content:"";display:block;width:82px;height:5px;margin:20px auto 0;border-radius:20px;
+    background:linear-gradient(90deg,transparent,#ffc300,transparent);
+    animation:feeLine 2.8s ease-in-out infinite;
+}
+@keyframes feeLine{0%,100%{transform:scaleX(.65);opacity:.65}50%{transform:scaleX(1.2);opacity:1}}
+
+.hero-meta span{backdrop-filter:blur(16px)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+
+.fees-section{overflow:hidden}
+.fees-section::before{
+    content:"";position:absolute;width:500px;height:500px;left:-350px;top:500px;border-radius:50%;
+    background:rgba(0,83,135,.06);filter:blur(10px);pointer-events:none;
+}
+.fees-heading h2{font-size:clamp(34px,4vw,50px)!important}
+.fees-heading h2::after{
+    content:"";display:block;width:58px;height:4px;margin:16px auto 0;border-radius:10px;
+    background:linear-gradient(90deg,#001f3f,#ffc300);
+}
+
+.stat-card{
+    position:relative;overflow:hidden;backdrop-filter:blur(12px);
+    transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease;
+}
+.stat-card::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(115deg,transparent 20%,rgba(255,255,255,.75) 48%,transparent 68%);
+    transform:translateX(-130%);transition:transform .7s ease;
+}
+.stat-card:hover::before{transform:translateX(130%)}
+.stat-card:hover{transform:translateY(-7px);border-color:rgba(255,195,0,.45);box-shadow:0 22px 45px rgba(0,31,63,.13)}
+.stat-icon{transition:transform .35s ease}
+.stat-card:hover .stat-icon{transform:rotate(-6deg) scale(1.08)}
+
+.fees-grid{perspective:1400px}
+.fees-card{
+    transform:translateY(18px);opacity:0;
+    animation:feeCardIn .75s cubic-bezier(.2,.7,.2,1) forwards;
+    animation-delay:calc(var(--fee-index,0)*90ms);transform-style:preserve-3d;
+}
+.fees-card:nth-child(1){--fee-index:1}.fees-card:nth-child(2){--fee-index:2}
+.fees-card:nth-child(3){--fee-index:3}.fees-card:nth-child(4){--fee-index:4}
+.fees-card:nth-child(5){--fee-index:5}.fees-card:nth-child(6){--fee-index:6}
+@keyframes feeCardIn{to{opacity:1;transform:translateY(0)}}
+
+.fees-card::before{
+    content:"";position:absolute;inset:0;z-index:5;pointer-events:none;
+    background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.25) 48%,transparent 67%);
+    transform:translateX(-130%);transition:transform .8s ease;
+}
+.fees-card:hover::before{transform:translateX(130%)}
+.fees-card::after{
+    width:230px!important;height:230px!important;right:-115px!important;top:80px!important;
+    border-color:rgba(255,195,0,.13)!important;transition:transform .7s ease;
+}
+.fees-card:hover::after{transform:scale(1.25)}
+
+.fees-head{
+    min-height:245px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 50% 0%,rgba(255,195,0,.18),transparent 48%),linear-gradient(145deg,#00172f,#003d6d 62%,#00517d)!important;
+}
+.fees-head::after{
+    content:"";position:absolute;width:180px;height:180px;right:-100px;bottom:-115px;
+    border:1px solid rgba(255,255,255,.10);border-radius:50%;box-shadow:0 0 0 35px rgba(255,255,255,.025);
+}
+.fees-icon{box-shadow:0 15px 35px rgba(0,0,0,.20),inset 0 0 25px rgba(255,195,0,.08);transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s ease}
+.fees-card:hover .fees-icon{transform:translateY(-7px) rotate(5deg) scale(1.08);box-shadow:0 22px 45px rgba(0,0,0,.27),0 0 25px rgba(255,195,0,.16)}
+.fees-head h3{text-shadow:0 8px 25px rgba(0,0,0,.2)}
+
+.fee-row{position:relative}
+.fee-row::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:#ffc300;transition:width .35s ease}
+.fee-row:hover::after{width:100%}
+.fee-row-number{transition:background .25s ease,color .25s ease,transform .25s ease}
+.fee-row:hover .fee-row-number{background:#fff5c7;color:#a87700;transform:scale(1.08)}
+.fee-amount{transition:transform .25s ease,color .25s ease}
+.fee-row:hover .fee-amount{color:#b77f00;transform:translateX(-3px)}
+
+.annual-row{position:relative;overflow:hidden}
+.annual-row::before{
+    content:"";position:absolute;top:0;left:-80%;width:45%;height:100%;transform:skewX(-20deg);
+    background:rgba(255,255,255,.28);transition:left .7s ease;
+}
+.fees-card:hover .annual-row::before{left:140%}
+.annual-row strong{text-shadow:0 3px 10px rgba(0,0,0,.10)}
+
+.download-btn,.print-btn{position:relative;overflow:hidden}
+.download-btn::after{
+    content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent,rgba(255,255,255,.18),transparent);
+    transform:translateX(-130%);transition:transform .6s ease;
+}
+.download-btn:hover::after{transform:translateX(130%)}
+.download-btn:hover,.print-btn:hover{box-shadow:0 12px 28px rgba(0,31,63,.18)}
+
+.fees-note{position:relative;overflow:hidden;transition:transform .35s ease,box-shadow .35s ease}
+.fees-note::before{
+    content:"";position:absolute;left:0;top:0;width:5px;height:100%;background:linear-gradient(#ffc300,#e3a900);
+}
+.fees-note:hover{transform:translateY(-4px);box-shadow:0 22px 50px rgba(0,31,63,.11)}
+.note-icon{transition:transform .35s ease}
+.fees-note:hover .note-icon{transform:rotate(-7deg) scale(1.06)}
+
+.fees-empty{position:relative;overflow:hidden}
+.fees-empty::before,.fees-empty::after{
+    content:"";position:absolute;width:180px;height:180px;border:1px solid rgba(255,195,0,.12);border-radius:50%;
+}
+.fees-empty::before{left:-80px;top:-80px}.fees-empty::after{right:-80px;bottom:-80px}
+.empty-icon{animation:emptyFloat 3.5s ease-in-out infinite}
+@keyframes emptyFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+.fee-reveal{opacity:0!important;transform:translateY(35px)!important}
+.fee-reveal.fee-visible{opacity:1!important;transform:translateY(0)!important;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+
+@media(max-width:900px){
+    .fees-hero{min-height:470px!important}.fees-head{min-height:225px}
+    .fees-card:hover{transform:translateY(-5px)}
+}
+@media(max-width:600px){
+    .fees-hero h1{font-size:40px!important}.fees-hero h1::after{margin-top:14px}
+    .fees-grid-pattern{opacity:.07!important}.fees-card{animation-delay:0ms!important}
+    .fees-head{min-height:215px}.stat-card:hover{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+    .fees-hero::after,.fees-grid-pattern,.fees-orb-one,.fees-orb-two,.fees-badge,.hero-logo-ring,.empty-icon,.fees-card{animation:none!important}
+    .fees-card{opacity:1!important;transform:none!important}
+}
 </style>
 
 <script>
-  function downloadSection(sectionId){
-    const section = document.getElementById(sectionId).cloneNode(true);
-    const button = section.querySelector('button');
-    if(button) button.remove();
+document.addEventListener("DOMContentLoaded",function(){
+    const elements=document.querySelectorAll(".stat-card,.fees-card,.fees-note");
+    if(!("IntersectionObserver" in window)) return;
+    const observer=new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+            if(entry.isIntersecting){
+                entry.target.classList.add("fee-visible");
+                observer.unobserve(entry.target);
+            }
+        });
+    },{threshold:.12});
+    elements.forEach(function(el){
+        el.classList.add("fee-reveal");
+        observer.observe(el);
+    });
+});
+</script>
 
-    const printWindow = window.open('', '_blank');
+
+<!-- =========================================================
+     PDF / PRINT SCRIPT
+========================================================= -->
+
+<script>
+
+function getFeeCard(id) {
+
+    return document.getElementById(
+        'fee-' + id
+    );
+
+}
+
+
+/* =========================================================
+   DOWNLOAD / PRINT FEE CARD
+========================================================= */
+
+function downloadFeeCard(id) {
+
+    printFeeCard(id);
+
+}
+
+
+/* =========================================================
+   PRINT FEE CARD
+========================================================= */
+
+function printFeeCard(id) {
+
+    const original =
+        getFeeCard(id);
+
+
+    if (!original) {
+
+        alert(
+            'Fee structure not found.'
+        );
+
+        return;
+
+    }
+
+
+    const section =
+        original.cloneNode(true);
+
+
+    const actions =
+        section.querySelector(
+            '.card-actions'
+        );
+
+
+    if (actions) {
+
+        actions.remove();
+
+    }
+
+
+    const notes =
+        section.querySelector(
+            '.fee-notes'
+        );
+
+
+    const session =
+        '<%= currentSession %>';
+
+
+    const schoolName =
+        '<%= schoolName.replace(/'/g, "\\'") %>';
+
+
+    const schoolLogo =
+        '<%= schoolLogo.replace(/'/g, "\\'") %>';
+
+
+    const printWindow =
+        window.open(
+            '',
+            '_blank'
+        );
+
+
+    if (!printWindow) {
+
+        alert(
+            'Please allow pop-ups to print or download the fee structure.'
+        );
+
+        return;
+
+    }
+
 
     printWindow.document.write(`
-      <html>
-      <head>
-        <title>Fees Structure</title>
-        <style>
-          body{font-family:Arial;padding:35px;color:#111}
-          .print-header{text-align:center;margin-bottom:25px}
-          .print-header img{width:90px;height:90px;object-fit:contain}
-          .print-header h1{color:#001f3f;margin:10px 0 4px}
-          .fees-card{border:2px solid #001f3f;border-radius:16px;overflow:hidden}
-          .fees-head{background:#001f3f;color:white;text-align:center;padding:22px}
-          .fees-head i{display:none}
-          .fees-head h3{font-size:28px;margin:0;color:white}
-          .fees-head p{margin:6px 0 0}
-          table{width:100%;border-collapse:collapse}
-          td{padding:14px 18px;border:1px solid #ddd;font-weight:bold}
-          td:last-child{text-align:right;color:#001f3f}
-          .total td{background:#ffc300;color:#001f3f;font-size:18px}
-          .note{margin-top:20px;font-size:14px;color:#444}
-        </style>
-      </head>
-      <body>
-        <div class="print-header">
-          <img src="/images/logo.png">
-          <h1>Gyan Jyoti School</h1>
-          <p>Fees Structure - Session 2026-27</p>
-        </div>
 
-        ${section.outerHTML}
+        <!DOCTYPE html>
 
-        <p class="note">
-          Note: Transport, uniform and books charges may be separate.
-          Please contact school office for final confirmation.
-        </p>
-      </body>
-      </html>
+        <html>
+
+        <head>
+
+            <meta charset="UTF-8">
+
+            <title>
+                ${schoolName} - Fees Structure
+            </title>
+
+
+            <style>
+
+                * {
+                    box-sizing: border-box;
+                }
+
+
+                @page {
+                    size: A4;
+                    margin: 15mm;
+                }
+
+
+                body {
+
+                    margin: 0;
+
+                    font-family:
+                        Arial,
+                        Helvetica,
+                        sans-serif;
+
+                    color: #172b3f;
+
+                    background: #fff;
+
+                }
+
+
+                .print-header {
+
+                    text-align: center;
+
+                    padding-bottom: 22px;
+
+                    margin-bottom: 25px;
+
+                    border-bottom:
+                        3px solid
+                        #ffc300;
+
+                }
+
+
+                .print-header img {
+
+                    width: 85px;
+
+                    height: 85px;
+
+                    object-fit: contain;
+
+                    border-radius: 50%;
+
+                }
+
+
+                .print-header h1 {
+
+                    margin:
+                        8px 0 4px;
+
+                    color: #8b0000;
+
+                    font-size: 27px;
+
+                }
+
+
+                .print-header h2 {
+
+                    margin:
+                        0 0 5px;
+
+                    color: #001f3f;
+
+                    font-size: 21px;
+
+                }
+
+
+                .print-header p {
+
+                    margin: 0;
+
+                    color: #666;
+
+                    font-size: 13px;
+
+                }
+
+
+                .fees-card {
+
+                    border:
+                        2px solid
+                        #001f3f;
+
+                    border-radius: 16px;
+
+                    overflow: hidden;
+
+                    box-shadow: none;
+
+                }
+
+
+                .fees-head {
+
+                    background: #001f3f !important;
+
+                    color: #fff !important;
+
+                    text-align: center;
+
+                    padding: 28px;
+
+                }
+
+
+                .fees-icon {
+
+                    width: auto !important;
+
+                    height: auto !important;
+
+                    background: transparent !important;
+
+                    border: none !important;
+
+                }
+
+
+                .fees-icon i {
+
+                    color: #ffc300 !important;
+
+                    font-size: 28px;
+
+                }
+
+
+                .card-number {
+
+                    display: none;
+
+                }
+
+
+                .fees-section-label {
+
+                    color: #ffc300 !important;
+
+                    font-size: 10px;
+
+                    font-weight: bold;
+
+                }
+
+
+                .fees-head h3 {
+
+                    color: #fff !important;
+
+                    font-size: 26px;
+
+                    margin: 8px 0;
+
+                }
+
+
+                .fees-head p {
+
+                    color: #fff !important;
+
+                }
+
+
+                .card-session {
+
+                    color: #fff !important;
+
+                }
+
+
+                .fee-row {
+
+                    display: flex;
+
+                    justify-content: space-between;
+
+                    align-items: center;
+
+                    padding: 14px 18px;
+
+                    border-bottom:
+                        1px solid
+                        #ddd;
+
+                }
+
+
+                .fee-row-number {
+
+                    display: none;
+
+                }
+
+
+                .fee-name {
+
+                    font-size: 14px;
+
+                    font-weight: bold;
+
+                }
+
+
+                .fee-amount {
+
+                    color: #001f3f;
+
+                    font-weight: bold;
+
+                }
+
+
+                .annual-row {
+
+                    display: flex;
+
+                    justify-content: space-between;
+
+                    padding: 17px 18px;
+
+                    background: #ffc300 !important;
+
+                    color: #001f3f !important;
+
+                }
+
+
+                .annual-row strong {
+
+                    font-size: 18px;
+
+                }
+
+
+                .annual-row small {
+
+                    display: none;
+
+                }
+
+
+                .fee-notes {
+
+                    padding: 12px 18px;
+
+                    background: #fffdf4;
+
+                }
+
+
+                .fee-notes p {
+
+                    font-size: 11px;
+
+                }
+
+
+                .print-footer {
+
+                    margin-top: 25px;
+
+                    padding-top: 15px;
+
+                    border-top:
+                        1px solid
+                        #ddd;
+
+                    font-size: 11px;
+
+                    color: #666;
+
+                    line-height: 1.6;
+
+                }
+
+            </style>
+
+        </head>
+
+
+        <body>
+
+
+            <div class="print-header">
+
+                <img
+                    src="${schoolLogo}"
+                    alt="School Logo"
+                >
+
+                <h1>
+                    ${schoolName}
+                </h1>
+
+                <h2>
+                    Fees Structure
+                </h2>
+
+                <p>
+                    Academic Session ${session}
+                </p>
+
+            </div>
+
+
+            ${section.outerHTML}
+
+
+            <div class="print-footer">
+
+                <strong>
+                    Important Note:
+                </strong>
+
+                Transport, uniform, books and other
+                applicable charges may be separate.
+                Please contact the school office for
+                final confirmation of applicable fees.
+
+                <br><br>
+
+                This fee structure is intended for
+                informational purposes.
+
+            </div>
+
+
+        </body>
+
+        </html>
+
     `);
 
+
     printWindow.document.close();
+
     printWindow.focus();
 
-    setTimeout(() => {
-      printWindow.print();
-    }, 500);
-  }
+
+    setTimeout(
+        function () {
+
+            printWindow.print();
+
+        },
+        600
+    );
+
+}
+
 </script>
+
 
 <%- include('partials/footer') %>

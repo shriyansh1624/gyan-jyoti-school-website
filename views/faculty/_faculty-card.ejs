@@ -1,0 +1,84 @@
+<article class="faculty-card">
+
+    <div class="faculty-card-image">
+
+        <img
+            src="<%= faculty.image || '/images/logo.png' %>"
+            alt="<%= faculty.name || 'Faculty Member' %>"
+            loading="lazy"
+            onerror="this.src='/images/logo.png'"
+        >
+
+    </div>
+
+
+    <div class="faculty-card-body">
+
+        <h4>
+            <%= faculty.name || 'Faculty Member' %>
+        </h4>
+
+
+        <span class="faculty-role">
+            <%= faculty.role || 'Faculty' %>
+        </span>
+
+
+        <div class="faculty-info">
+
+            <% if (faculty.specialization) { %>
+
+                <div class="faculty-info-row">
+
+                    <i class="fas fa-book-open"></i>
+
+                    <span>
+                        <%= faculty.specialization %>
+                    </span>
+
+                </div>
+
+            <% } %>
+
+
+            <% if (faculty.department) { %>
+
+                <div class="faculty-info-row">
+
+                    <i class="fas fa-building"></i>
+
+                    <span>
+                        <%= faculty.department %>
+                    </span>
+
+                </div>
+
+            <% } %>
+
+        </div>
+
+
+        <% if (
+            faculty.qualities &&
+            faculty.qualities.length
+        ) { %>
+
+            <div class="qualities">
+
+                <% faculty.qualities
+                    .slice(0, 4)
+                    .forEach(quality => { %>
+
+                    <span class="quality-chip">
+                        <%= quality %>
+                    </span>
+
+                <% }) %>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</article>

@@ -1,0 +1,2922 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Fees Management | Admin</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           ROOT
+        ====================================================== */
+
+        :root {
+
+            --navy: #001f3f;
+            --navy-2: #032e59;
+            --blue: #07528d;
+            --blue-light: #eaf4ff;
+
+            --gold: #ffc300;
+            --gold-light: #fff5cf;
+
+            --green: #0a9b50;
+            --green-light: #e8fff2;
+
+            --red: #d13c3c;
+            --red-light: #fff0f0;
+
+            --text: #142b49;
+            --muted: #7588a2;
+
+            --border: #e2e9f2;
+
+            --bg: #f3f7fb;
+
+            --white: #ffffff;
+
+            --shadow:
+                0 16px 45px
+                rgba(0,31,63,.08);
+
+            --shadow-hover:
+                0 24px 55px
+                rgba(0,31,63,.14);
+
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+
+            margin: 0;
+
+            padding: 0;
+
+            width: 100%;
+
+            min-height: 100%;
+
+        }
+
+
+        body {
+
+            font-family:
+                "Segoe UI",
+                Tahoma,
+                Geneva,
+                Verdana,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef4fa 0%,
+                    #f8fbfe 45%,
+                    #edf4fa 100%
+                );
+
+            color: var(--text);
+
+        }
+
+
+        /* =====================================================
+           PAGE
+        ====================================================== */
+
+        .fees-page {
+
+            min-height: 100vh;
+
+            padding:
+                28px 32px 60px;
+
+        }
+
+
+        .fees-container {
+
+            width: 100%;
+
+            max-width: 1540px;
+
+            margin: auto;
+
+        }
+
+
+        /* =====================================================
+           TOP HERO
+        ====================================================== */
+
+        .hero {
+
+            position: relative;
+
+            overflow: hidden;
+
+            min-height: 205px;
+
+            padding: 32px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #001f3f 0%,
+                    #043c70 55%,
+                    #075b98 100%
+                );
+
+            color: #fff;
+
+            box-shadow:
+                0 22px 55px
+                rgba(0,31,63,.20);
+
+            margin-bottom: 24px;
+
+        }
+
+
+        .hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 350px;
+
+            height: 350px;
+
+            right: -120px;
+
+            top: -190px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,195,0,.14);
+
+        }
+
+
+        .hero::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+
+            height: 220px;
+
+            right: 170px;
+
+            bottom: -170px;
+
+            border-radius: 50%;
+
+            border:
+                35px solid
+                rgba(255,255,255,.04);
+
+        }
+
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 30px;
+
+        }
+
+
+        .hero-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+        }
+
+
+        .hero-icon {
+
+            width: 76px;
+
+            height: 76px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffc300,
+                    #ffdb4c
+                );
+
+            color: var(--navy);
+
+            font-size: 31px;
+
+            box-shadow:
+                0 15px 30px
+                rgba(0,0,0,.20);
+
+        }
+
+
+        .hero h1 {
+
+            margin: 0;
+
+            font-size: 33px;
+
+            font-weight: 950;
+
+            letter-spacing: -.5px;
+
+        }
+
+
+        .hero p {
+
+            margin:
+                7px 0 0;
+
+            color:
+                rgba(255,255,255,.72);
+
+            font-size: 14px;
+
+        }
+
+
+        .hero-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+        }
+
+
+        .hero-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 9px;
+
+            min-height: 48px;
+
+            padding:
+                0 19px;
+
+            border-radius: 13px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 900;
+
+            transition: .25s;
+
+        }
+
+
+        .hero-btn-primary {
+
+            background: var(--gold);
+
+            color: var(--navy);
+
+            box-shadow:
+                0 12px 28px
+                rgba(0,0,0,.18);
+
+        }
+
+
+        .hero-btn-primary:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 17px 35px
+                rgba(0,0,0,.24);
+
+        }
+
+
+        .hero-btn-secondary {
+
+            color: #fff;
+
+            border:
+                1px solid
+                rgba(255,255,255,.25);
+
+            background:
+                rgba(255,255,255,.08);
+
+        }
+
+
+        .hero-btn-secondary:hover {
+
+            background:
+                rgba(255,255,255,.15);
+
+        }
+
+
+        /* =====================================================
+           STATS
+        ====================================================== */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 17px;
+
+            margin-bottom: 24px;
+
+        }
+
+
+        .stat {
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                rgba(255,255,255,.96);
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 20px;
+
+            padding: 20px;
+
+            box-shadow: var(--shadow);
+
+            transition: .25s;
+
+        }
+
+
+        .stat:hover {
+
+            transform:
+                translateY(-4px);
+
+            box-shadow:
+                var(--shadow-hover);
+
+        }
+
+
+        .stat::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 85px;
+
+            height: 85px;
+
+            right: -25px;
+
+            bottom: -30px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0,31,63,.025);
+
+        }
+
+
+        .stat-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+        }
+
+
+        .stat-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 15px;
+
+            font-size: 19px;
+
+        }
+
+
+        .stat:nth-child(1)
+        .stat-icon {
+
+            color: #0067b1;
+
+            background:
+                var(--blue-light);
+
+        }
+
+
+        .stat:nth-child(2)
+        .stat-icon {
+
+            color: var(--green);
+
+            background:
+                var(--green-light);
+
+        }
+
+
+        .stat:nth-child(3)
+        .stat-icon {
+
+            color: #d69400;
+
+            background:
+                var(--gold-light);
+
+        }
+
+
+        .stat:nth-child(4)
+        .stat-icon {
+
+            color: #c53c3c;
+
+            background:
+                var(--red-light);
+
+        }
+
+
+        .stat-label {
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+        }
+
+
+        .stat-number {
+
+            margin-top: 5px;
+
+            color: var(--navy);
+
+            font-size: 27px;
+
+            font-weight: 950;
+
+        }
+
+
+        /* =====================================================
+           MAIN GRID
+        ====================================================== */
+
+        .dashboard-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                330px;
+
+            gap: 22px;
+
+        }
+
+
+        /* =====================================================
+           MAIN PANEL
+        ====================================================== */
+
+        .panel {
+
+            background:
+                rgba(255,255,255,.97);
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 23px;
+
+            box-shadow: var(--shadow);
+
+            overflow: hidden;
+
+        }
+
+
+        .panel-header {
+
+            padding:
+                20px 22px;
+
+            border-bottom:
+                1px solid
+                #edf1f6;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+        }
+
+
+        .panel-heading {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+        .panel-heading-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 13px;
+
+            color: var(--navy);
+
+            background:
+                var(--gold-light);
+
+        }
+
+
+        .panel-heading h2 {
+
+            margin: 0;
+
+            color: var(--navy);
+
+            font-size: 17px;
+
+            font-weight: 900;
+
+        }
+
+
+        .panel-heading p {
+
+            margin:
+                3px 0 0;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+        }
+
+
+        /* =====================================================
+           TOOLBAR
+        ====================================================== */
+
+        .toolbar {
+
+            padding: 16px;
+
+            display: flex;
+
+            gap: 10px;
+
+            border-bottom:
+                1px solid
+                #edf1f6;
+
+            background:
+                #fbfdff;
+
+        }
+
+
+        .search {
+
+            position: relative;
+
+            flex: 1;
+
+        }
+
+
+        .search i {
+
+            position: absolute;
+
+            left: 16px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color: #8ba0b8;
+
+        }
+
+
+        .search input {
+
+            width: 100%;
+
+            height: 47px;
+
+            border:
+                1px solid
+                #dce5ef;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            padding:
+                0 15px 0 44px;
+
+            color: var(--text);
+
+            font-size: 13px;
+
+            transition: .2s;
+
+        }
+
+
+        .search input:focus {
+
+            border-color:
+                var(--gold);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(255,195,0,.12);
+
+        }
+
+
+        .filter {
+
+            min-width: 145px;
+
+            height: 47px;
+
+            padding:
+                0 13px;
+
+            border:
+                1px solid
+                #dce5ef;
+
+            border-radius: 12px;
+
+            background: #fff;
+
+            color: var(--text);
+
+            outline: none;
+
+            font-weight: 750;
+
+        }
+
+
+        /* =====================================================
+           TABLE
+        ====================================================== */
+
+        .table-wrap {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+
+        th {
+
+            text-align: left;
+
+            padding:
+                14px 20px;
+
+            background:
+                #f7faff;
+
+            color: #8092a8;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .6px;
+
+            font-weight: 900;
+
+            white-space: nowrap;
+
+        }
+
+
+        td {
+
+            padding:
+                15px 20px;
+
+            border-top:
+                1px solid
+                #edf1f6;
+
+            vertical-align: middle;
+
+        }
+
+
+        tbody tr {
+
+            transition: .2s;
+
+        }
+
+
+        tbody tr:hover {
+
+            background:
+                #fbfdff;
+
+        }
+
+
+        .structure {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            min-width: 190px;
+
+        }
+
+
+        .structure-icon {
+
+            width: 43px;
+
+            height: 43px;
+
+            border-radius: 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--navy),
+                    var(--blue)
+                );
+
+            color: var(--gold);
+
+        }
+
+
+        .structure-name {
+
+            color: var(--navy);
+
+            font-size: 13px;
+
+            font-weight: 900;
+
+        }
+
+
+        .structure-range {
+
+            margin-top: 3px;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+        }
+
+
+        .session {
+
+            display: inline-flex;
+
+            padding:
+                6px 9px;
+
+            border-radius: 8px;
+
+            background:
+                #f0f5fb;
+
+            color: #536b86;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+        }
+
+
+        .annual {
+
+            color: var(--navy);
+
+            font-weight: 950;
+
+            white-space: nowrap;
+
+        }
+
+
+        .status {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding:
+                6px 10px;
+
+            border-radius: 30px;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+        }
+
+
+        .status.published {
+
+            background:
+                var(--green-light);
+
+            color:
+                var(--green);
+
+        }
+
+
+        .status.hidden {
+
+            background:
+                var(--gold-light);
+
+            color:
+                #9b6800;
+
+        }
+
+
+        .actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+        }
+
+
+        .action {
+
+            width: 34px;
+
+            height: 34px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            transition: .2s;
+
+        }
+
+
+        .action:hover {
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        .action.edit {
+
+            background:
+                var(--blue-light);
+
+            color:
+                #0066af;
+
+        }
+
+
+        .action.toggle {
+
+            background:
+                var(--green-light);
+
+            color:
+                var(--green);
+
+        }
+
+
+        .action.delete {
+
+            background:
+                var(--red-light);
+
+            color:
+                var(--red);
+
+        }
+
+
+        .inline {
+
+            display: inline;
+
+            margin: 0;
+
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ====================================================== */
+
+        .empty {
+
+            padding:
+                70px 25px;
+
+            text-align: center;
+
+        }
+
+
+        .empty-icon {
+
+            width: 92px;
+
+            height: 92px;
+
+            margin:
+                0 auto 18px;
+
+            border-radius: 27px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #edf5ff,
+                    #e5eef9
+                );
+
+            color:
+                #66819c;
+
+            font-size: 32px;
+
+        }
+
+
+        .empty h3 {
+
+            margin:
+                0 0 8px;
+
+            color: var(--navy);
+
+            font-size: 21px;
+
+            font-weight: 950;
+
+        }
+
+
+        .empty p {
+
+            max-width: 510px;
+
+            margin:
+                0 auto 22px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.65;
+
+        }
+
+
+        /* =====================================================
+           SIDE PANEL
+        ====================================================== */
+
+        .side {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 18px;
+
+        }
+
+
+        .quick-panel {
+
+            padding: 20px;
+
+        }
+
+
+        .quick-title {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .quick-title h3 {
+
+            margin: 0;
+
+            color: var(--navy);
+
+            font-size: 15px;
+
+            font-weight: 900;
+
+        }
+
+
+        .quick-title i {
+
+            color: var(--gold);
+
+        }
+
+
+        .quick-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                12px;
+
+            border-radius: 13px;
+
+            background:
+                #f8fbff;
+
+            margin-bottom: 9px;
+
+            border:
+                1px solid
+                #edf2f7;
+
+        }
+
+
+        .quick-item:last-child {
+
+            margin-bottom: 0;
+
+        }
+
+
+        .quick-item-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            flex-shrink: 0;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: var(--navy);
+
+            background:
+                var(--gold-light);
+
+        }
+
+
+        .quick-item strong {
+
+            display: block;
+
+            color: var(--navy);
+
+            font-size: 12px;
+
+        }
+
+
+        .quick-item span {
+
+            display: block;
+
+            margin-top: 2px;
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+        }
+
+
+        /* =====================================================
+           SECTION SUMMARY
+        ====================================================== */
+
+        .section-summary {
+
+            padding: 20px;
+
+        }
+
+
+        .summary-title {
+
+            margin:
+                0 0 17px;
+
+            color: var(--navy);
+
+            font-size: 15px;
+
+            font-weight: 900;
+
+        }
+
+
+        .section-row {
+
+            margin-bottom: 16px;
+
+        }
+
+
+        .section-row:last-child {
+
+            margin-bottom: 0;
+
+        }
+
+
+        .section-row-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .section-row-top span {
+
+            color: #536b86;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+        }
+
+
+        .section-row-top strong {
+
+            color: var(--navy);
+
+            font-size: 11px;
+
+        }
+
+
+        .progress {
+
+            height: 7px;
+
+            border-radius: 20px;
+
+            background:
+                #edf2f7;
+
+            overflow: hidden;
+
+        }
+
+
+        .progress span {
+
+            display: block;
+
+            height: 100%;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--navy),
+                    var(--gold)
+                );
+
+        }
+
+
+        /* =====================================================
+           NO RESULTS
+        ====================================================== */
+
+        #noResults {
+
+            display: none;
+
+            padding:
+                55px 20px;
+
+            text-align: center;
+
+        }
+
+
+        #noResults i {
+
+            font-size: 32px;
+
+            color:
+                #91a4ba;
+
+        }
+
+
+        #noResults h3 {
+
+            color: var(--navy);
+
+            margin:
+                13px 0 5px;
+
+        }
+
+
+        #noResults p {
+
+            color: var(--muted);
+
+            margin: 0;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media(max-width:1200px) {
+
+            .dashboard-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .side {
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media(max-width:950px) {
+
+            .stats {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .hero-content {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .hero-actions {
+
+                width: 100%;
+
+            }
+
+        }
+
+
+        @media(max-width:700px) {
+
+            .fees-page {
+
+                padding:
+                    18px 13px 45px;
+
+            }
+
+
+            .hero {
+
+                padding: 23px;
+
+                border-radius: 21px;
+
+            }
+
+
+            .hero-left {
+
+                align-items:
+                    flex-start;
+
+            }
+
+
+            .hero-icon {
+
+                width: 58px;
+
+                height: 58px;
+
+                border-radius: 17px;
+
+                font-size: 24px;
+
+            }
+
+
+            .hero h1 {
+
+                font-size: 25px;
+
+            }
+
+
+            .hero-actions {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .hero-btn {
+
+                width: 100%;
+
+            }
+
+
+            .stats {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+                gap: 10px;
+
+            }
+
+
+            .stat {
+
+                padding: 15px;
+
+            }
+
+
+            .stat-number {
+
+                font-size: 21px;
+
+            }
+
+
+            .toolbar {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .filter {
+
+                width: 100%;
+
+            }
+
+
+            .side {
+
+                display: flex;
+
+            }
+
+        }
+
+
+        @media(max-width:430px) {
+
+            .stats {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .hero-left {
+
+                gap: 12px;
+
+            }
+
+
+            .hero p {
+
+                font-size: 12px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="fees-page">
+
+<div class="fees-container">
+
+
+<%
+    /* =====================================================
+       SAFE DATA
+    ====================================================== */
+
+    let data = [];
+
+    if (
+        typeof feeStructures !== 'undefined' &&
+        Array.isArray(feeStructures)
+    ) {
+
+        data = feeStructures;
+
+    } else if (
+        typeof fees !== 'undefined' &&
+        Array.isArray(fees)
+    ) {
+
+        data = fees;
+
+    } else if (
+        typeof structures !== 'undefined' &&
+        Array.isArray(structures)
+    ) {
+
+        data = structures;
+
+    }
+
+
+    const total =
+        data.length;
+
+
+    const published =
+        data.filter(
+            fee => fee && fee.published
+        ).length;
+
+
+    const hidden =
+        total - published;
+
+
+    const sessionCount =
+        new Set(
+            data
+                .map(
+                    fee => fee && fee.session
+                )
+                .filter(Boolean)
+        ).size;
+
+
+    const sectionCount = {
+
+        primary:
+            data.filter(
+                fee =>
+                    fee &&
+                    fee.section === 'primary'
+            ).length,
+
+        middle:
+            data.filter(
+                fee =>
+                    fee &&
+                    fee.section === 'middle'
+            ).length,
+
+        secondary:
+            data.filter(
+                fee =>
+                    fee &&
+                    fee.section === 'secondary'
+            ).length,
+
+        senior:
+            data.filter(
+                fee =>
+                    fee &&
+                    fee.section === 'senior-secondary'
+            ).length
+
+    };
+
+
+    function money(value) {
+
+        return Number(
+            value || 0
+        ).toLocaleString(
+            'en-IN'
+        );
+
+    }
+
+
+    function sectionName(value) {
+
+        if (!value) {
+
+            return 'Fee Structure';
+
+        }
+
+        return String(value)
+            .replace(/-/g, ' ')
+            .replace(
+                /\b\w/g,
+                char =>
+                    char.toUpperCase()
+            );
+
+    }
+
+%>
+
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
+<section class="hero">
+
+
+    <div class="hero-content">
+
+
+        <div class="hero-left">
+
+
+            <div class="hero-icon">
+
+                <i class="fas fa-file-invoice-dollar"></i>
+
+            </div>
+
+
+            <div>
+
+                <h1>
+                    Fees Structure
+                </h1>
+
+
+                <p>
+                    Centralized control for academic fees,
+                    sessions, sections and publication.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="hero-actions">
+
+
+            <a
+                href="/admin/fees/add"
+                class="hero-btn hero-btn-primary"
+            >
+
+                <i class="fas fa-plus"></i>
+
+                Add Fee Structure
+
+            </a>
+
+
+            <a
+                href="/fees"
+                target="_blank"
+                class="hero-btn hero-btn-secondary"
+            >
+
+                <i class="fas fa-arrow-up-right-from-square"></i>
+
+                View Website
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+<!-- =====================================================
+     STATS
+====================================================== -->
+
+<section class="stats">
+
+
+    <div class="stat">
+
+        <div class="stat-top">
+
+            <div>
+
+                <div class="stat-label">
+                    Total Structures
+                </div>
+
+                <div class="stat-number">
+                    <%= total %>
+                </div>
+
+            </div>
+
+
+            <div class="stat-icon">
+
+                <i class="fas fa-layer-group"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-top">
+
+            <div>
+
+                <div class="stat-label">
+                    Published
+                </div>
+
+                <div class="stat-number">
+                    <%= published %>
+                </div>
+
+            </div>
+
+
+            <div class="stat-icon">
+
+                <i class="fas fa-circle-check"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-top">
+
+            <div>
+
+                <div class="stat-label">
+                    Hidden
+                </div>
+
+                <div class="stat-number">
+                    <%= hidden %>
+                </div>
+
+            </div>
+
+
+            <div class="stat-icon">
+
+                <i class="fas fa-eye-slash"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-top">
+
+            <div>
+
+                <div class="stat-label">
+                    Academic Sessions
+                </div>
+
+                <div class="stat-number">
+                    <%= sessionCount %>
+                </div>
+
+            </div>
+
+
+            <div class="stat-icon">
+
+                <i class="fas fa-calendar-days"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- =====================================================
+     DASHBOARD
+====================================================== -->
+
+<div class="dashboard-grid">
+
+
+<!-- =====================================================
+     LEFT MAIN PANEL
+====================================================== -->
+
+<section class="panel">
+
+
+    <div class="panel-header">
+
+
+        <div class="panel-heading">
+
+
+            <div class="panel-heading-icon">
+
+                <i class="fas fa-table-list"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Fee Structures
+                </h2>
+
+                <p>
+                    Manage all academic fee configurations
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <span
+            style="
+                color:#7588a2;
+                font-size:11px;
+                font-weight:800;
+            "
+        >
+
+            <%= total %> Records
+
+        </span>
+
+
+    </div>
+
+
+    <!-- =================================================
+         TOOLBAR
+    ================================================== -->
+
+    <div class="toolbar">
+
+
+        <div class="search">
+
+            <i class="fas fa-search"></i>
+
+            <input
+                id="feeSearch"
+                type="search"
+                placeholder="Search section, class, session..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <select
+            id="statusFilter"
+            class="filter"
+        >
+
+            <option value="all">
+                All Status
+            </option>
+
+            <option value="published">
+                Published
+            </option>
+
+            <option value="hidden">
+                Hidden
+            </option>
+
+        </select>
+
+
+        <select
+            id="sectionFilter"
+            class="filter"
+        >
+
+            <option value="all">
+                All Sections
+            </option>
+
+            <option value="primary">
+                Primary
+            </option>
+
+            <option value="middle">
+                Middle
+            </option>
+
+            <option value="secondary">
+                Secondary
+            </option>
+
+            <option value="senior-secondary">
+                Senior Secondary
+            </option>
+
+        </select>
+
+
+    </div>
+
+
+<% if (data.length > 0) { %>
+
+
+    <div class="table-wrap">
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Structure
+                    </th>
+
+                    <th>
+                        Session
+                    </th>
+
+                    <th>
+                        Annual Approx.
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="feeTable">
+
+
+            <% data.forEach(
+                function(fee) {
+
+                    const section =
+                        fee.section || '';
+
+                    const label =
+                        sectionName(
+                            section
+                        );
+
+            %>
+
+
+                <tr
+                    class="fee-row-item"
+
+                    data-search="<%= (
+                        (fee.title || '') +
+                        ' ' +
+                        (fee.classRange || '') +
+                        ' ' +
+                        (fee.session || '') +
+                        ' ' +
+                        label
+                    ).toLowerCase() %>"
+
+                    data-status="<%= fee.published
+                        ? 'published'
+                        : 'hidden' %>"
+
+                    data-section="<%= section %>"
+                >
+
+
+                    <td>
+
+
+                        <div class="structure">
+
+
+                            <div class="structure-icon">
+
+                                <i class="<%= fee.icon || 'fas fa-graduation-cap' %>"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="structure-name">
+
+                                    <%= fee.title || label %>
+
+                                </div>
+
+
+                                <div class="structure-range">
+
+                                    <%= fee.classRange || 'Class range not specified' %>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </td>
+
+
+                    <td>
+
+                        <% if (fee.session) { %>
+
+                            <span class="session">
+
+                                <%= fee.session %>
+
+                            </span>
+
+                        <% } else { %>
+
+                            <span class="session">
+                                —
+                            </span>
+
+                        <% } %>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="annual">
+
+                            ₹ <%= money(
+                                fee.annualApprox
+                            ) %>
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+
+                        <% if (fee.published) { %>
+
+                            <span
+                                class="status published"
+                            >
+
+                                <i class="fas fa-circle-check"></i>
+
+                                Published
+
+                            </span>
+
+                        <% } else { %>
+
+                            <span
+                                class="status hidden"
+                            >
+
+                                <i class="fas fa-eye-slash"></i>
+
+                                Hidden
+
+                            </span>
+
+                        <% } %>
+
+
+                    </td>
+
+
+                    <td>
+
+
+                        <div class="actions">
+
+
+                            <a
+                                href="/admin/fees/edit/<%= fee._id %>"
+                                class="action edit"
+                                title="Edit"
+                            >
+
+                                <i class="fas fa-pen"></i>
+
+                            </a>
+
+
+                            <form
+                                method="POST"
+                                action="/admin/fees/toggle/<%= fee._id %>"
+                                class="inline"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="_csrf"
+                                    value="<%= typeof csrfToken !== 'undefined'
+                                        ? csrfToken
+                                        : '' %>"
+                                >
+
+
+                                <button
+                                    type="submit"
+                                    class="action toggle"
+                                    title="<%= fee.published
+                                        ? 'Hide'
+                                        : 'Publish' %>"
+                                >
+
+                                    <i class="fas <%= fee.published
+                                        ? 'fa-eye-slash'
+                                        : 'fa-eye' %>"></i>
+
+                                </button>
+
+                            </form>
+
+
+                            <form
+                                method="POST"
+                                action="/admin/fees/delete/<%= fee._id %>"
+                                class="inline delete-form"
+                            >
+
+                                <input
+                                    type="hidden"
+                                    name="_csrf"
+                                    value="<%= typeof csrfToken !== 'undefined'
+                                        ? csrfToken
+                                        : '' %>"
+                                >
+
+
+                                <button
+                                    type="submit"
+                                    class="action delete"
+                                    title="Delete"
+                                >
+
+                                    <i class="fas fa-trash"></i>
+
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+
+                    </td>
+
+
+                </tr>
+
+
+            <% }); %>
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+    <div id="noResults">
+
+
+        <i class="fas fa-magnifying-glass"></i>
+
+
+        <h3>
+            No Matching Structures
+        </h3>
+
+
+        <p>
+            Try changing your search or filters.
+        </p>
+
+
+    </div>
+
+
+<% } else { %>
+
+
+    <!-- =================================================
+         PREMIUM EMPTY STATE
+    ================================================== -->
+
+    <div class="empty">
+
+
+        <div class="empty-icon">
+
+            <i class="fas fa-file-invoice-dollar"></i>
+
+        </div>
+
+
+        <h3>
+            No Fee Structures Yet
+        </h3>
+
+
+        <p>
+
+            Your fee management system is ready.
+            Create your Primary, Middle, Secondary or
+            Senior Secondary structure and manage its
+            fees, session and publishing status from here.
+
+        </p>
+
+
+        <a
+            href="/admin/fees/add"
+            class="hero-btn hero-btn-primary"
+            style="
+                display:inline-flex;
+                background:#001f3f;
+                color:#fff;
+            "
+        >
+
+            <i
+                class="fas fa-plus"
+                style="color:#ffc300;"
+            ></i>
+
+            Create First Structure
+
+        </a>
+
+
+    </div>
+
+
+<% } %>
+
+
+</section>
+
+
+<!-- =====================================================
+     RIGHT SIDEBAR
+====================================================== -->
+
+<aside class="side">
+
+
+    <!-- =================================================
+         QUICK ACTIONS
+    ================================================== -->
+
+    <section class="panel quick-panel">
+
+
+        <div class="quick-title">
+
+            <h3>
+                Quick Actions
+            </h3>
+
+            <i class="fas fa-bolt"></i>
+
+        </div>
+
+
+        <a
+            href="/admin/fees/add"
+            style="text-decoration:none;"
+        >
+
+            <div class="quick-item">
+
+                <div class="quick-item-icon">
+
+                    <i class="fas fa-plus"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Add Structure
+                    </strong>
+
+                    <span>
+                        Create a new academic fee
+                    </span>
+
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="/fees"
+            target="_blank"
+            style="text-decoration:none;"
+        >
+
+            <div class="quick-item">
+
+                <div class="quick-item-icon">
+
+                    <i class="fas fa-globe"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        View Public Page
+                    </strong>
+
+                    <span>
+                        Check live fees page
+                    </span>
+
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <div class="quick-item">
+
+            <div class="quick-item-icon">
+
+                <i class="fas fa-shield-halved"></i>
+
+            </div>
+
+            <div>
+
+                <strong>
+                    Publishing Control
+                </strong>
+
+                <span>
+                    Only published fees are public
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =================================================
+         SECTION SUMMARY
+    ================================================== -->
+
+    <section class="panel section-summary">
+
+
+        <h3 class="summary-title">
+            Section Overview
+        </h3>
+
+
+        <div class="section-row">
+
+
+            <div class="section-row-top">
+
+                <span>
+                    Primary
+                </span>
+
+                <strong>
+                    <%= sectionCount.primary %>
+                </strong>
+
+            </div>
+
+
+            <div class="progress">
+
+                <span
+                    style="
+                        width:<%= total
+                            ? (sectionCount.primary / total) * 100
+                            : 0 %>%;
+                    "
+                ></span>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="section-row">
+
+
+            <div class="section-row-top">
+
+                <span>
+                    Middle
+                </span>
+
+                <strong>
+                    <%= sectionCount.middle %>
+                </strong>
+
+            </div>
+
+
+            <div class="progress">
+
+                <span
+                    style="
+                        width:<%= total
+                            ? (sectionCount.middle / total) * 100
+                            : 0 %>%;
+                    "
+                ></span>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="section-row">
+
+
+            <div class="section-row-top">
+
+                <span>
+                    Secondary
+                </span>
+
+                <strong>
+                    <%= sectionCount.secondary %>
+                </strong>
+
+            </div>
+
+
+            <div class="progress">
+
+                <span
+                    style="
+                        width:<%= total
+                            ? (sectionCount.secondary / total) * 100
+                            : 0 %>%;
+                    "
+                ></span>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="section-row">
+
+
+            <div class="section-row-top">
+
+                <span>
+                    Senior Secondary
+                </span>
+
+                <strong>
+                    <%= sectionCount.senior %>
+                </strong>
+
+            </div>
+
+
+            <div class="progress">
+
+                <span
+                    style="
+                        width:<%= total
+                            ? (sectionCount.senior / total) * 100
+                            : 0 %>%;
+                    "
+                ></span>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</aside>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+
+
+        const search =
+            document.getElementById(
+                'feeSearch'
+            );
+
+
+        const status =
+            document.getElementById(
+                'statusFilter'
+            );
+
+
+        const section =
+            document.getElementById(
+                'sectionFilter'
+            );
+
+
+        const rows =
+            document.querySelectorAll(
+                '.fee-row-item'
+            );
+
+
+        const noResults =
+            document.getElementById(
+                'noResults'
+            );
+
+
+        function filterRows() {
+
+
+            const query =
+                search
+                    ? search.value
+                        .trim()
+                        .toLowerCase()
+                    : '';
+
+
+            const selectedStatus =
+                status
+                    ? status.value
+                    : 'all';
+
+
+            const selectedSection =
+                section
+                    ? section.value
+                    : 'all';
+
+
+            let visible = 0;
+
+
+            rows.forEach(
+                function(row) {
+
+
+                    const text =
+                        row.dataset.search || '';
+
+
+                    const rowStatus =
+                        row.dataset.status || '';
+
+
+                    const rowSection =
+                        row.dataset.section || '';
+
+
+                    const matchSearch =
+                        !query ||
+                        text.includes(query);
+
+
+                    const matchStatus =
+                        selectedStatus === 'all' ||
+                        rowStatus === selectedStatus;
+
+
+                    const matchSection =
+                        selectedSection === 'all' ||
+                        rowSection === selectedSection;
+
+
+                    const show =
+                        matchSearch &&
+                        matchStatus &&
+                        matchSection;
+
+
+                    row.style.display =
+                        show
+                            ? ''
+                            : 'none';
+
+
+                    if (show) {
+
+                        visible++;
+
+                    }
+
+                }
+            );
+
+
+            if (noResults) {
+
+                noResults.style.display =
+                    visible === 0
+                        ? 'block'
+                        : 'none';
+
+            }
+
+        }
+
+
+        if (search) {
+
+            search.addEventListener(
+                'input',
+                filterRows
+            );
+
+        }
+
+
+        if (status) {
+
+            status.addEventListener(
+                'change',
+                filterRows
+            );
+
+        }
+
+
+        if (section) {
+
+            section.addEventListener(
+                'change',
+                filterRows
+            );
+
+        }
+
+
+        /* =================================================
+           DELETE CONFIRMATION
+        ================================================== */
+
+        document
+            .querySelectorAll(
+                '.delete-form'
+            )
+            .forEach(
+                function(form) {
+
+
+                    form.addEventListener(
+                        'submit',
+                        function(event) {
+
+
+                            const okay =
+                                window.confirm(
+                                    'Are you sure you want to permanently delete this fee structure?'
+                                );
+
+
+                            if (!okay) {
+
+                                event.preventDefault();
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

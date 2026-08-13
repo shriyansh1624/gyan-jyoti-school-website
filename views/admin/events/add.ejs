@@ -1,0 +1,4020 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        <%= title || 'Add Event' %>
+    </title>
+
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        :root {
+
+            --navy: #001f3f;
+            --navy2: #003b73;
+
+            --blue: #0066c7;
+
+            --gold: #ffc300;
+            --gold2: #ffe16a;
+
+            --bg: #f3f6fb;
+            --white: #ffffff;
+
+            --text: #172033;
+            --muted: #64748b;
+
+            --border: #e2e8f0;
+
+            --green: #16a34a;
+            --green-bg: #ecfdf3;
+
+            --red: #dc2626;
+            --red-bg: #fef2f2;
+
+            --orange: #ea580c;
+
+            --shadow:
+                0 18px 50px
+                rgba(0,31,63,.08);
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            color:
+                var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 10% 0%,
+                    #e6f0ff,
+                    transparent 28%
+                ),
+                var(--bg);
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+
+        /* =====================================================
+           PAGE
+        ====================================================== */
+
+        .page {
+
+            width:
+                min(
+                    1180px,
+                    calc(100% - 32px)
+                );
+
+            margin:
+                auto;
+
+            padding:
+                24px 0 55px;
+        }
+
+
+        /* =====================================================
+           TOP BAR
+        ====================================================== */
+
+        .topbar {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                12px;
+
+            margin-bottom:
+                18px;
+        }
+
+
+        .top-btn {
+
+            min-height:
+                43px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                0 15px;
+
+            border-radius:
+                12px;
+
+            font-size:
+                11px;
+
+            font-weight:
+                900;
+
+            transition:
+                .25s;
+        }
+
+
+        .back-btn {
+
+            color:
+                var(--navy);
+
+            background:
+                var(--white);
+
+            border:
+                1px solid
+                var(--border);
+        }
+
+
+        .dashboard-btn {
+
+            color:
+                #fff;
+
+            background:
+                var(--navy);
+        }
+
+
+        .top-btn:hover {
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        .dashboard-btn:hover {
+
+            color:
+                var(--navy);
+
+            background:
+                var(--gold);
+        }
+
+
+        /* =====================================================
+           HERO
+        ====================================================== */
+
+        .hero {
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            min-height:
+                215px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                25px;
+
+            padding:
+                36px;
+
+            border-radius:
+                28px;
+
+            color:
+                #fff;
+
+            background:
+
+                radial-gradient(
+                    circle at 85% 15%,
+                    rgba(255,195,0,.30),
+                    transparent 27%
+                ),
+
+                radial-gradient(
+                    circle at 70% 100%,
+                    rgba(0,153,255,.20),
+                    transparent 35%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #00172f,
+                    #003b73,
+                    #005cae
+                );
+
+            box-shadow:
+                0 25px 70px
+                rgba(0,31,63,.20);
+        }
+
+
+        .hero-content {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+        }
+
+
+        .hero-badge {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                7px;
+
+            padding:
+                7px 12px;
+
+            margin-bottom:
+                13px;
+
+            border:
+                1px solid
+                rgba(255,195,0,.35);
+
+            border-radius:
+                999px;
+
+            color:
+                var(--gold);
+
+            background:
+                rgba(255,195,0,.10);
+
+            font-size:
+                9px;
+
+            font-weight:
+                950;
+
+            letter-spacing:
+                1px;
+
+            text-transform:
+                uppercase;
+        }
+
+
+        .hero h1 {
+
+            font-size:
+                clamp(
+                    32px,
+                    4vw,
+                    50px
+                );
+
+            line-height:
+                1;
+
+            letter-spacing:
+                -1.5px;
+
+            font-weight:
+                950;
+        }
+
+
+        .hero h1 span {
+
+            color:
+                var(--gold);
+        }
+
+
+        .hero p {
+
+            max-width:
+                720px;
+
+            margin-top:
+                12px;
+
+            color:
+                rgba(255,255,255,.76);
+
+            font-size:
+                12px;
+
+            line-height:
+                1.7;
+        }
+
+
+        .hero-icon {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+            width:
+                98px;
+
+            height:
+                98px;
+
+            flex:
+                none;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid
+                rgba(255,255,255,.18);
+
+            border-radius:
+                27px;
+
+            color:
+                var(--gold);
+
+            background:
+                rgba(255,255,255,.08);
+
+            backdrop-filter:
+                blur(12px);
+
+            font-size:
+                38px;
+        }
+
+
+        /* =====================================================
+           FORM CARD
+        ====================================================== */
+
+        .card {
+
+            margin-top:
+                20px;
+
+            overflow:
+                hidden;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius:
+                24px;
+
+            background:
+                var(--white);
+
+            box-shadow:
+                var(--shadow);
+        }
+
+
+        .card-header {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                13px;
+
+            padding:
+                20px 24px;
+
+            color:
+                #fff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--navy),
+                    var(--navy2)
+                );
+        }
+
+
+        .header-icon {
+
+            width:
+                43px;
+
+            height:
+                43px;
+
+            flex:
+                none;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                12px;
+
+            color:
+                var(--navy);
+
+            background:
+                var(--gold);
+        }
+
+
+        .card-header h2 {
+
+            color:
+                #fff;
+
+            font-size:
+                17px;
+
+            font-weight:
+                950;
+        }
+
+
+        .card-header p {
+
+            margin-top:
+                3px;
+
+            color:
+                rgba(255,255,255,.66);
+
+            font-size:
+                9px;
+        }
+
+
+        /* =====================================================
+           FORM
+        ====================================================== */
+
+        .form {
+
+            padding:
+                27px;
+        }
+
+
+        .grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0,1fr)
+                );
+
+            gap:
+                20px;
+        }
+
+
+        .full {
+
+            grid-column:
+                1 / -1;
+        }
+
+
+        .field label {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                7px;
+
+            margin-bottom:
+                8px;
+
+            color:
+                #334155;
+
+            font-size:
+                10px;
+
+            font-weight:
+                950;
+        }
+
+
+        .field label i {
+
+            color:
+                var(--blue);
+        }
+
+
+        .field input,
+        .field select,
+        .field textarea {
+
+            width:
+                100%;
+
+            outline:
+                none;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius:
+                12px;
+
+            color:
+                var(--text);
+
+            background:
+                #f8fafc;
+
+            transition:
+                .2s;
+        }
+
+
+        .field input,
+        .field select {
+
+            height:
+                47px;
+
+            padding:
+                0 13px;
+
+            font-size:
+                11px;
+        }
+
+
+        .field textarea {
+
+            min-height:
+                105px;
+
+            padding:
+                12px 13px;
+
+            resize:
+                vertical;
+
+            font-size:
+                11px;
+
+            line-height:
+                1.6;
+        }
+
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+
+            border-color:
+                var(--gold);
+
+            background:
+                #fff;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(255,195,0,.12);
+        }
+
+
+        .help {
+
+            display:
+                block;
+
+            margin-top:
+                6px;
+
+            color:
+                #94a3b8;
+
+            font-size:
+                9px;
+
+            line-height:
+                1.5;
+        }
+
+
+        /* =====================================================
+           CATEGORY INFO
+        ====================================================== */
+
+        .category-info {
+
+            display:
+                none;
+
+            margin-top:
+                8px;
+
+            padding:
+                9px 11px;
+
+            border-radius:
+                10px;
+
+            color:
+                #475569;
+
+            background:
+                #f8fafc;
+
+            font-size:
+                9px;
+
+            line-height:
+                1.5;
+        }
+
+
+        .category-info.active {
+
+            display:
+                block;
+        }
+
+
+        /* =====================================================
+           UPLOAD SECTION
+        ====================================================== */
+
+        .upload-section {
+
+            padding:
+                20px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius:
+                18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fbfdff,
+                    #f7faff
+                );
+        }
+
+
+        .upload-heading {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+            margin-bottom:
+                14px;
+        }
+
+
+        .upload-title {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+        }
+
+
+        .upload-title-icon {
+
+            width:
+                39px;
+
+            height:
+                39px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                11px;
+
+            color:
+                var(--blue);
+
+            background:
+                #eff6ff;
+        }
+
+
+        .upload-title strong {
+
+            display:
+                block;
+
+            color:
+                var(--navy);
+
+            font-size:
+                12px;
+
+            font-weight:
+                950;
+        }
+
+
+        .upload-title span {
+
+            display:
+                block;
+
+            margin-top:
+                3px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                9px;
+        }
+
+
+        .upload-limit {
+
+            padding:
+                7px 9px;
+
+            border-radius:
+                8px;
+
+            color:
+                #475569;
+
+            background:
+                #f1f5f9;
+
+            font-size:
+                8px;
+
+            font-weight:
+                900;
+
+            white-space:
+                nowrap;
+        }
+
+
+        /* =====================================================
+           DROPZONE
+        ====================================================== */
+
+        .dropzone {
+
+            position:
+                relative;
+
+            min-height:
+                145px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                22px;
+
+            text-align:
+                center;
+
+            border:
+                2px dashed
+                #cbd5e1;
+
+            border-radius:
+                16px;
+
+            background:
+                #fff;
+
+            cursor:
+                pointer;
+
+            transition:
+                .25s;
+        }
+
+
+        .dropzone:hover,
+        .dropzone.dragover {
+
+            border-color:
+                var(--blue);
+
+            background:
+                #f4f9ff;
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        .drop-icon {
+
+            width:
+                48px;
+
+            height:
+                48px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            margin-bottom:
+                9px;
+
+            border-radius:
+                14px;
+
+            color:
+                var(--blue);
+
+            background:
+                #eff6ff;
+
+            font-size:
+                19px;
+        }
+
+
+        .dropzone strong {
+
+            color:
+                var(--navy);
+
+            font-size:
+                11px;
+
+            font-weight:
+                950;
+        }
+
+
+        .dropzone span {
+
+            margin-top:
+                5px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                9px;
+        }
+
+
+        .browse {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                6px;
+
+            margin-top:
+                11px;
+
+            padding:
+                8px 12px;
+
+            border-radius:
+                9px;
+
+            color:
+                var(--navy);
+
+            background:
+                var(--gold);
+
+            font-size:
+                9px;
+
+            font-weight:
+                950;
+        }
+
+
+        .file-input {
+
+            position:
+                absolute;
+
+            width:
+                1px;
+
+            height:
+                1px;
+
+            opacity:
+                0;
+
+            pointer-events:
+                none;
+        }
+
+
+        /* =====================================================
+           PREVIEW GRID
+        ====================================================== */
+
+        .preview-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fill,
+                    minmax(
+                        125px,
+                        1fr
+                    )
+                );
+
+            gap:
+                11px;
+
+            margin-top:
+                14px;
+        }
+
+
+        .preview-item {
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            min-height:
+                125px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius:
+                13px;
+
+            background:
+                #e2e8f0;
+        }
+
+
+        .preview-item img,
+        .preview-item video {
+
+            width:
+                100%;
+
+            height:
+                125px;
+
+            display:
+                block;
+
+            object-fit:
+                cover;
+        }
+
+
+        .preview-remove {
+
+            position:
+                absolute;
+
+            top:
+                7px;
+
+            right:
+                7px;
+
+            width:
+                28px;
+
+            height:
+                28px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                0;
+
+            border-radius:
+                50%;
+
+            color:
+                #fff;
+
+            background:
+                rgba(220,38,38,.92);
+
+            cursor:
+                pointer;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0,0,0,.18);
+
+            z-index:
+                3;
+        }
+
+
+        .preview-name {
+
+            position:
+                absolute;
+
+            left:
+                0;
+
+            right:
+                0;
+
+            bottom:
+                0;
+
+            padding:
+                8px 7px;
+
+            overflow:
+                hidden;
+
+            color:
+                #fff;
+
+            background:
+                linear-gradient(
+                    transparent,
+                    rgba(0,0,0,.75)
+                );
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            white-space:
+                nowrap;
+
+            text-overflow:
+                ellipsis;
+        }
+
+
+        /* =====================================================
+           COVER PREVIEW
+        ====================================================== */
+
+        .cover-preview {
+
+            display:
+                none;
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            height:
+                220px;
+
+            margin-top:
+                13px;
+
+            border-radius:
+                16px;
+
+            background:
+                #e2e8f0;
+        }
+
+
+        .cover-preview.active {
+
+            display:
+                block;
+        }
+
+
+        .cover-preview img {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            display:
+                block;
+
+            object-fit:
+                cover;
+        }
+
+
+        .cover-remove {
+
+            position:
+                absolute;
+
+            top:
+                10px;
+
+            right:
+                10px;
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                0;
+
+            border-radius:
+                50%;
+
+            color:
+                #fff;
+
+            background:
+                rgba(220,38,38,.92);
+
+            cursor:
+                pointer;
+        }
+
+
+        /* =====================================================
+           FILE SUMMARY
+        ====================================================== */
+
+        .file-summary {
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                7px;
+
+            margin-top:
+                12px;
+        }
+
+
+        .summary-pill {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                6px;
+
+            padding:
+                7px 9px;
+
+            border-radius:
+                8px;
+
+            color:
+                #475569;
+
+            background:
+                #f1f5f9;
+
+            font-size:
+                8px;
+
+            font-weight:
+                900;
+        }
+
+
+        .summary-pill i {
+
+            color:
+                var(--blue);
+        }
+
+
+        .summary-pill.video i {
+
+            color:
+                var(--red);
+        }
+
+
+        /* =====================================================
+           PUBLISH BOX
+        ====================================================== */
+
+        .publish-box {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+            padding:
+                16px 17px;
+
+            border:
+                1px solid
+                #dbeafe;
+
+            border-radius:
+                16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fbff,
+                    #eef6ff
+                );
+        }
+
+
+        .publish-content {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+        }
+
+
+        .publish-icon {
+
+            width:
+                40px;
+
+            height:
+                40px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                11px;
+
+            color:
+                var(--green);
+
+            background:
+                #dcfce7;
+        }
+
+
+        .publish-content strong {
+
+            display:
+                block;
+
+            color:
+                var(--navy);
+
+            font-size:
+                11px;
+        }
+
+
+        .publish-content span {
+
+            display:
+                block;
+
+            margin-top:
+                3px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                9px;
+        }
+
+
+        /* =====================================================
+           SWITCH
+        ====================================================== */
+
+        .switch {
+
+            position:
+                relative;
+
+            width:
+                49px;
+
+            height:
+                27px;
+
+            flex:
+                none;
+        }
+
+
+        .switch input {
+
+            opacity:
+                0;
+
+            width:
+                0;
+
+            height:
+                0;
+        }
+
+
+        .slider {
+
+            position:
+                absolute;
+
+            inset:
+                0;
+
+            cursor:
+                pointer;
+
+            border-radius:
+                999px;
+
+            background:
+                #cbd5e1;
+
+            transition:
+                .25s;
+        }
+
+
+        .slider::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                21px;
+
+            height:
+                21px;
+
+            left:
+                3px;
+
+            top:
+                3px;
+
+            border-radius:
+                50%;
+
+            background:
+                #fff;
+
+            box-shadow:
+                0 2px 6px
+                rgba(0,0,0,.15);
+
+            transition:
+                .25s;
+        }
+
+
+        .switch input:checked +
+        .slider {
+
+            background:
+                var(--green);
+        }
+
+
+        .switch input:checked +
+        .slider::before {
+
+            transform:
+                translateX(22px);
+        }
+
+
+        /* =====================================================
+           ACTIONS
+        ====================================================== */
+
+        .actions {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                flex-end;
+
+            gap:
+                10px;
+
+            margin-top:
+                27px;
+
+            padding-top:
+                22px;
+
+            border-top:
+                1px solid
+                var(--border);
+        }
+
+
+        .btn {
+
+            min-height:
+                48px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                0 21px;
+
+            border:
+                0;
+
+            border-radius:
+                13px;
+
+            font-size:
+                10px;
+
+            font-weight:
+                950;
+
+            cursor:
+                pointer;
+
+            transition:
+                .25s;
+        }
+
+
+        .cancel-btn {
+
+            color:
+                #475569;
+
+            background:
+                #e2e8f0;
+        }
+
+
+        .save-btn {
+
+            color:
+                var(--navy);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--gold),
+                    var(--gold2)
+                );
+
+            box-shadow:
+                0 12px 28px
+                rgba(255,195,0,.22);
+        }
+
+
+        .btn:hover {
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        .save-btn:disabled {
+
+            opacity:
+                .65;
+
+            cursor:
+                wait;
+
+            transform:
+                none;
+        }
+
+
+        /* =====================================================
+           ERROR
+        ====================================================== */
+
+        .error-box {
+
+            display:
+                none;
+
+            margin-top:
+                14px;
+
+            padding:
+                11px 13px;
+
+            border:
+                1px solid
+                #fecaca;
+
+            border-radius:
+                10px;
+
+            color:
+                #991b1b;
+
+            background:
+                var(--red-bg);
+
+            font-size:
+                9px;
+
+            line-height:
+                1.5;
+        }
+
+
+        .error-box.active {
+
+            display:
+                block;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 700px) {
+
+            .page {
+
+                width:
+                    min(
+                        100% - 24px,
+                        1180px
+                    );
+
+                padding-top:
+                    15px;
+            }
+
+
+            .hero {
+
+                padding:
+                    28px;
+            }
+
+
+            .hero-icon {
+
+                display:
+                    none;
+            }
+
+
+            .grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .full {
+
+                grid-column:
+                    auto;
+            }
+
+
+            .form {
+
+                padding:
+                    19px;
+            }
+
+
+            .preview-grid {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0,1fr)
+                    );
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .topbar {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    stretch;
+            }
+
+
+            .top-btn {
+
+                width:
+                    100%;
+            }
+
+
+            .hero h1 {
+
+                font-size:
+                    34px;
+            }
+
+
+            .upload-heading {
+
+                flex-direction:
+                    column;
+            }
+
+
+            .upload-limit {
+
+                align-self:
+                    flex-start;
+            }
+
+
+            .actions {
+
+                flex-direction:
+                    column;
+            }
+
+
+            .btn {
+
+                width:
+                    100%;
+            }
+
+
+            .preview-grid {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0,1fr)
+                    );
+            }
+
+
+            .cover-preview {
+
+                height:
+                    180px;
+            }
+
+        }
+
+
+        @media (prefers-reduced-motion: reduce) {
+
+            * {
+
+                transition:
+                    none !important;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
+
+    <div class="topbar">
+
+
+        <a
+            href="/admin/events"
+            class="top-btn back-btn"
+        >
+
+            <i class="fas fa-arrow-left"></i>
+
+            Back to Events
+
+        </a>
+
+
+        <a
+            href="/admin/dashboard"
+            class="top-btn dashboard-btn"
+        >
+
+            <i class="fas fa-chart-line"></i>
+
+            Dashboard
+
+        </a>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="hero">
+
+
+        <div class="hero-content">
+
+
+            <div class="hero-badge">
+
+                <i class="fas fa-calendar-plus"></i>
+
+                Event Management
+
+            </div>
+
+
+            <h1>
+
+                Create
+
+                <span>New Event</span>
+
+            </h1>
+
+
+            <p>
+
+                Add your school's events, photos and
+                videos directly from your phone or laptop.
+
+            </p>
+
+
+        </div>
+
+
+        <div class="hero-icon">
+
+            <i class="fas fa-images"></i>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =====================================================
+         MAIN CARD
+    ====================================================== -->
+
+    <section class="card">
+
+
+        <div class="card-header">
+
+
+            <div class="header-icon">
+
+                <i class="fas fa-sparkles"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Event Information
+                </h2>
+
+                <p>
+                    Fill the details and upload your memories.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
+
+        <form
+
+            method="POST"
+
+            action="/admin/events/add"
+
+            enctype="multipart/form-data"
+
+            class="form"
+
+            id="eventForm"
+
+        >
+
+
+            <!-- =================================================
+                 CSRF
+            ================================================== -->
+
+            <input
+                type="hidden"
+                name="_csrf"
+                value="<%= csrfToken %>"
+            >
+
+
+            <div class="grid">
+
+
+                <!-- =================================================
+                     TITLE
+                ================================================== -->
+
+                <div class="field full">
+
+
+                    <label>
+
+                        <i class="fas fa-heading"></i>
+
+                        Event Title
+
+                    </label>
+
+
+                    <input
+
+                        type="text"
+
+                        name="title"
+
+                        maxlength="150"
+
+                        required
+
+                        placeholder="Example: Fun Fiesta 2026"
+
+                    >
+
+
+                    <span class="help">
+
+                        Enter a clear and attractive event name.
+
+                    </span>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     CATEGORY
+                ================================================== -->
+
+                <div class="field">
+
+
+                    <label>
+
+                        <i class="fas fa-layer-group"></i>
+
+                        Event Category
+
+                    </label>
+
+
+                    <select
+                        name="category"
+                        id="category"
+                        required
+                    >
+
+                        <option value="">
+
+                            Select Category
+
+                        </option>
+
+
+                        <option value="fun-fiesta">
+
+                            Fun &amp; Fiesta
+
+                        </option>
+
+
+                        <option value="sports">
+
+                            Sports
+
+                        </option>
+
+
+                        <option value="national-celebration">
+
+                            National Celebration
+
+                        </option>
+
+
+                        <option value="old-memory">
+
+                            Old Memory
+
+                        </option>
+
+
+                    </select>
+
+
+                    <div
+                        class="category-info"
+                        id="categoryInfo"
+                    ></div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     DATE
+                ================================================== -->
+
+                <div class="field">
+
+
+                    <label>
+
+                        <i class="far fa-calendar"></i>
+
+                        Event Date
+
+                    </label>
+
+
+                    <input
+
+                        type="date"
+
+                        name="date"
+
+                        required
+
+                    >
+
+
+                </div>
+
+
+                <!-- =================================================
+                     SESSION
+                ================================================== -->
+
+                <div class="field">
+
+
+                    <label>
+
+                        <i class="fas fa-graduation-cap"></i>
+
+                        Academic Session
+
+                    </label>
+
+
+                    <input
+
+                        type="text"
+
+                        name="session"
+
+                        id="session"
+
+                        maxlength="30"
+
+                        placeholder="2026-27"
+
+                    >
+
+
+                    <span class="help">
+
+                        Required for Fun &amp; Fiesta.
+
+                    </span>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     BATCH
+                ================================================== -->
+
+                <div class="field">
+
+
+                    <label>
+
+                        <i class="fas fa-users"></i>
+
+                        Batch
+
+                    </label>
+
+
+                    <input
+
+                        type="text"
+
+                        name="batch"
+
+                        id="batch"
+
+                        maxlength="100"
+
+                        placeholder="Batch A / Class 10"
+
+                    >
+
+
+                    <span class="help">
+
+                        Required for Fun &amp; Fiesta.
+
+                    </span>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     DESCRIPTION
+                ================================================== -->
+
+                <div class="field full">
+
+
+                    <label>
+
+                        <i class="fas fa-align-left"></i>
+
+                        Event Description
+
+                    </label>
+
+
+                    <textarea
+
+                        name="description"
+
+                        maxlength="2000"
+
+                        required
+
+                        placeholder="Write something about this event..."
+
+                    ></textarea>
+
+
+                    <span class="help">
+
+                        Maximum 2000 characters.
+
+                    </span>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     COVER IMAGE
+                ================================================== -->
+
+                <div class="field full">
+
+
+                    <div class="upload-section">
+
+
+                        <div class="upload-heading">
+
+
+                            <div class="upload-title">
+
+
+                                <div class="upload-title-icon">
+
+                                    <i class="fas fa-image"></i>
+
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                        Cover Photo
+                                    </strong>
+
+                                    <span>
+                                        Select one main photo for this event.
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="upload-limit">
+
+                                1 IMAGE
+
+                            </div>
+
+
+                        </div>
+
+
+                        <label
+                            class="dropzone"
+                            id="coverDropzone"
+                        >
+
+
+                            <input
+
+                                type="file"
+
+                                name="coverImage"
+
+                                id="coverImage"
+
+                                class="file-input"
+
+                                accept="image/jpeg,image/png,image/webp"
+
+                            >
+
+
+                            <div class="drop-icon">
+
+                                <i class="fas fa-cloud-arrow-up"></i>
+
+                            </div>
+
+
+                            <strong>
+
+                                Choose Cover Photo
+
+                            </strong>
+
+
+                            <span>
+
+                                JPG, PNG or WEBP
+
+                            </span>
+
+
+                            <span class="browse">
+
+                                <i class="fas fa-folder-open"></i>
+
+                                Browse Photos
+
+                            </span>
+
+
+                        </label>
+
+
+                        <div
+                            class="cover-preview"
+                            id="coverPreview"
+                        >
+
+                            <img
+                                id="coverPreviewImage"
+                                alt="Cover preview"
+                            >
+
+
+                            <button
+                                type="button"
+                                class="cover-remove"
+                                id="coverRemove"
+                                title="Remove cover photo"
+                            >
+
+                                <i class="fas fa-xmark"></i>
+
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     MULTIPLE PHOTOS
+                ================================================== -->
+
+                <div class="field full">
+
+
+                    <div class="upload-section">
+
+
+                        <div class="upload-heading">
+
+
+                            <div class="upload-title">
+
+
+                                <div class="upload-title-icon">
+
+                                    <i class="fas fa-images"></i>
+
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                        Event Photos
+                                    </strong>
+
+                                    <span>
+                                        Select one or multiple photos.
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="upload-limit">
+
+                                UP TO 50
+
+                            </div>
+
+
+                        </div>
+
+
+                        <label
+                            class="dropzone"
+                            id="photosDropzone"
+                        >
+
+
+                            <input
+
+                                type="file"
+
+                                name="photos"
+
+                                id="photos"
+
+                                class="file-input"
+
+                                accept="image/jpeg,image/png,image/webp"
+
+                                multiple
+
+                            >
+
+
+                            <div class="drop-icon">
+
+                                <i class="fas fa-photo-film"></i>
+
+                            </div>
+
+
+                            <strong>
+
+                                Choose Event Photos
+
+                            </strong>
+
+
+                            <span>
+
+                                Select multiple photos from Gallery or Files
+
+                            </span>
+
+
+                            <span class="browse">
+
+                                <i class="fas fa-folder-open"></i>
+
+                                Browse Photos
+
+                            </span>
+
+
+                        </label>
+
+
+                        <div
+                            class="preview-grid"
+                            id="photosPreview"
+                        ></div>
+
+
+                        <div
+                            class="file-summary"
+                            id="photosSummary"
+                        ></div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     MULTIPLE VIDEOS
+                ================================================== -->
+
+                <div class="field full">
+
+
+                    <div class="upload-section">
+
+
+                        <div class="upload-heading">
+
+
+                            <div class="upload-title">
+
+
+                                <div class="upload-title-icon">
+
+                                    <i class="fas fa-video"></i>
+
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                        Event Videos
+                                    </strong>
+
+                                    <span>
+                                        Upload videos directly from your device.
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="upload-limit">
+
+                                UP TO 10
+
+                            </div>
+
+
+                        </div>
+
+
+                        <label
+                            class="dropzone"
+                            id="videosDropzone"
+                        >
+
+
+                            <input
+
+                                type="file"
+
+                                name="videos"
+
+                                id="videos"
+
+                                class="file-input"
+
+                                accept="video/mp4,video/webm,video/quicktime,video/x-m4v"
+
+                                multiple
+
+                            >
+
+
+                            <div class="drop-icon">
+
+                                <i class="fas fa-video"></i>
+
+                            </div>
+
+
+                            <strong>
+
+                                Choose Event Videos
+
+                            </strong>
+
+
+                            <span>
+
+                                MP4, WEBM, MOV or M4V
+
+                            </span>
+
+
+                            <span class="browse">
+
+                                <i class="fas fa-folder-open"></i>
+
+                                Browse Videos
+
+                            </span>
+
+
+                        </label>
+
+
+                        <div
+                            class="preview-grid"
+                            id="videosPreview"
+                        ></div>
+
+
+                        <div
+                            class="file-summary"
+                            id="videosSummary"
+                        ></div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     PRIORITY
+                ================================================== -->
+
+                <div class="field">
+
+
+                    <label>
+
+                        <i class="fas fa-ranking-star"></i>
+
+                        Display Priority
+
+                    </label>
+
+
+                    <input
+
+                        type="number"
+
+                        name="priority"
+
+                        value="0"
+
+                        min="0"
+
+                        max="9999"
+
+                    >
+
+
+                    <span class="help">
+
+                        Lower number means higher display priority.
+
+                    </span>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     PUBLISH
+                ================================================== -->
+
+                <div class="field">
+
+
+                    <div class="publish-box">
+
+
+                        <div class="publish-content">
+
+
+                            <div class="publish-icon">
+
+                                <i class="fas fa-eye"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+
+                                    Publish Event
+
+                                </strong>
+
+
+                                <span>
+
+                                    Make this event visible on the website.
+
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <label class="switch">
+
+
+                            <input
+
+                                type="checkbox"
+
+                                name="published"
+
+                                value="true"
+
+                                checked
+
+                            >
+
+
+                            <span class="slider"></span>
+
+
+                        </label>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 ERROR
+            ================================================== -->
+
+            <div
+                class="error-box"
+                id="errorBox"
+            ></div>
+
+
+            <!-- =================================================
+                 ACTIONS
+            ================================================== -->
+
+            <div class="actions">
+
+
+                <a
+                    href="/admin/events"
+                    class="btn cancel-btn"
+                >
+
+                    <i class="fas fa-arrow-left"></i>
+
+                    Cancel
+
+                </a>
+
+
+                <button
+
+                    type="submit"
+
+                    class="btn save-btn"
+
+                    id="saveButton"
+
+                >
+
+                    <i class="fas fa-calendar-plus"></i>
+
+                    Create Event
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </section>
+
+
+</div>
+
+
+<script>
+
+    // =========================================================
+    // ELEMENTS
+    // =========================================================
+
+    const form =
+        document.getElementById(
+            'eventForm'
+        );
+
+
+    const category =
+        document.getElementById(
+            'category'
+        );
+
+
+    const session =
+        document.getElementById(
+            'session'
+        );
+
+
+    const batch =
+        document.getElementById(
+            'batch'
+        );
+
+
+    const coverInput =
+        document.getElementById(
+            'coverImage'
+        );
+
+
+    const photosInput =
+        document.getElementById(
+            'photos'
+        );
+
+
+    const videosInput =
+        document.getElementById(
+            'videos'
+        );
+
+
+    const coverDropzone =
+        document.getElementById(
+            'coverDropzone'
+        );
+
+
+    const photosDropzone =
+        document.getElementById(
+            'photosDropzone'
+        );
+
+
+    const videosDropzone =
+        document.getElementById(
+            'videosDropzone'
+        );
+
+
+    const coverPreview =
+        document.getElementById(
+            'coverPreview'
+        );
+
+
+    const coverPreviewImage =
+        document.getElementById(
+            'coverPreviewImage'
+        );
+
+
+    const coverRemove =
+        document.getElementById(
+            'coverRemove'
+        );
+
+
+    const photosPreview =
+        document.getElementById(
+            'photosPreview'
+        );
+
+
+    const videosPreview =
+        document.getElementById(
+            'videosPreview'
+        );
+
+
+    const photosSummary =
+        document.getElementById(
+            'photosSummary'
+        );
+
+
+    const videosSummary =
+        document.getElementById(
+            'videosSummary'
+        );
+
+
+    const errorBox =
+        document.getElementById(
+            'errorBox'
+        );
+
+
+    const saveButton =
+        document.getElementById(
+            'saveButton'
+        );
+
+
+    // =========================================================
+    // CATEGORY
+    // =========================================================
+
+    function updateCategory() {
+
+        const value =
+            category.value;
+
+
+        session.required =
+            value === 'fun-fiesta';
+
+
+        batch.required =
+            value === 'fun-fiesta';
+
+    }
+
+
+    category.addEventListener(
+        'change',
+        updateCategory
+    );
+
+
+    updateCategory();
+
+
+    // =========================================================
+    // FILE SIZE
+    // =========================================================
+
+    function formatSize(bytes) {
+
+        if (
+            bytes < 1024
+        ) {
+
+            return bytes + ' B';
+
+        }
+
+
+        if (
+            bytes < 1024 * 1024
+        ) {
+
+            return (
+                bytes / 1024
+            ).toFixed(1)
+            + ' KB';
+
+        }
+
+
+        if (
+            bytes < 1024 * 1024 * 1024
+        ) {
+
+            return (
+                bytes /
+                (1024 * 1024)
+            ).toFixed(1)
+            + ' MB';
+
+        }
+
+
+        return (
+            bytes /
+            (1024 * 1024 * 1024)
+        ).toFixed(2)
+        + ' GB';
+
+    }
+
+
+    // =========================================================
+    // ERROR
+    // =========================================================
+
+    function showError(message) {
+
+        errorBox.textContent =
+            message;
+
+        errorBox.classList.add(
+            'active'
+        );
+
+
+        errorBox.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+
+    }
+
+
+    function clearError() {
+
+        errorBox.textContent =
+            '';
+
+        errorBox.classList.remove(
+            'active'
+        );
+
+    }
+
+
+    // =========================================================
+    // COVER IMAGE
+    // =========================================================
+
+    coverInput.addEventListener(
+        'change',
+        function () {
+
+            clearError();
+
+
+            const file =
+                this.files[0];
+
+
+            if (!file) {
+
+                return;
+
+            }
+
+
+            if (
+                !file.type.startsWith(
+                    'image/'
+                )
+            ) {
+
+                showError(
+                    'Please select a valid image.'
+                );
+
+                this.value =
+                    '';
+
+                return;
+
+            }
+
+
+            if (
+                file.size >
+                100 * 1024 * 1024
+            ) {
+
+                showError(
+                    'Cover image must be smaller than 100 MB.'
+                );
+
+                this.value =
+                    '';
+
+                return;
+
+            }
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function (event) {
+
+                    coverPreviewImage.src =
+                        event.target.result;
+
+                    coverPreview.classList.add(
+                        'active'
+                    );
+
+                };
+
+
+            reader.readAsDataURL(
+                file
+            );
+
+        }
+    );
+
+
+    // =========================================================
+    // REMOVE COVER
+    // =========================================================
+
+    coverRemove.addEventListener(
+        'click',
+        function (event) {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+
+            coverInput.value =
+                '';
+
+            coverPreviewImage.src =
+                '';
+
+            coverPreview.classList.remove(
+                'active'
+            );
+
+        }
+    );
+
+
+    // =========================================================
+    // PHOTO FILES
+    // =========================================================
+
+    let selectedPhotos = [];
+
+
+    photosInput.addEventListener(
+        'change',
+        function () {
+
+            clearError();
+
+
+            const incoming =
+                Array.from(
+                    this.files
+                );
+
+
+            addPhotos(
+                incoming
+            );
+
+        }
+    );
+
+
+    function addPhotos(files) {
+
+        for (
+            const file of files
+        ) {
+
+            if (
+                !file.type.startsWith(
+                    'image/'
+                )
+            ) {
+
+                showError(
+                    `${file.name} is not a valid image.`
+                );
+
+                continue;
+
+            }
+
+
+            if (
+                file.size >
+                100 * 1024 * 1024
+            ) {
+
+                showError(
+                    `${file.name} is larger than 100 MB.`
+                );
+
+                continue;
+
+            }
+
+
+            if (
+                selectedPhotos.length >= 50
+            ) {
+
+                showError(
+                    'Maximum 50 event photos are allowed.'
+                );
+
+                break;
+
+            }
+
+
+            const duplicate =
+                selectedPhotos.some(
+                    item =>
+                        item.name ===
+                            file.name &&
+                        item.size ===
+                            file.size &&
+                        item.lastModified ===
+                            file.lastModified
+                );
+
+
+            if (
+                !duplicate
+            ) {
+
+                selectedPhotos.push(
+                    file
+                );
+
+            }
+
+        }
+
+
+        rebuildPhotoInput();
+
+        renderPhotos();
+
+    }
+
+
+    function rebuildPhotoInput() {
+
+        const dataTransfer =
+            new DataTransfer();
+
+
+        selectedPhotos.forEach(
+            file => {
+
+                dataTransfer.items.add(
+                    file
+                );
+
+            }
+        );
+
+
+        photosInput.files =
+            dataTransfer.files;
+
+    }
+
+
+    function renderPhotos() {
+
+        photosPreview.innerHTML =
+            '';
+
+
+        selectedPhotos.forEach(
+            (
+                file,
+                index
+            ) => {
+
+
+                const item =
+                    document.createElement(
+                        'div'
+                    );
+
+
+                item.className =
+                    'preview-item';
+
+
+                const image =
+                    document.createElement(
+                        'img'
+                    );
+
+
+                const url =
+                    URL.createObjectURL(
+                        file
+                    );
+
+
+                image.src =
+                    url;
+
+
+                image.onload =
+                    function () {
+
+                        URL.revokeObjectURL(
+                            url
+                        );
+
+                    };
+
+
+                image.alt =
+                    file.name;
+
+
+                const remove =
+                    document.createElement(
+                        'button'
+                    );
+
+
+                remove.type =
+                    'button';
+
+
+                remove.className =
+                    'preview-remove';
+
+
+                remove.innerHTML =
+                    '<i class="fas fa-xmark"></i>';
+
+
+                remove.title =
+                    'Remove photo';
+
+
+                remove.addEventListener(
+                    'click',
+                    function () {
+
+                        selectedPhotos.splice(
+                            index,
+                            1
+                        );
+
+
+                        rebuildPhotoInput();
+
+                        renderPhotos();
+
+                    }
+                );
+
+
+                const name =
+                    document.createElement(
+                        'div'
+                    );
+
+
+                name.className =
+                    'preview-name';
+
+
+                name.textContent =
+                    `${file.name} • ${formatSize(file.size)}`;
+
+
+                item.appendChild(
+                    image
+                );
+
+
+                item.appendChild(
+                    remove
+                );
+
+
+                item.appendChild(
+                    name
+                );
+
+
+                photosPreview.appendChild(
+                    item
+                );
+
+            }
+        );
+
+
+        photosSummary.innerHTML =
+            '';
+
+
+        if (
+            selectedPhotos.length
+        ) {
+
+            const totalSize =
+                selectedPhotos.reduce(
+                    (
+                        total,
+                        file
+                    ) =>
+                        total +
+                        file.size,
+                    0
+                );
+
+
+            photosSummary.innerHTML = `
+
+                <span class="summary-pill">
+
+                    <i class="fas fa-images"></i>
+
+                    ${selectedPhotos.length} photo(s)
+
+                </span>
+
+                <span class="summary-pill">
+
+                    <i class="fas fa-hard-drive"></i>
+
+                    ${formatSize(totalSize)}
+
+                </span>
+
+            `;
+
+        }
+
+    }
+
+
+    // =========================================================
+    // VIDEO FILES
+    // =========================================================
+
+    let selectedVideos = [];
+
+
+    videosInput.addEventListener(
+        'change',
+        function () {
+
+            clearError();
+
+
+            const incoming =
+                Array.from(
+                    this.files
+                );
+
+
+            addVideos(
+                incoming
+            );
+
+        }
+    );
+
+
+    function addVideos(files) {
+
+        for (
+            const file of files
+        ) {
+
+            if (
+                !file.type.startsWith(
+                    'video/'
+                )
+            ) {
+
+                showError(
+                    `${file.name} is not a valid video.`
+                );
+
+                continue;
+
+            }
+
+
+            if (
+                file.size >
+                100 * 1024 * 1024
+            ) {
+
+                showError(
+                    `${file.name} is larger than 100 MB.`
+                );
+
+                continue;
+
+            }
+
+
+            if (
+                selectedVideos.length >= 10
+            ) {
+
+                showError(
+                    'Maximum 10 videos are allowed.'
+                );
+
+                break;
+
+            }
+
+
+            const duplicate =
+                selectedVideos.some(
+                    item =>
+                        item.name ===
+                            file.name &&
+                        item.size ===
+                            file.size &&
+                        item.lastModified ===
+                            file.lastModified
+                );
+
+
+            if (
+                !duplicate
+            ) {
+
+                selectedVideos.push(
+                    file
+                );
+
+            }
+
+        }
+
+
+        rebuildVideoInput();
+
+        renderVideos();
+
+    }
+
+
+    function rebuildVideoInput() {
+
+        const dataTransfer =
+            new DataTransfer();
+
+
+        selectedVideos.forEach(
+            file => {
+
+                dataTransfer.items.add(
+                    file
+                );
+
+            }
+        );
+
+
+        videosInput.files =
+            dataTransfer.files;
+
+    }
+
+
+    function renderVideos() {
+
+        videosPreview.innerHTML =
+            '';
+
+
+        selectedVideos.forEach(
+            (
+                file,
+                index
+            ) => {
+
+
+                const item =
+                    document.createElement(
+                        'div'
+                    );
+
+
+                item.className =
+                    'preview-item';
+
+
+                const video =
+                    document.createElement(
+                        'video'
+                    );
+
+
+                const url =
+                    URL.createObjectURL(
+                        file
+                    );
+
+
+                video.src =
+                    url;
+
+                video.muted =
+                    true;
+
+                video.preload =
+                    'metadata';
+
+
+                const remove =
+                    document.createElement(
+                        'button'
+                    );
+
+
+                remove.type =
+                    'button';
+
+
+                remove.className =
+                    'preview-remove';
+
+
+                remove.innerHTML =
+                    '<i class="fas fa-xmark"></i>';
+
+
+                remove.title =
+                    'Remove video';
+
+
+                remove.addEventListener(
+                    'click',
+                    function () {
+
+                        selectedVideos.splice(
+                            index,
+                            1
+                        );
+
+
+                        rebuildVideoInput();
+
+                        renderVideos();
+
+                    }
+                );
+
+
+                const name =
+                    document.createElement(
+                        'div'
+                    );
+
+
+                name.className =
+                    'preview-name';
+
+
+                name.textContent =
+                    `${file.name} • ${formatSize(file.size)}`;
+
+
+                item.appendChild(
+                    video
+                );
+
+
+                item.appendChild(
+                    remove
+                );
+
+
+                item.appendChild(
+                    name
+                );
+
+
+                videosPreview.appendChild(
+                    item
+                );
+
+            }
+        );
+
+
+        videosSummary.innerHTML =
+            '';
+
+
+        if (
+            selectedVideos.length
+        ) {
+
+            const totalSize =
+                selectedVideos.reduce(
+                    (
+                        total,
+                        file
+                    ) =>
+                        total +
+                        file.size,
+                    0
+                );
+
+
+            videosSummary.innerHTML = `
+
+                <span class="summary-pill video">
+
+                    <i class="fas fa-video"></i>
+
+                    ${selectedVideos.length} video(s)
+
+                </span>
+
+                <span class="summary-pill">
+
+                    <i class="fas fa-hard-drive"></i>
+
+                    ${formatSize(totalSize)}
+
+                </span>
+
+            `;
+
+        }
+
+    }
+
+
+    // =========================================================
+    // DRAG & DROP
+    // =========================================================
+
+    function setupDropzone(
+        dropzone,
+        input,
+        type
+    ) {
+
+
+        dropzone.addEventListener(
+            'dragover',
+            function (event) {
+
+                event.preventDefault();
+
+                dropzone.classList.add(
+                    'dragover'
+                );
+
+            }
+        );
+
+
+        dropzone.addEventListener(
+            'dragleave',
+            function () {
+
+                dropzone.classList.remove(
+                    'dragover'
+                );
+
+            }
+        );
+
+
+        dropzone.addEventListener(
+            'drop',
+            function (event) {
+
+                event.preventDefault();
+
+
+                dropzone.classList.remove(
+                    'dragover'
+                );
+
+
+                const files =
+                    Array.from(
+                        event.dataTransfer.files
+                    );
+
+
+                if (
+                    type === 'cover'
+                ) {
+
+                    if (
+                        files.length
+                    ) {
+
+                        const file =
+                            files[0];
+
+
+                        const dataTransfer =
+                            new DataTransfer();
+
+
+                        dataTransfer.items.add(
+                            file
+                        );
+
+
+                        input.files =
+                            dataTransfer.files;
+
+
+                        input.dispatchEvent(
+                            new Event(
+                                'change'
+                            )
+                        );
+
+                    }
+
+                }
+
+
+                if (
+                    type === 'photos'
+                ) {
+
+                    addPhotos(
+                        files
+                    );
+
+                }
+
+
+                if (
+                    type === 'videos'
+                ) {
+
+                    addVideos(
+                        files
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    setupDropzone(
+        coverDropzone,
+        coverInput,
+        'cover'
+    );
+
+
+    setupDropzone(
+        photosDropzone,
+        photosInput,
+        'photos'
+    );
+
+
+    setupDropzone(
+        videosDropzone,
+        videosInput,
+        'videos'
+    );
+
+
+    // =========================================================
+    // FORM SUBMIT
+    // =========================================================
+
+    form.addEventListener(
+        'submit',
+        function (event) {
+
+            clearError();
+
+
+            if (
+                !form.checkValidity()
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                category.value ===
+                    'fun-fiesta' &&
+                (
+                    !session.value.trim() ||
+                    !batch.value.trim()
+                )
+            ) {
+
+                event.preventDefault();
+
+
+                showError(
+                    'Fun & Fiesta requires both Academic Session and Batch.'
+                );
+
+
+                return;
+
+            }
+
+
+            // Prevent accidental double submit
+
+            saveButton.disabled =
+                true;
+
+
+            saveButton.innerHTML = `
+
+                <i class="fas fa-spinner fa-spin"></i>
+
+                Uploading Event...
+
+            `;
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

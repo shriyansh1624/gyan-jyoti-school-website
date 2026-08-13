@@ -1,449 +1,1893 @@
 <%- include('../partials/header') %>
 
-<section class="acad-hero">
-  <div class="acad-overlay">
-    <div class="acad-container">
-      <img src="/images/logo.png" class="acad-logo" alt="Gyan Jyoti Logo">
-      <span class="acad-badge">Learning With Excellence</span>
-      <h1>Academics</h1>
-      <p><a href="/" style="color:#ffc300">Home</a> / Academics</p>
-    </div>
-  </div>
-</section>
-
-<section class="acad-intro">
-  <div class="acad-container">
-    <div class="acad-heading">
-      <span class="section-tag">Academic Approach</span>
-      <h2>Education That Builds Knowledge, Skills & Confidence</h2>
-      <p>
-        At Gyan Jyoti School, we focus on strong academics, concept-based learning,
-        regular practice, skill development and disciplined examination patterns.
-      </p>
-    </div>
-
-    <div class="acad-grid">
-
-      <div class="acad-card">
-        <i class="fas fa-chalkboard-teacher"></i>
-        <h3>Teaching Method</h3>
-        <p>
-          Our teachers explain every concept in a simple and practical way using
-          classroom interaction, examples, activities and regular revision.
-        </p>
-      </div>
-
-      <div class="acad-card">
-        <i class="fas fa-brain"></i>
-        <h3>Skill Development</h3>
-        <p>
-          Students are encouraged to improve communication, creativity, logical
-          thinking, confidence, discipline and problem-solving skills.
-        </p>
-      </div>
-
-      <div class="acad-card">
-        <i class="fas fa-clipboard-check"></i>
-        <h3>Monthly Tests</h3>
-        <p>
-          Monthly tests are conducted to check students’ understanding and help
-          them improve continuously throughout the academic session.
-        </p>
-      </div>
-
-      <div class="acad-card">
-        <i class="fas fa-calendar-alt"></i>
-        <h3>Quarterly Exams</h3>
-        <p>
-          Quarterly examinations help evaluate performance after every major
-          academic term and prepare students for final assessments.
-        </p>
-      </div>
-
-      <div class="acad-card">
-        <i class="fas fa-award"></i>
-        <h3>Annual Examination</h3>
-        <p>
-          Annual examinations are conducted at the end of the session to assess
-          overall academic progress and learning outcomes.
-        </p>
-      </div>
-
-      <div class="acad-card">
-        <i class="fas fa-user-graduate"></i>
-        <h3>Student Progress</h3>
-        <p>
-          Regular feedback, classwork, homework, tests and parent communication
-          help students improve step by step.
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section class="exam-section">
-  <div class="acad-container">
-    <div class="exam-wrapper">
-
-      <div class="exam-left">
-        <span class="section-tag">Examination System</span>
-        <h2>Regular Assessment For Better Learning</h2>
-        <p>
-          Our examination system is designed to keep students consistent,
-          confident and prepared for academic success.
-        </p>
-
-        <div class="exam-list">
-          <div><i class="fas fa-check-circle"></i> Class tests and oral assessment</div>
-          <div><i class="fas fa-check-circle"></i> Monthly written tests</div>
-          <div><i class="fas fa-check-circle"></i> Quarterly examinations</div>
-          <div><i class="fas fa-check-circle"></i> Half-yearly and annual exams</div>
-          <div><i class="fas fa-check-circle"></i> Result analysis and improvement guidance</div>
-        </div>
-      </div>
-
-      <div class="exam-right">
-        <div class="exam-box">
-          <h3>Monthly</h3>
-          <p>Regular tests for continuous improvement</p>
-        </div>
-
-        <div class="exam-box">
-          <h3>Quarterly</h3>
-          <p>Term-wise evaluation and performance tracking</p>
-        </div>
-
-        <div class="exam-box">
-          <h3>Annual</h3>
-          <p>Final assessment of overall academic growth</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<section class="skills-section">
-  <div class="acad-container">
-
-    <div class="acad-heading">
-      <span class="section-tag">Student Skills</span>
-      <h2>Beyond Books, Towards Real Growth</h2>
-      <p>
-        We believe that education should prepare students not only for exams,
-        but also for life.
-      </p>
-    </div>
-
-    <div class="skills-grid">
-      <div><i class="fas fa-comments"></i><h3>Communication</h3></div>
-      <div><i class="fas fa-lightbulb"></i><h3>Creativity</h3></div>
-      <div><i class="fas fa-users"></i><h3>Teamwork</h3></div>
-      <div><i class="fas fa-star"></i><h3>Confidence</h3></div>
-    </div>
-
-  </div>
-</section>
-
 <style>
-  .acad-container {
-    width: 86%;
-    max-width: 1200px;
-    margin: auto;
-  }
+/* =========================================================
+   TOP ACHIEVERS — COMPLETE PREMIUM UI
+   BACKEND / EJS DATA CONTRACT UNCHANGED
+========================================================= */
 
-  .acad-hero {
-    height: 460px;
+.achievers-page{
+    --navy:#001d3d;
+    --blue:#075c98;
+    --blue2:#0b82c7;
+    --yellow:#ffc300;
+    --yellow2:#ffe27a;
+    --text:#092c4d;
+    --muted:#71869b;
+    --bg:#edf3f9;
+    --white:#fff;
+    --border:#dce6ef;
+    --green:#0fa968;
+    --purple:#7457d8;
+    --red:#e93645;
+
+    min-height:100vh;
+    color:var(--text);
+    font-family:"Nunito","Segoe UI",Arial,sans-serif;
     background:
-      linear-gradient(rgba(0,31,63,.80), rgba(0,31,63,.80)),
-      url('/images/school-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    overflow: hidden;
-  }
+        radial-gradient(circle at 5% 20%,rgba(7,92,152,.07),transparent 25%),
+        radial-gradient(circle at 95% 80%,rgba(255,195,0,.08),transparent 25%),
+        linear-gradient(135deg,#edf3f9 0%,#f8fbff 50%,#e8f0f8 100%);
+    overflow:hidden;
+    position:relative;
+}
 
-  .acad-hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-      radial-gradient(circle, rgba(255,195,0,.35) 2px, transparent 2px),
-      radial-gradient(circle, rgba(255,255,255,.15) 1px, transparent 1px);
-    background-size: 120px 120px, 75px 75px;
-    animation: acadDots 22s linear infinite;
-  }
+.achievers-page::before,
+.achievers-page::after{
+    content:"";
+    position:fixed;
+    width:480px;
+    height:480px;
+    border-radius:50%;
+    pointer-events:none;
+    filter:blur(15px);
+    z-index:0;
+}
 
-  @keyframes acadDots {
-    from { transform: translateY(0); }
-    to { transform: translateY(-120px); }
-  }
+.achievers-page::before{
+    left:-330px;
+    top:30%;
+    background:radial-gradient(circle,rgba(7,92,152,.10),transparent 68%);
+    animation:ambientFloat 13s ease-in-out infinite;
+}
 
-  .acad-overlay {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    position: relative;
-    z-index: 2;
-  }
+.achievers-page::after{
+    right:-320px;
+    bottom:0;
+    background:radial-gradient(circle,rgba(255,195,0,.11),transparent 68%);
+    animation:ambientFloat 16s 2s ease-in-out infinite reverse;
+}
 
-  .acad-logo {
-    width: 115px;
-    height: 115px;
-    object-fit: contain;
-    background: white;
-    padding: 10px;
-    border-radius: 50%;
-    border: 5px solid #ffc300;
-    box-shadow: 0 16px 40px rgba(0,0,0,.28);
-    margin-bottom: 18px;
-  }
+@keyframes ambientFloat{
+    0%,100%{transform:translate3d(0,0,0) scale(1)}
+    50%{transform:translate3d(35px,-25px,0) scale(1.08)}
+}
 
-  .acad-badge,
-  .section-tag {
-    display: inline-block;
-    background: #ffc300;
-    color: #001f3f;
-    padding: 9px 22px;
-    border-radius: 40px;
-    font-weight: 900;
-    margin-bottom: 15px;
-  }
+.achievers-hero,
+.achievers-main{
+    position:relative;
+    z-index:1;
+}
 
-  .acad-hero h1 {
-    color: white;
-    font-size: 68px;
-    font-weight: 900;
-    text-shadow: 0 15px 35px rgba(0,0,0,.38);
-  }
+.achievers-container{
+    width:min(1200px,calc(100% - 40px));
+    margin:auto;
+    position:relative;
+    z-index:2;
+}
 
-  .acad-hero p {
-    color: white;
-    font-size: 18px;
-    margin-top: 8px;
-  }
+/* =========================================================
+   HERO
+========================================================= */
 
-  .acad-intro,
-  .exam-section {
-    padding: 85px 0;
-    background: #f5f7fb;
-  }
+.achievers-hero{
+    min-height:430px;
+    display:flex;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+    border-bottom:4px solid var(--yellow);
+    background:
+        radial-gradient(circle at 12% 80%,rgba(255,195,0,.17),transparent 25%),
+        radial-gradient(circle at 87% 18%,rgba(61,186,255,.18),transparent 28%),
+        linear-gradient(125deg,#00142d 0%,#002e59 48%,#075c98 100%);
+}
 
-  .skills-section {
-    padding: 85px 0;
-    background: white;
-  }
+.achievers-hero::before{
+    content:"";
+    position:absolute;
+    width:650px;
+    height:650px;
+    right:-250px;
+    top:-390px;
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:50%;
+    box-shadow:
+        0 0 0 45px rgba(255,255,255,.018),
+        0 0 0 95px rgba(255,195,0,.025);
+    animation:heroRing 18s linear infinite;
+}
 
-  .acad-heading {
-    text-align: center;
-    margin-bottom: 55px;
-  }
+.achievers-hero::after{
+    content:"";
+    position:absolute;
+    width:430px;
+    height:430px;
+    right:75px;
+    top:-225px;
+    border:1px solid rgba(255,195,0,.15);
+    border-radius:50%;
+    animation:heroRing 12s linear infinite reverse;
+}
 
-  .acad-heading h2 {
-    font-size: 46px;
-    color: #001f3f;
-    margin-bottom: 15px;
-  }
+@keyframes heroRing{
+    from{transform:rotate(0)}
+    to{transform:rotate(360deg)}
+}
 
-  .acad-heading p {
-    max-width: 850px;
-    margin: auto;
-    color: #555;
-    font-size: 18px;
-    line-height: 1.7;
-  }
+.hero-content{
+    max-width:850px;
+    animation:heroIn .9s cubic-bezier(.2,.75,.2,1) both;
+}
 
-  .acad-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-  }
+@keyframes heroIn{
+    from{opacity:0;transform:translateY(30px)}
+    to{opacity:1;transform:translateY(0)}
+}
 
-  .acad-card {
-    background: white;
-    padding: 35px;
-    border-radius: 26px;
-    box-shadow: 0 16px 40px rgba(0,0,0,.12);
-    border-top: 5px solid #ffc300;
-    transition: .35s;
-    position: relative;
-    overflow: hidden;
-  }
+.hero-label{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 15px;
+    color:var(--yellow);
+    background:rgba(255,195,0,.08);
+    border:1px solid rgba(255,195,0,.30);
+    border-radius:999px;
+    backdrop-filter:blur(12px);
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:16px;
+}
 
-  .acad-card::after {
-    content: "";
-    position: absolute;
-    width: 220px;
-    height: 220px;
-    background: rgba(255,195,0,.10);
-    border-radius: 50%;
-    top: -110px;
-    right: -110px;
-    transition: .45s;
-  }
+.hero-label::before{
+    content:"";
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--yellow);
+    box-shadow:0 0 0 5px rgba(255,195,0,.10),0 0 18px rgba(255,195,0,.65);
+    animation:liveDot 1.8s ease-in-out infinite;
+}
 
-  .acad-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 28px 60px rgba(0,0,0,.18);
-  }
+@keyframes liveDot{
+    0%,100%{transform:scale(1);opacity:1}
+    50%{transform:scale(.72);opacity:.55}
+}
 
-  .acad-card:hover::after {
-    transform: scale(1.5);
-  }
+.hero-content h1{
+    margin:0;
+    color:#fff;
+    font-size:clamp(40px,5.5vw,68px);
+    line-height:1;
+    font-weight:900;
+    letter-spacing:-2px;
+    text-shadow:0 8px 30px rgba(0,0,0,.25);
+}
 
-  .acad-card i {
-    color: #ffc300;
-    background: #001f3f;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    margin-bottom: 22px;
-    position: relative;
-    z-index: 2;
-  }
+.hero-content h1 span{
+    background:linear-gradient(100deg,#ffc300,#ffe27a,#ffc300);
+    background-size:220% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:goldSweep 4s ease-in-out infinite;
+}
 
-  .acad-card h3 {
-    color: #001f3f;
-    font-size: 25px;
-    margin-bottom: 14px;
-    position: relative;
-    z-index: 2;
-  }
+@keyframes goldSweep{
+    0%,100%{background-position:0 center}
+    50%{background-position:100% center}
+}
 
-  .acad-card p {
-    color: #555;
-    line-height: 1.75;
-    position: relative;
-    z-index: 2;
-  }
+.hero-content h1::after{
+    content:"";
+    display:block;
+    width:95px;
+    height:5px;
+    margin-top:20px;
+    border-radius:99px;
+    background:linear-gradient(90deg,transparent,var(--yellow),transparent);
+    animation:underlinePulse 2.8s ease-in-out infinite;
+}
 
-  .exam-wrapper {
-    display: grid;
-    grid-template-columns: 1.1fr .9fr;
-    gap: 40px;
-    align-items: center;
-  }
+@keyframes underlinePulse{
+    0%,100%{transform:scaleX(.55);opacity:.55}
+    50%{transform:scaleX(1.15);opacity:1}
+}
 
-  .exam-left {
-    background: white;
-    padding: 45px;
-    border-radius: 30px;
-    box-shadow: 0 18px 45px rgba(0,0,0,.13);
-  }
+.hero-content p{
+    max-width:720px;
+    margin:18px 0 0;
+    color:rgba(255,255,255,.80);
+    font-size:14px;
+    line-height:1.75;
+    font-weight:600;
+}
 
-  .exam-left h2 {
-    color: #001f3f;
-    font-size: 42px;
-    margin-bottom: 18px;
-  }
+.hero-breadcrumb{
+    display:inline-flex;
+    align-items:center;
+    margin-top:22px;
+    padding:8px 13px;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:999px;
+    background:rgba(255,255,255,.055);
+    backdrop-filter:blur(12px);
+    color:rgba(255,255,255,.65);
+    font-size:12px;
+    font-weight:700;
+}
 
-  .exam-left p {
-    color: #444;
-    font-size: 18px;
-    line-height: 1.8;
-    margin-bottom: 24px;
-  }
+.hero-breadcrumb a{
+    color:var(--yellow);
+    text-decoration:none;
+}
 
-  .exam-list div {
-    background: #001f3f;
-    color: white;
-    padding: 14px 18px;
-    border-radius: 16px;
-    font-weight: 800;
-    margin-bottom: 12px;
-  }
+/* =========================================================
+   FLOATING TROPHY
+========================================================= */
 
-  .exam-list i {
-    color: #ffc300;
-    margin-right: 8px;
-  }
+.hero-trophy{
+    position:absolute;
+    right:8%;
+    top:50%;
+    transform:translateY(-50%);
+    width:170px;
+    height:170px;
+    border-radius:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--yellow);
+    font-size:62px;
+    background:
+        radial-gradient(circle at 35% 25%,rgba(255,255,255,.16),transparent 30%),
+        linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035));
+    border:1px solid rgba(255,255,255,.17);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.16),
+        0 30px 80px rgba(0,0,0,.25),
+        0 0 55px rgba(255,195,0,.10);
+    animation:trophyFloat 4.5s ease-in-out infinite;
+}
 
-  .exam-right {
-    display: grid;
-    gap: 20px;
-  }
+.hero-trophy::before,
+.hero-trophy::after{
+    content:"";
+    position:absolute;
+    border:1px solid rgba(255,195,0,.18);
+    border-radius:50px;
+}
 
-  .exam-box {
-    background: linear-gradient(135deg, #001f3f, #004481);
-    color: white;
-    padding: 35px;
-    border-radius: 26px;
-    box-shadow: 0 18px 45px rgba(0,31,63,.25);
-    transition: .35s;
-  }
+.hero-trophy::before{inset:-17px}
+.hero-trophy::after{
+    inset:-32px;
+    border-color:rgba(255,255,255,.07);
+    animation:trophyRing 8s linear infinite;
+}
 
-  .exam-box:hover {
-    transform: translateX(-10px);
-  }
+@keyframes trophyFloat{
+    0%,100%{transform:translateY(-50%) rotate(0)}
+    50%{transform:translateY(calc(-50% - 15px)) rotate(2deg)}
+}
 
-  .exam-box h3 {
-    color: #ffc300;
-    font-size: 34px;
-    margin-bottom: 8px;
-  }
+@keyframes trophyRing{
+    from{transform:rotate(0)}
+    to{transform:rotate(360deg)}
+}
 
-  .exam-box p {
-    line-height: 1.6;
-    opacity: .92;
-  }
+.hero-trophy i{
+    filter:drop-shadow(0 10px 18px rgba(255,195,0,.24));
+    animation:trophyGlow 2.5s ease-in-out infinite;
+}
 
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-  }
+@keyframes trophyGlow{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.08);filter:drop-shadow(0 15px 28px rgba(255,195,0,.42))}
+}
 
-  .skills-grid div {
-    background: #f5f7fb;
-    text-align: center;
-    padding: 35px 20px;
-    border-radius: 24px;
-    box-shadow: 0 14px 35px rgba(0,0,0,.10);
-    border-top: 5px solid #ffc300;
-    transition: .35s;
-  }
+/* =========================================================
+   MAIN / INTRO
+========================================================= */
 
-  .skills-grid div:hover {
-    background: #001f3f;
-    transform: translateY(-10px);
-  }
+.achievers-main{
+    padding:65px 0 90px;
+}
 
-  .skills-grid i {
-    color: #ffc300;
-    font-size: 42px;
-    margin-bottom: 16px;
-  }
+.intro{
+    text-align:center;
+    max-width:850px;
+    margin:0 auto 38px;
+}
 
-  .skills-grid h3 {
-    color: #001f3f;
-    font-size: 22px;
-  }
+.intro-label{
+    display:inline-flex;
+    padding:8px 13px;
+    border-radius:999px;
+    background:#fff7d8;
+    border:1px solid #f0db87;
+    color:#a27700;
+    box-shadow:0 8px 22px rgba(150,110,0,.07);
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
 
-  .skills-grid div:hover h3 {
-    color: white;
-  }
+.intro h2{
+    margin:10px 0 0;
+    color:var(--navy);
+    font-size:clamp(29px,4vw,43px);
+    font-weight:900;
+    letter-spacing:-.8px;
+}
 
-  @media(max-width: 900px) {
-    .acad-grid,
-    .exam-wrapper,
-    .skills-grid {
-      grid-template-columns: 1fr;
+.intro h2::after{
+    content:"";
+    display:block;
+    width:60px;
+    height:4px;
+    margin:15px auto 0;
+    border-radius:99px;
+    background:linear-gradient(90deg,var(--navy),var(--yellow));
+}
+
+.intro p{
+    margin:11px 0 0;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.8;
+    font-weight:600;
+}
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+.filter-card{
+    position:relative;
+    overflow:hidden;
+    margin-bottom:42px;
+    padding:14px;
+    background:rgba(255,255,255,.72);
+    border:1px solid rgba(255,255,255,.9);
+    border-radius:20px;
+    box-shadow:
+        0 20px 55px rgba(0,43,87,.08),
+        inset 0 1px 0 rgba(255,255,255,.9);
+    backdrop-filter:blur(20px);
+}
+
+.filter-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-35%;
+    width:25%;
+    height:100%;
+    transform:skewX(-20deg);
+    background:rgba(255,255,255,.55);
+    transition:left .8s ease;
+    pointer-events:none;
+}
+
+.filter-card:hover::before{left:125%}
+
+.filters{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:9px;
+}
+
+.filter-btn{
+    position:relative;
+    overflow:hidden;
+    min-height:43px;
+    padding:0 18px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    background:#f7fafc;
+    color:#536c82;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:11px;
+    font-weight:900;
+    transition:all .22s ease;
+}
+
+.filter-btn i{margin-right:6px}
+
+.filter-btn::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(110deg,transparent,rgba(255,255,255,.25),transparent);
+    transform:translateX(-130%);
+    transition:transform .55s ease;
+}
+
+.filter-btn:hover::after{transform:translateX(130%)}
+
+.filter-btn:hover{
+    border-color:#b8cfdf;
+    color:var(--navy);
+    transform:translateY(-2px);
+}
+
+.filter-btn.active{
+    background:linear-gradient(135deg,var(--navy),var(--blue));
+    color:#fff;
+    border-color:var(--navy);
+    box-shadow:
+        0 10px 25px rgba(0,43,87,.20),
+        0 0 0 3px rgba(255,195,0,.08);
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.achievement-section{
+    margin-bottom:55px;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.section-title-left{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.section-icon{
+    width:48px;
+    height:48px;
+    flex-shrink:0;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff5cf;
+    color:var(--navy);
+    font-size:17px;
+    box-shadow:0 10px 25px rgba(0,43,87,.08);
+    transition:transform .35s ease,box-shadow .35s ease;
+}
+
+.section-title:hover .section-icon{
+    transform:translateY(-4px) rotate(-4deg);
+    box-shadow:0 16px 32px rgba(0,43,87,.13);
+}
+
+.section-title h3{
+    margin:0;
+    color:var(--navy);
+    font-size:21px;
+    font-weight:900;
+}
+
+.section-title p{
+    margin:3px 0 0;
+    color:var(--muted);
+    font-size:10px;
+    font-weight:600;
+}
+
+.section-count{
+    padding:7px 11px;
+    border:1px solid #dbe7f0;
+    border-radius:30px;
+    background:#eaf2f8;
+    color:var(--navy);
+    font-size:10px;
+    font-weight:900;
+    box-shadow:0 7px 18px rgba(0,43,87,.05);
+}
+
+/* =========================================================
+   GRID / CARD
+========================================================= */
+
+.records-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:22px;
+    perspective:1600px;
+}
+
+.achievement-card{
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    background:#fff;
+    border:1px solid rgba(123,157,182,.20);
+    border-radius:21px;
+    box-shadow:
+        0 15px 42px rgba(0,43,87,.08),
+        inset 0 1px 0 rgba(255,255,255,.9);
+    transform:translateY(0) rotateX(0) rotateY(0);
+    transition:
+        transform .45s cubic-bezier(.2,.8,.2,1),
+        box-shadow .45s ease,
+        border-color .35s ease;
+    animation:cardIn .75s cubic-bezier(.2,.75,.2,1) both;
+}
+
+.achievement-card:nth-child(1){animation-delay:.05s}
+.achievement-card:nth-child(2){animation-delay:.13s}
+.achievement-card:nth-child(3){animation-delay:.21s}
+.achievement-card:nth-child(4){animation-delay:.29s}
+.achievement-card:nth-child(5){animation-delay:.37s}
+.achievement-card:nth-child(6){animation-delay:.45s}
+
+@keyframes cardIn{
+    from{opacity:0;transform:translateY(32px) scale(.985)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.achievement-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:7;
+    pointer-events:none;
+    border-radius:inherit;
+    background:radial-gradient(
+        260px circle at var(--mx,50%) var(--my,0%),
+        rgba(255,255,255,.24),
+        transparent 60%
+    );
+    opacity:0;
+    transition:opacity .3s ease;
+}
+
+.achievement-card::after{
+    content:"";
+    position:absolute;
+    left:10%;
+    right:10%;
+    bottom:-18px;
+    height:30px;
+    z-index:-1;
+    border-radius:50%;
+    background:rgba(0,36,70,.14);
+    filter:blur(16px);
+    opacity:.35;
+    transform:scale(.82);
+    transition:transform .45s ease,opacity .45s ease;
+}
+
+.achievement-card:hover{
+    transform:translateY(-13px) rotateX(1.2deg) rotateY(-1.2deg);
+    border-color:rgba(0,91,152,.26);
+    box-shadow:0 34px 85px rgba(0,31,63,.20);
+}
+
+.achievement-card:hover::before{opacity:1}
+.achievement-card:hover::after{
+    transform:scale(.65);
+    opacity:.22;
+}
+
+/* =========================================================
+   PHOTO
+========================================================= */
+
+.card-image{
+    height:235px;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 30% 20%,rgba(255,255,255,.7),transparent 30%),
+        linear-gradient(145deg,#dbe8f2,#cbdbe8);
+}
+
+.card-image::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:2;
+    pointer-events:none;
+    background:linear-gradient(
+        115deg,
+        transparent 15%,
+        rgba(255,255,255,.22) 45%,
+        transparent 68%
+    );
+    transform:translateX(-130%);
+    transition:transform .9s ease;
+}
+
+.achievement-card:hover .card-image::before{
+    transform:translateX(130%);
+}
+
+.card-image::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:3;
+    pointer-events:none;
+    background:
+        linear-gradient(to top,rgba(0,20,42,.55),transparent 48%),
+        radial-gradient(circle at 50% 0%,rgba(255,195,0,.13),transparent 50%);
+}
+
+.card-image img{
+    position:relative;
+    z-index:1;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transform:scale(1.025) translateY(0);
+    transition:
+        transform .65s cubic-bezier(.2,.8,.2,1),
+        filter .45s ease;
+    animation:photoFloat 5s ease-in-out infinite;
+    will-change:transform;
+}
+
+@keyframes photoFloat{
+    0%,100%{transform:scale(1.025) translate3d(0,0,0)}
+    50%{transform:scale(1.035) translate3d(0,-6px,0)}
+}
+
+.achievement-card:hover .card-image img{
+    transform:scale(1.10) translateY(-5px);
+    filter:saturate(1.06) contrast(1.02);
+    animation-play-state:paused;
+}
+
+.year-badge{
+    position:absolute;
+    top:15px;
+    right:15px;
+    z-index:5;
+    padding:7px 11px;
+    border-radius:30px;
+    background:rgba(255,255,255,.92);
+    border:1px solid rgba(255,255,255,.85);
+    color:var(--navy);
+    font-size:10px;
+    font-weight:900;
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.14),
+        inset 0 1px 0 rgba(255,255,255,.9);
+    backdrop-filter:blur(12px);
+    transition:transform .35s ease;
+}
+
+.achievement-card:hover .year-badge{
+    transform:translateY(-3px) scale(1.03);
+}
+
+/* =========================================================
+   BODY / BADGES
+========================================================= */
+
+.card-body{
+    padding:21px;
+    position:relative;
+}
+
+.rank-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:7px 10px;
+    border-radius:30px;
+    font-size:9px;
+    font-weight:900;
+    margin-bottom:11px;
+    box-shadow:0 7px 18px rgba(0,43,87,.05);
+    transition:transform .3s ease,box-shadow .3s ease;
+}
+
+.achievement-card:hover .rank-badge{
+    transform:translateY(-2px);
+    box-shadow:0 10px 24px rgba(0,43,87,.09);
+}
+
+.badge-state{
+    background:linear-gradient(135deg,#e8f2ff,#dcecff);
+    color:#1769d2;
+}
+
+.badge-district{
+    background:linear-gradient(135deg,#f1ecff,#e7dfff);
+    color:var(--purple);
+}
+
+.badge-school{
+    background:linear-gradient(135deg,#e6f9f0,#d8f3e6);
+    color:#078a57;
+}
+
+.card-body h4{
+    margin:0 0 15px;
+    color:var(--navy);
+    font-size:20px;
+    line-height:1.2;
+    font-weight:900;
+    transition:color .3s ease,transform .3s ease;
+}
+
+.achievement-card:hover .card-body h4{
+    color:var(--blue);
+    transform:translateX(2px);
+}
+
+.meta-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.meta{
+    position:relative;
+    overflow:hidden;
+    padding:10px;
+    background:#f7f9fb;
+    border:1px solid #e5ecf2;
+    border-radius:10px;
+    transition:transform .3s ease,border-color .3s ease,background .3s ease;
+}
+
+.meta::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:3px;
+    height:0;
+    background:var(--yellow);
+    transition:height .3s ease;
+}
+
+.achievement-card:hover .meta{
+    border-color:#d3e2ed;
+    background:#f9fbfd;
+}
+
+.achievement-card:hover .meta::before{height:100%}
+
+.meta-label{
+    display:block;
+    margin-bottom:4px;
+    color:#8497a9;
+    font-size:7px;
+    font-weight:900;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+}
+
+.meta-value{
+    color:var(--text);
+    font-size:10px;
+    font-weight:900;
+    word-break:break-word;
+}
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+.result{
+    position:relative;
+    overflow:hidden;
+    margin-top:9px;
+    padding:12px 13px;
+    border:1px solid #f3dd89;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:linear-gradient(135deg,#fff9df,#fff3bf);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.75),
+        0 8px 22px rgba(185,142,0,.06);
+}
+
+.result::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-90%;
+    width:45%;
+    height:100%;
+    transform:skewX(-20deg);
+    background:rgba(255,255,255,.40);
+    transition:left .75s ease;
+}
+
+.achievement-card:hover .result::before{left:140%}
+
+.result-label{
+    position:relative;
+    z-index:1;
+    color:#886b00;
+    font-size:9px;
+    font-weight:900;
+}
+
+.result-value{
+    position:relative;
+    z-index:1;
+    color:var(--navy);
+    font-size:19px;
+    font-weight:900;
+    text-shadow:0 3px 10px rgba(0,43,87,.08);
+}
+
+/* =========================================================
+   ACHIEVEMENT
+========================================================= */
+
+.achievement{
+    margin-top:13px;
+    padding-top:13px;
+    border-top:1px solid #e7edf3;
+}
+
+.achievement strong{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:5px;
+    color:var(--navy);
+    font-size:9px;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+.achievement strong::before{
+    content:"";
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:var(--yellow);
+    box-shadow:0 0 0 4px rgba(255,195,0,.10);
+}
+
+.achievement p{
+    margin:0;
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.6;
+    font-weight:600;
+}
+
+/* =========================================================
+   HIDDEN / EMPTY
+========================================================= */
+
+.achievement-card.hidden{
+    display:none !important;
+}
+
+.section-empty{
+    padding:40px 20px;
+    text-align:center;
+    border:1px dashed #cbd9e5;
+    border-radius:18px;
+    background:rgba(255,255,255,.55);
+    color:var(--muted);
+    font-size:12px;
+    font-weight:700;
+}
+
+.no-results{
+    display:none;
+    position:relative;
+    overflow:hidden;
+    padding:55px 20px;
+    text-align:center;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:22px;
+    box-shadow:0 12px 35px rgba(0,43,87,.06);
+}
+
+.no-results.show{display:block}
+
+.no-results::before,
+.no-results::after{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    border:1px solid rgba(255,195,0,.12);
+    border-radius:50%;
+}
+
+.no-results::before{left:-80px;top:-90px}
+.no-results::after{right:-80px;bottom:-90px}
+
+.no-results-icon{
+    width:65px;
+    height:65px;
+    margin:0 auto 15px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff5cf;
+    color:var(--navy);
+    font-size:24px;
+    animation:noResultFloat 3s ease-in-out infinite;
+}
+
+@keyframes noResultFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-8px)}
+}
+
+.no-results h3{
+    margin:0;
+    color:var(--navy);
+    font-size:20px;
+    font-weight:900;
+}
+
+.no-results p{
+    margin:5px 0 0;
+    color:var(--muted);
+    font-size:11px;
+}
+
+/* =========================================================
+   FILTER REVEAL
+========================================================= */
+
+.achievement-card.filter-reveal{
+    animation:filterReveal .5s cubic-bezier(.2,.8,.2,1) both !important;
+}
+
+@keyframes filterReveal{
+    from{opacity:0;transform:translateY(18px) scale(.97)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1050px){
+    .records-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .hero-trophy{
+        right:25px;
+        width:125px;
+        height:125px;
+        font-size:48px;
     }
+}
 
-    .acad-hero h1 {
-      font-size: 44px;
-    }
+@media(max-width:900px){
+    .achievement-card:hover{transform:translateY(-8px)}
+}
 
-    .acad-heading h2,
-    .exam-left h2 {
-      font-size: 34px;
+@media(max-width:750px){
+    .achievers-hero{min-height:360px}
+    .hero-trophy{display:none}
+    .achievers-main{padding:48px 0 65px}
+    .records-grid{grid-template-columns:1fr}
+    .section-title{align-items:flex-start}
+    .section-count{display:none}
+    .card-image{height:245px}
+}
+
+@media(max-width:500px){
+    .achievers-container{width:calc(100% - 28px)}
+    .achievers-hero{min-height:345px}
+    .hero-content h1{font-size:38px}
+    .hero-content p{font-size:12px}
+    .filter-card{padding:10px}
+    .filters{
+        display:grid;
+        grid-template-columns:1fr 1fr;
     }
-  }
+    .filter-btn{
+        padding:0 8px;
+        font-size:10px;
+    }
+    .meta-grid{grid-template-columns:1fr}
+    .card-image{height:225px}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .achievers-page::before,
+    .achievers-page::after,
+    .achievers-hero::before,
+    .achievers-hero::after,
+    .hero-content,
+    .hero-content h1 span,
+    .hero-content h1::after,
+    .hero-label::before,
+    .hero-trophy,
+    .hero-trophy::after,
+    .hero-trophy i,
+    .achievement-card,
+    .card-image img,
+    .no-results-icon{
+        animation:none !important;
+    }
+}
 </style>
+
+<div class="achievers-page">
+
+<section class="achievers-hero">
+    <div class="achievers-container">
+        <div class="hero-content">
+
+            <div class="hero-label">
+                <i class="fa-solid fa-award"></i>
+                Gyan Jyoti School
+            </div>
+
+            <h1>
+                Our
+                <span>Top Achievers</span>
+            </h1>
+
+            <p>
+                Celebrating the exceptional academic achievements
+                of our students who have brought pride to Gyan Jyoti
+                School through outstanding board results and
+                remarkable academic performance.
+            </p>
+
+            <div class="hero-breadcrumb">
+                <a href="/">Home</a>
+                &nbsp; / &nbsp;
+                Academics
+            </div>
+
+        </div>
+    </div>
+
+    <div class="hero-trophy">
+        <i class="fa-solid fa-trophy"></i>
+    </div>
+</section>
+
+<section class="achievers-main">
+<div class="achievers-container">
+
+<div class="intro">
+    <div class="intro-label">Academic Excellence</div>
+    <h2>Celebrating Excellence</h2>
+    <p>
+        Meet the students who have achieved excellence
+        at the state, district and school level.
+    </p>
+</div>
+
+<div class="filter-card">
+    <div class="filters">
+
+        <button class="filter-btn active" data-filter="all" type="button">
+            <i class="fa-solid fa-layer-group"></i>
+            All Achievers
+        </button>
+
+        <button class="filter-btn" data-filter="10th" type="button">
+            <i class="fa-solid fa-graduation-cap"></i>
+            10th
+        </button>
+
+        <button class="filter-btn" data-filter="12th" type="button">
+            <i class="fa-solid fa-graduation-cap"></i>
+            12th
+        </button>
+
+        <button class="filter-btn" data-filter="State Topper" type="button">
+            <i class="fa-solid fa-location-dot"></i>
+            State
+        </button>
+
+        <button class="filter-btn" data-filter="District Topper" type="button">
+            <i class="fa-solid fa-location-crosshairs"></i>
+            District
+        </button>
+
+        <button class="filter-btn" data-filter="School Topper" type="button">
+            <i class="fa-solid fa-school"></i>
+            School
+        </button>
+
+    </div>
+</div>
+
+<!-- =========================================================
+     10TH TOPPERS
+========================================================= -->
+
+<section class="achievement-section" data-section="10th">
+
+<div class="section-title">
+    <div class="section-title-left">
+        <div class="section-icon">
+            <i class="fa-solid fa-medal"></i>
+        </div>
+        <div>
+            <h3>Class 10th Toppers</h3>
+            <p>Outstanding performance in Class 10 board examinations</p>
+        </div>
+    </div>
+
+    <div class="section-count">
+        <%= records.filter(r => r.className === '10th').length %>
+        Records
+    </div>
+</div>
+
+<div class="records-grid">
+
+<% records
+    .filter(r => r.className === '10th')
+    .forEach(record => {
+%>
+
+<article
+    class="achievement-card"
+    data-class="<%= record.className %>"
+    data-rank="<%= record.rankType %>"
+>
+
+<div class="card-image">
+
+    <div class="year-badge">
+        <i class="fa-regular fa-calendar"></i>
+        <%= record.year || '—' %>
+    </div>
+
+    <img
+        src="<%= record.photo || '/images/academic/default-student.jpg' %>"
+        alt="<%= record.studentName %>"
+        loading="lazy"
+        onerror="
+            this.onerror=null;
+            this.src='/images/academic/default-student.jpg';
+        "
+    >
+
+</div>
+
+<div class="card-body">
+
+<% if (record.rankType === 'State Topper') { %>
+    <span class="rank-badge badge-state">
+        <i class="fa-solid fa-location-dot"></i>
+        State Topper
+    </span>
+<% } else if (record.rankType === 'District Topper') { %>
+    <span class="rank-badge badge-district">
+        <i class="fa-solid fa-location-crosshairs"></i>
+        District Topper
+    </span>
+<% } else { %>
+    <span class="rank-badge badge-school">
+        <i class="fa-solid fa-school"></i>
+        School Topper
+    </span>
+<% } %>
+
+<h4><%= record.studentName %></h4>
+
+<div class="meta-grid">
+
+    <div class="meta">
+        <span class="meta-label">Class</span>
+        <span class="meta-value">10th</span>
+    </div>
+
+    <div class="meta">
+        <span class="meta-label">Batch</span>
+        <span class="meta-value"><%= record.batch || '—' %></span>
+    </div>
+
+    <% if (record.stream) { %>
+    <div class="meta">
+        <span class="meta-label">Stream</span>
+        <span class="meta-value"><%= record.stream %></span>
+    </div>
+    <% } %>
+
+</div>
+
+<% if (record.percentage) { %>
+<div class="result">
+    <span class="result-label">
+        <i class="fa-solid fa-chart-line"></i>
+        Result
+    </span>
+    <span class="result-value"><%= record.percentage %></span>
+</div>
+<% } %>
+
+<% if (record.achievement) { %>
+<div class="achievement">
+    <strong>Achievement</strong>
+    <p><%= record.achievement %></p>
+</div>
+<% } %>
+
+</div>
+</article>
+
+<% }) %>
+
+</div>
+</section>
+
+<!-- =========================================================
+     12TH TOPPERS
+========================================================= -->
+
+<section class="achievement-section" data-section="12th">
+
+<div class="section-title">
+    <div class="section-title-left">
+        <div class="section-icon">
+            <i class="fa-solid fa-award"></i>
+        </div>
+        <div>
+            <h3>Class 12th Toppers</h3>
+            <p>Exceptional performance across senior secondary board examinations</p>
+        </div>
+    </div>
+
+    <div class="section-count">
+        <%= records.filter(r => r.className === '12th').length %>
+        Records
+    </div>
+</div>
+
+<div class="records-grid">
+
+<% records
+    .filter(r => r.className === '12th')
+    .forEach(record => {
+%>
+
+<article
+    class="achievement-card"
+    data-class="<%= record.className %>"
+    data-rank="<%= record.rankType %>"
+>
+
+<div class="card-image">
+
+    <div class="year-badge">
+        <i class="fa-regular fa-calendar"></i>
+        <%= record.year || '—' %>
+    </div>
+
+    <img
+        src="<%= record.photo || '/images/academic/default-student.jpg' %>"
+        alt="<%= record.studentName %>"
+        loading="lazy"
+        onerror="
+            this.onerror=null;
+            this.src='/images/academic/default-student.jpg';
+        "
+    >
+
+</div>
+
+<div class="card-body">
+
+<% if (record.rankType === 'State Topper') { %>
+    <span class="rank-badge badge-state">
+        <i class="fa-solid fa-location-dot"></i>
+        State Topper
+    </span>
+<% } else if (record.rankType === 'District Topper') { %>
+    <span class="rank-badge badge-district">
+        <i class="fa-solid fa-location-crosshairs"></i>
+        District Topper
+    </span>
+<% } else { %>
+    <span class="rank-badge badge-school">
+        <i class="fa-solid fa-school"></i>
+        School Topper
+    </span>
+<% } %>
+
+<h4><%= record.studentName %></h4>
+
+<div class="meta-grid">
+
+    <div class="meta">
+        <span class="meta-label">Class</span>
+        <span class="meta-value">12th</span>
+    </div>
+
+    <div class="meta">
+        <span class="meta-label">Batch</span>
+        <span class="meta-value"><%= record.batch || '—' %></span>
+    </div>
+
+    <% if (record.stream) { %>
+    <div class="meta">
+        <span class="meta-label">Stream</span>
+        <span class="meta-value"><%= record.stream %></span>
+    </div>
+    <% } %>
+
+</div>
+
+<% if (record.percentage) { %>
+<div class="result">
+    <span class="result-label">
+        <i class="fa-solid fa-chart-line"></i>
+        Result
+    </span>
+    <span class="result-value"><%= record.percentage %></span>
+</div>
+<% } %>
+
+<% if (record.achievement) { %>
+<div class="achievement">
+    <strong>Achievement</strong>
+    <p><%= record.achievement %></p>
+</div>
+<% } %>
+
+</div>
+</article>
+
+<% }) %>
+
+</div>
+</section>
+
+<!-- =========================================================
+     STATE TOPPERS
+========================================================= -->
+
+<section class="achievement-section" data-section="State Topper">
+
+<div class="section-title">
+    <div class="section-title-left">
+        <div class="section-icon">
+            <i class="fa-solid fa-location-dot"></i>
+        </div>
+        <div>
+            <h3>State Toppers</h3>
+            <p>Students achieving exceptional results at state level</p>
+        </div>
+    </div>
+</div>
+
+<div class="records-grid">
+
+<% records
+    .filter(r => r.rankType === 'State Topper')
+    .forEach(record => {
+%>
+
+<article
+    class="achievement-card"
+    data-class="<%= record.className %>"
+    data-rank="<%= record.rankType %>"
+>
+
+<div class="card-image">
+
+    <div class="year-badge">
+        <i class="fa-regular fa-calendar"></i>
+        <%= record.year || '—' %>
+    </div>
+
+    <img
+        src="<%= record.photo || '/images/academic/default-student.jpg' %>"
+        alt="<%= record.studentName %>"
+        loading="lazy"
+        onerror="
+            this.onerror=null;
+            this.src='/images/academic/default-student.jpg';
+        "
+    >
+
+</div>
+
+<div class="card-body">
+
+<span class="rank-badge badge-state">
+    <i class="fa-solid fa-location-dot"></i>
+    State Topper
+</span>
+
+<h4><%= record.studentName %></h4>
+
+<div class="meta-grid">
+
+    <div class="meta">
+        <span class="meta-label">Class</span>
+        <span class="meta-value"><%= record.className %></span>
+    </div>
+
+    <div class="meta">
+        <span class="meta-label">Batch</span>
+        <span class="meta-value"><%= record.batch || '—' %></span>
+    </div>
+
+</div>
+
+<% if (record.percentage) { %>
+<div class="result">
+    <span class="result-label">
+        <i class="fa-solid fa-chart-line"></i>
+        Result
+    </span>
+    <span class="result-value"><%= record.percentage %></span>
+</div>
+<% } %>
+
+<% if (record.achievement) { %>
+<div class="achievement">
+    <strong>Achievement</strong>
+    <p><%= record.achievement %></p>
+</div>
+<% } %>
+
+</div>
+</article>
+
+<% }) %>
+
+</div>
+</section>
+
+<!-- =========================================================
+     DISTRICT TOPPERS
+========================================================= -->
+
+<section class="achievement-section" data-section="District Topper">
+
+<div class="section-title">
+    <div class="section-title-left">
+        <div class="section-icon">
+            <i class="fa-solid fa-location-crosshairs"></i>
+        </div>
+        <div>
+            <h3>District Toppers</h3>
+            <p>Outstanding students achieving distinction at district level</p>
+        </div>
+    </div>
+</div>
+
+<div class="records-grid">
+
+<% records
+    .filter(r => r.rankType === 'District Topper')
+    .forEach(record => {
+%>
+
+<article
+    class="achievement-card"
+    data-class="<%= record.className %>"
+    data-rank="<%= record.rankType %>"
+>
+
+<div class="card-image">
+
+    <div class="year-badge">
+        <i class="fa-regular fa-calendar"></i>
+        <%= record.year || '—' %>
+    </div>
+
+    <img
+        src="<%= record.photo || '/images/academic/default-student.jpg' %>"
+        alt="<%= record.studentName %>"
+        loading="lazy"
+        onerror="
+            this.onerror=null;
+            this.src='/images/academic/default-student.jpg';
+        "
+    >
+
+</div>
+
+<div class="card-body">
+
+<span class="rank-badge badge-district">
+    <i class="fa-solid fa-location-crosshairs"></i>
+    District Topper
+</span>
+
+<h4><%= record.studentName %></h4>
+
+<div class="meta-grid">
+
+    <div class="meta">
+        <span class="meta-label">Class</span>
+        <span class="meta-value"><%= record.className %></span>
+    </div>
+
+    <div class="meta">
+        <span class="meta-label">Batch</span>
+        <span class="meta-value"><%= record.batch || '—' %></span>
+    </div>
+
+</div>
+
+<% if (record.percentage) { %>
+<div class="result">
+    <span class="result-label">
+        <i class="fa-solid fa-chart-line"></i>
+        Result
+    </span>
+    <span class="result-value"><%= record.percentage %></span>
+</div>
+<% } %>
+
+<% if (record.achievement) { %>
+<div class="achievement">
+    <strong>Achievement</strong>
+    <p><%= record.achievement %></p>
+</div>
+<% } %>
+
+</div>
+</article>
+
+<% }) %>
+
+</div>
+</section>
+
+<!-- =========================================================
+     SCHOOL TOPPERS
+========================================================= -->
+
+<section class="achievement-section" data-section="School Topper">
+
+<div class="section-title">
+    <div class="section-title-left">
+        <div class="section-icon">
+            <i class="fa-solid fa-school"></i>
+        </div>
+        <div>
+            <h3>School Toppers</h3>
+            <p>Students who achieved the highest results within the school</p>
+        </div>
+    </div>
+</div>
+
+<div class="records-grid">
+
+<% records
+    .filter(r => r.rankType === 'School Topper')
+    .forEach(record => {
+%>
+
+<article
+    class="achievement-card"
+    data-class="<%= record.className %>"
+    data-rank="<%= record.rankType %>"
+>
+
+<div class="card-image">
+
+    <div class="year-badge">
+        <i class="fa-regular fa-calendar"></i>
+        <%= record.year || '—' %>
+    </div>
+
+    <img
+        src="<%= record.photo || '/images/academic/default-student.jpg' %>"
+        alt="<%= record.studentName %>"
+        loading="lazy"
+        onerror="
+            this.onerror=null;
+            this.src='/images/academic/default-student.jpg';
+        "
+    >
+
+</div>
+
+<div class="card-body">
+
+<span class="rank-badge badge-school">
+    <i class="fa-solid fa-school"></i>
+    School Topper
+</span>
+
+<h4><%= record.studentName %></h4>
+
+<div class="meta-grid">
+
+    <div class="meta">
+        <span class="meta-label">Class</span>
+        <span class="meta-value"><%= record.className %></span>
+    </div>
+
+    <div class="meta">
+        <span class="meta-label">Batch</span>
+        <span class="meta-value"><%= record.batch || '—' %></span>
+    </div>
+
+</div>
+
+<% if (record.percentage) { %>
+<div class="result">
+    <span class="result-label">
+        <i class="fa-solid fa-chart-line"></i>
+        Result
+    </span>
+    <span class="result-value"><%= record.percentage %></span>
+</div>
+<% } %>
+
+<% if (record.achievement) { %>
+<div class="achievement">
+    <strong>Achievement</strong>
+    <p><%= record.achievement %></p>
+</div>
+<% } %>
+
+</div>
+</article>
+
+<% }) %>
+
+</div>
+</section>
+
+<!-- =========================================================
+     NO RESULTS
+========================================================= -->
+
+<div class="no-results" id="noResults">
+
+    <div class="no-results-icon">
+        <i class="fa-solid fa-trophy"></i>
+    </div>
+
+    <h3>No Achievers Found</h3>
+
+    <p>
+        No achievement records match the selected filter.
+    </p>
+
+</div>
+
+</div>
+</section>
+</div>
+
+<script>
+/* =========================================================
+   ACHIEVEMENT FILTER
+   ORIGINAL FILTER BEHAVIOUR PRESERVED
+========================================================= */
+
+const filterButtons =
+    document.querySelectorAll(".filter-btn");
+
+const sections =
+    document.querySelectorAll(".achievement-section");
+
+const noResults =
+    document.getElementById("noResults");
+
+filterButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const filter =
+            button.dataset.filter;
+
+        filterButtons.forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+        let visibleCards = 0;
+
+        sections.forEach(section => {
+
+            const cards =
+                section.querySelectorAll(".achievement-card");
+
+            let sectionVisible = 0;
+
+            cards.forEach(card => {
+
+                const cardClass =
+                    card.dataset.class;
+
+                const cardRank =
+                    card.dataset.rank;
+
+                let show = false;
+
+                if(filter === "all"){
+                    show = true;
+                }
+                else if(filter === "10th"){
+                    show = cardClass === "10th";
+                }
+                else if(filter === "12th"){
+                    show = cardClass === "12th";
+                }
+                else{
+                    show = cardRank === filter;
+                }
+
+                if(show){
+
+                    card.classList.remove("hidden");
+
+                    sectionVisible++;
+                    visibleCards++;
+
+                }
+                else{
+
+                    card.classList.add("hidden");
+
+                }
+
+            });
+
+            section.style.display =
+                sectionVisible === 0
+                    ? "none"
+                    : "block";
+
+        });
+
+        if(visibleCards === 0){
+            noResults.classList.add("show");
+        }
+        else{
+            noResults.classList.remove("show");
+        }
+
+        const main =
+            document.querySelector(".achievers-main");
+
+        if(main){
+
+            window.scrollTo({
+                top:main.offsetTop - 30,
+                behavior:"smooth"
+            });
+
+        }
+
+    });
+
+});
+
+/* =========================================================
+   PREMIUM MICRO INTERACTIONS
+   UI ONLY — NO BACKEND / DATA CHANGES
+========================================================= */
+
+document.addEventListener("DOMContentLoaded",function(){
+
+    const cards =
+        document.querySelectorAll(".achievement-card");
+
+    /* ---------------------------------------------------------
+       1. Mouse spotlight + subtle 3D tilt
+    --------------------------------------------------------- */
+
+    cards.forEach(card => {
+
+        card.addEventListener("mousemove",function(e){
+
+            if(window.innerWidth < 901) return;
+
+            const rect =
+                card.getBoundingClientRect();
+
+            const x =
+                e.clientX - rect.left;
+
+            const y =
+                e.clientY - rect.top;
+
+            const px =
+                x / rect.width;
+
+            const py =
+                y / rect.height;
+
+            const ry =
+                ((px - .5) * 5).toFixed(2);
+
+            const rx =
+                ((.5 - py) * 4).toFixed(2);
+
+            card.style.setProperty(
+                "--mx",
+                (px * 100) + "%"
+            );
+
+            card.style.setProperty(
+                "--my",
+                (py * 100) + "%"
+            );
+
+            card.style.transform =
+                `translateY(-7px)
+                 rotateX(${rx}deg)
+                 rotateY(${ry}deg)`;
+
+        });
+
+        card.addEventListener("mouseleave",function(){
+
+            card.style.removeProperty("transform");
+
+        });
+
+    });
+
+    /* ---------------------------------------------------------
+       2. Filter cards receive fresh reveal animation
+    --------------------------------------------------------- */
+
+    filterButtons.forEach(button => {
+
+        button.addEventListener("click",function(){
+
+            setTimeout(() => {
+
+                document
+                    .querySelectorAll(
+                        ".achievement-card:not(.hidden)"
+                    )
+                    .forEach((card,index) => {
+
+                        card.classList.remove(
+                            "filter-reveal"
+                        );
+
+                        void card.offsetWidth;
+
+                        card.style.animationDelay =
+                            Math.min(index * 65,450) + "ms";
+
+                        card.classList.add(
+                            "filter-reveal"
+                        );
+
+                    });
+
+            },25);
+
+        });
+
+    });
+
+});
+</script>
 
 <%- include('../partials/footer') %>

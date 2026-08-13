@@ -1,0 +1,1991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title><%= title || 'WhatsApp Announcements' %></title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    
+<style>
+/* =========================================================
+   PREMIUM WHATSAPP ANNOUNCEMENT CENTER
+   ========================================================= */
+
+:root{
+    --navy:#071a33;
+    --navy2:#0c315a;
+    --blue:#1478d4;
+    --cyan:#27b7e8;
+    --green:#19b957;
+    --green2:#25d366;
+    --green3:#0f8f45;
+    --gold:#f4c542;
+    --white:#fff;
+    --text:#142033;
+    --muted:#718096;
+    --line:#e6ebf2;
+    --soft:#f5f8fc;
+    --success:#dcfce7;
+    --danger:#dc3545;
+    --shadow:0 24px 70px rgba(7,26,51,.11);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth}
+
+body{
+    min-height:100vh;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 0 0,rgba(20,120,212,.10),transparent 30%),
+        radial-gradient(circle at 100% 10%,rgba(37,211,102,.09),transparent 27%),
+        #f3f6fa;
+    font-family:Inter,"Segoe UI",Arial,sans-serif;
+}
+
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+
+.page{
+    width:min(1480px,100%);
+    margin:auto;
+    padding:28px;
+}
+
+/* TOPBAR */
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    margin-bottom:22px;
+}
+
+.topbar-actions{
+    display:flex;
+    gap:10px;
+}
+
+.nav-btn{
+    min-height:45px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    padding:0 17px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fff;
+    color:var(--navy);
+    font-size:11px;
+    font-weight:900;
+    box-shadow:0 7px 20px rgba(7,26,51,.045);
+    transition:.22s ease;
+}
+
+.nav-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 13px 28px rgba(7,26,51,.10);
+}
+
+.nav-btn.primary{
+    border-color:var(--navy);
+    background:var(--navy);
+    color:#fff;
+}
+
+/* HERO */
+.hero{
+    position:relative;
+    overflow:hidden;
+    min-height:285px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:40px;
+    padding:48px;
+    margin-bottom:24px;
+    border-radius:34px;
+    color:#fff;
+    background:
+        radial-gradient(circle at 86% 18%,rgba(37,211,102,.27),transparent 23%),
+        radial-gradient(circle at 5% 105%,rgba(39,183,232,.25),transparent 30%),
+        linear-gradient(135deg,#041426,#092c52 58%,#075a98);
+    box-shadow:0 32px 80px rgba(7,26,51,.24);
+}
+
+.hero:before{
+    content:"";
+    position:absolute;
+    width:430px;
+    height:430px;
+    right:-170px;
+    top:-210px;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:50%;
+    box-shadow:
+        0 0 0 60px rgba(255,255,255,.025),
+        0 0 0 120px rgba(255,255,255,.018);
+}
+
+.hero:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    opacity:.045;
+    background-image:radial-gradient(#fff 1px,transparent 1px);
+    background-size:24px 24px;
+}
+
+.hero-content,.hero-stats{position:relative;z-index:2}
+
+.hero-content{max-width:850px}
+
+.hero-badge{
+    width:max-content;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 14px;
+    margin-bottom:17px;
+    border:1px solid rgba(37,211,102,.35);
+    border-radius:999px;
+    background:rgba(37,211,102,.11);
+    color:#8dffb5;
+    font-size:9px;
+    font-weight:950;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+}
+
+.hero h1{
+    color:#fff;
+    font-size:clamp(38px,5vw,64px);
+    line-height:.98;
+    letter-spacing:-2.7px;
+    font-weight:950;
+}
+
+.hero h1 span{color:var(--green2)}
+
+.hero p{
+    max-width:760px;
+    margin-top:17px;
+    color:rgba(255,255,255,.72);
+    font-size:13px;
+    line-height:1.8;
+}
+
+.hero-stats{
+    min-width:245px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.hero-stat{
+    padding:19px 17px;
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:19px;
+    background:rgba(255,255,255,.075);
+    backdrop-filter:blur(16px);
+}
+
+.hero-stat i{
+    color:var(--green2);
+    font-size:17px;
+}
+
+.hero-stat strong{
+    display:block;
+    margin-top:9px;
+    color:#fff;
+    font-size:20px;
+}
+
+.hero-stat span{
+    display:block;
+    margin-top:3px;
+    color:rgba(255,255,255,.54);
+    font-size:8px;
+    font-weight:850;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+}
+
+/* MAIN GRID */
+.main-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1.04fr) minmax(380px,.96fr);
+    gap:24px;
+    align-items:start;
+}
+
+.card{
+    overflow:hidden;
+    border:1px solid rgba(225,232,240,.95);
+    border-radius:27px;
+    background:#fff;
+    box-shadow:var(--shadow);
+}
+
+.card-head{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:21px 23px;
+    color:#fff;
+    background:linear-gradient(135deg,var(--navy),var(--navy2));
+}
+
+.card-icon{
+    width:47px;
+    height:47px;
+    flex:0 0 47px;
+    display:grid;
+    place-items:center;
+    border-radius:14px;
+    background:linear-gradient(135deg,#f9d45c,#eeb72d);
+    color:var(--navy);
+    box-shadow:0 8px 20px rgba(244,197,66,.18);
+}
+
+.card-head h2{
+    color:#fff;
+    font-size:16px;
+    font-weight:950;
+}
+
+.card-head p{
+    margin-top:4px;
+    color:rgba(255,255,255,.58);
+    font-size:9px;
+}
+
+.card-body{padding:23px}
+
+/* STEPS */
+.step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:11px;
+    color:#354256;
+    font-size:10px;
+    font-weight:950;
+    letter-spacing:.65px;
+    text-transform:uppercase;
+}
+
+.step-label:before{
+    content:"";
+    width:24px;
+    height:3px;
+    border-radius:99px;
+    background:var(--green2);
+}
+
+/* TARGET */
+.target-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:21px;
+}
+
+.target-option{position:relative}
+
+.target-option input{
+    position:absolute;
+    opacity:0;
+    pointer-events:none;
+}
+
+.target-label{
+    min-height:94px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    padding:12px;
+    border:1px solid var(--line);
+    border-radius:17px;
+    background:#f8fafc;
+    color:#768397;
+    text-align:center;
+    cursor:pointer;
+    transition:.22s ease;
+}
+
+.target-label:hover{
+    transform:translateY(-3px);
+    border-color:#cbd5e1;
+    box-shadow:0 10px 24px rgba(7,26,51,.07);
+}
+
+.target-label i{font-size:21px}
+.target-label strong{font-size:9px;font-weight:950}
+.target-label small{font-size:7px;color:#9aa6b5}
+
+.target-option input:checked+.target-label{
+    border-color:var(--green2);
+    background:linear-gradient(145deg,#f1fff6,#e7faef);
+    color:#14823e;
+    box-shadow:0 0 0 4px rgba(37,211,102,.09),0 12px 25px rgba(37,211,102,.10);
+}
+
+.target-option input[value="group"]:checked+.target-label{
+    border-color:var(--gold);
+    background:#fffbea;
+    color:#896600;
+    box-shadow:0 0 0 4px rgba(244,197,66,.10);
+}
+
+/* FIELDS */
+.field{margin-bottom:18px}
+
+.field-label{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:8px;
+    color:#334155;
+    font-size:10px;
+    font-weight:950;
+}
+
+.field-label span{
+    color:#9aa6b5;
+    font-size:8px;
+    font-weight:750;
+}
+
+.input,.textarea{
+    width:100%;
+    outline:none;
+    border:1px solid #dfe6ee;
+    border-radius:15px;
+    background:#f8fafc;
+    color:var(--text);
+    transition:.22s ease;
+}
+
+.input{
+    height:47px;
+    padding:0 14px;
+    font-size:11px;
+}
+
+.textarea{
+    min-height:205px;
+    padding:15px;
+    resize:vertical;
+    font-size:12px;
+    line-height:1.7;
+}
+
+.input:focus,.textarea:focus{
+    border-color:var(--green2);
+    background:#fff;
+    box-shadow:0 0 0 4px rgba(37,211,102,.08);
+}
+
+.message-meta{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:7px;
+    color:#99a5b5;
+    font-size:8px;
+}
+
+/* PANELS */
+.conditional{
+    display:none;
+    margin-bottom:18px;
+    padding:16px;
+    border-radius:17px;
+}
+
+.conditional.show{
+    display:block;
+    animation:fadeUp .22s ease;
+}
+
+.group-panel{
+    border:1px solid #f4dc89;
+    background:linear-gradient(145deg,#fffdf2,#fff9dd);
+}
+
+.selection-panel{
+    border:1px solid #b8edcb;
+    background:linear-gradient(145deg,#f5fff8,#ecfff3);
+}
+
+.panel-title{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    margin-bottom:9px;
+    color:#176c38;
+    font-size:10px;
+    font-weight:950;
+}
+
+.group-panel .panel-title{color:#8a6500}
+
+.panel-help{
+    margin-top:7px;
+    color:#927c37;
+    font-size:8px;
+    line-height:1.6;
+}
+
+.selection-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:9px;
+}
+
+.selection-top strong{
+    color:#176c38;
+    font-size:10px;
+}
+
+.count-pill{
+    min-width:29px;
+    height:25px;
+    display:inline-grid;
+    place-items:center;
+    padding:0 8px;
+    border-radius:999px;
+    background:#d9fbe4;
+    color:#13743a;
+    font-size:9px;
+    font-weight:950;
+}
+
+.chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    max-height:100px;
+    overflow:auto;
+}
+
+.chip{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:7px 10px;
+    border-radius:999px;
+    background:#dcfce7;
+    color:#166534;
+    font-size:8px;
+    font-weight:900;
+}
+
+.chip.empty{
+    background:#e9eef4;
+    color:#748196;
+}
+
+/* SEND */
+.send-btn{
+    width:100%;
+    min-height:56px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    border:0;
+    border-radius:16px;
+    background:linear-gradient(135deg,#118b43,#25d366);
+    color:#fff;
+    box-shadow:0 17px 38px rgba(37,211,102,.24);
+    font-size:11px;
+    font-weight:950;
+    transition:.23s ease;
+}
+
+.send-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 21px 45px rgba(37,211,102,.31);
+}
+
+.send-btn:active{transform:translateY(0)}
+
+.info{
+    display:flex;
+    gap:9px;
+    margin-top:14px;
+    padding:13px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#f8fafc;
+    color:#68768a;
+    font-size:8px;
+    line-height:1.65;
+}
+
+.info i{color:var(--blue);margin-top:2px}
+
+/* FACULTY */
+.toolbar{
+    display:flex;
+    gap:8px;
+    margin-bottom:12px;
+}
+
+.search-wrap{
+    position:relative;
+    flex:1;
+}
+
+.search-wrap i{
+    position:absolute;
+    left:13px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#9aa6b5;
+    font-size:10px;
+    pointer-events:none;
+}
+
+.search{
+    width:100%;
+    height:44px;
+    padding:0 12px 0 34px;
+    outline:none;
+    border:1px solid var(--line);
+    border-radius:13px;
+    background:#f8fafc;
+    font-size:10px;
+}
+
+.search:focus{
+    border-color:var(--gold);
+    background:#fff;
+    box-shadow:0 0 0 4px rgba(244,197,66,.08);
+}
+
+.tool-btn{
+    height:44px;
+    padding:0 13px;
+    border:1px solid var(--line);
+    border-radius:13px;
+    background:#fff;
+    color:var(--navy);
+    font-size:9px;
+    font-weight:950;
+    white-space:nowrap;
+    transition:.2s ease;
+}
+
+.tool-btn:hover{
+    background:var(--gold);
+    border-color:var(--gold);
+}
+
+.list-meta{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+    color:#8b98a9;
+    font-size:8px;
+}
+
+.list-meta strong{color:var(--navy)}
+
+.faculty-list{
+    max-height:590px;
+    overflow-y:auto;
+    padding-right:4px;
+}
+
+.faculty-list::-webkit-scrollbar,
+.chips::-webkit-scrollbar,
+.queue-list::-webkit-scrollbar{
+    width:6px;
+}
+
+.faculty-list::-webkit-scrollbar-thumb,
+.chips::-webkit-scrollbar-thumb,
+.queue-list::-webkit-scrollbar-thumb{
+    border-radius:10px;
+    background:#cbd5e1;
+}
+
+.faculty-item{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:12px;
+    margin-bottom:8px;
+    border:1px solid #e6ebf1;
+    border-radius:16px;
+    background:#fff;
+    transition:.2s ease;
+}
+
+.faculty-item:hover{
+    transform:translateX(2px);
+    border-color:#b9eaca;
+    box-shadow:0 8px 20px rgba(7,26,51,.055);
+}
+
+.faculty-item.selected{
+    border-color:#7ee3a1;
+    background:#f3fff7;
+    box-shadow:inset 3px 0 #25d366;
+}
+
+.faculty-check{
+    width:18px;
+    height:18px;
+    flex:0 0 18px;
+    accent-color:var(--green);
+}
+
+.avatar{
+    width:44px;
+    height:44px;
+    flex:0 0 44px;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+    border-radius:14px;
+    background:linear-gradient(135deg,#fff2ae,#e5edf7);
+    color:var(--navy);
+    font-size:14px;
+    font-weight:950;
+}
+
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.faculty-info{
+    min-width:0;
+    flex:1;
+}
+
+.faculty-name{
+    overflow:hidden;
+    color:var(--navy);
+    font-size:10px;
+    font-weight:950;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.faculty-role{
+    margin-top:3px;
+    overflow:hidden;
+    color:#748196;
+    font-size:8px;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.faculty-phone{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    margin-top:4px;
+    color:#159447;
+    font-size:8px;
+    font-weight:850;
+}
+
+.faculty-phone.missing{color:#a0aab8}
+
+.status-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#25d366;
+}
+
+/* QUEUE */
+.queue-card{
+    display:none;
+    margin-top:24px;
+}
+
+.queue-card.show{
+    display:block;
+    animation:fadeUp .22s ease;
+}
+
+.queue-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:18px 20px;
+    border-bottom:1px solid var(--line);
+}
+
+.queue-head h3{
+    color:var(--navy);
+    font-size:13px;
+    font-weight:950;
+}
+
+.queue-head p{
+    margin-top:3px;
+    color:#8b98a9;
+    font-size:8px;
+}
+
+.queue-list{
+    max-height:350px;
+    overflow:auto;
+    padding:14px 20px 20px;
+}
+
+.queue-item{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:11px;
+    margin-bottom:7px;
+    border:1px solid var(--line);
+    border-radius:14px;
+    background:#fbfcfe;
+}
+
+.queue-item.sent{
+    border-color:#bcefcf;
+    background:#f0fdf4;
+}
+
+.queue-info{
+    min-width:0;
+    flex:1;
+}
+
+.queue-info strong{
+    display:block;
+    overflow:hidden;
+    color:var(--navy);
+    font-size:9px;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.queue-info span{
+    display:block;
+    margin-top:3px;
+    color:#8a95a6;
+    font-size:7px;
+}
+
+.queue-send{
+    min-height:35px;
+    padding:0 11px;
+    border:0;
+    border-radius:10px;
+    background:#eaf9ef;
+    color:#15803d;
+    font-size:8px;
+    font-weight:950;
+    transition:.2s ease;
+}
+
+.queue-send:hover{
+    background:#25d366;
+    color:#fff;
+}
+
+.queue-send.sent{
+    background:#dcfce7;
+    color:#166534;
+}
+
+/* EMPTY */
+.empty{
+    padding:60px 15px;
+    text-align:center;
+    color:#9aa6b5;
+}
+
+.empty i{
+    display:block;
+    margin-bottom:13px;
+    font-size:38px;
+}
+
+.empty strong{
+    display:block;
+    color:#465365;
+    font-size:13px;
+}
+
+.empty span{
+    display:block;
+    margin-top:5px;
+    font-size:8px;
+}
+
+/* TOAST */
+.toast{
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    z-index:9999;
+    max-width:min(410px,calc(100vw - 30px));
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 16px;
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:15px;
+    background:#101b2d;
+    color:#fff;
+    box-shadow:0 20px 50px rgba(0,0,0,.24);
+    opacity:0;
+    transform:translateY(16px);
+    pointer-events:none;
+    transition:.25s ease;
+    font-size:9px;
+    font-weight:800;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.toast i{color:#25d366}
+.toast.error i{color:#ff7180}
+
+/* ANIMATION */
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(8px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+/* RESPONSIVE */
+@media(max-width:1080px){
+    .main-grid{grid-template-columns:1fr}
+    .faculty-list{max-height:500px}
+}
+
+@media(max-width:720px){
+    .page{padding:15px}
+
+    .topbar{
+        align-items:stretch;
+        flex-direction:column;
+    }
+
+    .topbar-actions{width:100%}
+
+    .nav-btn{flex:1}
+
+    .hero{
+        min-height:auto;
+        padding:30px 24px;
+        border-radius:25px;
+    }
+
+    .hero h1{font-size:37px}
+
+    .hero-stats{display:none}
+
+    .card-body{padding:18px}
+}
+
+@media(max-width:520px){
+    .target-grid{grid-template-columns:1fr}
+
+    .target-label{
+        min-height:69px;
+        flex-direction:row;
+        justify-content:flex-start;
+        text-align:left;
+        padding:12px 15px;
+    }
+
+    .target-label small{margin-left:auto}
+
+    .toolbar{flex-direction:column}
+
+    .tool-btn{width:100%}
+
+    .faculty-item{gap:8px}
+
+    .avatar{
+        width:39px;
+        height:39px;
+        flex-basis:39px;
+    }
+
+    .queue-item{align-items:flex-start}
+
+    .queue-send{flex:0 0 auto}
+
+    .toast{
+        right:15px;
+        bottom:15px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        scroll-behavior:auto!important;
+        transition:none!important;
+        animation:none!important;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="topbar">
+
+        <a
+            href="/admin/dashboard"
+            class="nav-btn"
+            aria-label="Back to dashboard"
+        >
+            <i class="fa-solid fa-arrow-left"></i>
+            Dashboard
+        </a>
+
+        <div class="topbar-actions">
+
+            <a
+                href="/admin/faculty"
+                class="nav-btn"
+            >
+                <i class="fa-solid fa-chalkboard-user"></i>
+                Faculty
+            </a>
+
+            <a
+                href="/admin/dashboard"
+                class="nav-btn primary"
+            >
+                <i class="fa-solid fa-chart-line"></i>
+                Admin Panel
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                <i class="fa-brands fa-whatsapp"></i>
+                Official Faculty Communication
+            </div>
+
+            <h1>
+                WhatsApp
+                <span>Announcements</span>
+            </h1>
+
+            <p>
+                Create important school notices, coordinate instantly, and send them to an
+                individual faculty member, selected faculty members,
+                or your official announcement group.
+            </p>
+
+        </div>
+
+        <div class="hero-stats">
+
+            <div class="hero-stat">
+                <i class="fa-solid fa-user-group"></i>
+                <strong><%= faculties ? faculties.length : 0 %></strong>
+                <span>Contacts</span>
+            </div>
+
+            <div class="hero-stat">
+                <i class="fa-brands fa-whatsapp"></i>
+                <strong>WA</strong>
+                <span>Ready</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="main-grid">
+
+        <!-- ================= MESSAGE COMPOSER ================= -->
+
+        <section class="card">
+
+            <div class="card-head">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </div>
+
+                <div>
+                    <h2>Create Announcement</h2>
+                    <p>Choose recipients and prepare your notice</p>
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="step-label">
+                    01 — Select destination
+                </div>
+
+                <div class="target-grid">
+
+                    <div class="target-option">
+
+                        <input
+                            type="radio"
+                            name="targetType"
+                            id="targetGroup"
+                            value="group"
+                        >
+
+                        <label
+                            for="targetGroup"
+                            class="target-label"
+                        >
+                            <i class="fa-solid fa-users"></i>
+
+                            <strong>Announcement Group</strong>
+
+                            <small>Official group</small>
+                        </label>
+
+                    </div>
+
+                    <div class="target-option">
+
+                        <input
+                            type="radio"
+                            name="targetType"
+                            id="targetSingle"
+                            value="single"
+                            checked
+                        >
+
+                        <label
+                            for="targetSingle"
+                            class="target-label"
+                        >
+                            <i class="fa-solid fa-user"></i>
+
+                            <strong>Individual</strong>
+
+                            <small>One faculty</small>
+                        </label>
+
+                    </div>
+
+                    <div class="target-option">
+
+                        <input
+                            type="radio"
+                            name="targetType"
+                            id="targetMultiple"
+                            value="multiple"
+                        >
+
+                        <label
+                            for="targetMultiple"
+                            class="target-label"
+                        >
+                            <i class="fa-solid fa-users-viewfinder"></i>
+
+                            <strong>Multiple Faculty</strong>
+
+                            <small>Send queue</small>
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- GROUP -->
+
+                <div
+                    class="conditional group-panel"
+                    id="groupPanel"
+                >
+
+                    <div class="panel-title">
+                        <i class="fa-solid fa-link"></i>
+                        Announcement Group
+                    </div>
+
+                    <input
+                        type="url"
+                        id="groupLink"
+                        class="input"
+                        placeholder="https://chat.whatsapp.com/..."
+                        autocomplete="off"
+                    >
+
+                    <div class="panel-help">
+                        Paste the official WhatsApp group invite link.
+                        The announcement text will be copied so it can
+                        be pasted into the group.
+                    </div>
+
+                </div>
+
+
+                <!-- SELECTION -->
+
+                <div
+                    class="conditional selection-panel"
+                    id="selectionPanel"
+                >
+
+                    <div class="selection-top">
+
+                        <strong>
+                            <i class="fa-solid fa-circle-check"></i>
+                            Selected faculty
+                        </strong>
+
+                        <span
+                            class="count-pill"
+                            id="selectedCount"
+                        >
+                            0
+                        </span>
+
+                    </div>
+
+                    <div
+                        class="chips"
+                        id="selectedChips"
+                    ></div>
+
+                </div>
+
+
+                <div class="step-label">
+                    02 — Write notice
+                </div>
+
+                <div class="field">
+
+                    <div class="field-label">
+
+                        <label for="message">
+                            <i class="fa-solid fa-message"></i>
+                            Announcement message
+                        </label>
+
+                        <span>Maximum 4000 characters</span>
+
+                    </div>
+
+                    <textarea
+                        id="message"
+                        class="textarea"
+                        maxlength="4000"
+                        placeholder="Type the important school notice here..."
+                    ></textarea>
+
+                    <div class="message-meta">
+                        <span>
+                            Message will open in WhatsApp.
+                        </span>
+
+                        <span>
+                            <b id="charCount">0</b> / 4000
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="send-btn"
+                    id="mainAction"
+                >
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Continue to WhatsApp
+                </button>
+
+
+                <div class="info">
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <span>
+                        This website does not silently send WhatsApp
+                        messages. It opens WhatsApp with the message
+                        prepared; the admin must press <b>Send</b>.
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FACULTY LIST ================= -->
+
+        <section class="card">
+
+            <div class="card-head">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-user-check"></i>
+                </div>
+
+                <div>
+                    <h2>Faculty Recipients</h2>
+                    <p>Select a faculty member for the announcement</p>
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <% if (faculties && faculties.length > 0) { %>
+
+                    <div class="toolbar">
+
+                        <div class="search-wrap">
+
+                            <i class="fa-solid fa-magnifying-glass"></i>
+
+                            <input
+                                type="search"
+                                id="facultySearch"
+                                class="search"
+                                placeholder="Search name or designation..."
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="tool-btn"
+                            id="selectAllBtn"
+                        >
+                            Select All
+                        </button>
+
+                    </div>
+
+                    <div class="list-meta">
+
+                        <span>
+                            <strong id="visibleCount">
+                                <%= faculties.length %>
+                            </strong>
+                            contacts shown
+                        </span>
+
+                        <span>
+                            <i class="fa-brands fa-whatsapp"></i>
+                            WhatsApp enabled
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="faculty-list"
+                        id="facultyList"
+                    >
+
+                        <% faculties.forEach(function(faculty) { %>
+
+                            <label
+                                class="faculty-item"
+                                data-name="<%= String(faculty.name || '').toLowerCase() %>"
+                                data-role="<%= String(faculty.role || '').toLowerCase() %>"
+                                data-section="<%= String(faculty.section || '').toLowerCase() %>"
+                            >
+
+                                <input
+                                    type="checkbox"
+                                    class="faculty-check"
+                                    value="<%= faculty._id %>"
+                                    data-name="<%= faculty.name || '' %>"
+                                    data-number="<%= faculty.whatsappNumber || '' %>"
+                                  <%= faculty.whatsappNumber ? '' : 'disabled' %>
+                                >
+
+                                <div class="avatar">
+
+                                    <% if (faculty.image) { %>
+
+                                        <img
+                                            src="<%= faculty.image %>"
+                                            alt="<%= faculty.name || 'Faculty' %>"
+                                            loading="lazy"
+                                            onerror="this.style.display='none';"
+                                        >
+
+                                    <% } else { %>
+
+                                        <i class="fa-solid fa-user"></i>
+
+                                    <% } %>
+
+                                </div>
+
+
+                                <div class="faculty-info">
+
+                                    <div class="faculty-name">
+                                        <%= faculty.name || 'Unnamed Faculty' %>
+                                    </div>
+
+                                    <div class="faculty-role">
+                                        <%= faculty.role || 'Faculty' %>
+
+                                        <% if (faculty.section) { %>
+                                            · <%= faculty.section %>
+                                        <% } %>
+
+                                    </div>
+
+
+                                    <% if (faculty.whatsappNumber) { %>
+
+                                        <div class="faculty-phone">
+                                            <span class="status-dot"></span>
+                                            <%= faculty.whatsappNumber %>
+                                        </div>
+
+                                    <% } else { %>
+
+                                        <div class="faculty-phone missing">
+                                            <i class="fa-solid fa-phone-slash"></i>
+                                            WhatsApp number not added
+                                        </div>
+
+                                    <% } %>
+
+                                </div>
+
+                            </label>
+
+                        <% }); %>
+
+                    </div>
+
+                <% } else { %>
+
+                    <div class="empty">
+                        <i class="fa-solid fa-user-slash"></i>
+
+                        <strong>No faculty contacts found</strong>
+
+                        <span>
+                            Add faculty members and WhatsApp numbers
+                            before using announcements.
+                        </span>
+                    </div>
+
+                <% } %>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- ================= MULTIPLE SEND QUEUE ================= -->
+
+    <section
+        class="card queue-card"
+        id="queueCard"
+    >
+
+        <div class="queue-head">
+
+            <div>
+                <h3>
+                    <i class="fa-brands fa-whatsapp"></i>
+                    WhatsApp Send Queue
+                </h3>
+
+                <p>
+                    Send the same prepared notice to selected faculty
+                    members one by one.
+                </p>
+            </div>
+
+            <span
+                class="count-pill"
+                id="queueCount"
+            >
+                0
+            </span>
+
+        </div>
+
+        <div
+            class="queue-list"
+            id="queueList"
+        ></div>
+
+    </section>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+    role="status"
+    aria-live="polite"
+>
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastText">Done</span>
+</div>
+
+
+<script>
+    (() => {
+        'use strict';
+
+        const $ = (selector, parent = document) =>
+            parent.querySelector(selector);
+
+        const $$ = (selector, parent = document) =>
+            Array.from(parent.querySelectorAll(selector));
+
+        const targetInputs = $$('input[name="targetType"]');
+        const groupPanel = $('#groupPanel');
+        const selectionPanel = $('#selectionPanel');
+        const groupLink = $('#groupLink');
+        const message = $('#message');
+        const charCount = $('#charCount');
+        const mainAction = $('#mainAction');
+
+        const facultySearch = $('#facultySearch');
+        const facultyItems = $$('.faculty-item');
+        const facultyChecks = $$('.faculty-check');
+
+        const selectedCount = $('#selectedCount');
+        const selectedChips = $('#selectedChips');
+        const selectAllBtn = $('#selectAllBtn');
+        const visibleCount = $('#visibleCount');
+
+        const queueCard = $('#queueCard');
+        const queueList = $('#queueList');
+        const queueCount = $('#queueCount');
+
+        const toast = $('#toast');
+        const toastText = $('#toastText');
+
+        let toastTimer = null;
+
+        function getTargetType() {
+            const checked = $('input[name="targetType"]:checked');
+            return checked ? checked.value : 'single';
+        }
+
+        function getSelectedContacts() {
+            return facultyChecks.filter(
+                check => check.checked && check.dataset.number
+            );
+        }
+
+        function cleanPhone(number) {
+            return String(number || '').replace(/\D/g, '');
+        }
+
+        function validPhone(number) {
+            return cleanPhone(number).length >= 8;
+        }
+
+        function escapeHtml(value) {
+            const div = document.createElement('div');
+            div.textContent = value || '';
+            return div.innerHTML;
+        }
+
+        function showToast(text, type = 'success') {
+            clearTimeout(toastTimer);
+
+            toast.classList.toggle('error', type === 'error');
+
+            const icon = $('i', toast);
+
+            icon.className = type === 'error'
+                ? 'fa-solid fa-circle-exclamation'
+                : 'fa-solid fa-circle-check';
+
+            toastText.textContent = text;
+            toast.classList.add('show');
+
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3200);
+        }
+
+        function updateTargetUI() {
+            const type = getTargetType();
+
+            groupPanel.classList.toggle('show', type === 'group');
+            selectionPanel.classList.toggle(
+                'show',
+                type === 'multiple'
+            );
+
+            if (type === 'single') {
+                enforceSingleSelection();
+            }
+
+            updateSelectionUI();
+            updateMainButton();
+        }
+
+        function enforceSingleSelection() {
+            const selected = getSelectedContacts();
+
+            if (selected.length <= 1) {
+                return;
+            }
+
+            selected.slice(1).forEach(check => {
+                check.checked = false;
+                check.closest('.faculty-item')
+                    ?.classList.remove('selected');
+            });
+        }
+
+        function updateSelectionUI() {
+            const selected = getSelectedContacts();
+
+            selectedCount.textContent = selected.length;
+
+            selectedChips.innerHTML = '';
+
+            if (selected.length === 0) {
+                selectedChips.innerHTML = `
+                    <span class="chip empty">
+                        No faculty selected
+                    </span>
+                `;
+            } else {
+                selected.forEach(check => {
+                    const chip = document.createElement('span');
+
+                    chip.className = 'chip';
+
+                    chip.innerHTML = `
+                        <i class="fa-brands fa-whatsapp"></i>
+                        ${escapeHtml(check.dataset.name)}
+                    `;
+
+                    selectedChips.appendChild(chip);
+                });
+            }
+
+            facultyItems.forEach(item => {
+                const check = $('.faculty-check', item);
+
+                if (check) {
+                    item.classList.toggle(
+                        'selected',
+                        check.checked
+                    );
+                }
+            });
+
+            updateMainButton();
+        }
+
+        function updateMainButton() {
+            const type = getTargetType();
+
+            if (type === 'group') {
+                mainAction.innerHTML = `
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Open Announcement Group
+                `;
+                return;
+            }
+
+            if (type === 'multiple') {
+                const count = getSelectedContacts().length;
+
+                mainAction.innerHTML = `
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Prepare ${count || ''} Recipient${count === 1 ? '' : 's'}
+                `;
+                return;
+            }
+
+            mainAction.innerHTML = `
+                <i class="fa-brands fa-whatsapp"></i>
+                Continue to WhatsApp
+            `;
+        }
+
+        function openWhatsApp(number, text) {
+            const phone = cleanPhone(number);
+
+            if (!validPhone(phone)) {
+                showToast(
+                    'This faculty member has an invalid WhatsApp number.',
+                    'error'
+                );
+                return;
+            }
+
+            const url =
+                'https://wa.me/' +
+                phone +
+                '?text=' +
+                encodeURIComponent(text);
+
+            window.open(
+                url,
+                '_blank',
+                'noopener,noreferrer'
+            );
+        }
+
+        function validateMessage() {
+            const text = message.value.trim();
+
+            if (!text) {
+                showToast(
+                    'Please write the announcement first.',
+                    'error'
+                );
+
+                message.focus();
+                return null;
+            }
+
+            return text;
+        }
+
+        function openGroup() {
+            const text = validateMessage();
+
+            if (!text) {
+                return;
+            }
+
+            const link = groupLink.value.trim();
+
+            if (!link) {
+                showToast(
+                    'Please add the WhatsApp announcement group link.',
+                    'error'
+                );
+
+                groupLink.focus();
+                return;
+            }
+
+            if (!/^https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9_-]+/i.test(link)) {
+                showToast(
+                    'Please enter a valid WhatsApp group invite link.',
+                    'error'
+                );
+
+                groupLink.focus();
+                return;
+            }
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).catch(() => {});
+            }
+
+            window.open(
+                link,
+                '_blank',
+                'noopener,noreferrer'
+            );
+
+            showToast(
+                'Message copied. Paste it into the group and press Send.'
+            );
+        }
+
+        function openSingle() {
+            const text = validateMessage();
+
+            if (!text) {
+                return;
+            }
+
+            const selected = getSelectedContacts();
+
+            if (selected.length !== 1) {
+                showToast(
+                    'Select exactly one faculty member.',
+                    'error'
+                );
+                return;
+            }
+
+            openWhatsApp(
+                selected[0].dataset.number,
+                text
+            );
+        }
+
+        function buildQueue() {
+            const text = validateMessage();
+
+            if (!text) {
+                return;
+            }
+
+            const selected = getSelectedContacts();
+
+            if (selected.length === 0) {
+                showToast(
+                    'Select at least one faculty member.',
+                    'error'
+                );
+                return;
+            }
+
+            queueList.innerHTML = '';
+
+            selected.forEach((check, index) => {
+                const item = document.createElement('div');
+
+                item.className = 'queue-item';
+
+                item.dataset.index = index;
+
+                item.innerHTML = `
+                    <div class="avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div class="queue-info">
+                        <strong>${escapeHtml(check.dataset.name)}</strong>
+                        <span>${escapeHtml(check.dataset.number)}</span>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="queue-send"
+                        data-number="${escapeHtml(check.dataset.number)}"
+                    >
+                        <i class="fa-brands fa-whatsapp"></i>
+                        Send
+                    </button>
+                `;
+
+                queueList.appendChild(item);
+            });
+
+            queueCount.textContent = selected.length;
+            queueCard.classList.add('show');
+
+            queueCard.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+            showToast(
+                'Recipient queue created. Send each notice from the queue.'
+            );
+        }
+
+        function handleMainAction() {
+            const type = getTargetType();
+
+            if (type === 'group') {
+                openGroup();
+                return;
+            }
+
+            if (type === 'multiple') {
+                buildQueue();
+                return;
+            }
+
+            openSingle();
+        }
+
+        targetInputs.forEach(input => {
+            input.addEventListener(
+                'change',
+                updateTargetUI
+            );
+        });
+
+        message.addEventListener('input', () => {
+            charCount.textContent = message.value.length;
+        });
+
+        facultyChecks.forEach(check => {
+            check.addEventListener('change', () => {
+                if (getTargetType() === 'single' && check.checked) {
+                    facultyChecks.forEach(other => {
+                        if (other !== check) {
+                            other.checked = false;
+                        }
+                    });
+                }
+
+                updateSelectionUI();
+            });
+        });
+
+        facultySearch?.addEventListener('input', () => {
+            const query = facultySearch.value
+                .trim()
+                .toLowerCase();
+
+            let visible = 0;
+
+            facultyItems.forEach(item => {
+                const searchable = [
+                    item.dataset.name,
+                    item.dataset.role,
+                    item.dataset.section
+                ].join(' ');
+
+                const match =
+                    !query ||
+                    searchable.includes(query);
+
+                item.style.display =
+                    match ? 'flex' : 'none';
+
+                if (match) {
+                    visible++;
+                }
+            });
+
+            visibleCount.textContent = visible;
+        });
+
+        selectAllBtn?.addEventListener('click', () => {
+            const type = getTargetType();
+
+            if (type === 'single') {
+                showToast(
+                    'Use Individual mode to select one faculty member.',
+                    'error'
+                );
+                return;
+            }
+
+            const visibleChecks = facultyItems
+                .filter(item => item.style.display !== 'none')
+                .map(item => $('.faculty-check', item))
+                .filter(Boolean)
+                .filter(check => !check.disabled);
+
+            if (visibleChecks.length === 0) {
+                showToast(
+                    'No WhatsApp-enabled faculty are visible.',
+                    'error'
+                );
+                return;
+            }
+
+            const shouldSelect =
+                visibleChecks.some(check => !check.checked);
+
+            visibleChecks.forEach(check => {
+                check.checked = shouldSelect;
+            });
+
+            selectAllBtn.textContent =
+                shouldSelect
+                    ? 'Clear All'
+                    : 'Select All';
+
+            updateSelectionUI();
+        });
+
+        queueList?.addEventListener('click', event => {
+            const button =
+                event.target.closest('.queue-send');
+
+            if (!button || button.disabled) {
+                return;
+            }
+
+            const text = validateMessage();
+
+            if (!text) {
+                return;
+            }
+
+            openWhatsApp(
+                button.dataset.number,
+                text
+            );
+
+            button.disabled = true;
+            button.classList.add('sent');
+
+            button.innerHTML = `
+                <i class="fa-solid fa-check"></i>
+                Opened
+            `;
+
+            button.closest('.queue-item')
+                ?.classList.add('sent');
+
+            showToast(
+                'WhatsApp opened for the selected faculty.'
+            );
+        });
+
+        mainAction.addEventListener(
+            'click',
+            handleMainAction
+        );
+
+        groupLink?.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                openGroup();
+            }
+        });
+
+        updateTargetUI();
+        updateSelectionUI();
+    })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        <%= title || 'Edit Faculty' %>
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #001f3f;
+            --blue: #0053a6;
+            --gold: #ffc300;
+            --bg: #eef3f9;
+            --white: #fff;
+            --text: #172033;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --green: #16a34a;
+            --red: #dc2626;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        .page {
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        .container {
+            width: min(1050px, 100%);
+            margin: auto;
+        }
+
+
+        /* =====================================================
+           TOP BAR
+        ===================================================== */
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+
+            margin-bottom: 22px;
+        }
+
+        .back-btn,
+        .dashboard-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            padding: 12px 17px;
+
+            border-radius: 13px;
+
+            font-size: 12px;
+            font-weight: 900;
+
+            transition: .25s;
+        }
+
+        .back-btn {
+            color: var(--navy);
+            background: #fff;
+
+            border: 1px solid var(--border);
+        }
+
+        .dashboard-btn {
+            color: #fff;
+            background: var(--navy);
+        }
+
+        .back-btn:hover,
+        .dashboard-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .dashboard-btn:hover {
+            color: var(--navy);
+            background: var(--gold);
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+
+            min-height: 190px;
+
+            padding: 34px;
+            margin-bottom: 22px;
+
+            border-radius: 27px;
+
+            color: #fff;
+
+            background:
+                radial-gradient(
+                    circle at 85% 15%,
+                    rgba(255, 195, 0, .3),
+                    transparent 27%
+                ),
+                linear-gradient(
+                    135deg,
+                    #00172f,
+                    #003b73,
+                    #0053a6
+                );
+
+            box-shadow:
+                0 22px 60px rgba(0, 31, 63, .22);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 7px 12px;
+            margin-bottom: 13px;
+
+            border-radius: 999px;
+
+            color: var(--gold);
+
+            background: #ffc30016;
+            border: 1px solid #ffc30050;
+
+            font-size: 9px;
+            font-weight: 950;
+
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            color: #fff;
+
+            font-size:
+                clamp(32px, 4vw, 48px);
+
+            font-weight: 950;
+
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            color: var(--gold);
+        }
+
+        .hero p {
+            margin-top: 9px;
+
+            max-width: 700px;
+
+            color: #ffffffc7;
+
+            line-height: 1.7;
+
+            font-size: 13px;
+        }
+
+        .hero-icon {
+            position: relative;
+            z-index: 2;
+
+            width: 90px;
+            height: 90px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex: none;
+
+            border-radius: 25px;
+
+            color: var(--gold);
+
+            background: #ffffff12;
+
+            border: 1px solid #ffffff25;
+
+            backdrop-filter: blur(12px);
+
+            font-size: 34px;
+        }
+
+
+        /* =====================================================
+           EDIT CARD
+        ===================================================== */
+
+        .edit-card {
+            overflow: hidden;
+
+            border: 1px solid var(--border);
+
+            border-radius: 25px;
+
+            background: #fff;
+
+            box-shadow:
+                0 18px 50px rgba(0, 31, 63, .09);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+
+            padding: 20px 23px;
+
+            color: #fff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--navy),
+                    #003b73
+                );
+        }
+
+        .header-icon {
+            width: 46px;
+            height: 46px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            color: var(--navy);
+
+            background: var(--gold);
+        }
+
+        .card-header h2 {
+            color: #fff;
+
+            font-size: 18px;
+            font-weight: 950;
+        }
+
+        .card-header p {
+            margin-top: 3px;
+
+            color: #ffffffaa;
+
+            font-size: 10px;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-body {
+            padding: 27px;
+        }
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 18px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .field {
+            margin-bottom: 2px;
+        }
+
+        .field label {
+            display: flex;
+            align-items: center;
+
+            gap: 7px;
+
+            margin-bottom: 7px;
+
+            color: #334155;
+
+            font-size: 11px;
+            font-weight: 900;
+        }
+
+        .field label i {
+            color: var(--blue);
+            font-size: 10px;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+
+            outline: none;
+
+            border: 1px solid #dbe2ea;
+
+            border-radius: 12px;
+
+            color: var(--text);
+
+            background: #f8fafc;
+
+            transition: .2s;
+        }
+
+        .field input,
+        .field select {
+            height: 47px;
+
+            padding: 0 13px;
+        }
+
+        .field textarea {
+            min-height: 95px;
+
+            padding: 12px 13px;
+
+            resize: vertical;
+
+            line-height: 1.5;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--gold);
+
+            background: #fff;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(255, 195, 0, .13);
+        }
+
+        .help {
+            display: block;
+
+            margin-top: 5px;
+
+            color: #94a3b8;
+
+            font-size: 9px;
+        }
+
+
+        /* =====================================================
+           WHATSAPP
+        ===================================================== */
+
+        .whatsapp-field {
+            position: relative;
+        }
+
+        .whatsapp-field input {
+            padding-left: 43px;
+        }
+
+        .whatsapp-icon {
+            position: absolute;
+
+            left: 14px;
+            bottom: 15px;
+
+            color: #16a34a !important;
+
+            font-size: 15px !important;
+        }
+
+        .whatsapp-help {
+            color: #16a34a;
+        }
+
+
+        /* =====================================================
+           CURRENT IMAGE
+        ===================================================== */
+
+        .image-section {
+            display: grid;
+
+            grid-template-columns:
+                150px 1fr;
+
+            gap: 20px;
+
+            align-items: start;
+        }
+
+        .current-image {
+            width: 150px;
+            height: 180px;
+
+            overflow: hidden;
+
+            border-radius: 17px;
+
+            background: #e2e8f0;
+
+            border: 1px solid var(--border);
+        }
+
+        .current-image img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+        }
+
+
+        /* =====================================================
+           ACTIONS
+        ===================================================== */
+
+        .form-actions {
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            padding-top: 22px;
+
+            border-top:
+                1px solid var(--border);
+        }
+
+        .cancel-btn,
+        .save-btn {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            min-height: 48px;
+
+            padding: 0 22px;
+
+            border: 0;
+
+            border-radius: 13px;
+
+            font-size: 12px;
+
+            font-weight: 950;
+
+            transition: .25s;
+
+            cursor: pointer;
+        }
+
+        .cancel-btn {
+            color: #475569;
+
+            background: #e2e8f0;
+        }
+
+        .save-btn {
+            color: var(--navy);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--gold),
+                    #ffdc54
+                );
+
+            box-shadow:
+                0 12px 30px
+                rgba(255, 195, 0, .24);
+        }
+
+        .cancel-btn:hover,
+        .save-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .save-btn:disabled {
+            opacity: .7;
+
+            cursor: wait;
+
+            transform: none;
+        }
+
+
+        /* =====================================================
+           DANGER ZONE
+        ===================================================== */
+
+        .danger-zone {
+            margin-top: 20px;
+
+            padding: 18px;
+
+            border:
+                1px solid #fecaca;
+
+            border-radius: 16px;
+
+            background: #fff7f7;
+        }
+
+        .danger-zone h3 {
+            color: #991b1b;
+
+            font-size: 13px;
+        }
+
+        .danger-zone p {
+            margin-top: 4px;
+
+            color: #7f1d1d;
+
+            font-size: 10px;
+        }
+
+        .delete-btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-top: 12px;
+
+            padding: 10px 14px;
+
+            border: 0;
+
+            border-radius: 10px;
+
+            color: #fff;
+
+            background: var(--red);
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #b91c1c;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 750px) {
+
+            .page {
+                padding: 18px;
+            }
+
+            .hero {
+                padding: 27px;
+            }
+
+            .hero-icon {
+                display: none;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .image-section {
+                grid-template-columns: 1fr;
+            }
+
+            .current-image {
+                width: 130px;
+                height: 155px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .topbar {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .back-btn,
+            .dashboard-btn {
+                width: 100%;
+            }
+
+            .form-body {
+                padding: 19px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .cancel-btn,
+            .save-btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+<div class="container">
+
+
+    <!-- =================================================
+         TOP BAR
+    ================================================== -->
+
+    <div class="topbar">
+
+        <a
+            href="/admin/faculty"
+            class="back-btn"
+        >
+
+            <i class="fas fa-arrow-left"></i>
+
+            Back to Faculty
+
+        </a>
+
+
+        <a
+            href="/admin/dashboard"
+            class="dashboard-btn"
+        >
+
+            <i class="fas fa-chart-line"></i>
+
+            Dashboard
+
+        </a>
+
+    </div>
+
+
+    <!-- =================================================
+         HERO
+    ================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+
+                <i class="fas fa-user-pen"></i>
+
+                Faculty Administration
+
+            </div>
+
+
+            <h1>
+
+                Edit
+
+                <span>Faculty Profile</span>
+
+            </h1>
+
+
+            <p>
+
+                Update the faculty member's designation,
+                academic section, specialization, WhatsApp
+                number, qualities, image and display priority.
+
+            </p>
+
+        </div>
+
+
+        <div class="hero-icon">
+
+            <i class="fas fa-user-gear"></i>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         EDIT CARD
+    ================================================== -->
+
+    <section class="edit-card">
+
+
+        <div class="card-header">
+
+            <div class="header-icon">
+
+                <i class="fas fa-pen-to-square"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    <%= faculty.name %>
+                </h2>
+
+                <p>
+                    Update faculty information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             EDIT FORM
+        ================================================== -->
+
+        <form
+            method="POST"
+            action="/admin/faculty/edit/<%= faculty._id %>"
+            class="form-body"
+            id="editFacultyForm"
+        >
+
+            <!-- =================================================
+                 IMPORTANT: CSRF TOKEN
+            ================================================== -->
+
+            <input
+                type="hidden"
+                name="_csrf"
+                value="<%= csrfToken %>"
+            >
+
+
+            <div class="form-grid">
+
+
+                <!-- NAME -->
+
+                <div class="field">
+
+                    <label>
+
+                        <i class="fas fa-user"></i>
+
+                        Faculty Name
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        value="<%= faculty.name || '' %>"
+                        placeholder="Faculty name"
+                        maxlength="100"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ROLE -->
+
+                <div class="field">
+
+                    <label>
+
+                        <i class="fas fa-id-badge"></i>
+
+                        Role / Designation
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="role"
+                        value="<%= faculty.role || '' %>"
+                        placeholder="Teacher / Incharge / etc."
+                        maxlength="100"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="field">
+
+                    <label>
+
+                        <i class="fas fa-layer-group"></i>
+
+                        Category
+
+                    </label>
+
+                    <select
+                        name="category"
+                        required
+                    >
+
+                        <option
+                            value="top-faculty"
+
+                            <%= faculty.category === 'top-faculty'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Top Faculty
+                        </option>
+
+
+                        <option
+                            value="incharge"
+
+                            <%= faculty.category === 'incharge'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Section Incharge
+                        </option>
+
+
+                        <option
+                            value="library-computing"
+
+                            <%= faculty.category === 'library-computing'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Library &amp; Computing
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SECTION -->
+
+                <div class="field">
+
+                    <label>
+
+                        <i class="fas fa-school"></i>
+
+                        Academic Section
+
+                    </label>
+
+                    <select
+                        name="section"
+                        required
+                    >
+
+                        <option
+                            value="general"
+
+                            <%= faculty.section === 'general'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            General
+                        </option>
+
+
+                        <option
+                            value="primary"
+
+                            <%= faculty.section === 'primary'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Primary
+                        </option>
+
+
+                        <option
+                            value="middle"
+
+                            <%= faculty.section === 'middle'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Middle
+                        </option>
+
+
+                        <option
+                            value="higher"
+
+                            <%= faculty.section === 'higher'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Higher / Higher Secondary
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SPECIALIZATION -->
+
+                <div class="field">
+
+                    <label>
+
+                        <i class="fas fa-book-open"></i>
+
+                        Specialization
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="specialization"
+                        value="<%= faculty.specialization || '' %>"
+                        placeholder="Mathematics, Science, English..."
+                        maxlength="150"
+                    >
+
+                </div>
+
+
+                <!-- DEPARTMENT -->
+
+                <div class="field">
+
+                    <label>
+
+                        <i class="fas fa-building"></i>
+
+                        Department
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="department"
+                        value="<%= faculty.department || '' %>"
+                        placeholder="Academic Department"
+                        maxlength="150"
+                    >
+
+                </div>
+
+
+                <!-- =================================================
+                     WHATSAPP NUMBER
+                ================================================== -->
+
+                <div class="field whatsapp-field">
+
+                    <label>
+
+                        <i class="fab fa-whatsapp"></i>
+
+                        WhatsApp Number
+
+                    </label>
+
+
+                    <i
+                        class="fab fa-whatsapp whatsapp-icon"
+                    ></i>
+
+
+                    <input
+                        type="text"
+                        name="whatsappNumber"
+                        value="<%= faculty.whatsappNumber || '' %>"
+                        placeholder="919876543210"
+                        inputmode="numeric"
+                        maxlength="15"
+                        pattern="[0-9]{10,15}"
+                    >
+
+
+                    <span class="help whatsapp-help">
+
+                        Enter country code + number
+                        without + or spaces.
+
+                        Example:
+                        919876543210
+
+                    </span>
+
+                </div>
+
+
+                <!-- PRIORITY -->
+
+                <div class="field">
+
+                    <label>
+
+                        <i class="fas fa-ranking-star"></i>
+
+                        Display Priority
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="priority"
+                        value="<%= faculty.priority || 0 %>"
+                        min="0"
+                        max="9999"
+                    >
+
+                    <span class="help">
+
+                        Lower number = displayed earlier.
+
+                    </span>
+
+                </div>
+
+
+                <!-- IMAGE URL -->
+
+                <div class="field full">
+
+                    <label>
+
+                        <i class="fas fa-image"></i>
+
+                        Faculty Image URL
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="image"
+                        id="imageInput"
+                        value="<%= faculty.image || '' %>"
+                        placeholder="/images/faculty/teacher.jpg"
+                    >
+
+                    <span class="help">
+
+                        Use the image path from
+                        your public folder.
+
+                    </span>
+
+                </div>
+
+
+                <!-- QUALITIES -->
+
+                <div class="field full">
+
+                    <label>
+
+                        <i class="fas fa-award"></i>
+
+                        Faculty Qualities
+
+                    </label>
+
+                    <textarea
+                        name="qualities"
+                        placeholder="Leadership, Student Friendly, Creative Teaching..."
+                    ><%= faculty.qualities
+                        ? faculty.qualities.join(', ')
+                        : '' %></textarea>
+
+                    <span class="help">
+
+                        Separate each quality with a comma.
+
+                    </span>
+
+                </div>
+
+
+                <!-- IMAGE PREVIEW -->
+
+                <div class="field full">
+
+                    <label>
+
+                        <i class="fas fa-eye"></i>
+
+                        Current Faculty Photo
+
+                    </label>
+
+
+                    <div class="image-section">
+
+
+                        <div class="current-image">
+
+                            <img
+                                id="imagePreview"
+                                src="<%= faculty.image || '/images/logo.png' %>"
+                                alt="<%= faculty.name %>"
+                                onerror="this.src='/images/logo.png'"
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <p
+                                style="
+                                    color:#64748b;
+                                    font-size:11px;
+                                    line-height:1.7;
+                                "
+                            >
+
+                                This image will be displayed
+                                on the public Faculty page.
+
+                                <br><br>
+
+                                Change the Image URL above
+                                to update the faculty photograph.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 ACTIONS
+            ================================================== -->
+
+            <div class="form-actions">
+
+                <a
+                    href="/admin/faculty"
+                    class="cancel-btn"
+                >
+
+                    <i class="fas fa-xmark"></i>
+
+                    Cancel
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                    id="saveBtn"
+                >
+
+                    <i class="fas fa-floppy-disk"></i>
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+    </section>
+
+
+    <!-- =================================================
+         DANGER ZONE
+    ================================================== -->
+
+    <section class="danger-zone">
+
+        <h3>
+
+            <i class="fas fa-triangle-exclamation"></i>
+
+            Danger Zone
+
+        </h3>
+
+
+        <p>
+
+            Deleting this faculty member is permanent
+            and cannot be undone.
+
+        </p>
+
+
+        <!-- =================================================
+             DELETE FORM
+        ================================================== -->
+
+        <form
+            method="POST"
+            action="/admin/faculty/delete/<%= faculty._id %>"
+
+            onsubmit="
+                return confirm(
+                    'Are you absolutely sure you want to permanently delete <%= faculty.name %>?'
+                );
+            "
+        >
+
+            <!-- IMPORTANT: CSRF TOKEN -->
+
+            <input
+                type="hidden"
+                name="_csrf"
+                value="<%= csrfToken %>"
+            >
+
+
+            <button
+                type="submit"
+                class="delete-btn"
+            >
+
+                <i class="fas fa-trash"></i>
+
+                Delete Faculty
+
+            </button>
+
+        </form>
+
+    </section>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+    // =====================================================
+    // IMAGE LIVE PREVIEW
+    // =====================================================
+
+    const imageInput =
+        document.getElementById(
+            'imageInput'
+        );
+
+
+    const imagePreview =
+        document.getElementById(
+            'imagePreview'
+        );
+
+
+    if (
+        imageInput &&
+        imagePreview
+    ) {
+
+        imageInput.addEventListener(
+            'input',
+            function () {
+
+                const url =
+                    this.value.trim();
+
+
+                if (!url) {
+
+                    imagePreview.src =
+                        '/images/logo.png';
+
+                    return;
+
+                }
+
+
+                imagePreview.src =
+                    url;
+
+            }
+        );
+
+    }
+
+
+    // =====================================================
+    // IMAGE ERROR FALLBACK
+    // =====================================================
+
+    if (imagePreview) {
+
+        imagePreview.addEventListener(
+            'error',
+            function () {
+
+                this.src =
+                    '/images/logo.png';
+
+            }
+        );
+
+    }
+
+
+    // =====================================================
+    // WHATSAPP NUMBER — DIGITS ONLY
+    // =====================================================
+
+    const whatsappInput =
+        document.querySelector(
+            'input[name="whatsappNumber"]'
+        );
+
+
+    if (whatsappInput) {
+
+        whatsappInput.addEventListener(
+            'input',
+            function () {
+
+                this.value =
+                    this.value
+                        .replace(
+                            /\D/g,
+                            ''
+                        )
+                        .slice(
+                            0,
+                            15
+                        );
+
+            }
+        );
+
+    }
+
+
+    // =====================================================
+    // SAVE BUTTON LOADING
+    // =====================================================
+
+    const form =
+        document.getElementById(
+            'editFacultyForm'
+        );
+
+
+    if (form) {
+
+        form.addEventListener(
+            'submit',
+            function () {
+
+                const button =
+                    document.getElementById(
+                        'saveBtn'
+                    );
+
+
+                // Browser validation
+
+                if (
+                    !form.checkValidity()
+                ) {
+
+                    return;
+
+                }
+
+
+                if (button) {
+
+                    button.disabled =
+                        true;
+
+
+                    button.innerHTML = `
+                        <i class="fas fa-spinner fa-spin"></i>
+                        Saving Changes...
+                    `;
+
+                }
+
+            }
+        );
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

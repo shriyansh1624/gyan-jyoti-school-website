@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#001f3f"
+    >
+
+    <title>
+        National Celebrations - Gyan Jyoti School
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/stylesheets/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="/stylesheets/responsive.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<%- include('../partials/header') %>
+
+
+<!-- =========================================================
+     PAGE HERO
+========================================================= -->
+
+<section class="national-hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="national-hero-content">
+
+        <div class="hero-badge">
+
+            <i class="fas fa-flag"></i>
+
+            Celebrating Our Nation
+
+        </div>
+
+
+        <h1>
+
+            National
+            <span>Celebrations</span>
+
+        </h1>
+
+
+        <p>
+
+            Celebrating the spirit of India,
+            patriotism, unity and the memories
+            created together at Gyan Jyoti School.
+
+        </p>
+
+
+        <div class="hero-divider">
+
+            <span></span>
+
+            <i class="fas fa-star"></i>
+
+            <span></span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="events-page">
+
+
+    <!-- =====================================================
+         PAGE INTRO
+    ====================================================== -->
+
+    <section class="page-intro">
+
+        <span class="section-kicker">
+
+            <i class="fas fa-heart"></i>
+
+            Proud Moments
+
+        </span>
+
+
+        <h2>
+
+            Our National
+            <span>Celebrations</span>
+
+        </h2>
+
+
+        <p>
+
+            From the colours of Independence Day
+            to the pride of Republic Day,
+            every celebration becomes a memory
+            shared by our students, teachers and school community.
+
+        </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         EVENTS
+    ====================================================== -->
+
+    <%
+        const nationalEvents =
+            Array.isArray(events)
+                ? events
+                : [];
+
+        const republicEvents =
+            nationalEvents.filter(
+                event =>
+                    event.category === 'republic-day'
+            );
+
+        const independenceEvents =
+            nationalEvents.filter(
+                event =>
+                    event.category === 'independence-day'
+            );
+    %>
+
+
+    <!-- =====================================================
+         REPUBLIC DAY
+    ====================================================== -->
+
+    <section class="national-section">
+
+        <div class="section-heading">
+
+            <div class="section-icon republic">
+
+                <i class="fas fa-landmark"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    26 JANUARY
+                </span>
+
+                <h2>
+                    Republic Day
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <% if (republicEvents.length > 0) { %>
+
+            <div class="event-grid">
+
+                <% republicEvents.forEach(
+                    function(event, index)
+                { %>
+
+                    <article
+                        class="event-card"
+                    >
+
+
+                        <!-- COVER -->
+
+                        <a
+                            href="/events/event/<%= event._id %>"
+                            class="event-cover"
+                        >
+
+                            <% if (
+                                event.coverImage
+                            ) { %>
+
+                                <img
+                                    src="<%= event.coverImage %>"
+                                    alt="<%= event.title || 'Republic Day Event' %>"
+                                    loading="lazy"
+                                >
+
+                            <% } else if (
+                                event.image
+                            ) { %>
+
+                                <img
+                                    src="<%= event.image %>"
+                                    alt="<%= event.title || 'Republic Day Event' %>"
+                                    loading="lazy"
+                                >
+
+                            <% } else { %>
+
+                                <div class="no-cover">
+
+                                    <i class="fas fa-flag"></i>
+
+                                </div>
+
+                            <% } %>
+
+
+                            <div class="cover-badge">
+
+                                <i class="fas fa-images"></i>
+
+                                <%= (
+                                    Array.isArray(event.photos)
+                                        ? event.photos.length
+                                        : 0
+                                ) %>
+
+                                Photos
+
+                            </div>
+
+                        </a>
+
+
+                        <!-- CONTENT -->
+
+                        <div class="event-content">
+
+
+                            <div class="event-meta">
+
+                                <span>
+
+                                    <i class="far fa-calendar"></i>
+
+                                    <%= event.date
+                                        ? new Date(
+                                            event.date
+                                        ).toLocaleDateString(
+                                            'en-IN',
+                                            {
+                                                day: '2-digit',
+                                                month: 'short',
+                                                year: 'numeric'
+                                            }
+                                        )
+                                        : 'Republic Day' %>
+
+                                </span>
+
+
+                                <% if (
+                                    event.session
+                                ) { %>
+
+                                    <span>
+
+                                        <i class="fas fa-calendar-days"></i>
+
+                                        <%= event.session %>
+
+                                    </span>
+
+                                <% } %>
+
+                            </div>
+
+
+                            <h3>
+
+                                <%= event.title ||
+                                    'Republic Day Celebration' %>
+
+                            </h3>
+
+
+                            <% if (
+                                event.description
+                            ) { %>
+
+                                <p>
+
+                                    <%= event.description %>
+
+                                </p>
+
+                            <% } %>
+
+
+                            <a
+                                href="/events/event/<%= event._id %>"
+                                class="view-event"
+                            >
+
+                                View Gallery
+
+                                <i class="fas fa-arrow-right"></i>
+
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                <% }) %>
+
+            </div>
+
+        <% } else { %>
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+
+                    <i class="fas fa-flag"></i>
+
+                </div>
+
+                <h3>
+                    Republic Day Memories Coming Soon
+                </h3>
+
+                <p>
+                    Celebrations and photographs will appear here.
+                </p>
+
+            </div>
+
+        <% } %>
+
+    </section>
+
+
+    <!-- =====================================================
+         INDEPENDENCE DAY
+    ====================================================== -->
+
+    <section class="national-section independence-section">
+
+        <div class="section-heading">
+
+            <div class="section-icon independence">
+
+                <i class="fas fa-flag"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    15 AUGUST
+                </span>
+
+                <h2>
+                    Independence Day
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <% if (
+            independenceEvents.length > 0
+        ) { %>
+
+            <div class="event-grid">
+
+                <% independenceEvents.forEach(
+                    function(event)
+                { %>
+
+                    <article
+                        class="event-card"
+                    >
+
+
+                        <a
+                            href="/events/event/<%= event._id %>"
+                            class="event-cover"
+                        >
+
+                            <% if (
+                                event.coverImage
+                            ) { %>
+
+                                <img
+                                    src="<%= event.coverImage %>"
+                                    alt="<%= event.title || 'Independence Day Event' %>"
+                                    loading="lazy"
+                                >
+
+                            <% } else if (
+                                event.image
+                            ) { %>
+
+                                <img
+                                    src="<%= event.image %>"
+                                    alt="<%= event.title || 'Independence Day Event' %>"
+                                    loading="lazy"
+                                >
+
+                            <% } else { %>
+
+                                <div class="no-cover">
+
+                                    <i class="fas fa-flag"></i>
+
+                                </div>
+
+                            <% } %>
+
+
+                            <div class="cover-badge">
+
+                                <i class="fas fa-images"></i>
+
+                                <%= (
+                                    Array.isArray(event.photos)
+                                        ? event.photos.length
+                                        : 0
+                                ) %>
+
+                                Photos
+
+                            </div>
+
+                        </a>
+
+
+                        <div class="event-content">
+
+                            <div class="event-meta">
+
+                                <span>
+
+                                    <i class="far fa-calendar"></i>
+
+                                    <%= event.date
+                                        ? new Date(
+                                            event.date
+                                        ).toLocaleDateString(
+                                            'en-IN',
+                                            {
+                                                day: '2-digit',
+                                                month: 'short',
+                                                year: 'numeric'
+                                            }
+                                        )
+                                        : 'Independence Day' %>
+
+                                </span>
+
+
+                                <% if (
+                                    event.session
+                                ) { %>
+
+                                    <span>
+
+                                        <i class="fas fa-calendar-days"></i>
+
+                                        <%= event.session %>
+
+                                    </span>
+
+                                <% } %>
+
+                            </div>
+
+
+                            <h3>
+
+                                <%= event.title ||
+                                    'Independence Day Celebration' %>
+
+                            </h3>
+
+
+                            <% if (
+                                event.description
+                            ) { %>
+
+                                <p>
+
+                                    <%= event.description %>
+
+                                </p>
+
+                            <% } %>
+
+
+                            <a
+                                href="/events/event/<%= event._id %>"
+                                class="view-event"
+                            >
+
+                                View Gallery
+
+                                <i class="fas fa-arrow-right"></i>
+
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                <% }) %>
+
+            </div>
+
+        <% } else { %>
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+
+                    <i class="fas fa-flag"></i>
+
+                </div>
+
+                <h3>
+                    Independence Day Memories Coming Soon
+                </h3>
+
+                <p>
+                    Celebrations and photographs will appear here.
+                </p>
+
+            </div>
+
+        <% } %>
+
+    </section>
+
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<%- include('../partials/footer') %>
+
+
+<!-- =========================================================
+     STYLES
+========================================================= -->
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+
+    body {
+        margin: 0;
+        background: #f6f8fb;
+        color: #102a43;
+        font-family:
+            'Segoe UI',
+            Tahoma,
+            Geneva,
+            Verdana,
+            sans-serif;
+    }
+
+
+    /* =====================================================
+       HERO
+    ====================================================== */
+
+    .national-hero {
+
+        position: relative;
+
+        min-height: 430px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        overflow: hidden;
+
+        background:
+
+            linear-gradient(
+                135deg,
+                rgba(0,31,63,.96),
+                rgba(0,63,110,.92)
+            ),
+
+            url('/images/school-bg.jpg');
+
+        background-size: cover;
+
+        background-position: center;
+
+    }
+
+
+    .hero-overlay {
+
+        position: absolute;
+
+        inset: 0;
+
+        background:
+
+            radial-gradient(
+                circle at 20% 30%,
+                rgba(255,195,0,.18),
+                transparent 28%
+            ),
+
+            radial-gradient(
+                circle at 80% 70%,
+                rgba(255,255,255,.08),
+                transparent 30%
+            );
+
+    }
+
+
+    .national-hero-content {
+
+        position: relative;
+
+        z-index: 2;
+
+        width: min(900px, 92%);
+
+        text-align: center;
+
+        color: #fff;
+
+    }
+
+
+    .hero-badge {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        padding: 9px 16px;
+
+        margin-bottom: 20px;
+
+        border:
+            1px solid
+            rgba(255,195,0,.35);
+
+        border-radius: 999px;
+
+        color: #ffc300;
+
+        background:
+            rgba(255,195,0,.08);
+
+        font-size: 12px;
+
+        font-weight: 800;
+
+        letter-spacing: .7px;
+
+        text-transform: uppercase;
+
+    }
+
+
+    .national-hero h1 {
+
+        margin: 0;
+
+        font-size: clamp(
+            42px,
+            7vw,
+            78px
+        );
+
+        line-height: 1;
+
+        font-weight: 900;
+
+        letter-spacing: -2px;
+
+    }
+
+
+    .national-hero h1 span {
+
+        color: #ffc300;
+
+    }
+
+
+    .national-hero p {
+
+        max-width: 680px;
+
+        margin: 25px auto 0;
+
+        color: rgba(255,255,255,.82);
+
+        font-size: 16px;
+
+        line-height: 1.8;
+
+    }
+
+
+    .hero-divider {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 14px;
+
+        margin-top: 25px;
+
+    }
+
+
+    .hero-divider span {
+
+        width: 70px;
+
+        height: 2px;
+
+        background: #ffc300;
+
+    }
+
+
+    .hero-divider i {
+
+        color: #ffc300;
+
+        font-size: 13px;
+
+    }
+
+
+    /* =====================================================
+       MAIN
+    ====================================================== */
+
+    .events-page {
+
+        width: min(
+            1180px,
+            92%
+        );
+
+        margin: 0 auto;
+
+        padding:
+            75px 0 100px;
+
+    }
+
+
+    .page-intro {
+
+        max-width: 760px;
+
+        margin:
+            0 auto 70px;
+
+        text-align: center;
+
+    }
+
+
+    .section-kicker {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        color: #0066a1;
+
+        font-size: 12px;
+
+        font-weight: 900;
+
+        text-transform: uppercase;
+
+        letter-spacing: 1px;
+
+    }
+
+
+    .page-intro h2 {
+
+        margin:
+            12px 0 16px;
+
+        color: #001f3f;
+
+        font-size: clamp(
+            30px,
+            5vw,
+            48px
+        );
+
+        font-weight: 900;
+
+    }
+
+
+    .page-intro h2 span {
+
+        color: #c18c00;
+
+    }
+
+
+    .page-intro p {
+
+        margin: 0;
+
+        color: #66788a;
+
+        line-height: 1.8;
+
+        font-size: 15px;
+
+    }
+
+
+    /* =====================================================
+       SECTION
+    ====================================================== */
+
+    .national-section {
+
+        margin-bottom: 75px;
+
+    }
+
+
+    .section-heading {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 18px;
+
+        margin-bottom: 28px;
+
+    }
+
+
+    .section-icon {
+
+        width: 62px;
+
+        height: 62px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 18px;
+
+        color: #fff;
+
+        font-size: 22px;
+
+        flex-shrink: 0;
+
+        box-shadow:
+            0 12px 25px
+            rgba(0,0,0,.12);
+
+    }
+
+
+    .section-icon.republic {
+
+        background:
+            linear-gradient(
+                135deg,
+                #001f3f,
+                #00558f
+            );
+
+    }
+
+
+    .section-icon.independence {
+
+        background:
+            linear-gradient(
+                135deg,
+                #e47700,
+                #ffb300
+            );
+
+    }
+
+
+    .section-heading span {
+
+        display: block;
+
+        margin-bottom: 4px;
+
+        color: #7c8a98;
+
+        font-size: 11px;
+
+        font-weight: 900;
+
+        letter-spacing: 1.2px;
+
+    }
+
+
+    .section-heading h2 {
+
+        margin: 0;
+
+        color: #001f3f;
+
+        font-size: 30px;
+
+        font-weight: 900;
+
+    }
+
+
+    /* =====================================================
+       EVENT GRID
+    ====================================================== */
+
+    .event-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
+
+        gap: 25px;
+
+    }
+
+
+    /* =====================================================
+       EVENT CARD
+    ====================================================== */
+
+    .event-card {
+
+        overflow: hidden;
+
+        background: #fff;
+
+        border:
+            1px solid
+            #e7edf3;
+
+        border-radius: 22px;
+
+        box-shadow:
+            0 12px 35px
+            rgba(0,31,63,.07);
+
+        transition:
+            transform .3s ease,
+            box-shadow .3s ease;
+
+    }
+
+
+    .event-card:hover {
+
+        transform:
+            translateY(-7px);
+
+        box-shadow:
+            0 22px 45px
+            rgba(0,31,63,.14);
+
+    }
+
+
+    /* =====================================================
+       COVER
+    ====================================================== */
+
+    .event-cover {
+
+        position: relative;
+
+        display: block;
+
+        height: 245px;
+
+        overflow: hidden;
+
+        background: #e9eef4;
+
+        text-decoration: none;
+
+    }
+
+
+    .event-cover img {
+
+        width: 100%;
+
+        height: 100%;
+
+        object-fit: cover;
+
+        display: block;
+
+        transition:
+            transform .5s ease;
+
+    }
+
+
+    .event-card:hover
+    .event-cover img {
+
+        transform:
+            scale(1.06);
+
+    }
+
+
+    .no-cover {
+
+        width: 100%;
+
+        height: 100%;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        color: #fff;
+
+        background:
+            linear-gradient(
+                135deg,
+                #001f3f,
+                #006aa6
+            );
+
+        font-size: 50px;
+
+    }
+
+
+    .cover-badge {
+
+        position: absolute;
+
+        right: 13px;
+
+        bottom: 13px;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+        padding: 8px 11px;
+
+        border-radius: 9px;
+
+        color: #fff;
+
+        background:
+            rgba(0,0,0,.72);
+
+        backdrop-filter:
+            blur(8px);
+
+        font-size: 10px;
+
+        font-weight: 800;
+
+    }
+
+
+    /* =====================================================
+       CONTENT
+    ====================================================== */
+
+    .event-content {
+
+        padding: 22px;
+
+    }
+
+
+    .event-meta {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        flex-wrap: wrap;
+
+        margin-bottom: 12px;
+
+    }
+
+
+    .event-meta span {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+        color: #778797;
+
+        font-size: 10px;
+
+        font-weight: 700;
+
+    }
+
+
+    .event-meta i {
+
+        color: #d39b00;
+
+    }
+
+
+    .event-content h3 {
+
+        margin:
+            0 0 10px;
+
+        color: #001f3f;
+
+        font-size: 20px;
+
+        line-height: 1.3;
+
+        font-weight: 900;
+
+    }
+
+
+    .event-content p {
+
+        display: -webkit-box;
+
+        -webkit-line-clamp: 3;
+
+        -webkit-box-orient: vertical;
+
+        overflow: hidden;
+
+        margin:
+            0 0 18px;
+
+        color: #718096;
+
+        font-size: 13px;
+
+        line-height: 1.7;
+
+    }
+
+
+    .view-event {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        color: #005d99;
+
+        font-size: 12px;
+
+        font-weight: 900;
+
+        text-decoration: none;
+
+        transition: .25s;
+
+    }
+
+
+    .view-event:hover {
+
+        color: #d39b00;
+
+        gap: 12px;
+
+    }
+
+
+    /* =====================================================
+       EMPTY
+    ====================================================== */
+
+    .empty-state {
+
+        padding:
+            55px 25px;
+
+        text-align: center;
+
+        background: #fff;
+
+        border:
+            1px dashed
+            #d6dee7;
+
+        border-radius: 20px;
+
+    }
+
+
+    .empty-icon {
+
+        width: 65px;
+
+        height: 65px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        margin: 0 auto 16px;
+
+        border-radius: 18px;
+
+        color: #005d99;
+
+        background: #eef6fb;
+
+        font-size: 25px;
+
+    }
+
+
+    .empty-state h3 {
+
+        margin: 0 0 7px;
+
+        color: #001f3f;
+
+        font-size: 19px;
+
+    }
+
+
+    .empty-state p {
+
+        margin: 0;
+
+        color: #7c8a98;
+
+        font-size: 13px;
+
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ====================================================== */
+
+    @media(max-width: 1000px) {
+
+        .event-grid {
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
+
+        }
+
+    }
+
+
+    @media(max-width: 650px) {
+
+        .national-hero {
+
+            min-height: 390px;
+
+        }
+
+
+        .national-hero h1 {
+
+            letter-spacing: -1px;
+
+        }
+
+
+        .national-hero p {
+
+            font-size: 14px;
+
+        }
+
+
+        .events-page {
+
+            width: 92%;
+
+            padding:
+                55px 0 75px;
+
+        }
+
+
+        .page-intro {
+
+            margin-bottom: 50px;
+
+        }
+
+
+        .event-grid {
+
+            grid-template-columns: 1fr;
+
+        }
+
+
+        .section-heading h2 {
+
+            font-size: 25px;
+
+        }
+
+
+        .section-icon {
+
+            width: 55px;
+
+            height: 55px;
+
+            border-radius: 16px;
+
+        }
+
+
+        .event-cover {
+
+            height: 230px;
+
+        }
+
+    }
+
+
+    @media(max-width: 400px) {
+
+        .section-heading {
+
+            gap: 12px;
+
+        }
+
+
+        .section-heading h2 {
+
+            font-size: 22px;
+
+        }
+
+
+        .event-content {
+
+            padding: 18px;
+
+        }
+
+    }
+
+</style>
+
+</body>
+
+</html>

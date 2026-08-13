@@ -1,0 +1,1519 @@
+<%- include('../../partials/header') %>
+
+<style>
+/* =========================================================
+   SPORTS & DANCE — ADD ACHIEVEMENT
+========================================================= */
+
+.sd-form-page {
+    --navy: #002b57;
+    --navy-dark: #001b35;
+    --blue: #075c98;
+    --yellow: #ffbd00;
+    --yellow-soft: #fff6d7;
+    --text: #102f4d;
+    --muted: #72869a;
+    --border: #dce6ef;
+    --danger: #dc3f4d;
+
+    min-height: 100vh;
+    padding: 32px 25px 70px;
+
+    background:
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(255,189,0,.08),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 5% 20%,
+            rgba(7,92,152,.06),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #edf4f9,
+            #f9fbfd 50%,
+            #e7f0f7
+        );
+
+    color: var(--text);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.sd-form-container {
+    width: min(1080px, 100%);
+    margin: auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.sd-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.sd-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sd-heading-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--navy-dark),
+            var(--blue)
+        );
+
+    color: var(--yellow);
+    font-size: 22px;
+
+    box-shadow:
+        0 10px 25px rgba(0,43,87,.18);
+}
+
+.sd-heading h1 {
+    margin: 0;
+
+    color: var(--navy);
+    font-size: 28px;
+    font-weight: 950;
+    letter-spacing: -.7px;
+}
+
+.sd-heading p {
+    margin: 5px 0 0;
+
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.sd-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 42px;
+    padding: 0 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 11px;
+
+    background: white;
+    color: var(--navy);
+
+    text-decoration: none;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    transition: .2s ease;
+}
+
+.sd-back:hover {
+    background: var(--navy);
+    color: white;
+    border-color: var(--navy);
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.sd-form-card {
+    overflow: hidden;
+
+    background: rgba(255,255,255,.97);
+
+    border: 1px solid var(--border);
+    border-radius: 25px;
+
+    box-shadow:
+        0 22px 55px rgba(0,43,87,.09);
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.sd-form-hero {
+    position: relative;
+    overflow: hidden;
+
+    padding: 31px 32px;
+
+    background:
+        radial-gradient(
+            circle at 92% 15%,
+            rgba(255,255,255,.13),
+            transparent 22%
+        ),
+        linear-gradient(
+            125deg,
+            var(--navy-dark),
+            #003c70 55%,
+            var(--blue)
+        );
+}
+
+.sd-form-hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    right: -130px;
+    top: -210px;
+
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 50%;
+}
+
+.sd-form-hero h2 {
+    position: relative;
+    z-index: 2;
+
+    margin: 0;
+
+    color: white;
+    font-size: 21px;
+    font-weight: 950;
+}
+
+.sd-form-hero p {
+    position: relative;
+    z-index: 2;
+
+    margin: 6px 0 0;
+
+    color: rgba(255,255,255,.68);
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   FORM BODY
+========================================================= */
+
+.sd-form-body {
+    padding: 32px;
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.sd-section {
+    margin-bottom: 32px;
+}
+
+.sd-section:last-child {
+    margin-bottom: 0;
+}
+
+.sd-section-head {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    margin-bottom: 18px;
+    padding-bottom: 13px;
+
+    border-bottom: 1px solid #e6edf3;
+}
+
+.sd-section-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: var(--yellow-soft);
+    color: var(--navy);
+
+    font-size: 12px;
+}
+
+.sd-section-head h3 {
+    margin: 0;
+
+    color: var(--navy);
+    font-size: 14px;
+    font-weight: 950;
+}
+
+
+/* =========================================================
+   SPORTS / DANCE SELECTOR
+========================================================= */
+
+.sd-type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.sd-type-option {
+    position: relative;
+}
+
+.sd-type-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sd-type-option label {
+    min-height: 85px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 17px;
+
+    cursor: pointer;
+
+    border: 1px solid var(--border);
+    border-radius: 15px;
+
+    background: #f8fafc;
+
+    transition: .22s ease;
+}
+
+.sd-type-option label:hover {
+    border-color: #a9c3d7;
+    transform: translateY(-2px);
+}
+
+.sd-type-option label i {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: #e9f2f8;
+    color: var(--navy);
+
+    font-size: 18px;
+}
+
+.sd-type-option label strong {
+    display: block;
+
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 950;
+}
+
+.sd-type-option label span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--muted);
+    font-size: 9px;
+    line-height: 1.45;
+}
+
+.sd-type-option input:checked + label {
+    border-color: var(--navy);
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef6fc,
+            white
+        );
+
+    box-shadow:
+        0 10px 25px rgba(0,43,87,.09);
+}
+
+.sd-type-option input:checked + label i {
+    background: var(--navy);
+    color: var(--yellow);
+}
+
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.sd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.sd-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.sd-group.full {
+    grid-column: 1 / -1;
+}
+
+.sd-group label {
+    margin-bottom: 7px;
+
+    color: var(--navy);
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.required {
+    color: var(--danger);
+}
+
+.sd-input,
+.sd-select,
+.sd-textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    border: 1px solid #d8e3ec;
+    border-radius: 11px;
+
+    background: #fbfdff;
+    color: var(--text);
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+
+    outline: none;
+
+    transition: .2s ease;
+}
+
+.sd-input,
+.sd-select {
+    height: 45px;
+    padding: 0 13px;
+}
+
+.sd-textarea {
+    min-height: 120px;
+    padding: 13px;
+    resize: vertical;
+}
+
+.sd-input:focus,
+.sd-select:focus,
+.sd-textarea:focus {
+    border-color: #4c89b3;
+    background: white;
+
+    box-shadow:
+        0 0 0 3px rgba(7,92,152,.08);
+}
+
+.sd-help {
+    margin-top: 5px;
+
+    color: #8b9bab;
+    font-size: 8px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   PHOTO UPLOAD
+========================================================= */
+
+.sd-photo-upload {
+    position: relative;
+
+    padding: 18px;
+
+    border: 1px dashed #b9ccda;
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fbfd,
+            #eef5f9
+        );
+
+    transition: .2s ease;
+}
+
+.sd-photo-upload:hover {
+    border-color: #6997b7;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f2f8fc,
+            #e9f2f7
+        );
+}
+
+.sd-photo-inner {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.sd-photo-icon {
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: var(--navy);
+    color: var(--yellow);
+
+    font-size: 19px;
+
+    box-shadow:
+        0 8px 20px rgba(0,43,87,.15);
+}
+
+.sd-photo-text strong {
+    display: block;
+
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 950;
+}
+
+.sd-photo-text span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--muted);
+    font-size: 8px;
+}
+
+.sd-file-input {
+    width: 100%;
+
+    margin-top: 13px;
+
+    padding: 9px;
+
+    border: 1px solid #d7e3eb;
+    border-radius: 10px;
+
+    background: white;
+
+    color: var(--text);
+
+    font-family: inherit;
+    font-size: 9px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.sd-preview {
+    display: none;
+
+    margin-top: 15px;
+
+    padding: 10px;
+
+    border: 1px solid #dbe6ee;
+    border-radius: 12px;
+
+    background: white;
+}
+
+.sd-preview.show {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sd-preview img {
+    width: 64px;
+    height: 64px;
+
+    object-fit: cover;
+
+    border-radius: 11px;
+
+    border: 2px solid white;
+
+    box-shadow:
+        0 5px 14px rgba(0,43,87,.12);
+}
+
+.sd-preview-info strong {
+    display: block;
+
+    color: var(--navy);
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.sd-preview-info span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--muted);
+
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.sd-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    margin-top: 30px;
+    padding-top: 25px;
+
+    border-top: 1px solid #e5ecf2;
+}
+
+.sd-cancel,
+.sd-save {
+    min-height: 45px;
+
+    padding: 0 21px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    border-radius: 11px;
+
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 900;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.sd-cancel {
+    border: 1px solid var(--border);
+
+    background: #f3f6f8;
+    color: #607487;
+}
+
+.sd-cancel:hover {
+    background: #e7edf1;
+    color: var(--navy);
+}
+
+.sd-save {
+    border: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--navy),
+            var(--blue)
+        );
+
+    color: white;
+
+    box-shadow:
+        0 9px 22px rgba(0,43,87,.18);
+}
+
+.sd-save:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 13px 28px rgba(0,43,87,.25);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:700px) {
+
+    .sd-form-page {
+        padding: 20px 14px 50px;
+    }
+
+    .sd-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .sd-back {
+        width: 100%;
+    }
+
+    .sd-form-body {
+        padding: 22px 18px;
+    }
+
+    .sd-grid,
+    .sd-type-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sd-group.full {
+        grid-column: auto;
+    }
+
+    .sd-photo-inner {
+        align-items: flex-start;
+    }
+
+    .sd-actions {
+        flex-direction: column-reverse;
+    }
+
+    .sd-cancel,
+    .sd-save {
+        width: 100%;
+    }
+}
+
+@media(max-width:430px) {
+
+    .sd-heading h1 {
+        font-size: 23px;
+    }
+
+    .sd-heading-icon {
+        width: 50px;
+        height: 50px;
+    }
+}
+</style>
+
+
+<div class="sd-form-page">
+
+    <div class="sd-form-container">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================= -->
+
+        <div class="sd-page-header">
+
+            <div class="sd-heading">
+
+                <div class="sd-heading-icon">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+
+                <div>
+
+                    <h1>
+                        Add Achievement
+                    </h1>
+
+                    <p>
+                        Create a new Sports or Dance achievement record
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <a
+                href="/admin/sports-dance"
+                class="sd-back"
+            >
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back to Records
+
+            </a>
+
+        </div>
+
+
+
+        <!-- =================================================
+             FORM
+        ================================================= -->
+
+        <form
+            action="/admin/sports-dance/add"
+            method="POST"
+            enctype="multipart/form-data"
+            class="sd-form-card"
+        >
+
+            <!-- CSRF -->
+
+            <input
+                type="hidden"
+                name="_csrf"
+                value="<%= csrfToken %>"
+            >
+
+
+            <!-- HERO -->
+
+            <div class="sd-form-hero">
+
+                <h2>
+                    Achievement Information
+                </h2>
+
+                <p>
+                    Add an individual winner or a complete team/group achievement.
+                </p>
+
+            </div>
+
+
+            <div class="sd-form-body">
+
+
+                <!-- =================================================
+                     TYPE
+                ================================================= -->
+
+                <section class="sd-section">
+
+                    <div class="sd-section-head">
+
+                        <div class="sd-section-icon">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+
+                        <h3>
+                            Achievement Type
+                        </h3>
+
+                    </div>
+
+
+                    <div class="sd-type-grid">
+
+
+                        <div class="sd-type-option">
+
+                            <input
+                                type="radio"
+                                id="sports"
+                                name="recordType"
+                                value="sports"
+                                checked
+                            >
+
+                            <label for="sports">
+
+                                <i class="fa-solid fa-futbol"></i>
+
+                                <div>
+
+                                    <strong>
+                                        Sports Achievement
+                                    </strong>
+
+                                    <span>
+                                        Individual winner, player,
+                                        team or sports group.
+                                    </span>
+
+                                </div>
+
+                            </label>
+
+                        </div>
+
+
+
+                        <div class="sd-type-option">
+
+                            <input
+                                type="radio"
+                                id="dance"
+                                name="recordType"
+                                value="dance"
+                            >
+
+                            <label for="dance">
+
+                                <i class="fa-solid fa-music"></i>
+
+                                <div>
+
+                                    <strong>
+                                        Dance Achievement
+                                    </strong>
+
+                                    <span>
+                                        Individual performer,
+                                        dance group or cultural team.
+                                    </span>
+
+                                </div>
+
+                            </label>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     STUDENT / GROUP
+                ================================================= -->
+
+                <section class="sd-section">
+
+                    <div class="sd-section-head">
+
+                        <div class="sd-section-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+
+                        <h3>
+                            Student / Group Information
+                        </h3>
+
+                    </div>
+
+
+                    <div class="sd-grid">
+
+
+                        <div class="sd-group full">
+
+                            <label for="studentName">
+
+                                Student / Group Name
+
+                                <span class="required">
+                                    *
+                                </span>
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="studentName"
+                                name="studentName"
+                                class="sd-input"
+                                placeholder="e.g. Rahul Sharma OR Gyan Jyoti U-17 Cricket Team"
+                                maxlength="100"
+                                required
+                            >
+
+
+                            <span class="sd-help">
+
+                                For an individual achievement enter the student's name.
+                                For a team/group achievement enter the group or team name.
+
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- PHOTO -->
+
+                        <div class="sd-group full">
+
+                            <label for="photo">
+
+                                Achievement Photo
+
+                                <span class="required">
+                                    *
+                                </span>
+
+                            </label>
+
+
+                            <div class="sd-photo-upload">
+
+
+                                <div class="sd-photo-inner">
+
+
+                                    <div class="sd-photo-icon">
+
+                                        <i class="fa-solid fa-camera"></i>
+
+                                    </div>
+
+
+                                    <div class="sd-photo-text">
+
+                                        <strong>
+                                            Upload Individual / Group Photo
+                                        </strong>
+
+                                        <span>
+                                            One photo per achievement record
+                                        </span>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <input
+                                    type="file"
+                                    id="photo"
+                                    name="photo"
+                                    class="sd-file-input"
+                                    accept="image/jpeg,image/png,image/webp"
+                                    required
+                                >
+
+
+                                <div
+                                    class="sd-preview"
+                                    id="photoPreview"
+                                >
+
+                                    <img
+                                        id="previewImage"
+                                        src=""
+                                        alt="Photo preview"
+                                    >
+
+
+                                    <div class="sd-preview-info">
+
+                                        <strong>
+                                            Selected Photo
+                                        </strong>
+
+                                        <span id="photoName">
+                                            -
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <span class="sd-help">
+
+                                JPG, PNG or WebP • Maximum 2 MB.
+                                Use the group photo when the achievement belongs to a team.
+
+                            </span>
+
+                        </div>
+
+
+
+                        <div class="sd-group">
+
+                            <label for="batch">
+
+                                Batch
+
+                                <span class="required">
+                                    *
+                                </span>
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="batch"
+                                name="batch"
+                                class="sd-input"
+                                placeholder="e.g. 2024-25"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <div class="sd-group">
+
+                            <label for="year">
+
+                                Achievement Year
+
+                                <span class="required">
+                                    *
+                                </span>
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="year"
+                                name="year"
+                                class="sd-input"
+                                placeholder="e.g. 2025"
+                                required
+                            >
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     ACHIEVEMENT DETAILS
+                ================================================= -->
+
+                <section class="sd-section">
+
+
+                    <div class="sd-section-head">
+
+                        <div class="sd-section-icon">
+
+                            <i class="fa-solid fa-medal"></i>
+
+                        </div>
+
+
+                        <h3>
+                            Achievement Details
+                        </h3>
+
+                    </div>
+
+
+
+                    <div class="sd-grid">
+
+
+                        <div class="sd-group">
+
+                            <label for="category">
+                                Category
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="category"
+                                name="category"
+                                class="sd-input"
+                                placeholder="e.g. Cricket / Classical Dance"
+                            >
+
+
+                            <span class="sd-help">
+
+                                Sport, dance form or activity.
+
+                            </span>
+
+                        </div>
+
+
+
+                        <div class="sd-group">
+
+                            <label for="level">
+                                Achievement Level
+                            </label>
+
+
+                            <select
+                                id="level"
+                                name="level"
+                                class="sd-select"
+                            >
+
+                                <option value="">
+                                    Select level
+                                </option>
+
+                                <option value="School">
+                                    School
+                                </option>
+
+                                <option value="District">
+                                    District
+                                </option>
+
+                                <option value="State">
+                                    State
+                                </option>
+
+                                <option value="National">
+                                    National
+                                </option>
+
+                                <option value="International">
+                                    International
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+
+                        <div class="sd-group">
+
+                            <label for="position">
+                                Position / Award
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="position"
+                                name="position"
+                                class="sd-input"
+                                placeholder="e.g. 1st Position / Gold Medal"
+                            >
+
+                        </div>
+
+
+
+                        <div class="sd-group">
+
+                            <label for="competition">
+                                Competition / Event
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="competition"
+                                name="competition"
+                                class="sd-input"
+                                placeholder="Enter competition or event name"
+                            >
+
+                        </div>
+
+
+
+                        <div class="sd-group full">
+
+                            <label for="achievement">
+                                Achievement Description
+                            </label>
+
+
+                            <textarea
+                                id="achievement"
+                                name="achievement"
+                                class="sd-textarea"
+                                maxlength="1000"
+                                placeholder="Write a short description of the achievement..."
+                            ></textarea>
+
+
+                            <span class="sd-help">
+
+                                Maximum 1000 characters.
+
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     DISPLAY
+                ================================================= -->
+
+                <section class="sd-section">
+
+
+                    <div class="sd-section-head">
+
+                        <div class="sd-section-icon">
+
+                            <i class="fa-solid fa-sliders"></i>
+
+                        </div>
+
+
+                        <h3>
+                            Display Settings
+                        </h3>
+
+                    </div>
+
+
+
+                    <div class="sd-grid">
+
+
+                        <div class="sd-group">
+
+                            <label for="priority">
+                                Display Priority
+                            </label>
+
+
+                            <input
+                                type="number"
+                                id="priority"
+                                name="priority"
+                                class="sd-input"
+                                value="0"
+                                min="0"
+                                max="999"
+                            >
+
+
+                            <span class="sd-help">
+
+                                Lower number appears first for records from the same year.
+
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     ACTIONS
+                ================================================= -->
+
+                <div class="sd-actions">
+
+
+                    <a
+                        href="/admin/sports-dance"
+                        class="sd-cancel"
+                    >
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                        Cancel
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="sd-save"
+                    >
+
+                        <i class="fa-solid fa-check"></i>
+
+                        Save Achievement
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   PHOTO PREVIEW
+========================================================= */
+
+const photoInput =
+    document.getElementById('photo');
+
+const photoPreview =
+    document.getElementById('photoPreview');
+
+const previewImage =
+    document.getElementById('previewImage');
+
+const photoName =
+    document.getElementById('photoName');
+
+
+if (photoInput) {
+
+    photoInput.addEventListener(
+        'change',
+        function () {
+
+            const file =
+                this.files[0];
+
+
+            if (!file) {
+
+                photoPreview.classList.remove(
+                    'show'
+                );
+
+                return;
+
+            }
+
+
+            const allowedTypes = [
+                'image/jpeg',
+                'image/png',
+                'image/webp'
+            ];
+
+
+            if (
+                !allowedTypes.includes(
+                    file.type
+                )
+            ) {
+
+                alert(
+                    'Please select a JPG, PNG or WebP image.'
+                );
+
+                this.value = '';
+
+                photoPreview.classList.remove(
+                    'show'
+                );
+
+                return;
+
+            }
+
+
+            if (
+                file.size >
+                2 * 1024 * 1024
+            ) {
+
+                alert(
+                    'Image size must be less than 2 MB.'
+                );
+
+                this.value = '';
+
+                photoPreview.classList.remove(
+                    'show'
+                );
+
+                return;
+
+            }
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function (event) {
+
+                    previewImage.src =
+                        event.target.result;
+
+                    photoName.textContent =
+                        file.name;
+
+                    photoPreview.classList.add(
+                        'show'
+                    );
+
+                };
+
+
+            reader.readAsDataURL(
+                file
+            );
+
+        }
+    );
+
+}
+
+</script>
+
+
+<%- include('../../partials/footer') %>

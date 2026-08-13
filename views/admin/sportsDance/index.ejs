@@ -1,0 +1,2643 @@
+<%- include('../../partials/header') %>
+
+<style>
+
+/* =========================================================
+   SPORTS & DANCE — PREMIUM ADMIN INDEX
+========================================================= */
+
+.sd-index-page {
+    --navy: #002b57;
+    --navy-dark: #001b35;
+    --blue: #075c98;
+    --blue-light: #eaf4fc;
+    --yellow: #ffbd00;
+    --yellow-soft: #fff6d7;
+
+    --green: #0b9b65;
+    --green-soft: #eaf9f3;
+
+    --purple: #7657d8;
+    --purple-soft: #f1edff;
+
+    --red: #dc3f4d;
+    --red-soft: #fff0f2;
+
+    --text: #102f4d;
+    --muted: #73879a;
+    --border: #dce6ef;
+
+    min-height: 100vh;
+
+    padding: 32px 25px 70px;
+
+    background:
+        radial-gradient(
+            circle at 8% 0%,
+            rgba(255,189,0,.07),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 95% 15%,
+            rgba(7,92,152,.07),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #edf4f9,
+            #f9fbfd 50%,
+            #e7f0f7
+        );
+
+    color: var(--text);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+
+.sd-index-container {
+    width:
+        min(1280px, 100%);
+
+    margin:
+        auto;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.sd-index-hero {
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    min-height:
+        235px;
+
+    padding:
+        38px 42px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        30px;
+
+    border-radius:
+        27px;
+
+    background:
+        radial-gradient(
+            circle at 82% 20%,
+            rgba(255,189,0,.16),
+            transparent 23%
+        ),
+        radial-gradient(
+            circle at 100% 100%,
+            rgba(255,255,255,.08),
+            transparent 30%
+        ),
+        linear-gradient(
+            125deg,
+            #001b35,
+            #003b6d 55%,
+            #075c98
+        );
+
+    box-shadow:
+        0 24px 55px
+        rgba(0,43,87,.17);
+
+    margin-bottom:
+        25px;
+}
+
+
+.sd-index-hero::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        420px;
+
+    height:
+        420px;
+
+    right:
+        -170px;
+
+    top:
+        -290px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    border-radius:
+        50%;
+}
+
+
+.sd-index-hero::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        300px;
+
+    height:
+        300px;
+
+    right:
+        80px;
+
+    bottom:
+        -250px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        50%;
+}
+
+
+.sd-hero-content {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    max-width:
+        690px;
+}
+
+
+.sd-overline {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    margin-bottom:
+        10px;
+
+    color:
+        var(--yellow);
+
+    font-size:
+        9px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        2px;
+
+    text-transform:
+        uppercase;
+}
+
+
+.sd-overline i {
+    font-size:
+        11px;
+}
+
+
+.sd-hero-title {
+
+    margin:
+        0;
+
+    color:
+        white;
+
+    font-size:
+        clamp(30px, 4vw, 46px);
+
+    line-height:
+        1.05;
+
+    font-weight:
+        950;
+
+    letter-spacing:
+        -1.3px;
+}
+
+
+.sd-hero-title span {
+    color:
+        var(--yellow);
+}
+
+
+.sd-hero-description {
+
+    max-width:
+        640px;
+
+    margin:
+        13px 0 0;
+
+    color:
+        rgba(255,255,255,.68);
+
+    font-size:
+        11px;
+
+    line-height:
+        1.7;
+}
+
+
+.sd-hero-icon {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    width:
+        125px;
+
+    height:
+        125px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
+    border-radius:
+        31px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    backdrop-filter:
+        blur(10px);
+
+    color:
+        var(--yellow);
+
+    font-size:
+        48px;
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255,255,255,.1);
+}
+
+
+/* =========================================================
+   TOP ACTION BAR
+========================================================= */
+
+.sd-topbar {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        18px;
+
+    margin-bottom:
+        20px;
+}
+
+
+.sd-heading-small h2 {
+
+    margin:
+        0;
+
+    color:
+        var(--navy);
+
+    font-size:
+        23px;
+
+    font-weight:
+        950;
+
+    letter-spacing:
+        -.5px;
+}
+
+
+.sd-heading-small p {
+
+    margin:
+        5px 0 0;
+
+    color:
+        var(--muted);
+
+    font-size:
+        10px;
+}
+
+
+.sd-add-btn {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        8px;
+
+    min-height:
+        43px;
+
+    padding:
+        0 18px;
+
+    border-radius:
+        11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--navy),
+            var(--blue)
+        );
+
+    color:
+        white;
+
+    text-decoration:
+        none;
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    box-shadow:
+        0 9px 22px
+        rgba(0,43,87,.17);
+
+    transition:
+        .22s ease;
+}
+
+
+.sd-add-btn:hover {
+
+    color:
+        white;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 13px 28px
+        rgba(0,43,87,.24);
+}
+
+
+/* =========================================================
+   STAT CARDS
+========================================================= */
+
+.sd-stats {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap:
+        14px;
+
+    margin-bottom:
+        22px;
+}
+
+
+.sd-stat {
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    min-height:
+        102px;
+
+    padding:
+        18px;
+
+    background:
+        rgba(255,255,255,.96);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        17px;
+
+    box-shadow:
+        0 9px 26px
+        rgba(0,43,87,.055);
+
+    transition:
+        .22s ease;
+}
+
+
+.sd-stat:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 15px 32px
+        rgba(0,43,87,.09);
+}
+
+
+.sd-stat::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        90px;
+
+    height:
+        90px;
+
+    right:
+        -42px;
+
+    top:
+        -43px;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(7,92,152,.05);
+}
+
+
+.sd-stat-icon {
+
+    width:
+        36px;
+
+    height:
+        36px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        10px;
+
+    margin-bottom:
+        10px;
+
+    font-size:
+        13px;
+}
+
+
+.sd-stat-icon.total {
+
+    background:
+        var(--blue-light);
+
+    color:
+        var(--blue);
+}
+
+
+.sd-stat-icon.sports {
+
+    background:
+        var(--green-soft);
+
+    color:
+        var(--green);
+}
+
+
+.sd-stat-icon.dance {
+
+    background:
+        var(--purple-soft);
+
+    color:
+        var(--purple);
+}
+
+
+.sd-stat-icon.years {
+
+    background:
+        var(--yellow-soft);
+
+    color:
+        #9b7900;
+}
+
+
+.sd-stat-number {
+
+    color:
+        var(--navy);
+
+    font-size:
+        23px;
+
+    line-height:
+        1;
+
+    font-weight:
+        950;
+}
+
+
+.sd-stat-label {
+
+    margin-top:
+        5px;
+
+    color:
+        var(--muted);
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        .7px;
+}
+
+
+/* =========================================================
+   FILTER PANEL
+========================================================= */
+
+.sd-filter-panel {
+
+    padding:
+        13px;
+
+    margin-bottom:
+        20px;
+
+    background:
+        rgba(255,255,255,.96);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        17px;
+
+    box-shadow:
+        0 9px 25px
+        rgba(0,43,87,.05);
+}
+
+
+.sd-filter-row {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        12px;
+}
+
+
+.sd-filters {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        7px;
+}
+
+
+.sd-filter {
+
+    min-height:
+        37px;
+
+    padding:
+        0 13px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        7px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        9px;
+
+    background:
+        #f7fafc;
+
+    color:
+        #64798d;
+
+    font-family:
+        inherit;
+
+    font-size:
+        9px;
+
+    font-weight:
+        900;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s ease;
+}
+
+
+.sd-filter:hover {
+
+    border-color:
+        #abc2d5;
+
+    color:
+        var(--navy);
+}
+
+
+.sd-filter.active {
+
+    color:
+        white;
+
+    border-color:
+        var(--navy);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--navy),
+            var(--blue)
+        );
+
+    box-shadow:
+        0 6px 15px
+        rgba(0,43,87,.14);
+}
+
+
+.sd-search {
+
+    width:
+        220px;
+
+    height:
+        37px;
+
+    padding:
+        0 12px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        9px;
+
+    outline:
+        none;
+
+    background:
+        #f8fafc;
+
+    color:
+        var(--text);
+
+    font-family:
+        inherit;
+
+    font-size:
+        9px;
+
+    font-weight:
+        600;
+}
+
+
+.sd-search:focus {
+
+    border-color:
+        #568bad;
+
+    background:
+        white;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(7,92,152,.07);
+}
+
+
+/* =========================================================
+   RECORD AREA
+========================================================= */
+
+.sd-record-head {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    margin:
+        20px 2px 13px;
+}
+
+
+.sd-record-head h3 {
+
+    margin:
+        0;
+
+    color:
+        var(--navy);
+
+    font-size:
+        14px;
+
+    font-weight:
+        950;
+}
+
+
+.sd-record-count {
+
+    color:
+        var(--muted);
+
+    font-size:
+        9px;
+
+    font-weight:
+        800;
+}
+
+
+/* =========================================================
+   RECORD GRID
+========================================================= */
+
+.sd-record-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap:
+        18px;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.sd-record-card {
+
+    overflow:
+        hidden;
+
+    background:
+        rgba(255,255,255,.98);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        19px;
+
+    box-shadow:
+        0 9px 27px
+        rgba(0,43,87,.065);
+
+    transition:
+        transform .23s ease,
+        box-shadow .23s ease,
+        border-color .23s ease;
+}
+
+
+.sd-record-card:hover {
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        #bdd0df;
+
+    box-shadow:
+        0 18px 38px
+        rgba(0,43,87,.12);
+}
+
+
+.sd-record-card.hide {
+
+    display:
+        none;
+}
+
+
+/* =========================================================
+   CARD BANNER
+========================================================= */
+
+.sd-card-banner {
+
+    position:
+        relative;
+
+    min-height:
+        95px;
+
+    padding:
+        17px;
+
+    display:
+        flex;
+
+    align-items:
+        flex-end;
+
+    background:
+        linear-gradient(
+            135deg,
+            #002b57,
+            #075c98
+        );
+}
+
+
+.sd-record-card[data-type="dance"]
+.sd-card-banner {
+
+    background:
+        linear-gradient(
+            135deg,
+            #3a276f,
+            #7657d8
+        );
+}
+
+
+.sd-card-banner::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        120px;
+
+    height:
+        120px;
+
+    right:
+        -55px;
+
+    top:
+        -65px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-radius:
+        50%;
+}
+
+
+.sd-card-type {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    padding:
+        6px 9px;
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(255,255,255,.12);
+
+    color:
+        white;
+
+    font-size:
+        8px;
+
+    font-weight:
+        900;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        .6px;
+}
+
+
+.sd-card-icon {
+
+    position:
+        absolute;
+
+    z-index:
+        2;
+
+    right:
+        17px;
+
+    top:
+        17px;
+
+    width:
+        39px;
+
+    height:
+        39px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    border-radius:
+        11px;
+
+    background:
+        rgba(255,255,255,.10);
+
+    color:
+        var(--yellow);
+
+    font-size:
+        15px;
+}
+
+
+/* =========================================================
+   CARD BODY
+========================================================= */
+
+.sd-card-body {
+
+    padding:
+        18px;
+}
+
+
+.sd-student {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        11px;
+
+    margin-bottom:
+        14px;
+}
+
+
+.sd-student-avatar {
+
+    width:
+        39px;
+
+    height:
+        39px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        12px;
+
+    background:
+        var(--yellow-soft);
+
+    color:
+        var(--navy);
+
+    font-size:
+        14px;
+
+    font-weight:
+        950;
+}
+
+
+.sd-student-name {
+
+    min-width:
+        0;
+}
+
+
+.sd-student-name h3 {
+
+    margin:
+        0;
+
+    overflow:
+        hidden;
+
+    color:
+        var(--navy);
+
+    font-size:
+        15px;
+
+    font-weight:
+        950;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+}
+
+
+.sd-student-name span {
+
+    display:
+        block;
+
+    margin-top:
+        3px;
+
+    color:
+        var(--muted);
+
+    font-size:
+        8px;
+
+    font-weight:
+        700;
+}
+
+
+/* =========================================================
+   INFO GRID
+========================================================= */
+
+.sd-info-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        7px;
+}
+
+
+.sd-info {
+
+    min-width:
+        0;
+
+    padding:
+        9px;
+
+    border:
+        1px solid
+        #e5ecf2;
+
+    border-radius:
+        9px;
+
+    background:
+        #f8fafc;
+}
+
+
+.sd-info.full {
+
+    grid-column:
+        1 / -1;
+}
+
+
+.sd-info-label {
+
+    display:
+        block;
+
+    margin-bottom:
+        4px;
+
+    color:
+        #8b9baa;
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .6px;
+
+    text-transform:
+        uppercase;
+}
+
+
+.sd-info-value {
+
+    display:
+        block;
+
+    overflow:
+        hidden;
+
+    color:
+        var(--text);
+
+    font-size:
+        9px;
+
+    font-weight:
+        900;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+}
+
+
+/* =========================================================
+   ACHIEVEMENT
+========================================================= */
+
+.sd-award {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        10px;
+
+    margin-top:
+        9px;
+
+    padding:
+        10px 11px;
+
+    border:
+        1px solid
+        #f0dc8b;
+
+    border-radius:
+        10px;
+
+    background:
+        var(--yellow-soft);
+}
+
+
+.sd-award-label {
+
+    color:
+        #826900;
+
+    font-size:
+        7px;
+
+    font-weight:
+        900;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        .5px;
+}
+
+
+.sd-award-value {
+
+    color:
+        var(--navy);
+
+    font-size:
+        11px;
+
+    font-weight:
+        950;
+
+    text-align:
+        right;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.sd-description {
+
+    margin-top:
+        11px;
+
+    padding-top:
+        11px;
+
+    border-top:
+        1px solid
+        #e7edf2;
+}
+
+
+.sd-description p {
+
+    display:
+        -webkit-box;
+
+    overflow:
+        hidden;
+
+    margin:
+        0;
+
+    color:
+        var(--muted);
+
+    font-size:
+        9px;
+
+    line-height:
+        1.55;
+
+    -webkit-box-orient:
+        vertical;
+
+    -webkit-line-clamp:
+        2;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.sd-card-actions {
+
+    display:
+        flex;
+
+    gap:
+        7px;
+
+    margin-top:
+        15px;
+
+    padding-top:
+        13px;
+
+    border-top:
+        1px solid
+        #e7edf2;
+}
+
+
+.sd-edit-btn,
+.sd-delete-btn {
+
+    min-height:
+        34px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        6px;
+
+    border-radius:
+        9px;
+
+    font-family:
+        inherit;
+
+    font-size:
+        8px;
+
+    font-weight:
+        900;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s ease;
+}
+
+
+.sd-edit-btn {
+
+    flex:
+        1;
+
+    background:
+        var(--blue-light);
+
+    border:
+        1px solid
+        #d5e8f7;
+
+    color:
+        #1768a7;
+
+    text-decoration:
+        none;
+}
+
+
+.sd-edit-btn:hover {
+
+    background:
+        var(--blue);
+
+    color:
+        white;
+
+    border-color:
+        var(--blue);
+}
+
+
+.sd-delete-btn {
+
+    width:
+        38px;
+
+    border:
+        1px solid
+        #f5d8dc;
+
+    background:
+        var(--red-soft);
+
+    color:
+        var(--red);
+}
+
+
+.sd-delete-btn:hover {
+
+    background:
+        var(--red);
+
+    color:
+        white;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.sd-empty {
+
+    grid-column:
+        1 / -1;
+
+    padding:
+        65px 25px;
+
+    text-align:
+        center;
+
+    border:
+        1px dashed
+        #c8d7e3;
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(255,255,255,.82);
+}
+
+
+.sd-empty-icon {
+
+    width:
+        70px;
+
+    height:
+        70px;
+
+    margin:
+        0 auto 15px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        20px;
+
+    background:
+        var(--yellow-soft);
+
+    color:
+        var(--navy);
+
+    font-size:
+        27px;
+}
+
+
+.sd-empty h3 {
+
+    margin:
+        0 0 6px;
+
+    color:
+        var(--navy);
+
+    font-size:
+        20px;
+
+    font-weight:
+        950;
+}
+
+
+.sd-empty p {
+
+    margin:
+        0 0 18px;
+
+    color:
+        var(--muted);
+
+    font-size:
+        10px;
+}
+
+
+.sd-empty a {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        7px;
+
+    min-height:
+        39px;
+
+    padding:
+        0 15px;
+
+    border-radius:
+        10px;
+
+    background:
+        var(--navy);
+
+    color:
+        white;
+
+    text-decoration:
+        none;
+
+    font-size:
+        9px;
+
+    font-weight:
+        900;
+}
+
+
+/* =========================================================
+   NO SEARCH RESULT
+========================================================= */
+
+.sd-no-search {
+
+    display:
+        none;
+
+    grid-column:
+        1 / -1;
+
+    padding:
+        45px 20px;
+
+    text-align:
+        center;
+
+    color:
+        var(--muted);
+
+    font-size:
+        10px;
+}
+
+
+.sd-no-search i {
+
+    display:
+        block;
+
+    margin-bottom:
+        10px;
+
+    color:
+        #a4b4c1;
+
+    font-size:
+        28px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1050px) {
+
+    .sd-record-grid {
+        grid-template-columns:
+            repeat(2, minmax(0,1fr));
+    }
+
+    .sd-stats {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+
+@media(max-width:750px) {
+
+    .sd-index-page {
+        padding:
+            20px 14px 50px;
+    }
+
+    .sd-index-hero {
+        padding:
+            30px 25px;
+    }
+
+    .sd-hero-icon {
+        display:
+            none;
+    }
+
+    .sd-topbar {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+    }
+
+    .sd-add-btn {
+        width:
+            100%;
+    }
+
+    .sd-filter-row {
+        align-items:
+            stretch;
+
+        flex-direction:
+            column;
+    }
+
+    .sd-search {
+        width:
+            100%;
+    }
+
+    .sd-record-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+@media(max-width:450px) {
+
+    .sd-stats {
+        grid-template-columns:
+            1fr;
+    }
+
+    .sd-index-hero {
+        min-height:
+            auto;
+    }
+
+    .sd-hero-title {
+        font-size:
+            31px;
+    }
+
+}
+
+</style>
+
+
+<div class="sd-index-page">
+
+    <div class="sd-index-container">
+
+
+        <!-- =================================================
+             HERO
+        ================================================= -->
+
+        <section class="sd-index-hero">
+
+            <div class="sd-hero-content">
+
+                <div class="sd-overline">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    Secure Achievement Management
+
+                </div>
+
+
+                <h1 class="sd-hero-title">
+
+                    Sports & Dance
+                    <br>
+
+                    <span>
+                        Achievement Records
+                    </span>
+
+                </h1>
+
+
+                <p class="sd-hero-description">
+
+                    Manage student achievements, competitions,
+                    awards and performances from one centralized
+                    administration panel.
+
+                </p>
+
+            </div>
+
+
+            <div class="sd-hero-icon">
+
+                <i class="fa-solid fa-trophy"></i>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             TOP BAR
+        ================================================= -->
+
+        <div class="sd-topbar">
+
+            <div class="sd-heading-small">
+
+                <h2>
+                    Achievement Management
+                </h2>
+
+                <p>
+                    View, edit and manage all Sports & Dance records.
+                </p>
+
+            </div>
+
+
+            <a
+                href="/admin/sports-dance/add"
+                class="sd-add-btn"
+            >
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Achievement
+
+            </a>
+
+        </div>
+
+
+
+        <!-- =================================================
+             STATS
+        ================================================= -->
+
+        <%
+            const totalRecords =
+                records ? records.length : 0;
+
+            const sportsRecords =
+                records
+                    ? records.filter(
+                        r => r.recordType === 'sports'
+                    ).length
+                    : 0;
+
+            const danceRecords =
+                records
+                    ? records.filter(
+                        r => r.recordType === 'dance'
+                    ).length
+                    : 0;
+
+            const yearSet =
+                records
+                    ? new Set(
+                        records
+                            .map(r => r.year)
+                            .filter(Boolean)
+                    )
+                    : new Set();
+
+            const totalYears =
+                yearSet.size;
+        %>
+
+
+        <div class="sd-stats">
+
+
+            <div class="sd-stat">
+
+                <div class="sd-stat-icon total">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+
+                <div class="sd-stat-number">
+                    <%= totalRecords %>
+                </div>
+
+                <div class="sd-stat-label">
+                    Total Records
+                </div>
+
+            </div>
+
+
+            <div class="sd-stat">
+
+                <div class="sd-stat-icon sports">
+                    <i class="fa-solid fa-futbol"></i>
+                </div>
+
+                <div class="sd-stat-number">
+                    <%= sportsRecords %>
+                </div>
+
+                <div class="sd-stat-label">
+                    Sports Records
+                </div>
+
+            </div>
+
+
+            <div class="sd-stat">
+
+                <div class="sd-stat-icon dance">
+                    <i class="fa-solid fa-music"></i>
+                </div>
+
+                <div class="sd-stat-number">
+                    <%= danceRecords %>
+                </div>
+
+                <div class="sd-stat-label">
+                    Dance Records
+                </div>
+
+            </div>
+
+
+            <div class="sd-stat">
+
+                <div class="sd-stat-icon years">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+
+                <div class="sd-stat-number">
+                    <%= totalYears %>
+                </div>
+
+                <div class="sd-stat-label">
+                    Achievement Years
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             FILTER
+        ================================================= -->
+
+        <div class="sd-filter-panel">
+
+            <div class="sd-filter-row">
+
+
+                <div class="sd-filters">
+
+
+                    <button
+                        type="button"
+                        class="sd-filter active"
+                        data-filter="all"
+                    >
+
+                        <i class="fa-solid fa-layer-group"></i>
+
+                        All
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="sd-filter"
+                        data-filter="sports"
+                    >
+
+                        <i class="fa-solid fa-futbol"></i>
+
+                        Sports
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="sd-filter"
+                        data-filter="dance"
+                    >
+
+                        <i class="fa-solid fa-music"></i>
+
+                        Dance
+
+                    </button>
+
+
+                </div>
+
+
+                <input
+                    type="search"
+                    id="recordSearch"
+                    class="sd-search"
+                    placeholder="Search student, event, category..."
+                    autocomplete="off"
+                >
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             RECORD HEADER
+        ================================================= -->
+
+        <div class="sd-record-head">
+
+            <h3>
+                Achievement Records
+            </h3>
+
+            <span
+                class="sd-record-count"
+                id="visibleCount"
+            >
+                <%= totalRecords %> records
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             RECORD GRID
+        ================================================= -->
+
+        <div
+            class="sd-record-grid"
+            id="recordGrid"
+        >
+
+
+            <% if (records && records.length > 0) { %>
+
+
+                <% records.forEach(record => { %>
+
+
+                    <article
+                        class="sd-record-card"
+                        data-type="<%= record.recordType %>"
+                        data-search="<%= (
+                            (record.studentName || '') + ' ' +
+                            (record.category || '') + ' ' +
+                            (record.competition || '') + ' ' +
+                            (record.achievement || '') + ' ' +
+                            (record.year || '') + ' ' +
+                            (record.batch || '')
+                        ).toLowerCase() %>"
+                    >
+
+
+                        <!-- CARD BANNER -->
+
+                        <div class="sd-card-banner">
+
+
+                            <div class="sd-card-type">
+
+                                <% if (
+                                    record.recordType === 'sports'
+                                ) { %>
+
+                                    <i class="fa-solid fa-futbol"></i>
+
+                                    Sports
+
+                                <% } else { %>
+
+                                    <i class="fa-solid fa-music"></i>
+
+                                    Dance
+
+                                <% } %>
+
+                            </div>
+
+
+                            <div class="sd-card-icon">
+
+                                <% if (
+                                    record.recordType === 'sports'
+                                ) { %>
+
+                                    <i class="fa-solid fa-futbol"></i>
+
+                                <% } else { %>
+
+                                    <i class="fa-solid fa-music"></i>
+
+                                <% } %>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- CARD BODY -->
+
+                        <div class="sd-card-body">
+
+
+                            <!-- STUDENT -->
+
+                            <div class="sd-student">
+
+
+                                <div class="sd-student-avatar">
+
+                                    <%= (
+                                        record.studentName || 'S'
+                                    ).charAt(0).toUpperCase() %>
+
+                                </div>
+
+
+                                <div class="sd-student-name">
+
+                                    <h3>
+                                        <%= record.studentName %>
+                                    </h3>
+
+                                    <span>
+                                        Batch
+                                        <%= record.batch || '—' %>
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- INFO -->
+
+                            <div class="sd-info-grid">
+
+
+                                <div class="sd-info">
+
+                                    <span class="sd-info-label">
+                                        Year
+                                    </span>
+
+                                    <span class="sd-info-value">
+                                        <%= record.year || '—' %>
+                                    </span>
+
+                                </div>
+
+
+                                <div class="sd-info">
+
+                                    <span class="sd-info-label">
+                                        Level
+                                    </span>
+
+                                    <span class="sd-info-value">
+                                        <%= record.level || '—' %>
+                                    </span>
+
+                                </div>
+
+
+                                <% if (record.category) { %>
+
+                                    <div class="sd-info">
+
+                                        <span class="sd-info-label">
+                                            Category
+                                        </span>
+
+                                        <span class="sd-info-value">
+                                            <%= record.category %>
+                                        </span>
+
+                                    </div>
+
+                                <% } %>
+
+
+                                <% if (record.competition) { %>
+
+                                    <div class="sd-info">
+
+                                        <span class="sd-info-label">
+                                            Event
+                                        </span>
+
+                                        <span class="sd-info-value">
+                                            <%= record.competition %>
+                                        </span>
+
+                                    </div>
+
+                                <% } %>
+
+
+                            </div>
+
+
+
+                            <!-- AWARD -->
+
+                            <% if (record.position) { %>
+
+                                <div class="sd-award">
+
+                                    <span class="sd-award-label">
+
+                                        <i class="fa-solid fa-medal"></i>
+
+                                        Position / Award
+
+                                    </span>
+
+                                    <span class="sd-award-value">
+                                        <%= record.position %>
+                                    </span>
+
+                                </div>
+
+                            <% } %>
+
+
+
+                            <!-- DESCRIPTION -->
+
+                            <% if (record.achievement) { %>
+
+                                <div class="sd-description">
+
+                                    <p>
+                                        <%= record.achievement %>
+                                    </p>
+
+                                </div>
+
+                            <% } %>
+
+
+
+                            <!-- ACTIONS -->
+
+                            <div class="sd-card-actions">
+
+
+                                <a
+                                    href="/admin/sports-dance/edit/<%= record._id %>"
+                                    class="sd-edit-btn"
+                                >
+
+                                    <i class="fa-solid fa-pen"></i>
+
+                                    Edit Record
+
+                                </a>
+
+
+                                <form
+                                    method="POST"
+                                    action="/admin/sports-dance/delete/<%= record._id %>"
+                                    style="display:inline;"
+                                    onsubmit="return confirmDelete(event)"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="sd-delete-btn"
+                                        title="Delete record"
+                                    >
+
+                                        <i class="fa-solid fa-trash"></i>
+
+                                    </button>
+
+                                </form>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </article>
+
+
+                <% }) %>
+
+
+                <div
+                    class="sd-no-search"
+                    id="noSearch"
+                >
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    No matching records found.
+
+                </div>
+
+
+            <% } else { %>
+
+
+                <div class="sd-empty">
+
+
+                    <div class="sd-empty-icon">
+
+                        <i class="fa-solid fa-trophy"></i>
+
+                    </div>
+
+
+                    <h3>
+                        No Achievement Records
+                    </h3>
+
+
+                    <p>
+                        No Sports or Dance achievements have been added yet.
+                    </p>
+
+
+                    <a
+                        href="/admin/sports-dance/add"
+                    >
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Add First Achievement
+
+                    </a>
+
+
+                </div>
+
+
+            <% } %>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   FILTER + SEARCH
+========================================================= */
+
+const filterButtons =
+    document.querySelectorAll(
+        '.sd-filter'
+    );
+
+const cards =
+    document.querySelectorAll(
+        '.sd-record-card'
+    );
+
+const searchInput =
+    document.getElementById(
+        'recordSearch'
+    );
+
+const visibleCount =
+    document.getElementById(
+        'visibleCount'
+    );
+
+const noSearch =
+    document.getElementById(
+        'noSearch'
+    );
+
+
+let activeFilter = 'all';
+
+
+function updateRecords() {
+
+    const search =
+        searchInput
+            ? searchInput.value
+                .trim()
+                .toLowerCase()
+            : '';
+
+
+    let visible = 0;
+
+
+    cards.forEach(card => {
+
+
+        const type =
+            card.dataset.type;
+
+
+        const searchable =
+            card.dataset.search || '';
+
+
+        const matchesFilter =
+            activeFilter === 'all' ||
+            type === activeFilter;
+
+
+        const matchesSearch =
+            !search ||
+            searchable.includes(search);
+
+
+        if (
+            matchesFilter &&
+            matchesSearch
+        ) {
+
+            card.classList.remove(
+                'hide'
+            );
+
+            visible++;
+
+        } else {
+
+            card.classList.add(
+                'hide'
+            );
+
+        }
+
+    });
+
+
+    if (visibleCount) {
+
+        visibleCount.textContent =
+            visible +
+            (visible === 1
+                ? ' record'
+                : ' records');
+
+    }
+
+
+    if (noSearch) {
+
+        noSearch.style.display =
+            visible === 0
+                ? 'block'
+                : 'none';
+
+    }
+
+}
+
+
+filterButtons.forEach(button => {
+
+    button.addEventListener(
+        'click',
+        function() {
+
+
+            filterButtons.forEach(btn => {
+
+                btn.classList.remove(
+                    'active'
+                );
+
+            });
+
+
+            this.classList.add(
+                'active'
+            );
+
+
+            activeFilter =
+                this.dataset.filter;
+
+
+            updateRecords();
+
+        }
+    );
+
+});
+
+
+if (searchInput) {
+
+    searchInput.addEventListener(
+        'input',
+        updateRecords
+    );
+
+}
+
+
+/* =========================================================
+   DELETE CONFIRMATION
+========================================================= */
+
+function confirmDelete(event) {
+
+    const confirmed =
+        confirm(
+            'Are you sure you want to delete this achievement record?\n\nThis action cannot be undone.'
+        );
+
+
+    if (!confirmed) {
+
+        event.preventDefault();
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   INITIAL
+========================================================= */
+
+updateRecords();
+
+</script>
+
+
+<%- include('../../partials/footer') %>

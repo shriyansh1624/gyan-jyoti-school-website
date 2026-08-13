@@ -1,0 +1,2066 @@
+<%- include('../../partials/header') %>
+
+<section class="popup-create-page">
+
+  <div class="popup-create-shell">
+
+    <!-- HERO -->
+    <div class="popup-create-hero">
+
+      <div class="hero-copy">
+        <span class="eyebrow">
+          <i class="fas fa-bolt"></i>
+          HOMEPAGE CAMPAIGN
+        </span>
+
+        <h1>
+          Create New
+          <span>Popup</span>
+        </h1>
+
+        <p>
+          Create a polished promotional popup that automatically appears
+          on your homepage according to your display settings.
+        </p>
+
+        <div class="hero-points">
+          <span><i class="fas fa-circle-check"></i> Image preview</span>
+          <span><i class="fas fa-circle-check"></i> Timing control</span>
+          <span><i class="fas fa-circle-check"></i> Priority control</span>
+        </div>
+      </div>
+
+      <div class="hero-mark">
+        <i class="fas fa-images"></i>
+      </div>
+
+    </div>
+
+
+    <!-- FORM + LIVE PREVIEW -->
+    <div class="create-layout">
+
+      <!-- FORM CARD -->
+      <div class="form-card">
+
+        <div class="card-heading">
+          <div class="heading-icon">
+            <i class="fas fa-pen-to-square"></i>
+          </div>
+
+          <div>
+            <h2>Popup Details</h2>
+            <p>Fill in the information for your homepage popup.</p>
+          </div>
+        </div>
+
+
+       <form
+    id="popupCreateForm"
+    action="/admin/popup/add"
+    method="POST"
+    enctype="multipart/form-data"
+    novalidate>
+
+    <input
+        type="hidden"
+        name="_csrf"
+        value="<%= csrfToken %>"
+    >
+<!-- BASIC INFORMATION -->
+          <div class="form-section">
+
+            <div class="section-label">
+              <span>01</span>
+              <div>
+                <strong>Basic Information</strong>
+                <small>Content visitors will see.</small>
+              </div>
+            </div>
+
+
+            <div class="field-grid">
+
+              <div class="field full">
+                <label for="title">
+                  <i class="fas fa-heading"></i>
+                  Popup Title
+                  <b>*</b>
+                </label>
+
+                <input
+                  id="title"
+                  type="text"
+                  name="title"
+                  placeholder="Admissions Open 2026"
+                  maxlength="100"
+                  required>
+
+                <span class="field-help">
+                  Keep the title short and attention-grabbing.
+                </span>
+              </div>
+
+
+              <div class="field full">
+                <label for="subtitle">
+                  <i class="fas fa-align-left"></i>
+                  Subtitle / Description
+                </label>
+
+                <textarea
+                  id="subtitle"
+                  name="subtitle"
+                  rows="4"
+                  maxlength="300"
+                  placeholder="Write popup description..."></textarea>
+
+                <div class="field-meta">
+                  <span>Optional supporting message.</span>
+                  <span id="subtitleCount">0 / 300</span>
+                </div>
+              </div>
+
+
+              <div class="field">
+                <label for="buttonText">
+                  <i class="fas fa-hand-pointer"></i>
+                  Button Text
+                </label>
+
+                <input
+                  id="buttonText"
+                  type="text"
+                  name="buttonText"
+                  placeholder="Apply Now"
+                  maxlength="40">
+              </div>
+
+
+              <div class="field">
+                <label for="buttonLink">
+                  <i class="fas fa-link"></i>
+                  Button Link
+                </label>
+
+                <input
+                  id="buttonLink"
+                  type="text"
+                  name="buttonLink"
+                  value="/admission"
+                  placeholder="/admission">
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- IMAGE -->
+          <div class="form-section">
+
+            <div class="section-label">
+              <span>02</span>
+              <div>
+                <strong>Popup Visual</strong>
+                <small>Upload the promotional image.</small>
+              </div>
+            </div>
+
+
+            <div class="upload-zone" id="uploadZone">
+
+              <input
+                id="image"
+                type="file"
+                name="image"
+                accept="image/jpeg,image/png,image/webp"
+                hidden>
+
+              <div class="upload-icon">
+                <i class="fas fa-cloud-arrow-up"></i>
+              </div>
+
+              <h3>Drop your image here</h3>
+
+              <p>
+                or click to browse
+              </p>
+
+              <span>
+                JPG, JPEG, PNG or WEBP · Recommended 1200 × 700 · Max 5 MB
+              </span>
+
+              <button
+                type="button"
+                class="browse-btn"
+                id="browseBtn">
+                <i class="fas fa-folder-open"></i>
+                Choose Image
+              </button>
+
+            </div>
+
+
+            <div
+              id="imagePreviewWrap"
+              class="selected-image"
+              hidden>
+
+              <div class="selected-image-head">
+                <div>
+                  <strong>Selected Image</strong>
+                  <small id="imageName"></small>
+                </div>
+
+                <button
+                  type="button"
+                  id="removeImage"
+                  class="remove-image">
+                  <i class="fas fa-xmark"></i>
+                  Remove
+                </button>
+              </div>
+
+              <img
+                id="imagePreview"
+                src=""
+                alt="Popup image preview">
+
+            </div>
+
+          </div>
+
+
+          <!-- DISPLAY SETTINGS -->
+          <div class="form-section">
+
+            <div class="section-label">
+              <span>03</span>
+              <div>
+                <strong>Display Settings</strong>
+                <small>Control when and how the popup appears.</small>
+              </div>
+            </div>
+
+
+            <div class="field-grid">
+
+              <div class="field">
+                <label for="delay">
+                  <i class="fas fa-clock"></i>
+                  Delay
+                </label>
+
+                <div class="input-with-unit">
+                  <input
+                    id="delay"
+                    type="number"
+                    name="delay"
+                    value="1500"
+                    min="0"
+                    max="60000"
+                    step="100">
+
+                  <span>ms</span>
+                </div>
+
+                <span class="field-help">
+                  1500 ms = 1.5 seconds.
+                </span>
+              </div>
+
+
+              <div class="field">
+                <label for="priority">
+                  <i class="fas fa-arrow-down-1-9"></i>
+                  Priority
+                </label>
+
+                <input
+                  id="priority"
+                  type="number"
+                  name="priority"
+                  value="1"
+                  min="0"
+                  max="999">
+
+                <span class="field-help">
+                  Lower number appears first.
+                </span>
+              </div>
+
+
+              <div class="field">
+                <label for="startDate">
+                  <i class="fas fa-calendar-days"></i>
+                  Start Date
+                </label>
+
+                <input
+                  id="startDate"
+                  type="date"
+                  name="startDate">
+              </div>
+
+
+              <div class="field">
+                <label for="endDate">
+                  <i class="fas fa-calendar-check"></i>
+                  End Date
+                </label>
+
+                <input
+                  id="endDate"
+                  type="date"
+                  name="endDate">
+              </div>
+
+            </div>
+
+
+            <div class="toggle-grid">
+
+              <label class="toggle-card">
+
+                <input
+                  type="hidden"
+                  name="enabled"
+                  value="false">
+
+                <input
+                  id="enabled"
+                  type="checkbox"
+                  name="enabled"
+                  value="true"
+                  checked>
+
+                <span class="toggle-ui"></span>
+
+                <span class="toggle-copy">
+                  <strong>Enable Popup</strong>
+                  <small>Allow this popup to appear on the homepage.</small>
+                </span>
+
+              </label>
+
+
+              <label class="toggle-card">
+
+                <input
+                  type="hidden"
+                  name="showOnce"
+                  value="false">
+
+                <input
+                  id="showOnce"
+                  type="checkbox"
+                  name="showOnce"
+                  value="true">
+
+                <span class="toggle-ui"></span>
+
+                <span class="toggle-copy">
+                  <strong>Show Once</strong>
+                  <small>Limit the popup to one display per visitor.</small>
+                </span>
+
+              </label>
+
+            </div>
+
+          </div>
+
+
+          <!-- ACTIONS -->
+          <div class="form-actions">
+
+            <a
+              href="/admin/popup"
+              class="secondary-btn">
+              <i class="fas fa-arrow-left"></i>
+              Back to Popups
+            </a>
+
+            <button
+              type="button"
+              class="preview-btn"
+              id="previewBtn">
+              <i class="fas fa-eye"></i>
+              Preview Popup
+            </button>
+
+            <button
+              type="submit"
+              class="primary-btn">
+              <i class="fas fa-cloud-arrow-up"></i>
+              Create Popup
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+
+      <!-- SIDE PREVIEW -->
+      <aside class="preview-card">
+
+        <div class="preview-card-head">
+          <div>
+            <span class="preview-label">LIVE PREVIEW</span>
+            <h2>Homepage Popup</h2>
+          </div>
+
+          <span class="preview-dot">
+            <i class="fas fa-circle"></i>
+            LIVE
+          </span>
+        </div>
+
+
+        <div class="preview-browser">
+
+          <div class="browser-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+
+            <div class="browser-url">
+              gyanjyoti.com
+            </div>
+          </div>
+
+
+          <div class="browser-page">
+
+            <div class="fake-nav"></div>
+            <div class="fake-hero"></div>
+
+            <div class="mini-popup">
+
+              <button
+                type="button"
+                class="mini-close"
+                aria-label="Close">
+                <i class="fas fa-xmark"></i>
+              </button>
+
+              <div class="mini-image-wrap">
+
+                <img
+                  id="livePreviewImage"
+                  src=""
+                  alt="Popup preview">
+
+                <div
+                  id="imagePlaceholder"
+                  class="image-placeholder">
+                  <i class="fas fa-image"></i>
+                  <span>Your image</span>
+                </div>
+
+              </div>
+
+
+              <div class="mini-content">
+
+                <span class="mini-badge">
+                  FEATURED
+                </span>
+
+                <h3 id="livePreviewTitle">
+                  Admissions Open 2026
+                </h3>
+
+                <p id="livePreviewSubtitle">
+                  Write popup description...
+                </p>
+
+                <button
+                  type="button"
+                  id="livePreviewButton">
+                  Apply Now
+                </button>
+
+                <small>
+                  <i class="fas fa-bolt"></i>
+                  Appears after
+                  <strong id="livePreviewDelay">1.5s</strong>
+                </small>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="preview-tips">
+
+          <div>
+            <i class="fas fa-lightbulb"></i>
+            <p>
+              <strong>Tip</strong>
+              Use a clear promotional image with minimal text for the best
+              visual result.
+            </p>
+          </div>
+
+          <div>
+            <i class="fas fa-gauge-high"></i>
+            <p>
+              <strong>Timing</strong>
+              A 1000–3000 ms delay usually gives visitors enough time to see
+              the page before the popup appears.
+            </p>
+          </div>
+
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FULL PREVIEW MODAL -->
+<div
+  id="previewModal"
+  class="preview-modal"
+  aria-hidden="true">
+
+  <div class="preview-modal-box">
+
+    <button
+      type="button"
+      class="preview-modal-close"
+      id="closePreview">
+      <i class="fas fa-xmark"></i>
+    </button>
+
+    <div class="preview-modal-tag">
+      HOMEPAGE PREVIEW
+    </div>
+
+    <div class="preview-modal-popup">
+
+      <div class="modal-image-wrap">
+
+        <img
+          id="modalPreviewImage"
+          src=""
+          alt="Popup preview">
+
+        <div
+          id="modalImagePlaceholder"
+          class="image-placeholder">
+          <i class="fas fa-image"></i>
+          <span>Upload a popup image</span>
+        </div>
+
+      </div>
+
+
+      <div class="modal-popup-content">
+
+        <span>GYAN JYOTI SCHOOL</span>
+
+        <h2 id="modalPreviewTitle">
+          Admissions Open 2026
+        </h2>
+
+        <p id="modalPreviewSubtitle">
+          Write popup description...
+        </p>
+
+        <button
+          type="button"
+          id="modalPreviewButton">
+          Apply Now
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<style>
+
+/* =========================================================
+   PREMIUM POPUP CREATE PAGE
+========================================================= */
+
+.popup-create-page{
+  min-height:100vh;
+  padding:54px 20px 80px;
+  background:
+    radial-gradient(circle at 8% 5%,rgba(255,195,0,.12),transparent 22%),
+    radial-gradient(circle at 95% 25%,rgba(0,83,166,.09),transparent 25%),
+    #f5f8fc;
+}
+
+.popup-create-shell{
+  width:min(1320px,94%);
+  margin:auto;
+}
+
+
+/* HERO */
+
+.popup-create-hero{
+  position:relative;
+  overflow:hidden;
+  min-height:245px;
+  padding:44px 48px;
+  border-radius:30px;
+  background:
+    radial-gradient(circle at 90% 10%,rgba(255,195,0,.25),transparent 25%),
+    linear-gradient(135deg,#001f3f,#0053a6);
+  color:#fff;
+  box-shadow:0 25px 70px rgba(0,31,63,.20);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.popup-create-hero:after{
+  content:"";
+  position:absolute;
+  width:330px;
+  height:330px;
+  right:-120px;
+  bottom:-210px;
+  border-radius:50%;
+  border:55px solid rgba(255,195,0,.10);
+}
+
+.hero-copy{
+  position:relative;
+  z-index:2;
+  max-width:760px;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:#ffc300;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:1.5px;
+}
+.hero-copy h1{
+   color:#fff;
+}
+
+.hero-copy h1{
+  margin:12px 0 10px;
+  font-size:46px;
+  line-height:1.05;
+  font-weight:950;
+  letter-spacing:-1.5px;
+}
+
+.hero-copy h1 span{
+  color:#ffc300;
+}
+
+.hero-copy p{
+  max-width:690px;
+  margin:0;
+  color:rgba(255,255,255,.78);
+  font-size:15px;
+  line-height:1.75;
+}
+
+.hero-points{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:20px;
+}
+
+.hero-points span{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:8px 12px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:99px;
+  background:rgba(255,255,255,.07);
+  color:rgba(255,255,255,.88);
+  font-size:10px;
+  font-weight:800;
+}
+
+.hero-points i{
+  color:#ffc300;
+}
+
+.hero-mark{
+  position:relative;
+  z-index:2;
+  width:130px;
+  height:130px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:34px;
+  background:rgba(255,255,255,.08);
+  color:#ffc300;
+  font-size:58px;
+  transform:rotate(5deg);
+}
+
+
+/* LAYOUT */
+
+.create-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.5fr) minmax(330px,.8fr);
+  gap:24px;
+  margin-top:24px;
+  align-items:start;
+}
+
+
+/* FORM CARD */
+
+.form-card,
+.preview-card{
+  background:#fff;
+  border:1px solid #e4eaf2;
+  border-radius:28px;
+  box-shadow:0 20px 60px rgba(0,31,63,.08);
+}
+
+.form-card{
+  padding:30px;
+}
+
+.card-heading{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding-bottom:25px;
+  border-bottom:1px solid #edf1f6;
+}
+
+.heading-icon{
+  width:52px;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:16px;
+  background:#fff5d5;
+  color:#c89100;
+  font-size:20px;
+}
+
+.card-heading h2{
+  margin:0;
+  color:#001f3f;
+  font-size:22px;
+  font-weight:950;
+}
+
+.card-heading p{
+  margin:5px 0 0;
+  color:#748197;
+  font-size:12px;
+}
+
+
+/* FORM SECTION */
+
+.form-section{
+  padding:28px 0;
+  border-bottom:1px solid #edf1f6;
+}
+
+.section-label{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:22px;
+}
+
+.section-label>span{
+  width:34px;
+  height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:11px;
+  background:#001f3f;
+  color:#ffc300;
+  font-size:11px;
+  font-weight:950;
+}
+
+.section-label strong{
+  display:block;
+  color:#001f3f;
+  font-size:14px;
+  font-weight:950;
+}
+
+.section-label small{
+  display:block;
+  margin-top:3px;
+  color:#8491a3;
+  font-size:10px;
+}
+
+.field-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px 26px;
+}
+
+.field.full{
+  grid-column:1 / -1;
+}
+
+.field label{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-bottom:9px;
+  color:#001f3f;
+  font-size:12px;
+  font-weight:900;
+}
+
+.field label i{
+  color:#c89100;
+}
+
+.field label b{
+  color:#dc3545;
+}
+
+.field input:not([type="checkbox"]),
+.field textarea{
+  width:100%;
+  box-sizing:border-box;
+  border:1px solid #dce3eb;
+  border-radius:15px;
+  background:#fbfcfe;
+  color:#172033;
+  padding:14px 16px;
+  font:inherit;
+  font-size:13px;
+  outline:none;
+  transition:.25s;
+}
+
+.field textarea{
+  resize:vertical;
+  min-height:120px;
+}
+
+.field input:not([type="checkbox"]):focus,
+.field textarea:focus{
+  border-color:#0053a6;
+  background:#fff;
+  box-shadow:0 0 0 4px rgba(0,83,166,.08);
+}
+
+.field-help{
+  display:block;
+  margin-top:7px;
+  color:#8a96a8;
+  font-size:10px;
+  line-height:1.5;
+}
+
+.field-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:7px;
+  color:#8a96a8;
+  font-size:10px;
+}
+
+.input-with-unit{
+  position:relative;
+}
+
+.input-with-unit input{
+  padding-right:55px !important;
+}
+
+.input-with-unit span{
+  position:absolute;
+  right:15px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#718096;
+  font-size:11px;
+  font-weight:900;
+}
+
+
+/* UPLOAD */
+
+.upload-zone{
+  position:relative;
+  padding:34px 22px;
+  text-align:center;
+  border:2px dashed #cbd6e4;
+  border-radius:22px;
+  background:#f9fbfe;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.upload-zone:hover,
+.upload-zone.dragover{
+  border-color:#0053a6;
+  background:#f2f7fd;
+  transform:translateY(-2px);
+}
+
+.upload-icon{
+  width:58px;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 12px;
+  border-radius:18px;
+  background:#fff5d5;
+  color:#c89100;
+  font-size:23px;
+}
+
+.upload-zone h3{
+  margin:0;
+  color:#001f3f;
+  font-size:15px;
+  font-weight:950;
+}
+
+.upload-zone p{
+  margin:5px 0;
+  color:#6f7d91;
+  font-size:12px;
+}
+
+.upload-zone>span{
+  display:block;
+  color:#9aa5b5;
+  font-size:9px;
+}
+
+.browse-btn{
+  margin-top:16px;
+  padding:10px 16px;
+  border:0;
+  border-radius:11px;
+  background:#001f3f;
+  color:#fff;
+  font-weight:850;
+  cursor:pointer;
+}
+
+.browse-btn i{
+  margin-right:6px;
+  color:#ffc300;
+}
+
+.selected-image{
+  margin-top:16px;
+  padding:13px;
+  border:1px solid #e0e7ef;
+  border-radius:18px;
+  background:#fff;
+}
+
+.selected-image-head{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.selected-image-head strong{
+  display:block;
+  color:#001f3f;
+  font-size:12px;
+}
+
+.selected-image-head small{
+  display:block;
+  margin-top:3px;
+  max-width:400px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#8a96a8;
+}
+
+.remove-image{
+  border:0;
+  border-radius:10px;
+  padding:8px 10px;
+  background:#fff0f0;
+  color:#dc3545;
+  font-size:10px;
+  font-weight:850;
+  cursor:pointer;
+}
+
+.selected-image img{
+  width:100%;
+  max-height:330px;
+  display:block;
+  object-fit:cover;
+  border-radius:13px;
+}
+
+
+/* TOGGLES */
+
+.toggle-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:22px;
+}
+
+.toggle-card{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:16px;
+  border:1px solid #e2e8f0;
+  border-radius:17px;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.toggle-card:hover{
+  border-color:#c7d5e5;
+  box-shadow:0 10px 25px rgba(0,31,63,.05);
+}
+
+.toggle-card input[type="checkbox"]{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+
+.toggle-ui{
+  position:relative;
+  width:43px;
+  height:24px;
+  flex:none;
+  border-radius:99px;
+  background:#cbd5e1;
+  transition:.25s;
+}
+
+.toggle-ui:after{
+  content:"";
+  position:absolute;
+  width:18px;
+  height:18px;
+  left:3px;
+  top:3px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 2px 5px rgba(0,0,0,.15);
+  transition:.25s;
+}
+
+.toggle-card input[type="checkbox"]:checked + .toggle-ui{
+  background:#0053a6;
+}
+
+.toggle-card input[type="checkbox"]:checked + .toggle-ui:after{
+  transform:translateX(19px);
+}
+
+.toggle-copy strong{
+  display:block;
+  color:#001f3f;
+  font-size:11px;
+  font-weight:950;
+}
+
+.toggle-copy small{
+  display:block;
+  margin-top:3px;
+  color:#8491a3;
+  font-size:9px;
+  line-height:1.4;
+}
+
+
+/* ACTIONS */
+
+.form-actions{
+  display:flex;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+  gap:10px;
+  padding-top:25px;
+}
+
+.secondary-btn,
+.preview-btn,
+.primary-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-height:46px;
+  padding:0 17px;
+  border-radius:13px;
+  text-decoration:none;
+  border:1px solid transparent;
+  font-size:11px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.secondary-btn{
+  background:#f1f5f9;
+  color:#334155;
+}
+
+.preview-btn{
+  background:#fff;
+  border-color:#dce4ee;
+  color:#0053a6;
+}
+
+.primary-btn{
+  background:linear-gradient(135deg,#001f3f,#0053a6);
+  color:#fff;
+  box-shadow:0 12px 25px rgba(0,31,63,.18);
+}
+
+.secondary-btn:hover,
+.preview-btn:hover,
+.primary-btn:hover{
+  transform:translateY(-2px);
+}
+
+.primary-btn i{
+  color:#ffc300;
+}
+
+
+/* PREVIEW CARD */
+
+.preview-card{
+  position:sticky;
+  top:25px;
+  overflow:hidden;
+}
+
+.preview-card-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:22px;
+  border-bottom:1px solid #edf1f6;
+}
+
+.preview-label{
+  display:block;
+  color:#c89100;
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:1.3px;
+}
+
+.preview-card-head h2{
+  margin:5px 0 0;
+  color:#001f3f;
+  font-size:17px;
+  font-weight:950;
+}
+
+.preview-dot{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:6px 9px;
+  border-radius:99px;
+  background:#ecfdf5;
+  color:#15803d;
+  font-size:8px;
+  font-weight:950;
+}
+
+.preview-dot i{
+  font-size:6px;
+}
+
+
+/* BROWSER */
+
+.preview-browser{
+  margin:18px;
+  overflow:hidden;
+  border:1px solid #dfe6ee;
+  border-radius:18px;
+  background:#eef3f8;
+  box-shadow:0 15px 35px rgba(0,31,63,.09);
+}
+
+.browser-bar{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  padding:10px 12px;
+  background:#fff;
+  border-bottom:1px solid #e4e9ef;
+}
+
+.browser-bar>span{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#cbd5e1;
+}
+
+.browser-url{
+  flex:1;
+  margin-left:7px;
+  padding:4px 9px;
+  border-radius:7px;
+  background:#f1f5f9;
+  color:#94a3b8;
+  font-size:7px;
+}
+
+.browser-page{
+  position:relative;
+  min-height:470px;
+  overflow:hidden;
+  background:
+    linear-gradient(135deg,#dce8f5,#f8fafc);
+}
+
+.fake-nav{
+  height:42px;
+  background:#fff;
+  border-bottom:1px solid #e7edf4;
+}
+
+.fake-hero{
+  height:100%;
+  min-height:430px;
+  background:
+    radial-gradient(circle at 80% 20%,rgba(255,195,0,.20),transparent 20%),
+    linear-gradient(135deg,#e9f1fa,#dce8f4);
+}
+
+.mini-popup{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:82%;
+  transform:translate(-50%,-50%);
+  overflow:hidden;
+  border-radius:17px;
+  background:#fff;
+  box-shadow:0 25px 60px rgba(0,31,63,.25);
+}
+
+.mini-close{
+  position:absolute;
+  right:9px;
+  top:9px;
+  z-index:5;
+  width:26px;
+  height:26px;
+  border:0;
+  border-radius:50%;
+  background:rgba(0,31,63,.78);
+  color:#fff;
+  cursor:pointer;
+}
+
+.mini-image-wrap{
+  position:relative;
+  height:150px;
+  overflow:hidden;
+  background:#e9eef5;
+}
+
+.mini-image-wrap img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+}
+
+.image-placeholder{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  color:#94a3b8;
+  background:linear-gradient(135deg,#eef3f8,#f8fafc);
+  font-size:9px;
+}
+
+.image-placeholder i{
+  font-size:26px;
+}
+
+.mini-content{
+  padding:17px;
+}
+
+.mini-badge{
+  display:inline-block;
+  padding:4px 7px;
+  border-radius:99px;
+  background:#fff5d5;
+  color:#b37b00;
+  font-size:6px;
+  font-weight:950;
+  letter-spacing:.7px;
+}
+
+.mini-content h3{
+  margin:8px 0 5px;
+  color:#001f3f;
+  font-size:17px;
+  line-height:1.15;
+  font-weight:950;
+}
+
+.mini-content p{
+  min-height:30px;
+  margin:0;
+  color:#718096;
+  font-size:9px;
+  line-height:1.5;
+}
+
+.mini-content button{
+  margin-top:12px;
+  width:100%;
+  border:0;
+  border-radius:9px;
+  padding:10px;
+  background:#001f3f;
+  color:#fff;
+  font-size:9px;
+  font-weight:900;
+}
+
+.mini-content>small{
+  display:block;
+  margin-top:10px;
+  color:#9aa5b5;
+  font-size:7px;
+  text-align:center;
+}
+
+.mini-content>small i{
+  color:#ffc300;
+}
+
+
+/* TIPS */
+
+.preview-tips{
+  padding:0 18px 20px;
+}
+
+.preview-tips>div{
+  display:flex;
+  gap:10px;
+  padding:12px;
+  margin-top:9px;
+  border-radius:13px;
+  background:#f8fafc;
+}
+
+.preview-tips i{
+  color:#c89100;
+  margin-top:2px;
+}
+
+.preview-tips p{
+  margin:0;
+  color:#758297;
+  font-size:9px;
+  line-height:1.5;
+}
+
+.preview-tips strong{
+  color:#001f3f;
+}
+
+
+/* MODAL */
+
+.preview-modal{
+  position:fixed;
+  inset:0;
+  z-index:999999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,15,30,.82);
+  backdrop-filter:blur(7px);
+}
+
+.preview-modal.show{
+  display:flex;
+}
+
+.preview-modal-box{
+  position:relative;
+  width:min(620px,96vw);
+  overflow:hidden;
+  border-radius:25px;
+  background:#fff;
+  box-shadow:0 30px 100px rgba(0,0,0,.4);
+}
+
+.preview-modal-close{
+  position:absolute;
+  top:12px;
+  right:12px;
+  z-index:5;
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:50%;
+  background:#001f3f;
+  color:#fff;
+  cursor:pointer;
+}
+
+.preview-modal-tag{
+  position:absolute;
+  top:15px;
+  left:15px;
+  z-index:4;
+  padding:7px 10px;
+  border-radius:99px;
+  background:#ffc300;
+  color:#001f3f;
+  font-size:8px;
+  font-weight:950;
+}
+
+.preview-modal-popup{
+  display:grid;
+  grid-template-columns:1fr;
+}
+
+.modal-image-wrap{
+  position:relative;
+  height:280px;
+  background:#edf2f7;
+}
+
+.modal-image-wrap img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+}
+
+.modal-popup-content{
+  padding:26px;
+}
+
+.modal-popup-content>span{
+  color:#c89100;
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:1.2px;
+}
+
+.modal-popup-content h2{
+  margin:8px 0;
+  color:#001f3f;
+  font-size:27px;
+  font-weight:950;
+}
+
+.modal-popup-content p{
+  margin:0;
+  color:#68778c;
+  line-height:1.65;
+  font-size:12px;
+}
+
+.modal-popup-content button{
+  margin-top:18px;
+  padding:12px 22px;
+  border:0;
+  border-radius:11px;
+  background:#001f3f;
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:1050px){
+
+  .create-layout{
+    grid-template-columns:1fr;
+  }
+
+  .preview-card{
+    position:relative;
+    top:auto;
+  }
+
+  .preview-browser{
+    max-width:600px;
+    margin:20px auto;
+  }
+
+}
+
+
+@media(max-width:700px){
+
+  .popup-create-page{
+    padding:30px 12px 60px;
+  }
+
+  .popup-create-shell{
+    width:100%;
+  }
+
+  .popup-create-hero{
+    padding:30px 24px;
+    border-radius:23px;
+  }
+
+  .hero-copy h1{
+    font-size:36px;
+  }
+
+  .hero-mark{
+    display:none;
+  }
+
+  .form-card{
+    padding:20px;
+    border-radius:22px;
+  }
+
+  .field-grid,
+  .toggle-grid{
+    grid-template-columns:1fr;
+  }
+
+  .field.full{
+    grid-column:auto;
+  }
+
+  .form-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .secondary-btn,
+  .preview-btn,
+  .primary-btn{
+    width:100%;
+  }
+
+}
+
+</style>
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function(){
+
+  const form = document.getElementById('popupCreateForm');
+
+  const title = document.getElementById('title');
+  const subtitle = document.getElementById('subtitle');
+  const buttonText = document.getElementById('buttonText');
+  const delay = document.getElementById('delay');
+
+  const imageInput = document.getElementById('image');
+  const uploadZone = document.getElementById('uploadZone');
+  const browseBtn = document.getElementById('browseBtn');
+  const removeImage = document.getElementById('removeImage');
+
+  const imagePreviewWrap =
+    document.getElementById('imagePreviewWrap');
+
+  const imagePreview =
+    document.getElementById('imagePreview');
+
+  const imageName =
+    document.getElementById('imageName');
+
+  const subtitleCount =
+    document.getElementById('subtitleCount');
+
+  const liveImage =
+    document.getElementById('livePreviewImage');
+
+  const imagePlaceholder =
+    document.getElementById('imagePlaceholder');
+
+  const liveTitle =
+    document.getElementById('livePreviewTitle');
+
+  const liveSubtitle =
+    document.getElementById('livePreviewSubtitle');
+
+  const liveButton =
+    document.getElementById('livePreviewButton');
+
+  const liveDelay =
+    document.getElementById('livePreviewDelay');
+
+  const previewModal =
+    document.getElementById('previewModal');
+
+  const previewBtn =
+    document.getElementById('previewBtn');
+
+  const closePreview =
+    document.getElementById('closePreview');
+
+  const modalImage =
+    document.getElementById('modalPreviewImage');
+
+  const modalPlaceholder =
+    document.getElementById('modalImagePlaceholder');
+
+  const modalTitle =
+    document.getElementById('modalPreviewTitle');
+
+  const modalSubtitle =
+    document.getElementById('modalPreviewSubtitle');
+
+  const modalButton =
+    document.getElementById('modalPreviewButton');
+
+
+  /* =======================================================
+     TEXT PREVIEW
+  ======================================================= */
+
+  function updatePreview(){
+
+    liveTitle.textContent =
+      title.value.trim() || 'Admissions Open 2026';
+
+    liveSubtitle.textContent =
+      subtitle.value.trim() ||
+      'Write popup description...';
+
+    liveButton.textContent =
+      buttonText.value.trim() || 'Apply Now';
+
+    const delayValue =
+      Math.max(0, Number(delay.value || 0));
+
+    liveDelay.textContent =
+      delayValue >= 1000
+        ? (delayValue / 1000).toFixed(1) + 's'
+        : delayValue + 'ms';
+
+
+    modalTitle.textContent =
+      title.value.trim() || 'Admissions Open 2026';
+
+    modalSubtitle.textContent =
+      subtitle.value.trim() ||
+      'Write popup description...';
+
+    modalButton.textContent =
+      buttonText.value.trim() || 'Apply Now';
+  }
+
+
+  [title, subtitle, buttonText, delay].forEach(function(input){
+
+    input.addEventListener('input', updatePreview);
+
+  });
+
+
+  /* =======================================================
+     CHARACTER COUNTER
+  ======================================================= */
+
+  subtitle.addEventListener('input', function(){
+
+    subtitleCount.textContent =
+      subtitle.value.length + ' / 300';
+
+  });
+
+
+  /* =======================================================
+     FILE SELECT
+  ======================================================= */
+
+  browseBtn.addEventListener('click', function(e){
+
+    e.stopPropagation();
+
+    imageInput.click();
+
+  });
+
+
+  uploadZone.addEventListener('click', function(){
+
+    imageInput.click();
+
+  });
+
+
+  imageInput.addEventListener('change', function(){
+
+    if(this.files && this.files[0]){
+
+      showImage(this.files[0]);
+
+    }
+
+  });
+
+
+  function showImage(file){
+
+    const allowed = [
+      'image/jpeg',
+      'image/jpg',
+      'image/png',
+      'image/webp'
+    ];
+
+    if(!allowed.includes(file.type)){
+
+      alert(
+        'Please select a JPG, JPEG, PNG or WEBP image.'
+      );
+
+      imageInput.value = '';
+
+      return;
+
+    }
+
+
+    if(file.size > 5 * 1024 * 1024){
+
+      alert('Image size must be 5 MB or less.');
+
+      imageInput.value = '';
+
+      return;
+
+    }
+
+
+    const reader = new FileReader();
+
+    reader.onload = function(event){
+
+      const src = event.target.result;
+
+      imagePreview.src = src;
+      liveImage.src = src;
+      modalImage.src = src;
+
+      imagePreviewWrap.hidden = false;
+
+      liveImage.style.display = 'block';
+      imagePlaceholder.style.display = 'none';
+
+      modalImage.style.display = 'block';
+      modalPlaceholder.style.display = 'none';
+
+      imageName.textContent =
+        file.name;
+
+    };
+
+    reader.readAsDataURL(file);
+
+  }
+
+
+  /* =======================================================
+     REMOVE IMAGE
+  ======================================================= */
+
+  removeImage.addEventListener('click', function(){
+
+    imageInput.value = '';
+
+    imagePreview.src = '';
+
+    liveImage.src = '';
+    modalImage.src = '';
+
+    imagePreviewWrap.hidden = true;
+
+    liveImage.style.display = 'none';
+    imagePlaceholder.style.display = 'flex';
+
+    modalImage.style.display = 'none';
+    modalPlaceholder.style.display = 'flex';
+
+    imageName.textContent = '';
+
+  });
+
+
+  /* =======================================================
+     DRAG & DROP
+  ======================================================= */
+
+  ['dragenter','dragover'].forEach(function(eventName){
+
+    uploadZone.addEventListener(eventName, function(e){
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      uploadZone.classList.add('dragover');
+
+    });
+
+  });
+
+
+  ['dragleave','drop'].forEach(function(eventName){
+
+    uploadZone.addEventListener(eventName, function(e){
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      uploadZone.classList.remove('dragover');
+
+    });
+
+  });
+
+
+  uploadZone.addEventListener('drop', function(e){
+
+    const files = e.dataTransfer.files;
+
+    if(!files || !files.length) return;
+
+    try{
+
+      const dataTransfer =
+        new DataTransfer();
+
+      dataTransfer.items.add(files[0]);
+
+      imageInput.files =
+        dataTransfer.files;
+
+      showImage(files[0]);
+
+    }catch(error){
+
+      console.warn(
+        'Drag and drop file assignment unavailable.',
+        error
+      );
+
+    }
+
+  });
+
+
+  /* =======================================================
+     MODAL PREVIEW
+  ======================================================= */
+
+  previewBtn.addEventListener('click', function(){
+
+    updatePreview();
+
+    previewModal.classList.add('show');
+
+    previewModal.setAttribute(
+      'aria-hidden',
+      'false'
+    );
+
+    document.body.style.overflow = 'hidden';
+
+  });
+
+
+  function closePreviewModal(){
+
+    previewModal.classList.remove('show');
+
+    previewModal.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+
+    document.body.style.overflow = '';
+
+  }
+
+
+  closePreview.addEventListener(
+    'click',
+    closePreviewModal
+  );
+
+
+  previewModal.addEventListener('click', function(e){
+
+    if(e.target === previewModal){
+
+      closePreviewModal();
+
+    }
+
+  });
+
+
+  document.addEventListener('keydown', function(e){
+
+    if(e.key === 'Escape'){
+
+      closePreviewModal();
+
+    }
+
+  });
+
+
+  /* =======================================================
+     DATE VALIDATION
+  ======================================================= */
+
+  const startDate =
+    document.getElementById('startDate');
+
+  const endDate =
+    document.getElementById('endDate');
+
+
+  startDate.addEventListener('change', function(){
+
+    endDate.min = startDate.value;
+
+  });
+
+
+  /* =======================================================
+     FORM VALIDATION
+  ======================================================= */
+
+  form.addEventListener('submit', function(e){
+
+    if(!title.value.trim()){
+
+      e.preventDefault();
+
+      title.focus();
+
+      alert('Please enter a popup title.');
+
+      return;
+
+    }
+
+
+    if(
+      startDate.value &&
+      endDate.value &&
+      endDate.value < startDate.value
+    ){
+
+      e.preventDefault();
+
+      endDate.focus();
+
+      alert('End date cannot be before start date.');
+
+      return;
+
+    }
+
+
+    const delayValue =
+      Number(delay.value);
+
+    if(
+      Number.isNaN(delayValue) ||
+      delayValue < 0
+    ){
+
+      e.preventDefault();
+
+      delay.focus();
+
+      alert('Please enter a valid delay.');
+
+      return;
+
+    }
+
+  });
+
+
+  /* Initial state */
+
+  liveImage.style.display = 'none';
+  modalImage.style.display = 'none';
+
+  updatePreview();
+
+});
+
+</script>
+
+
+<%- include('../../partials/footer') %>

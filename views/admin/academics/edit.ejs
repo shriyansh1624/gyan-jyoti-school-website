@@ -1,0 +1,3421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Edit Achievement | Student & Academics
+    </title>
+
+
+    <!-- GOOGLE FONT -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- FONT AWESOME -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+
+    --navy:
+        #002b57;
+
+    --navy-dark:
+        #001d3d;
+
+    --blue:
+        #075ca8;
+
+    --blue-light:
+        #eaf4ff;
+
+    --yellow:
+        #ffbd00;
+
+    --yellow-dark:
+        #e9a900;
+
+    --yellow-light:
+        #fff5cf;
+
+    --green:
+        #14a968;
+
+    --red:
+        #e93645;
+
+    --purple:
+        #7657d9;
+
+    --text:
+        #08294a;
+
+    --muted:
+        #71859a;
+
+    --background:
+        #edf3f9;
+
+    --white:
+        #ffffff;
+
+    --border:
+        #d9e5ef;
+
+    --border-dark:
+        #c8d8e6;
+
+    --shadow:
+        0 18px 45px rgba(0, 43, 87, .09);
+
+    --shadow-heavy:
+        0 25px 60px rgba(0, 43, 87, .14);
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+
+    margin:
+        0;
+
+    padding:
+        0;
+
+    box-sizing:
+        border-box;
+
+}
+
+
+html {
+
+    scroll-behavior:
+        smooth;
+
+}
+
+
+body {
+
+    font-family:
+        "Nunito",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #edf3f9 0%,
+            #e6eef7 100%
+        );
+
+    color:
+        var(--text);
+
+    min-height:
+        100vh;
+
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar {
+
+    height:
+        82px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #001d3d 0%,
+            #003d72 48%,
+            #075c98 100%
+        );
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding:
+        0 42px;
+
+    color:
+        white;
+
+    box-shadow:
+        0 8px 28px rgba(0,0,0,.18);
+
+    position:
+        sticky;
+
+    top:
+        0;
+
+    z-index:
+        1000;
+
+}
+
+
+.brand {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+}
+
+
+.brand-icon {
+
+    width:
+        52px;
+
+    height:
+        52px;
+
+    border-radius:
+        15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffd229,
+            #ffb600
+        );
+
+    color:
+        var(--navy);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        23px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(255,189,0,.28);
+
+}
+
+
+.brand-title {
+
+    font-size:
+        20px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        -.3px;
+
+}
+
+
+.brand-subtitle {
+
+    margin-top:
+        2px;
+
+    font-size:
+        11px;
+
+    font-weight:
+        600;
+
+    color:
+        rgba(255,255,255,.72);
+
+}
+
+
+.back-btn {
+
+    height:
+        47px;
+
+    padding:
+        0 20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.24);
+
+    border-radius:
+        12px;
+
+    color:
+        white;
+
+    text-decoration:
+        none;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        9px;
+
+    font-size:
+        13px;
+
+    font-weight:
+        900;
+
+    transition:
+        all .25s ease;
+
+}
+
+
+.back-btn:hover {
+
+    background:
+        rgba(255,255,255,.11);
+
+    border-color:
+        rgba(255,255,255,.45);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
+
+    width:
+        calc(100% - 48px);
+
+    max-width:
+        1550px;
+
+    margin:
+        0 auto;
+
+    padding:
+        30px 0 70px;
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+
+    min-height:
+        205px;
+
+    border-radius:
+        0 0 34px 34px;
+
+    padding:
+        42px 48px;
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    background:
+
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(255,255,255,.14),
+            transparent 27%
+        ),
+
+        linear-gradient(
+            120deg,
+            #002b57,
+            #075c98
+        );
+
+    box-shadow:
+        var(--shadow-heavy);
+
+}
+
+
+.hero::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        390px;
+
+    height:
+        390px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius:
+        50%;
+
+    right:
+        -105px;
+
+    top:
+        -240px;
+
+}
+
+
+.hero::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        230px;
+
+    height:
+        230px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius:
+        50%;
+
+    right:
+        55px;
+
+    top:
+        -120px;
+
+}
+
+
+.hero-content {
+
+    position:
+        relative;
+
+    z-index:
+        5;
+
+}
+
+
+.eyebrow {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    color:
+        var(--yellow);
+
+    font-size:
+        12px;
+
+    font-weight:
+        900;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        1.7px;
+
+    margin-bottom:
+        11px;
+
+}
+
+
+.hero h1 {
+
+    color:
+        white;
+
+    font-size:
+        48px;
+
+    line-height:
+        1;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        -1px;
+
+}
+
+
+.hero h1 span {
+
+    color:
+        var(--yellow);
+
+}
+
+
+.hero p {
+
+    margin-top:
+        13px;
+
+    max-width:
+        760px;
+
+    color:
+        rgba(255,255,255,.78);
+
+    font-size:
+        14px;
+
+    line-height:
+        1.6;
+
+    font-weight:
+        600;
+
+}
+
+
+.hero-icon {
+
+    position:
+        absolute;
+
+    right:
+        55px;
+
+    top:
+        35px;
+
+    width:
+        90px;
+
+    height:
+        90px;
+
+    border-radius:
+        25px;
+
+    background:
+        rgba(255,255,255,.09);
+
+    border:
+        1px solid
+        rgba(255,255,255,.17);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        var(--yellow);
+
+    font-size:
+        38px;
+
+    z-index:
+        5;
+
+    box-shadow:
+        inset 0 0 30px
+        rgba(255,255,255,.04);
+
+}
+
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.content-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        375px;
+
+    gap:
+        28px;
+
+    margin-top:
+        28px;
+
+    align-items:
+        start;
+
+}
+
+
+/* =========================================================
+   MAIN FORM CARD
+========================================================= */
+
+.form-card {
+
+    background:
+        rgba(255,255,255,.98);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        26px;
+
+    box-shadow:
+        var(--shadow-heavy);
+
+    overflow:
+        hidden;
+
+}
+
+
+/* =========================================================
+   FORM HEADER
+========================================================= */
+
+.card-header {
+
+    padding:
+        24px 30px;
+
+    background:
+        linear-gradient(
+            120deg,
+            #002b57,
+            #075493
+        );
+
+    color:
+        white;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+}
+
+
+.header-icon {
+
+    width:
+        55px;
+
+    height:
+        55px;
+
+    border-radius:
+        16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffd229,
+            #ffb600
+        );
+
+    color:
+        var(--navy);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        20px;
+
+    box-shadow:
+        0 7px 20px
+        rgba(255,189,0,.22);
+
+}
+
+
+.card-header h2 {
+
+    font-size:
+        20px;
+
+    font-weight:
+        900;
+
+}
+
+
+.card-header p {
+
+    margin-top:
+        3px;
+
+    font-size:
+        11px;
+
+    color:
+        rgba(255,255,255,.72);
+
+    font-weight:
+        600;
+
+}
+
+
+/* =========================================================
+   FORM BODY
+========================================================= */
+
+.form-body {
+
+    padding:
+        30px;
+
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.form-section {
+
+    padding:
+        25px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f9fbfd
+        );
+
+    margin-bottom:
+        22px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(0,43,87,.025);
+
+}
+
+
+.form-section:hover {
+
+    border-color:
+        #cbdce9;
+
+}
+
+
+/* =========================================================
+   SECTION HEADING
+========================================================= */
+
+.section-heading {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    padding-bottom:
+        17px;
+
+    margin-bottom:
+        20px;
+
+    border-bottom:
+        1px solid
+        #e7eef5;
+
+}
+
+
+.section-heading-icon {
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    border-radius:
+        12px;
+
+    background:
+        var(--yellow-light);
+
+    color:
+        var(--navy);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        15px;
+
+}
+
+
+.section-heading h3 {
+
+    font-size:
+        15px;
+
+    font-weight:
+        900;
+
+    color:
+        var(--navy);
+
+}
+
+
+.section-heading p {
+
+    margin-top:
+        2px;
+
+    font-size:
+        10px;
+
+    color:
+        var(--muted);
+
+    font-weight:
+        600;
+
+}
+
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.form-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0,1fr));
+
+    gap:
+        21px;
+
+}
+
+
+.form-group.full {
+
+    grid-column:
+        1 / -1;
+
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.form-group label {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    margin-bottom:
+        8px;
+
+    color:
+        var(--text);
+
+    font-size:
+        12px;
+
+    font-weight:
+        900;
+
+}
+
+
+.form-group label i {
+
+    color:
+        var(--blue);
+
+    margin-right:
+        7px;
+
+    font-size:
+        11px;
+
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.form-control {
+
+    width:
+        100%;
+
+    height:
+        52px;
+
+    padding:
+        0 15px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        12px;
+
+    outline:
+        none;
+
+    background:
+        #f8fafc;
+
+    color:
+        var(--text);
+
+    font-family:
+        inherit;
+
+    font-size:
+        13px;
+
+    font-weight:
+        600;
+
+    transition:
+        all .22s ease;
+
+}
+
+
+.form-control:hover {
+
+    border-color:
+        var(--border-dark);
+
+    background:
+        #fbfdff;
+
+}
+
+
+.form-control:focus {
+
+    background:
+        white;
+
+    border-color:
+        var(--blue);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(7,92,168,.08);
+
+}
+
+
+.form-control::placeholder {
+
+    color:
+        #94a5b5;
+
+    font-weight:
+        500;
+
+}
+
+
+select.form-control {
+
+    cursor:
+        pointer;
+
+}
+
+
+textarea.form-control {
+
+    min-height:
+        125px;
+
+    height:
+        125px;
+
+    padding:
+        14px 15px;
+
+    resize:
+        vertical;
+
+    line-height:
+        1.5;
+
+}
+
+
+/* =========================================================
+   PHOTO AREA
+========================================================= */
+
+.photo-box {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        125px 1fr;
+
+    gap:
+        23px;
+
+    align-items:
+        center;
+
+    padding:
+        20px;
+
+    border:
+        1px dashed
+        #c5d8e8;
+
+    border-radius:
+        17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f8fbfe,
+            #f3f7fb
+        );
+
+}
+
+
+.current-photo {
+
+    width:
+        125px;
+
+    height:
+        140px;
+
+    border-radius:
+        17px;
+
+    overflow:
+        hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #e7eef6,
+            #dce7f1
+        );
+
+    border:
+        1px solid
+        #d3e0eb;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        #7a91a8;
+
+    font-size:
+        34px;
+
+}
+
+
+.current-photo img {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        cover;
+
+}
+
+
+.photo-content h4 {
+
+    font-size:
+        15px;
+
+    font-weight:
+        900;
+
+    color:
+        var(--navy);
+
+}
+
+
+.photo-content p {
+
+    font-size:
+        11px;
+
+    color:
+        var(--muted);
+
+    margin:
+        5px 0 14px;
+
+    line-height:
+        1.5;
+
+}
+
+
+.file-control {
+
+    width:
+        100%;
+
+    font-family:
+        inherit;
+
+    font-size:
+        11px;
+
+    color:
+        var(--muted);
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        20px;
+
+    position:
+        sticky;
+
+    top:
+        102px;
+
+}
+
+
+/* =========================================================
+   PREVIEW CARD
+========================================================= */
+
+.preview-card {
+
+    background:
+        white;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        25px;
+
+    box-shadow:
+        var(--shadow-heavy);
+
+    overflow:
+        hidden;
+
+}
+
+
+.preview-top {
+
+    height:
+        112px;
+
+    background:
+
+        radial-gradient(
+            circle at 95% 10%,
+            rgba(255,255,255,.13),
+            transparent 28%
+        ),
+
+        linear-gradient(
+            120deg,
+            #002b57,
+            #075c98
+        );
+
+    position:
+        relative;
+
+}
+
+
+.preview-top::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        170px;
+
+    height:
+        170px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius:
+        50%;
+
+    right:
+        -50px;
+
+    top:
+        -105px;
+
+}
+
+
+.preview-photo {
+
+    width:
+        112px;
+
+    height:
+        112px;
+
+    border-radius:
+        20px;
+
+    position:
+        absolute;
+
+    left:
+        25px;
+
+    bottom:
+        -55px;
+
+    border:
+        5px solid
+        white;
+
+    overflow:
+        hidden;
+
+    background:
+        #e5edf5;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        #7890a8;
+
+    font-size:
+        32px;
+
+    z-index:
+        5;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.12);
+
+}
+
+
+.preview-photo img {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        cover;
+
+}
+
+
+.preview-body {
+
+    padding:
+        70px 25px 25px;
+
+}
+
+
+.preview-label {
+
+    color:
+        var(--yellow-dark);
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        1.4px;
+
+}
+
+
+.preview-name {
+
+    font-size:
+        23px;
+
+    font-weight:
+        900;
+
+    color:
+        var(--navy);
+
+    margin-top:
+        4px;
+
+    line-height:
+        1.15;
+
+    word-break:
+        break-word;
+
+}
+
+
+.preview-class {
+
+    color:
+        var(--muted);
+
+    font-size:
+        11px;
+
+    margin-top:
+        6px;
+
+    font-weight:
+        700;
+
+}
+
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.preview-badge {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    padding:
+        8px 12px;
+
+    border-radius:
+        30px;
+
+    margin-top:
+        14px;
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+}
+
+
+.state {
+
+    background:
+        #e8f2ff;
+
+    color:
+        #1769d2;
+
+}
+
+
+.district {
+
+    background:
+        #f0ebff;
+
+    color:
+        var(--purple);
+
+}
+
+
+.school {
+
+    background:
+        #e5f8ef;
+
+    color:
+        #078a57;
+
+}
+
+
+.sports {
+
+    background:
+        #fff0f2;
+
+    color:
+        var(--red);
+
+}
+
+
+/* =========================================================
+   QUICK INFO
+========================================================= */
+
+.quick-info {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        10px;
+
+    margin-top:
+        19px;
+
+}
+
+
+.quick-item {
+
+    padding:
+        12px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        12px;
+
+    background:
+        #f8fafc;
+
+    transition:
+        .2s;
+
+}
+
+
+.quick-item:hover {
+
+    border-color:
+        #cbdce9;
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.quick-item span {
+
+    display:
+        block;
+
+    color:
+        var(--muted);
+
+    font-size:
+        8px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .6px;
+
+}
+
+
+.quick-item strong {
+
+    display:
+        block;
+
+    margin-top:
+        4px;
+
+    color:
+        var(--navy);
+
+    font-size:
+        12px;
+
+    font-weight:
+        900;
+
+    overflow:
+        hidden;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+
+}
+
+
+/* =========================================================
+   ACTION CARD
+========================================================= */
+
+.action-card {
+
+    background:
+        white;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        23px;
+
+    padding:
+        23px;
+
+    box-shadow:
+        var(--shadow);
+
+}
+
+
+.action-title {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        11px;
+
+}
+
+
+.action-title-icon {
+
+    width:
+        40px;
+
+    height:
+        40px;
+
+    border-radius:
+        11px;
+
+    background:
+        var(--yellow-light);
+
+    color:
+        var(--navy);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+}
+
+
+.action-card h3 {
+
+    font-size:
+        16px;
+
+    font-weight:
+        900;
+
+    color:
+        var(--navy);
+
+}
+
+
+.action-card > p {
+
+    margin-top:
+        8px;
+
+    color:
+        var(--muted);
+
+    font-size:
+        10px;
+
+    line-height:
+        1.5;
+
+    font-weight:
+        600;
+
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.action-buttons {
+
+    margin-top:
+        19px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1.25fr;
+
+    gap:
+        10px;
+
+}
+
+
+.btn {
+
+    min-height:
+        48px;
+
+    padding:
+        0 15px;
+
+    border-radius:
+        11px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        8px;
+
+    font-family:
+        inherit;
+
+    font-size:
+        12px;
+
+    font-weight:
+        900;
+
+    text-decoration:
+        none;
+
+    cursor:
+        pointer;
+
+    transition:
+        all .22s ease;
+
+}
+
+
+.cancel-btn {
+
+    color:
+        var(--text);
+
+    background:
+        #edf3f8;
+
+    border:
+        1px solid
+        var(--border);
+
+}
+
+
+.cancel-btn:hover {
+
+    background:
+        #e1eaf2;
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.save-btn {
+
+    border:
+        none;
+
+    color:
+        var(--navy);
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffd12b,
+            #ffb800
+        );
+
+    box-shadow:
+        0 7px 18px
+        rgba(255,189,0,.22);
+
+}
+
+
+.save-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(255,189,0,.30);
+
+}
+
+
+.save-btn:active,
+.cancel-btn:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+.save-btn:disabled {
+
+    opacity:
+        .7;
+
+    cursor:
+        not-allowed;
+
+    transform:
+        none;
+
+}
+
+
+/* =========================================================
+   SECURITY NOTE
+========================================================= */
+
+.security-note {
+
+    margin-top:
+        14px;
+
+    padding:
+        13px;
+
+    border-radius:
+        12px;
+
+    background:
+        #eef7ff;
+
+    border:
+        1px solid
+        #d6e9f8;
+
+    color:
+        #4c708e;
+
+    font-size:
+        9px;
+
+    line-height:
+        1.55;
+
+    font-weight:
+        600;
+
+}
+
+
+.security-note i {
+
+    color:
+        var(--blue);
+
+    margin-right:
+        5px;
+
+}
+
+
+/* =========================================================
+   BOTTOM FORM ACTION
+========================================================= */
+
+.bottom-actions {
+
+    display:
+        flex;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        12px;
+
+    margin-top:
+        4px;
+
+    padding-top:
+        4px;
+
+}
+
+
+.bottom-actions .btn {
+
+    min-width:
+        150px;
+
+    min-height:
+        50px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1150px) {
+
+    .content-grid {
+
+        grid-template-columns:
+            minmax(0,1fr)
+            340px;
+
+    }
+
+}
+
+
+@media(max-width:1000px) {
+
+    .content-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .sidebar {
+
+        position:
+            static;
+
+        display:
+            grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        align-items:
+            start;
+
+    }
+
+}
+
+
+@media(max-width:800px) {
+
+    .topbar {
+
+        height:
+            74px;
+
+        padding:
+            0 18px;
+
+    }
+
+
+    .brand-icon {
+
+        width:
+            46px;
+
+        height:
+            46px;
+
+    }
+
+
+    .brand-title {
+
+        font-size:
+            17px;
+
+    }
+
+
+    .brand-subtitle {
+
+        display:
+            none;
+
+    }
+
+
+    .back-btn {
+
+        padding:
+            0 14px;
+
+    }
+
+
+    .page {
+
+        width:
+            calc(100% - 20px);
+
+        padding-top:
+            20px;
+
+    }
+
+
+    .hero {
+
+        padding:
+            32px 28px;
+
+        min-height:
+            180px;
+
+    }
+
+
+    .hero h1 {
+
+        font-size:
+            38px;
+
+    }
+
+
+    .hero-icon {
+
+        display:
+            none;
+
+    }
+
+
+    .form-body {
+
+        padding:
+            22px;
+
+    }
+
+
+    .form-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .form-group.full {
+
+        grid-column:
+            auto;
+
+    }
+
+
+    .sidebar {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+
+@media(max-width:560px) {
+
+    .topbar {
+
+        padding:
+            0 12px;
+
+    }
+
+
+    .brand {
+
+        gap:
+            9px;
+
+    }
+
+
+    .brand-title {
+
+        font-size:
+            15px;
+
+    }
+
+
+    .back-btn span {
+
+        display:
+            none;
+
+    }
+
+
+    .hero {
+
+        border-radius:
+            0 0 23px 23px;
+
+        padding:
+            28px 22px;
+
+    }
+
+
+    .hero h1 {
+
+        font-size:
+            32px;
+
+    }
+
+
+    .hero p {
+
+        font-size:
+            12px;
+
+    }
+
+
+    .card-header {
+
+        padding:
+            19px;
+
+    }
+
+
+    .form-body {
+
+        padding:
+            14px;
+
+    }
+
+
+    .form-section {
+
+        padding:
+            17px;
+
+    }
+
+
+    .photo-box {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .current-photo {
+
+        width:
+            100%;
+
+        height:
+            190px;
+
+    }
+
+
+    .bottom-actions {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .bottom-actions .btn {
+
+        width:
+            100%;
+
+    }
+
+
+    .action-buttons {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
+
+<header class="topbar">
+
+
+    <div class="brand">
+
+
+        <div class="brand-icon">
+
+            <i class="fa-solid fa-trophy"></i>
+
+        </div>
+
+
+        <div>
+
+            <div class="brand-title">
+                Student & Academics
+            </div>
+
+            <div class="brand-subtitle">
+                Academic Achievements Manager
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <a
+        href="/admin/academics"
+        class="back-btn"
+    >
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        <span>
+            Back to Achievements
+        </span>
+
+    </a>
+
+
+</header>
+
+
+
+<main class="page">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+
+    <div class="hero-content">
+
+
+        <div class="eyebrow">
+
+            <i class="fa-solid fa-pen-to-square"></i>
+
+            Achievement Management
+
+        </div>
+
+
+        <h1>
+
+            Edit
+            <span>Achievement</span>
+
+        </h1>
+
+
+        <p>
+
+            Update student information, academic results
+            and achievement details from one professional workspace.
+
+        </p>
+
+
+    </div>
+
+
+
+    <div class="hero-icon">
+
+        <i class="fa-solid fa-award"></i>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     CONTENT GRID
+========================================================= -->
+
+<div class="content-grid">
+
+
+
+<!-- =========================================================
+     FORM
+========================================================= -->
+
+<section class="form-card">
+
+
+    <div class="card-header">
+
+
+        <div class="header-icon">
+
+            <i class="fa-solid fa-user-pen"></i>
+
+        </div>
+
+
+        <div>
+
+            <h2>
+                Update Student Record
+            </h2>
+
+            <p>
+                Modify the selected achievement information
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="form-body">
+
+
+        <form
+            action="/admin/academics/edit/<%= record._id %>"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+
+            <% if (typeof csrfToken !== 'undefined') { %>
+
+                <input
+                    type="hidden"
+                    name="_csrf"
+                    value="<%= csrfToken %>"
+                >
+
+            <% } %>
+
+
+
+            <!-- =================================================
+                 STUDENT INFORMATION
+            ================================================= -->
+
+            <div class="form-section">
+
+
+                <div class="section-heading">
+
+
+                    <div class="section-heading-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Student Information
+                        </h3>
+
+                        <p>
+                            Basic student and academic session details
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="form-grid">
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+
+                        <label>
+
+                            <i class="fa-solid fa-user"></i>
+
+                            Student Name
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            name="studentName"
+                            class="form-control"
+                            value="<%= record.studentName || '' %>"
+                            placeholder="e.g. Ananya Gupta"
+                            required
+                        >
+
+
+                    </div>
+
+
+
+                    <!-- YEAR -->
+
+                    <div class="form-group">
+
+
+                        <label>
+
+                            <i class="fa-solid fa-calendar"></i>
+
+                            Academic Year
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            name="year"
+                            class="form-control"
+                            value="<%= record.year || '' %>"
+                            placeholder="e.g. 2025"
+                            required
+                        >
+
+
+                    </div>
+
+
+
+                    <!-- CLASS -->
+
+                    <div class="form-group">
+
+
+                        <label>
+
+                            <i class="fa-solid fa-graduation-cap"></i>
+
+                            Class
+
+                        </label>
+
+
+                        <select
+                            name="className"
+                            class="form-control"
+                            required
+                        >
+
+
+                            <option
+                                value="10th"
+                                <%= record.className === '10th'
+                                    ? 'selected'
+                                    : '' %>
+                            >
+                                10th
+                            </option>
+
+
+                            <option
+                                value="12th"
+                                <%= record.className === '12th'
+                                    ? 'selected'
+                                    : '' %>
+                            >
+                                12th
+                            </option>
+
+
+                            <option
+                                value="sports"
+                                <%= record.className === 'sports'
+                                    ? 'selected'
+                                    : '' %>
+                            >
+                                Sports
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+                    <!-- BATCH -->
+
+                    <div class="form-group">
+
+
+                        <label>
+
+                            <i class="fa-solid fa-layer-group"></i>
+
+                            Batch / Session
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            name="batch"
+                            class="form-control"
+                            value="<%= record.batch || '' %>"
+                            placeholder="e.g. 2024-25"
+                            required
+                        >
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ACHIEVEMENT DETAILS
+            ================================================= -->
+
+            <div class="form-section">
+
+
+                <div class="section-heading">
+
+
+                    <div class="section-heading-icon">
+
+                        <i class="fa-solid fa-trophy"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Achievement Details
+                        </h3>
+
+                        <p>
+                            Define the achievement and result
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="form-grid">
+
+
+                    <!-- TYPE -->
+
+                    <div class="form-group">
+
+
+                        <label>
+
+                            <i class="fa-solid fa-ranking-star"></i>
+
+                            Achievement Type
+
+                        </label>
+
+
+                        <select
+                            name="rankType"
+                            class="form-control"
+                            required
+                        >
+
+
+                            <option
+                                value="State Topper"
+                                <%= record.rankType === 'State Topper'
+                                    ? 'selected'
+                                    : '' %>
+                            >
+                                State Topper
+                            </option>
+
+
+                            <option
+                                value="District Topper"
+                                <%= record.rankType === 'District Topper'
+                                    ? 'selected'
+                                    : '' %>
+                            >
+                                District Topper
+                            </option>
+
+
+                            <option
+                                value="School Topper"
+                                <%= record.rankType === 'School Topper'
+                                    ? 'selected'
+                                    : '' %>
+                            >
+                                School Topper
+                            </option>
+
+
+                            <option
+                                value="Sports Achievement"
+                                <%= record.rankType === 'Sports Achievement'
+                                    ? 'selected'
+                                    : '' %>
+                            >
+                                Sports Achievement
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+                    <!-- RESULT -->
+
+                    <div class="form-group">
+
+
+                        <label>
+
+                            <i class="fa-solid fa-percent"></i>
+
+                            Percentage / Result
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            name="percentage"
+                            class="form-control"
+                            value="<%= record.percentage || '' %>"
+                            placeholder="e.g. 98.2%"
+                        >
+
+
+                    </div>
+
+
+
+                    <!-- STREAM -->
+
+                    <div class="form-group">
+
+
+                        <label>
+
+                            <i class="fa-solid fa-book-open"></i>
+
+                            Stream / Category
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            name="stream"
+                            class="form-control"
+                            value="<%= record.stream || '' %>"
+                            placeholder="Science / Commerce / Sports"
+                        >
+
+
+                    </div>
+
+
+
+                    <!-- PRIORITY -->
+
+                    <div class="form-group">
+
+
+                        <label>
+
+                            <i class="fa-solid fa-arrow-up-1-9"></i>
+
+                            Display Priority
+
+                        </label>
+
+
+                        <input
+                            type="number"
+                            name="priority"
+                            class="form-control"
+                            value="<%= record.priority || 0 %>"
+                            min="0"
+                        >
+
+
+                    </div>
+
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="form-group full">
+
+
+                        <label>
+
+                            <i class="fa-solid fa-medal"></i>
+
+                            Achievement Description
+
+                        </label>
+
+
+                        <textarea
+                            name="achievement"
+                            class="form-control"
+                            placeholder="Describe the student's achievement..."
+                        ><%= record.achievement || '' %></textarea>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PHOTO
+            ================================================= -->
+
+            <div class="form-section">
+
+
+                <div class="section-heading">
+
+
+                    <div class="section-heading-icon">
+
+                        <i class="fa-solid fa-image"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            Student Photograph
+                        </h3>
+
+                        <p>
+                            Replace the current student image if required
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="photo-box">
+
+
+                    <div class="current-photo">
+
+
+                        <% if (record.photo) { %>
+
+
+                            <img
+                                src="<%= record.photo %>"
+                                alt="<%= record.studentName %>"
+                                onerror="
+                                    this.style.display='none';
+                                    this.parentElement.innerHTML='<i class=&quot;fa-solid fa-user&quot;></i>';
+                                "
+                            >
+
+
+                        <% } else { %>
+
+
+                            <i class="fa-solid fa-user"></i>
+
+
+                        <% } %>
+
+
+                    </div>
+
+
+
+                    <div class="photo-content">
+
+
+                        <h4>
+                            Current Student Photo
+                        </h4>
+
+
+                        <p>
+
+                            Upload a new JPG, PNG or WEBP image
+                            to replace the existing photo.
+
+                        </p>
+
+
+                        <input
+                            type="file"
+                            name="photo"
+                            class="file-control"
+                            accept="image/jpeg,image/png,image/webp"
+                        >
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 BOTTOM BUTTONS
+            ================================================= -->
+
+            <div class="bottom-actions">
+
+
+                <a
+                    href="/admin/academics"
+                    class="btn cancel-btn"
+                >
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancel
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn save-btn"
+                >
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Save Changes
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar">
+
+
+
+    <!-- =====================================================
+         STUDENT PREVIEW
+    ===================================================== -->
+
+    <div class="preview-card">
+
+
+        <div class="preview-top">
+
+
+            <div class="preview-photo">
+
+
+                <% if (record.photo) { %>
+
+
+                    <img
+                        src="<%= record.photo %>"
+                        alt="<%= record.studentName %>"
+                        onerror="
+                            this.style.display='none';
+                            this.parentElement.innerHTML='<i class=&quot;fa-solid fa-user&quot;></i>';
+                        "
+                    >
+
+
+                <% } else { %>
+
+
+                    <i class="fa-solid fa-user"></i>
+
+
+                <% } %>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="preview-body">
+
+
+            <div class="preview-label">
+                Student Preview
+            </div>
+
+
+            <div class="preview-name">
+                <%= record.studentName %>
+            </div>
+
+
+            <div class="preview-class">
+
+                <%= record.className || '—' %>
+
+                &nbsp; • &nbsp;
+
+                <%= record.batch || '—' %>
+
+            </div>
+
+
+
+            <% if (record.rankType === 'State Topper') { %>
+
+
+                <div class="preview-badge state">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    State Topper
+
+                </div>
+
+
+            <% } else if (record.rankType === 'District Topper') { %>
+
+
+                <div class="preview-badge district">
+
+                    <i class="fa-solid fa-location-crosshairs"></i>
+
+                    District Topper
+
+                </div>
+
+
+            <% } else if (record.rankType === 'School Topper') { %>
+
+
+                <div class="preview-badge school">
+
+                    <i class="fa-solid fa-school"></i>
+
+                    School Topper
+
+                </div>
+
+
+            <% } else { %>
+
+
+                <div class="preview-badge sports">
+
+                    <i class="fa-solid fa-medal"></i>
+
+                    Sports Achievement
+
+                </div>
+
+
+            <% } %>
+
+
+
+            <!-- QUICK INFO -->
+
+            <div class="quick-info">
+
+
+                <div class="quick-item">
+
+                    <span>
+                        YEAR
+                    </span>
+
+                    <strong>
+                        <%= record.year || '—' %>
+                    </strong>
+
+                </div>
+
+
+                <div class="quick-item">
+
+                    <span>
+                        PRIORITY
+                    </span>
+
+                    <strong>
+                        <%= record.priority || 0 %>
+                    </strong>
+
+                </div>
+
+
+                <div class="quick-item">
+
+                    <span>
+                        RESULT
+                    </span>
+
+                    <strong>
+                        <%= record.percentage || '—' %>
+                    </strong>
+
+                </div>
+
+
+                <div class="quick-item">
+
+                    <span>
+                        STREAM
+                    </span>
+
+                    <strong>
+                        <%= record.stream || '—' %>
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         SAVE CARD
+    ===================================================== -->
+
+    <div class="action-card">
+
+
+        <div class="action-title">
+
+
+            <div class="action-title-icon">
+
+                <i class="fa-solid fa-floppy-disk"></i>
+
+            </div>
+
+
+            <h3>
+                Save Your Changes
+            </h3>
+
+
+        </div>
+
+
+        <p>
+
+            Review the information before updating
+            this achievement record.
+
+        </p>
+
+
+
+        <div class="action-buttons">
+
+
+            <a
+                href="/admin/academics"
+                class="btn cancel-btn"
+            >
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Cancel
+
+            </a>
+
+
+            <button
+                type="button"
+                class="btn save-btn"
+                onclick="
+                    document
+                    .querySelector('form')
+                    .requestSubmit()
+                "
+            >
+
+                <i class="fa-solid fa-check"></i>
+
+                Update
+
+            </button>
+
+
+        </div>
+
+
+
+        <div class="security-note">
+
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            Your changes are saved securely to
+            the academic records database.
+
+
+        </div>
+
+
+    </div>
+
+
+</aside>
+
+
+</div>
+
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   PREVENT DOUBLE SUBMIT
+========================================================= */
+
+const form =
+    document.querySelector("form");
+
+
+if (form) {
+
+
+    form.addEventListener(
+        "submit",
+        function () {
+
+
+            const buttons =
+                form.querySelectorAll(
+                    'button[type="submit"]'
+                );
+
+
+            buttons.forEach(
+                function(button) {
+
+
+                    button.disabled =
+                        true;
+
+
+                    button.innerHTML =
+                        '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+
+                }
+            );
+
+
+        }
+    );
+
+
+}
+
+
+/* =========================================================
+   LIVE STUDENT NAME PREVIEW
+========================================================= */
+
+const nameInput =
+    document.querySelector(
+        'input[name="studentName"]'
+    );
+
+
+const previewName =
+    document.querySelector(
+        ".preview-name"
+    );
+
+
+if (
+    nameInput &&
+    previewName
+) {
+
+
+    nameInput.addEventListener(
+        "input",
+        function () {
+
+
+            previewName.textContent =
+                this.value.trim() ||
+                "Student Name";
+
+
+        }
+    );
+
+
+}
+
+
+/* =========================================================
+   LIVE YEAR PREVIEW
+========================================================= */
+
+const yearInput =
+    document.querySelector(
+        'input[name="year"]'
+    );
+
+
+const quickYear =
+    document.querySelector(
+        ".quick-item strong"
+    );
+
+
+if (
+    yearInput &&
+    quickYear
+) {
+
+
+    yearInput.addEventListener(
+        "input",
+        function () {
+
+
+            quickYear.textContent =
+                this.value.trim() ||
+                "—";
+
+
+        }
+    );
+
+
+}
+
+</script>
+
+
+</body>
+
+</html>

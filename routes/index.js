@@ -1,34 +1,68 @@
 const express = require('express');
 const router = express.Router();
+
 const Slider = require('../models/Slider');
 const About = require('../models/About');
 const SchoolInfo = require('../models/SchoolInfo');
+const Popup = require('../models/Popup');
 
-// Home Page
+
+// ============================
+// HOME PAGE
+// ============================
+
 router.get('/', async (req, res) => {
   try {
-    const sliders = await Slider.find({ active: true }).sort({ position: 1 });
+
+    const sliders = await Slider.find({ active: true })
+      .sort({ position: 1 });
+
     const schoolInfo = await SchoolInfo.findOne();
 
-    res.render('index', {
-      sliders,
-      schoolInfo,
-      title: 'Home - Gyan Jyoti School',
-      active: 'home'
-    });
+    const popups = await Popup.find({
+    enabled: true
+}).sort({
+    priority: 1
+});
+    res.render("index",{
+
+    sliders,
+
+    schoolInfo,
+
+    popups,
+
+    title:"Home - Gyan Jyoti School",
+
+    active:"home"
+
+});
   } catch (error) {
+
     console.error('Error loading home:', error);
+
     res.render('index', {
       sliders: [],
       schoolInfo: null,
+      popup: null,
       title: 'Home - Gyan Jyoti School',
       active: 'home'
     });
+
   }
 });
+
+
+// ============================
+// ABOUT PAGE
+// ============================
+
 router.get('/about', async (req, res) => {
   try {
-    const about = await About.findOne({ section: 'about' });
+
+    const about = await About.findOne({
+      section: 'about'
+    });
 
     res.render('about/about', {
       title: 'About Us - Gyan Jyoti School',
@@ -37,15 +71,25 @@ router.get('/about', async (req, res) => {
     });
 
   } catch (err) {
+
     console.log(err);
     res.redirect('/');
+
   }
 });
 
-// Vision & Mission
+// ============================
+// VISION
+// ============================
+
 router.get('/about/vision', async (req, res) => {
+
   try {
-    const data = await About.findOne({ section: 'vision' });
+
+    const data = await About.findOne({
+      section: 'vision'
+    });
+
     const schoolInfo = await SchoolInfo.findOne();
 
     res.render('about/vision', {
@@ -54,15 +98,28 @@ router.get('/about/vision', async (req, res) => {
       title: 'Vision & Mission - Gyan Jyoti School',
       active: 'about'
     });
+
   } catch (error) {
+
     res.status(500).send('Error loading page');
+
   }
+
 });
 
-// Founder's Message
+
+// ============================
+// FOUNDER
+// ============================
+
 router.get('/about/founder', async (req, res) => {
+
   try {
-    const about = await About.findOne({ section: 'founder' });
+
+    const about = await About.findOne({
+      section: 'founder'
+    });
+
     const schoolInfo = await SchoolInfo.findOne();
 
     res.render('about/founder', {
@@ -71,16 +128,29 @@ router.get('/about/founder', async (req, res) => {
       about,
       schoolInfo
     });
+
   } catch (err) {
+
     console.log(err);
     res.redirect('/');
+
   }
+
 });
 
-// Principal's Message
+
+// ============================
+// PRINCIPAL
+// ============================
+
 router.get('/about/principal', async (req, res) => {
+
   try {
-    const data = await About.findOne({ section: 'principal' });
+
+    const data = await About.findOne({
+      section: 'principal'
+    });
+
     const schoolInfo = await SchoolInfo.findOne();
 
     res.render('about/principal', {
@@ -89,21 +159,42 @@ router.get('/about/principal', async (req, res) => {
       title: "Principal's Message - Gyan Jyoti School",
       active: 'about'
     });
+
   } catch (error) {
+
     res.status(500).send('Error loading page');
+
   }
+
 });
 
-router.get('/fees', async (req, res) => {
+
+// ============================
+// FEES
+// ============================
+
+router.get('/fees', (req, res) => {
+
   res.render('fees', {
     title: 'Fees Structure - Gyan Jyoti School',
     active: 'fees'
   });
+
 });
-// Mission
+
+
+// ============================
+// MISSION
+// ============================
+
 router.get('/about/mission', async (req, res) => {
+
   try {
-    const data = await About.findOne({ section: 'mission' });
+
+    const data = await About.findOne({
+      section: 'mission'
+    });
+
     const schoolInfo = await SchoolInfo.findOne();
 
     res.render('about/mission', {
@@ -112,22 +203,42 @@ router.get('/about/mission', async (req, res) => {
       title: 'Our Mission - Gyan Jyoti School',
       active: 'about'
     });
+
   } catch (error) {
+
     res.status(500).send('Error loading page');
+
   }
+
 });
 
-router.get('/about/accolades', async (req, res) => {
+
+// ============================
+// ACCOLADES
+// ============================
+
+router.get('/about/accolades', (req, res) => {
+
   res.render('about/accolades', {
     title: 'Developer & Management - Gyan Jyoti School',
     active: 'about'
   });
+
 });
 
-// Advantages (FIXED)
+
+// ============================
+// ADVANTAGES
+// ============================
+
 router.get('/about/advantages', async (req, res) => {
+
   try {
-    const data = await About.findOne({ section: 'advantages' });
+
+    const data = await About.findOne({
+      section: 'advantages'
+    });
+
     const schoolInfo = await SchoolInfo.findOne();
 
     res.render('about/advantages', {
@@ -136,9 +247,13 @@ router.get('/about/advantages', async (req, res) => {
       title: 'MIS Advantages - Gyan Jyoti School',
       active: 'about'
     });
+
   } catch (error) {
+
     res.status(500).send('Error loading page');
+
   }
+
 });
 
 module.exports = router;

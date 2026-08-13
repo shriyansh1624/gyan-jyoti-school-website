@@ -1,22 +1,48 @@
 <%- include('../partials/header') %>
 
 <section class="enquiry-hero">
-  <div class="enquiry-container">
-    <span class="hero-badge">Admission Enquiry</span>
-    <h1>Talk to Our Admission Team</h1>
+  <div class="enquiry-hero-grid"></div>
+  <div class="enquiry-orb enquiry-orb-one"></div>
+  <div class="enquiry-orb enquiry-orb-two"></div>
+
+  <div class="enquiry-container enquiry-hero-content">
+
+    <div class="hero-kicker">
+      <span class="kicker-dot"></span>
+      Admissions Open • Enquiry Desk
+    </div>
+
+    <span class="hero-badge">
+      <i class="fas fa-comments"></i>
+      Admission Enquiry
+    </span>
+
+    <h1>Talk to Our <span>Admission Team</span></h1>
+
     <p>
       Have questions about admission, classes, fees or school facilities?
       Fill the enquiry form and our team will contact you soon.
     </p>
 
     <div class="hero-actions">
-      <a href="/admission/registration">
-        <i class="fas fa-user-plus"></i> Register Now
+      <a href="/admission/registration" class="hero-primary">
+        <i class="fas fa-user-plus"></i>
+        Register Now
+        <i class="fas fa-arrow-right action-arrow"></i>
       </a>
-      <a href="tel:+919876543210">
-        <i class="fas fa-phone"></i> Call School
+
+      <a href="tel:+919876543210" class="hero-secondary">
+        <i class="fas fa-phone"></i>
+        Call School
       </a>
     </div>
+
+    <div class="hero-trust">
+      <span><i class="fas fa-circle-check"></i> Admission Guidance</span>
+      <span><i class="fas fa-circle-check"></i> Fee Information</span>
+      <span><i class="fas fa-circle-check"></i> Campus Support</span>
+    </div>
+
   </div>
 </section>
 
@@ -24,8 +50,13 @@
   <div class="enquiry-container">
 
     <div class="enquiry-heading">
-      <span class="section-tag">Get Admission Support</span>
+      <span class="section-tag">
+        <i class="fas fa-paper-plane"></i>
+        Get Admission Support
+      </span>
+
       <h2>Submit Your Enquiry</h2>
+
       <p>
         Our admission counsellor will guide you about class availability,
         admission process, fees and school facilities.
@@ -34,555 +65,1429 @@
 
     <div class="enquiry-layout">
 
-      <div class="enquiry-info-card">
-        <div class="school-logo-box">
-          <img src="/images/logo.png" alt="Gyan Jyoti Logo">
+      <!-- =====================================================
+           SCHOOL INFORMATION
+      ====================================================== -->
+
+      <aside class="enquiry-info-card">
+
+        <div class="info-glow"></div>
+
+        <div class="school-brand">
+          <div class="school-logo-box">
+            <img src="/images/logo.png" alt="Gyan Jyoti Logo">
+          </div>
+
+          <div>
+            <span class="brand-label">ADMISSION DESK</span>
+            <h2>Gyan Jyoti School</h2>
+          </div>
         </div>
 
-        <h2>Gyan Jyoti School</h2>
-        <p>
+        <p class="info-description">
           We provide quality education with discipline, confidence,
           values and academic excellence.
         </p>
 
+        <div class="info-divider"></div>
+
         <div class="info-item">
-          <i class="fas fa-phone"></i>
+          <div class="info-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+
           <div>
-            <h4>Call Us</h4>
+            <span class="info-label">CALL US</span>
+            <h4>School Phone</h4>
             <p>
-              <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.phone ? schoolInfo.phone : '+91 98765-43210' %>
+              <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.phone
+                ? schoolInfo.phone
+                : '+91 98765-43210' %>
             </p>
           </div>
         </div>
 
         <div class="info-item">
-          <i class="fas fa-envelope"></i>
+          <div class="info-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+
           <div>
-            <h4>Email</h4>
+            <span class="info-label">EMAIL</span>
+            <h4>Email Address</h4>
             <p>
-              <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.email ? schoolInfo.email : 'info@gyanjyoti.com' %>
+              <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.email
+                ? schoolInfo.email
+                : 'info@gyanjyoti.com' %>
             </p>
           </div>
         </div>
 
         <div class="info-item">
-          <i class="fas fa-location-dot"></i>
+          <div class="info-icon">
+            <i class="fas fa-location-dot"></i>
+          </div>
+
           <div>
-            <h4>Visit School</h4>
+            <span class="info-label">VISIT CAMPUS</span>
+            <h4>School Address</h4>
             <p>
-              <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.address ? schoolInfo.address : 'C4M4+858, Ruchika Catering Rd, North Civil Lines, Nainpur, Madhya Pradesh 481776' %>
+              <%= typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.address
+                ? schoolInfo.address
+                : 'C4M4+858, Ruchika Catering Rd, North Civil Lines, Nainpur, Madhya Pradesh 481776' %>
             </p>
           </div>
         </div>
-      </div>
+
+        <a href="/admission/process" class="info-link">
+          <span>
+            <i class="fas fa-route"></i>
+            View Admission Process
+          </span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+
+      </aside>
+
+      <!-- =====================================================
+           ENQUIRY FORM
+      ====================================================== -->
 
       <div class="enquiry-form-card">
 
+        <div class="form-card-header">
+          <div>
+            <span class="form-label">STEP 01</span>
+            <h3>Tell Us About Your Requirement</h3>
+          </div>
+
+          <div class="secure-badge">
+            <i class="fas fa-shield-halved"></i>
+            Secure Form
+          </div>
+        </div>
+
         <% if (typeof query !== 'undefined' && query.success) { %>
           <div class="success-msg">
-            <i class="fas fa-check-circle"></i>
-            Your enquiry has been submitted successfully. Our team will contact you soon.
+            <span class="message-icon">
+              <i class="fas fa-check"></i>
+            </span>
+            <div>
+              <strong>Enquiry Submitted Successfully</strong>
+              <p>Our team will contact you soon.</p>
+            </div>
           </div>
         <% } %>
 
         <% if (typeof query !== 'undefined' && query.error) { %>
           <div class="error-msg">
-            <i class="fas fa-exclamation-circle"></i>
-            Please fill all details correctly and try again.
+            <span class="message-icon">
+              <i class="fas fa-exclamation"></i>
+            </span>
+            <div>
+              <strong>Please check your details</strong>
+              <p>Fill all required details correctly and try again.</p>
+            </div>
           </div>
         <% } %>
 
         <form action="/admission/enquiry" method="POST" class="enquiry-form" novalidate>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label>Parent / Guardian Name <span>*</span></label>
-              <input
-                type="text"
-                name="name"
-                placeholder="Enter parent / guardian name"
-                pattern="[A-Za-z\s.]{3,60}"
-                maxlength="60"
-                required
-              >
-            </div>
-
-            <div class="form-group">
-              <label>Student Name <span>*</span></label>
-              <input
-                type="text"
-                name="studentName"
-                placeholder="Enter student name"
-                pattern="[A-Za-z\s.]{3,60}"
-                maxlength="60"
-                required
-              >
+          <div class="form-section-title">
+            <span>01</span>
+            <div>
+              <strong>Student &amp; Parent Details</strong>
+              <small>Required information</small>
             </div>
           </div>
 
           <div class="form-row">
+
             <div class="form-group">
-              <label>Class Applying For <span>*</span></label>
-              <input
-                type="text"
-                name="class"
-                placeholder="Example: Class 6"
-                maxlength="30"
-                required
-              >
+              <label for="parentName">
+                Parent / Guardian Name <span>*</span>
+              </label>
+
+              <div class="input-wrap">
+                <i class="fas fa-user"></i>
+                <input
+                  type="text"
+                  id="parentName"
+                  name="name"
+                  placeholder="Enter parent / guardian name"
+                  pattern="[A-Za-z\s.]{3,60}"
+                  maxlength="60"
+                  autocomplete="name"
+                  required>
+              </div>
             </div>
 
             <div class="form-group">
-              <label>Mobile Number <span>*</span></label>
-              <input
-                type="text"
-                name="phone"
-                placeholder="10 digit mobile number"
-                pattern="[0-9]{10}"
-                maxlength="10"
-                inputmode="numeric"
-                required
-              >
+              <label for="studentName">
+                Student Name <span>*</span>
+              </label>
+
+              <div class="input-wrap">
+                <i class="fas fa-user-graduate"></i>
+                <input
+                  type="text"
+                  id="studentName"
+                  name="studentName"
+                  placeholder="Enter student name"
+                  pattern="[A-Za-z\s.]{3,60}"
+                  maxlength="60"
+                  autocomplete="off"
+                  required>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+              <label for="class">
+                Class Applying For <span>*</span>
+              </label>
+
+              <div class="input-wrap">
+                <i class="fas fa-school"></i>
+                <input
+                  type="text"
+                  id="class"
+                  name="class"
+                  placeholder="Example: Class 6"
+                  maxlength="30"
+                  required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">
+                Mobile Number <span>*</span>
+              </label>
+
+              <div class="input-wrap">
+                <i class="fas fa-mobile-screen-button"></i>
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  placeholder="10 digit mobile number"
+                  pattern="[0-9]{10}"
+                  maxlength="10"
+                  inputmode="numeric"
+                  autocomplete="tel"
+                  required>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-section-title form-section-second">
+            <span>02</span>
+            <div>
+              <strong>Contact &amp; Enquiry</strong>
+              <small>How can we help you?</small>
             </div>
           </div>
 
           <div class="form-group">
-            <label>Email Address</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter email address"
-              maxlength="80"
-            >
+            <label for="email">Email Address</label>
+
+            <div class="input-wrap">
+              <i class="fas fa-envelope"></i>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter email address"
+                maxlength="80"
+                autocomplete="email">
+            </div>
           </div>
 
           <div class="form-group">
-            <label>Your Enquiry <span>*</span></label>
-            <textarea
-              name="message"
-              placeholder="Write your enquiry..."
-              minlength="5"
-              maxlength="1000"
-              required
-            ></textarea>
+            <label for="message">
+              Your Enquiry <span>*</span>
+            </label>
+
+            <div class="input-wrap textarea-wrap">
+              <i class="fas fa-message"></i>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Write your enquiry..."
+                minlength="5"
+                maxlength="1000"
+                required></textarea>
+            </div>
+
+            <div class="character-hint">
+              <span>Tell us what you would like to know.</span>
+              <span id="messageCounter">0 / 1000</span>
+            </div>
           </div>
 
           <button type="submit" class="submit-btn">
-            <i class="fas fa-paper-plane"></i> Send Enquiry
+            <span class="submit-content">
+              <i class="fas fa-paper-plane"></i>
+              Send Enquiry
+            </span>
+            <span class="submit-arrow">
+              <i class="fas fa-arrow-right"></i>
+            </span>
           </button>
+
+          <p class="form-note">
+            <i class="fas fa-lock"></i>
+            Your information is submitted securely to the school admission team.
+          </p>
 
         </form>
       </div>
 
     </div>
-
   </div>
 </section>
 
 <section class="why-enquiry-section">
   <div class="enquiry-container">
 
+    <div class="why-heading">
+      <span class="section-tag">Why Contact Us?</span>
+      <h2>Get the Right Guidance Before You Apply</h2>
+      <p>
+        Our admission support is designed to make your first interaction
+        with the school simple and informative.
+      </p>
+    </div>
+
     <div class="why-grid">
+
       <div class="why-card">
-        <i class="fas fa-user-graduate"></i>
+        <div class="why-number">01</div>
+        <div class="why-icon">
+          <i class="fas fa-user-graduate"></i>
+        </div>
+        <span>ADMISSIONS</span>
         <h3>Admission Guidance</h3>
-        <p>Get complete support about admission process and class availability.</p>
+        <p>
+          Get complete support about admission process and class availability.
+        </p>
       </div>
 
       <div class="why-card">
-        <i class="fas fa-file-invoice"></i>
+        <div class="why-number">02</div>
+        <div class="why-icon">
+          <i class="fas fa-file-invoice-dollar"></i>
+        </div>
+        <span>FEES</span>
         <h3>Fees Information</h3>
-        <p>Our team will guide you about class-wise fees and payment details.</p>
+        <p>
+          Our team will guide you about class-wise fees and payment details.
+        </p>
       </div>
 
       <div class="why-card">
-        <i class="fas fa-school"></i>
+        <div class="why-number">03</div>
+        <div class="why-icon">
+          <i class="fas fa-school"></i>
+        </div>
+        <span>CAMPUS</span>
         <h3>School Visit</h3>
-        <p>Parents can visit the campus and meet the school office team.</p>
+        <p>
+          Parents can visit the campus and meet the school office team.
+        </p>
       </div>
+
     </div>
 
   </div>
 </section>
 
+<section class="enquiry-cta">
+  <div class="cta-orb"></div>
+
+  <div class="enquiry-container">
+    <span class="cta-badge">
+      <i class="fas fa-graduation-cap"></i>
+      Begin Your Journey
+    </span>
+
+    <h2>Still Have Questions?</h2>
+
+    <p>
+      Our admission team is ready to help you understand the next step
+      for your child's educational journey.
+    </p>
+
+    <div class="cta-actions">
+      <a href="/admission/registration" class="cta-primary">
+        <i class="fas fa-user-plus"></i>
+        Register Now
+      </a>
+
+      <a href="/admission/process" class="cta-secondary">
+        Admission Process
+        <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
 <style>
-  .enquiry-container {
-    width: 86%;
-    max-width: 1200px;
-    margin: auto;
+/* =========================================================
+   PREMIUM ADMISSION ENQUIRY
+   Gyan Jyoti School — Navy / Gold
+========================================================= */
+
+.enquiry-container{
+  width:min(1200px,92%);
+  margin:0 auto;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.enquiry-hero{
+  min-height:620px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 80% 18%,rgba(255,195,0,.16),transparent 27%),
+    linear-gradient(135deg,#000913,#001f3f 58%,#075d98);
+}
+
+.enquiry-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(135deg,rgba(0,8,18,.84),rgba(0,31,63,.70)),
+    url('/images/school-bg.jpg') center/cover no-repeat;
+  opacity:.65;
+}
+
+.enquiry-hero-grid{
+  position:absolute;
+  inset:0;
+  opacity:.12;
+  background-image:
+    linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px);
+  background-size:70px 70px;
+  animation:enquiryGrid 28s linear infinite;
+}
+
+@keyframes enquiryGrid{
+  from{transform:translate(0,0)}
+  to{transform:translate(-70px,-70px)}
+}
+
+.enquiry-orb{
+  position:absolute;
+  border:1px solid rgba(255,195,0,.16);
+  border-radius:50%;
+  animation:enquiryFloat 8s ease-in-out infinite;
+}
+
+.enquiry-orb-one{
+  width:460px;
+  height:460px;
+  right:-210px;
+  top:-220px;
+}
+
+.enquiry-orb-two{
+  width:260px;
+  height:260px;
+  left:-130px;
+  bottom:-160px;
+  animation-delay:-3s;
+}
+
+@keyframes enquiryFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-18px)}
+}
+
+.enquiry-hero-content{
+  position:relative;
+  z-index:2;
+  padding:90px 0;
+}
+
+.hero-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:20px;
+  color:rgba(255,255,255,.60);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+
+.kicker-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#ffc300;
+  box-shadow:0 0 0 5px rgba(255,195,0,.10);
+}
+
+.hero-badge,
+.section-tag,
+.cta-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 19px;
+  border-radius:50px;
+  background:#ffc300;
+  color:#001f3f;
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  box-shadow:0 12px 30px rgba(255,195,0,.18);
+}
+
+.enquiry-hero h1{
+  max-width:950px;
+  margin:22px 0 15px;
+  color:#fff;
+  font-size:clamp(52px,7vw,84px);
+  line-height:.96;
+  letter-spacing:-3px;
+  font-weight:950;
+  text-shadow:0 20px 50px rgba(0,0,0,.40);
+}
+
+.enquiry-hero h1 span{
+  color:#ffc300;
+}
+
+.enquiry-hero > .enquiry-container > p{
+  max-width:790px;
+  margin:0;
+  color:rgba(255,255,255,.69);
+  font-size:18px;
+  line-height:1.8;
+}
+
+.hero-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:30px;
+}
+
+.hero-actions a{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:15px 22px;
+  border-radius:50px;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:950;
+  transition:.35s;
+}
+
+.hero-primary{
+  background:#ffc300;
+  color:#001f3f;
+  box-shadow:0 15px 32px rgba(255,195,0,.24);
+}
+
+.hero-secondary{
+  color:#fff;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.19);
+}
+
+.action-arrow{
+  margin-left:5px;
+  font-size:10px;
+}
+
+.hero-actions a:hover{
+  transform:translateY(-5px);
+  background:#fff;
+  color:#001f3f;
+}
+
+.hero-trust{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-top:28px;
+}
+
+.hero-trust span{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  color:rgba(255,255,255,.50);
+  font-size:10px;
+  font-weight:800;
+}
+
+.hero-trust i{
+  color:#ffc300;
+}
+
+/* =========================================================
+   MAIN ENQUIRY
+========================================================= */
+
+.enquiry-section{
+  padding:105px 0;
+  background:
+    radial-gradient(circle at 5% 5%,rgba(255,195,0,.07),transparent 25%),
+    #f5f8fb;
+}
+
+.enquiry-heading{
+  max-width:800px;
+  margin:0 auto 55px;
+  text-align:center;
+}
+
+.enquiry-heading h2{
+  margin:18px 0 12px;
+  color:#001f3f;
+  font-size:clamp(40px,5vw,56px);
+  line-height:1.03;
+  letter-spacing:-2px;
+  font-weight:950;
+}
+
+.enquiry-heading p{
+  margin:0;
+  color:#6d7b88;
+  font-size:16px;
+  line-height:1.8;
+}
+
+.enquiry-layout{
+  display:grid;
+  grid-template-columns:.82fr 1.18fr;
+  gap:25px;
+  align-items:stretch;
+}
+
+.enquiry-info-card,
+.enquiry-form-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:30px;
+  box-shadow:0 25px 65px rgba(0,31,63,.12);
+}
+
+.enquiry-info-card{
+  padding:40px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 100% 0,rgba(255,195,0,.16),transparent 32%),
+    linear-gradient(145deg,#000b18,#001f3f 62%,#004481);
+}
+
+.info-glow{
+  position:absolute;
+  width:280px;
+  height:280px;
+  right:-170px;
+  bottom:-170px;
+  border-radius:50%;
+  border:1px solid rgba(255,195,0,.14);
+}
+
+.school-brand{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.school-logo-box{
+  width:84px;
+  height:84px;
+  flex:0 0 84px;
+  padding:6px;
+  border-radius:50%;
+  background:#fff;
+  border:4px solid #ffc300;
+  box-shadow:0 15px 35px rgba(0,0,0,.22);
+}
+
+.school-logo-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.brand-label,
+.info-label,
+.form-label,
+.card-label{
+  display:block;
+  font-size:8px;
+  font-weight:950;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+}
+
+.brand-label{
+  margin-bottom:5px;
+  color:#ffc300;
+}
+
+.enquiry-info-card h2{
+  margin:0;
+  color:#fff;
+  font-size:29px;
+  font-weight:950;
+}
+
+.info-description{
+  position:relative;
+  z-index:2;
+  margin:25px 0;
+  color:rgba(255,255,255,.66);
+  font-size:13px;
+  line-height:1.8;
+}
+
+.info-divider{
+  height:1px;
+  margin-bottom:20px;
+  background:rgba(255,255,255,.10);
+}
+
+.info-item{
+  position:relative;
+  z-index:2;
+  display:flex;
+  gap:13px;
+  margin-bottom:12px;
+  padding:15px;
+  border:1px solid rgba(255,255,255,.08);
+  border-left:3px solid #ffc300;
+  border-radius:16px;
+  background:rgba(255,255,255,.055);
+  transition:.3s;
+}
+
+.info-item:hover{
+  transform:translateX(5px);
+  background:rgba(255,195,0,.07);
+}
+
+.info-icon{
+  flex:0 0 40px;
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  background:rgba(255,195,0,.11);
+  color:#ffc300;
+}
+
+.info-label{
+  margin-bottom:4px;
+  color:#ffc300;
+}
+
+.info-item h4{
+  margin:0 0 4px;
+  color:#fff;
+  font-size:14px;
+}
+
+.info-item p{
+  margin:0;
+  color:rgba(255,255,255,.59);
+  font-size:11px;
+  line-height:1.55;
+}
+
+.info-link{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:21px;
+  padding:15px 17px;
+  border-radius:15px;
+  background:#ffc300;
+  color:#001f3f;
+  text-decoration:none;
+  font-size:11px;
+  font-weight:950;
+  transition:.35s;
+}
+
+.info-link span{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.info-link:hover{
+  background:#fff;
+  transform:translateY(-4px);
+}
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.enquiry-form-card{
+  padding:40px;
+  background:#fff;
+}
+
+.form-card-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:28px;
+  padding-bottom:22px;
+  border-bottom:1px solid #e9eef2;
+}
+
+.form-label{
+  margin-bottom:5px;
+  color:#9b7600;
+}
+
+.form-card-header h3{
+  margin:0;
+  color:#001f3f;
+  font-size:23px;
+  font-weight:950;
+}
+
+.secure-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 11px;
+  border-radius:30px;
+  background:#effaf4;
+  color:#16824d;
+  font-size:9px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.success-msg,
+.error-msg{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 15px;
+  margin-bottom:20px;
+  border-radius:15px;
+}
+
+.success-msg{
+  background:#effaf4;
+  border:1px solid #c9eedb;
+  color:#126b40;
+}
+
+.error-msg{
+  background:#fff1f2;
+  border:1px solid #fecdd3;
+  color:#9f1239;
+}
+
+.message-icon{
+  flex:0 0 36px;
+  width:36px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:11px;
+}
+
+.success-msg .message-icon{
+  background:#d5f4e3;
+}
+
+.error-msg .message-icon{
+  background:#ffe0e5;
+}
+
+.success-msg strong,
+.error-msg strong{
+  display:block;
+  font-size:12px;
+}
+
+.success-msg p,
+.error-msg p{
+  margin:3px 0 0;
+  font-size:10px;
+  opacity:.75;
+}
+
+.form-section-title{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin-bottom:17px;
+}
+
+.form-section-title > span{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:32px;
+  height:32px;
+  border-radius:10px;
+  background:#001f3f;
+  color:#ffc300;
+  font-size:9px;
+  font-weight:950;
+}
+
+.form-section-title strong{
+  display:block;
+  color:#001f3f;
+  font-size:13px;
+}
+
+.form-section-title small{
+  display:block;
+  margin-top:2px;
+  color:#8a98a3;
+  font-size:9px;
+}
+
+.form-section-second{
+  margin-top:10px;
+}
+
+.form-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.form-group{
+  margin-bottom:16px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:7px;
+  color:#001f3f;
+  font-size:11px;
+  font-weight:900;
+}
+
+.form-group label span{
+  color:#dc2626;
+}
+
+.input-wrap{
+  position:relative;
+}
+
+.input-wrap > i{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#9aa7b2;
+  font-size:12px;
+  pointer-events:none;
+  transition:.3s;
+}
+
+.enquiry-form input,
+.enquiry-form textarea{
+  width:100%;
+  border:1px solid #dce4ea;
+  border-radius:13px;
+  outline:none;
+  background:#fbfcfd;
+  color:#001f3f;
+  font-family:inherit;
+  font-size:13px;
+  transition:.3s;
+}
+
+.enquiry-form input{
+  height:49px;
+  padding:0 15px 0 39px;
+}
+
+.enquiry-form textarea{
+  min-height:145px;
+  padding:14px 15px 14px 39px;
+  resize:vertical;
+}
+
+.input-wrap:focus-within > i{
+  color:#ffc300;
+}
+
+.enquiry-form input:focus,
+.enquiry-form textarea:focus{
+  border-color:#ffc300;
+  background:#fff;
+  box-shadow:0 0 0 4px rgba(255,195,0,.13);
+}
+
+.enquiry-form input::placeholder,
+.enquiry-form textarea::placeholder{
+  color:#a6b0b8;
+}
+
+.textarea-wrap > i{
+  top:17px;
+  transform:none;
+}
+
+.character-hint{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:6px;
+  color:#9aa5ae;
+  font-size:9px;
+}
+
+.submit-btn{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  min-height:53px;
+  padding:5px 6px 5px 20px;
+  margin-top:4px;
+  border:0;
+  border-radius:15px;
+  background:linear-gradient(135deg,#ffc300,#ffdc48);
+  color:#001f3f;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:950;
+  cursor:pointer;
+  box-shadow:0 14px 30px rgba(255,195,0,.25);
+  transition:.35s;
+}
+
+.submit-content{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.submit-arrow{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:rgba(0,31,63,.10);
+}
+
+.submit-btn:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 40px rgba(255,195,0,.32);
+}
+
+.submit-btn:disabled{
+  opacity:.7;
+  cursor:not-allowed;
+  transform:none;
+}
+
+.form-note{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  margin:13px 0 0;
+  color:#9aa5ae;
+  font-size:9px;
+  text-align:center;
+}
+
+.form-note i{
+  color:#22a86b;
+}
+
+/* =========================================================
+   WHY SECTION
+========================================================= */
+
+.why-enquiry-section{
+  padding:100px 0;
+  background:#fff;
+}
+
+.why-heading{
+  max-width:760px;
+  margin:0 auto 52px;
+  text-align:center;
+}
+
+.why-heading h2{
+  margin:17px 0 11px;
+  color:#001f3f;
+  font-size:clamp(39px,5vw,55px);
+  line-height:1.03;
+  letter-spacing:-2px;
+  font-weight:950;
+}
+
+.why-heading p{
+  margin:0;
+  color:#6d7b88;
+  font-size:15px;
+  line-height:1.8;
+}
+
+.why-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.why-card{
+  position:relative;
+  overflow:hidden;
+  min-height:290px;
+  padding:32px;
+  border:1px solid #e3eaf0;
+  border-radius:27px;
+  background:#f7f9fb;
+  box-shadow:0 15px 40px rgba(0,31,63,.06);
+  transition:.4s;
+}
+
+.why-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:4px;
+  background:#ffc300;
+}
+
+.why-number{
+  position:absolute;
+  top:24px;
+  right:25px;
+  color:#dbe3e9;
+  font-size:34px;
+  line-height:1;
+  font-weight:950;
+}
+
+.why-icon{
+  width:61px;
+  height:61px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:22px;
+  border-radius:18px;
+  background:#001f3f;
+  color:#ffc300;
+  font-size:24px;
+  box-shadow:0 11px 25px rgba(0,31,63,.13);
+  transition:.35s;
+}
+
+.why-card > span{
+  display:block;
+  margin-bottom:7px;
+  color:#a07a00;
+  font-size:8px;
+  font-weight:950;
+  letter-spacing:1.4px;
+}
+
+.why-card h3{
+  margin:0 0 10px;
+  color:#001f3f;
+  font-size:23px;
+  font-weight:950;
+}
+
+.why-card p{
+  margin:0;
+  color:#687784;
+  font-size:12px;
+  line-height:1.8;
+}
+
+.why-card:hover{
+  transform:translateY(-10px);
+  background:#001f3f;
+  box-shadow:0 28px 60px rgba(0,31,63,.17);
+}
+
+.why-card:hover .why-icon{
+  background:#ffc300;
+  color:#001f3f;
+}
+
+.why-card:hover h3{
+  color:#fff;
+}
+
+.why-card:hover p{
+  color:rgba(255,255,255,.60);
+}
+
+.why-card:hover > span{
+  color:#ffc300;
+}
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.enquiry-cta{
+  position:relative;
+  overflow:hidden;
+  padding:100px 0;
+  text-align:center;
+  background:
+    radial-gradient(circle at 50% 0,rgba(255,195,0,.15),transparent 32%),
+    linear-gradient(135deg,#000a16,#001f3f 60%,#004481);
+}
+
+.cta-orb{
+  position:absolute;
+  top:-400px;
+  left:50%;
+  width:520px;
+  height:520px;
+  transform:translateX(-50%);
+  border:1px solid rgba(255,195,0,.15);
+  border-radius:50%;
+  box-shadow:0 0 120px rgba(255,195,0,.05);
+}
+
+.enquiry-cta .enquiry-container{
+  position:relative;
+  z-index:2;
+}
+
+.cta-badge{
+  color:#ffc300;
+  background:rgba(255,195,0,.08);
+  border:1px solid rgba(255,195,0,.20);
+  box-shadow:none;
+}
+
+.enquiry-cta h2{
+  margin:20px 0 11px;
+  color:#fff;
+  font-size:clamp(42px,5vw,60px);
+  line-height:1;
+  letter-spacing:-2px;
+  font-weight:950;
+}
+
+.enquiry-cta p{
+  max-width:650px;
+  margin:0 auto;
+  color:rgba(255,255,255,.60);
+  font-size:15px;
+  line-height:1.8;
+}
+
+.cta-actions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:28px;
+}
+
+.cta-actions a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:15px 23px;
+  border-radius:50px;
+  text-decoration:none;
+  font-size:12px;
+  font-weight:950;
+  transition:.35s;
+}
+
+.cta-primary{
+  background:#ffc300;
+  color:#001f3f;
+  box-shadow:0 15px 30px rgba(255,195,0,.20);
+}
+
+.cta-secondary{
+  color:#fff;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.18);
+}
+
+.cta-actions a:hover{
+  transform:translateY(-5px);
+  background:#fff;
+  color:#001f3f;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1000px){
+  .enquiry-layout{
+    grid-template-columns:1fr;
   }
 
-  .enquiry-hero {
-    min-height: 480px;
-    background:
-      linear-gradient(rgba(0,31,63,.84), rgba(0,31,63,.84)),
-      url('/images/school-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: white;
-    position: relative;
-    overflow: hidden;
+  .why-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:700px){
+  .enquiry-container{
+    width:92%;
   }
 
-  .enquiry-hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-      radial-gradient(circle, rgba(255,195,0,.35) 2px, transparent 2px),
-      radial-gradient(circle, rgba(255,255,255,.14) 1px, transparent 1px);
-    background-size: 120px 120px, 75px 75px;
-    animation: enquiryDots 22s linear infinite;
+  .enquiry-hero{
+    min-height:600px;
   }
 
-  @keyframes enquiryDots {
-    from { transform: translateY(0); }
-    to { transform: translateY(-120px); }
+  .enquiry-hero-content{
+    padding:70px 0;
   }
 
-  .enquiry-hero .enquiry-container {
-    position: relative;
-    z-index: 2;
+  .enquiry-hero h1{
+    font-size:48px;
+    letter-spacing:-2px;
   }
 
-  .hero-badge,
-  .section-tag {
-    display: inline-block;
-    background: #ffc300;
-    color: #001f3f;
-    padding: 9px 22px;
-    border-radius: 40px;
-    font-weight: 900;
-    margin-bottom: 15px;
+  .enquiry-hero > .enquiry-container > p{
+    font-size:15px;
   }
 
-  .enquiry-hero h1 {
-    color: white;
-    font-size: 62px;
-    font-weight: 900;
-    text-shadow: 0 15px 35px rgba(0,0,0,.4);
-    margin-bottom: 14px;
+  .hero-actions{
+    flex-direction:column;
   }
 
-  .enquiry-hero p {
-    max-width: 850px;
-    margin: auto;
-    color: white;
-    font-size: 19px;
-    line-height: 1.7;
+  .hero-actions a{
+    justify-content:center;
   }
 
-  .hero-actions {
-    margin-top: 28px;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
+  .hero-trust{
+    display:grid;
+    gap:9px;
   }
 
-  .hero-actions a {
-    background: #ffc300;
-    color: #001f3f;
-    padding: 14px 24px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 900;
-    transition: .35s;
-    box-shadow: 0 14px 30px rgba(255,195,0,.28);
-  }
-
-  .hero-actions a:hover {
-    background: white;
-    transform: translateY(-5px);
-  }
-
-  .enquiry-section {
-    padding: 85px 0;
-    background: #f5f7fb;
-  }
-
-  .enquiry-heading {
-    text-align: center;
-    margin-bottom: 55px;
-  }
-
-  .enquiry-heading h2 {
-    color: #001f3f;
-    font-size: 46px;
-    margin-bottom: 14px;
-  }
-
-  .enquiry-heading p {
-    max-width: 850px;
-    margin: auto;
-    color: #555;
-    font-size: 18px;
-    line-height: 1.7;
-  }
-
-  .enquiry-layout {
-    display: grid;
-    grid-template-columns: .9fr 1.1fr;
-    gap: 40px;
-    align-items: stretch;
+  .enquiry-section,
+  .why-enquiry-section,
+  .enquiry-cta{
+    padding:75px 0;
   }
 
   .enquiry-info-card,
-  .enquiry-form-card {
-    border-radius: 30px;
-    padding: 42px;
-    box-shadow: 0 22px 55px rgba(0,0,0,.13);
-    position: relative;
-    overflow: hidden;
+  .enquiry-form-card{
+    padding:27px 21px;
   }
 
-  .enquiry-info-card {
-    background: linear-gradient(135deg, #001f3f, #004481);
-    color: white;
+  .form-card-header{
+    align-items:flex-start;
+    flex-direction:column;
   }
 
-  .enquiry-form-card {
-    background: white;
+  .form-row,
+  .why-grid{
+    grid-template-columns:1fr;
   }
 
-  .enquiry-info-card::after,
-  .enquiry-form-card::after {
-    content: "";
-    position: absolute;
-    width: 260px;
-    height: 260px;
-    background: rgba(255,195,0,.12);
-    border-radius: 50%;
-    top: -130px;
-    right: -130px;
+  .enquiry-heading h2,
+  .why-heading h2{
+    font-size:38px;
   }
 
-  .enquiry-info-card > *,
-  .enquiry-form-card > * {
-    position: relative;
-    z-index: 2;
+  .school-brand{
+    align-items:flex-start;
   }
 
-  .school-logo-box {
-    width: 110px;
-    height: 110px;
-    background: white;
-    border-radius: 50%;
-    padding: 8px;
-    border: 5px solid #ffc300;
-    margin-bottom: 22px;
+  .school-logo-box{
+    width:72px;
+    height:72px;
+    flex-basis:72px;
   }
 
-  .school-logo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  .enquiry-info-card h2{
+    font-size:24px;
   }
 
-  .enquiry-info-card h2 {
-    color: #ffc300;
-    font-size: 32px;
-    margin-bottom: 12px;
+  .cta-actions{
+    flex-direction:column;
   }
 
-  .enquiry-info-card > p {
-    color: rgba(255,255,255,.9);
-    font-size: 17px;
-    line-height: 1.75;
-    margin-bottom: 30px;
+  .cta-actions a{
+    width:100%;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .enquiry-hero-grid,
+  .enquiry-orb{
+    animation:none;
   }
 
-  .info-item {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 24px;
-    background: rgba(255,255,255,.10);
-    padding: 18px;
-    border-radius: 18px;
-    border-left: 4px solid #ffc300;
+  .info-item,
+  .why-card,
+  .submit-btn,
+  .hero-actions a,
+  .cta-actions a{
+    transition:none;
   }
-
-  .info-item i {
-    color: #ffc300;
-    font-size: 24px;
-    margin-top: 4px;
-  }
-
-  .info-item h4 {
-    color: white;
-    font-size: 18px;
-    margin-bottom: 6px;
-  }
-
-  .info-item p {
-    color: rgba(255,255,255,.88);
-    line-height: 1.6;
-  }
-
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-  }
-
-  .form-group {
-    margin-bottom: 18px;
-  }
-
-  .form-group label {
-    display: block;
-    color: #001f3f;
-    font-weight: 800;
-    margin-bottom: 8px;
-  }
-
-  .form-group span {
-    color: #dc2626;
-  }
-
-  .enquiry-form input,
-  .enquiry-form textarea {
-    width: 100%;
-    padding: 15px 18px;
-    border: 1px solid #d1d5db;
-    border-radius: 14px;
-    font-size: 15px;
-    outline: none;
-    transition: .3s;
-    background: white;
-  }
-
-  .enquiry-form textarea {
-    height: 150px;
-    resize: none;
-  }
-
-  .enquiry-form input:focus,
-  .enquiry-form textarea:focus {
-    border-color: #ffc300;
-    box-shadow: 0 0 0 4px rgba(255,195,0,.22);
-  }
-
-  .submit-btn {
-    border: none;
-    background: linear-gradient(135deg, #ffc300, #ffdd55);
-    color: #001f3f;
-    padding: 16px 32px;
-    border-radius: 50px;
-    font-weight: 900;
-    cursor: pointer;
-    font-size: 15px;
-    box-shadow: 0 12px 28px rgba(255,195,0,.35);
-    transition: .35s;
-  }
-
-  .submit-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 35px rgba(255,195,0,.45);
-  }
-
-  .submit-btn:disabled {
-    opacity: .7;
-    cursor: not-allowed;
-  }
-
-  .success-msg,
-  .error-msg {
-    padding: 14px 16px;
-    border-radius: 14px;
-    margin-bottom: 20px;
-    font-weight: 800;
-    line-height: 1.5;
-  }
-
-  .success-msg {
-    background: #d1e7dd;
-    color: #0f5132;
-  }
-
-  .error-msg {
-    background: #f8d7da;
-    color: #842029;
-  }
-
-  .why-enquiry-section {
-    padding: 80px 0;
-    background: white;
-  }
-
-  .why-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-  }
-
-  .why-card {
-    background: #f5f7fb;
-    padding: 35px;
-    text-align: center;
-    border-radius: 26px;
-    box-shadow: 0 16px 40px rgba(0,0,0,.10);
-    border-top: 5px solid #ffc300;
-    transition: .35s;
-  }
-
-  .why-card:hover {
-    background: #001f3f;
-    transform: translateY(-10px);
-  }
-
-  .why-card i {
-    color: #ffc300;
-    font-size: 42px;
-    margin-bottom: 18px;
-  }
-
-  .why-card h3 {
-    color: #001f3f;
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-
-  .why-card p {
-    color: #555;
-    line-height: 1.7;
-  }
-
-  .why-card:hover h3,
-  .why-card:hover p {
-    color: white;
-  }
-
-  @media(max-width: 900px) {
-    .enquiry-layout,
-    .form-row,
-    .why-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .enquiry-hero h1 {
-      font-size: 42px;
-    }
-
-    .enquiry-heading h2 {
-      font-size: 34px;
-    }
-
-    .enquiry-info-card,
-    .enquiry-form-card {
-      padding: 30px;
-    }
-  }
+}
 </style>
 
 <script>
+document.addEventListener('DOMContentLoaded', function(){
+
+  /* =======================================================
+     FORM VALIDATION
+  ======================================================= */
+
   const enquiryForm = document.querySelector('.enquiry-form');
 
   if (enquiryForm) {
+
     enquiryForm.addEventListener('submit', function(e) {
+
       const parentName = this.name.value.trim();
       const studentName = this.studentName.value.trim();
       const phone = this.phone.value.trim();
@@ -615,10 +1520,108 @@
       }
 
       const btn = this.querySelector('.submit-btn');
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+      btn.innerHTML =
+        '<span class="submit-content">' +
+        '<i class="fas fa-spinner fa-spin"></i> Sending...' +
+        '</span>';
+
       btn.disabled = true;
+
     });
+
   }
+
+  /* =======================================================
+     MESSAGE CHARACTER COUNTER
+  ======================================================= */
+
+  const message = document.getElementById('message');
+  const counter = document.getElementById('messageCounter');
+
+  if (message && counter) {
+
+    function updateCounter(){
+      counter.textContent = message.value.length + ' / 1000';
+    }
+
+    message.addEventListener('input', updateCounter);
+    updateCounter();
+
+  }
+
+  /* =======================================================
+     MOBILE NUMBER — ONLY DIGITS
+  ======================================================= */
+
+  const phoneInput = document.getElementById('phone');
+
+  if (phoneInput) {
+
+    phoneInput.addEventListener('input', function(){
+
+      this.value = this.value.replace(/\D/g, '').slice(0, 10);
+
+    });
+
+  }
+
+  /* =======================================================
+     SCROLL REVEAL
+  ======================================================= */
+
+  if ('IntersectionObserver' in window) {
+
+    const items = document.querySelectorAll(
+      '.enquiry-info-card, .enquiry-form-card, .why-card'
+    );
+
+    const observer = new IntersectionObserver(function(entries, obs){
+
+      entries.forEach(function(entry){
+
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        entry.target.classList.add('enquiry-visible');
+        obs.unobserve(entry.target);
+
+      });
+
+    }, {
+      threshold:0.08
+    });
+
+    items.forEach(function(item, index){
+
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(24px)';
+      item.style.transition =
+        'opacity .65s ease ' +
+        ((index % 3) * .08) +
+        's, transform .65s ease ' +
+        ((index % 3) * .08) +
+        's';
+
+      observer.observe(item);
+
+    });
+
+    const style = document.createElement('style');
+
+    style.textContent = `
+      .enquiry-visible{
+        opacity:1 !important;
+        transform:translateY(0) !important;
+      }
+    `;
+
+    document.head.appendChild(style);
+
+  }
+
+});
 </script>
 
 <%- include('../partials/footer') %>

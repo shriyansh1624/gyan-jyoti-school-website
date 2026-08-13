@@ -1,0 +1,3270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Academic Achievements | Admin
+    </title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+
+    --navy: #002b57;
+
+    --navy-dark: #001d3d;
+
+    --blue: #075ca8;
+
+    --blue-light: #eaf4ff;
+
+    --yellow: #ffbd00;
+
+    --yellow-light: #fff4c7;
+
+    --green: #18a968;
+
+    --red: #e93645;
+
+    --purple: #7657d9;
+
+    --text: #09294a;
+
+    --muted: #6c8198;
+
+    --bg: #edf3f9;
+
+    --white: #ffffff;
+
+    --border: #dce6f0;
+
+    --shadow:
+        0 12px 35px rgba(0, 43, 87, .08);
+
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+
+    font-family:
+        "Nunito",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background:
+        var(--bg);
+
+    color:
+        var(--text);
+
+    min-height:
+        100vh;
+
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar {
+
+    height: 78px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #00264d,
+            #034c88
+        );
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding:
+        0 42px;
+
+    color:
+        white;
+
+    box-shadow:
+        0 5px 25px rgba(0,0,0,.12);
+
+}
+
+
+/* BRAND */
+
+.brand {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+}
+
+
+.brand-icon {
+
+    width:
+        48px;
+
+    height:
+        48px;
+
+    border-radius:
+        13px;
+
+    background:
+        var(--yellow);
+
+    color:
+        var(--navy);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        21px;
+
+    box-shadow:
+        0 5px 15px
+        rgba(255,189,0,.25);
+
+}
+
+
+.brand-title {
+
+    font-size:
+        18px;
+
+    font-weight:
+        900;
+
+}
+
+
+.brand-subtitle {
+
+    font-size:
+        11px;
+
+    color:
+        rgba(255,255,255,.72);
+
+    margin-top:
+        2px;
+
+}
+
+
+.dashboard-btn {
+
+    height:
+        42px;
+
+    padding:
+        0 17px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.22);
+
+    border-radius:
+        10px;
+
+    color:
+        white;
+
+    text-decoration:
+        none;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
+
+    transition:
+        .2s;
+
+}
+
+
+.dashboard-btn:hover {
+
+    background:
+        rgba(255,255,255,.10);
+
+    border-color:
+        rgba(255,255,255,.45);
+
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
+
+    width:
+        calc(100% - 40px);
+
+    max-width:
+        1740px;
+
+    margin:
+        auto;
+
+    padding:
+        28px 0 60px;
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+
+    min-height:
+        185px;
+
+    border-radius:
+        0 0 34px 34px;
+
+    padding:
+        25px 45px;
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    background:
+
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(255,255,255,.15),
+            transparent 25%
+        ),
+
+        linear-gradient(
+            120deg,
+            #002a57,
+            #075c98
+        );
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,43,87,.18);
+
+}
+
+
+/* decorative circle */
+
+.hero::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        300px;
+
+    height:
+        300px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius:
+        50%;
+
+    right:
+        -70px;
+
+    top:
+        -160px;
+
+}
+
+
+.hero::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        190px;
+
+    height:
+        190px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+
+    border-radius:
+        50%;
+
+    right:
+        30px;
+
+    top:
+        -95px;
+
+}
+
+
+.hero-content {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+}
+
+
+.hero-title {
+
+    font-size:
+        48px;
+
+    line-height:
+        1;
+
+    font-weight:
+        900;
+
+    color:
+        white;
+
+}
+
+
+.hero-title span {
+
+    color:
+        var(--yellow);
+
+}
+
+
+.hero-description {
+
+    margin-top:
+        12px;
+
+    color:
+        rgba(255,255,255,.78);
+
+    font-size:
+        15px;
+
+    font-weight:
+        600;
+
+}
+
+
+.hero-icon {
+
+    position:
+        absolute;
+
+    right:
+        45px;
+
+    top:
+        25px;
+
+    width:
+        78px;
+
+    height:
+        78px;
+
+    border-radius:
+        22px;
+
+    background:
+        rgba(255,255,255,.09);
+
+    border:
+        1px solid
+        rgba(255,255,255,.18);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        var(--yellow);
+
+    font-size:
+        34px;
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:
+        20px;
+
+    margin-top:
+        30px;
+
+}
+
+
+.stat {
+
+    min-height:
+        150px;
+
+    background:
+        white;
+
+    border-radius:
+        21px;
+
+    padding:
+        24px;
+
+    border-top:
+        4px solid
+        var(--yellow);
+
+    box-shadow:
+        var(--shadow);
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+}
+
+
+.stat::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        120px;
+
+    height:
+        120px;
+
+    border-radius:
+        50%;
+
+    right:
+        -50px;
+
+    bottom:
+        -65px;
+
+    background:
+        rgba(255,189,0,.08);
+
+}
+
+
+.stat-icon {
+
+    width:
+        54px;
+
+    height:
+        54px;
+
+    border-radius:
+        15px;
+
+    background:
+        var(--yellow-light);
+
+    color:
+        var(--navy);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        20px;
+
+}
+
+
+.stat-number {
+
+    font-size:
+        29px;
+
+    font-weight:
+        900;
+
+    margin-top:
+        18px;
+
+    color:
+        var(--navy);
+
+}
+
+
+.stat-label {
+
+    font-size:
+        11px;
+
+    font-weight:
+        800;
+
+    color:
+        #63788e;
+
+}
+
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.main-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        390px 1fr;
+
+    gap:
+        28px;
+
+    margin-top:
+        32px;
+
+    align-items:
+        start;
+
+}
+
+
+/* =========================================================
+   ADD CARD
+========================================================= */
+
+.add-card {
+
+    background:
+        white;
+
+    border-radius:
+        25px;
+
+    overflow:
+        hidden;
+
+    box-shadow:
+        var(--shadow);
+
+    border:
+        1px solid
+        var(--border);
+
+}
+
+
+.add-header {
+
+    background:
+        linear-gradient(
+            120deg,
+            #002b57,
+            #075493
+        );
+
+    color:
+        white;
+
+    padding:
+        24px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+}
+
+
+.add-header-icon {
+
+    width:
+        53px;
+
+    height:
+        53px;
+
+    border-radius:
+        15px;
+
+    background:
+        var(--yellow);
+
+    color:
+        var(--navy);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        19px;
+
+}
+
+
+.add-header h2 {
+
+    font-size:
+        18px;
+
+    font-weight:
+        900;
+
+}
+
+
+.add-header p {
+
+    font-size:
+        10px;
+
+    color:
+        rgba(255,255,255,.7);
+
+    margin-top:
+        3px;
+
+}
+
+
+.add-body {
+
+    padding:
+        24px;
+
+}
+
+
+.form-group {
+
+    margin-bottom:
+        17px;
+
+}
+
+
+.form-group label {
+
+    display:
+        block;
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+
+    color:
+        var(--text);
+
+    margin-bottom:
+        7px;
+
+}
+
+
+.form-group label i {
+
+    color:
+        var(--blue);
+
+    margin-right:
+        5px;
+
+}
+
+
+.form-control {
+
+    width:
+        100%;
+
+    height:
+        48px;
+
+    border:
+        1px solid
+        #dce5ee;
+
+    border-radius:
+        11px;
+
+    padding:
+        0 13px;
+
+    background:
+        #f8fafc;
+
+    color:
+        var(--text);
+
+    font-family:
+        inherit;
+
+    font-size:
+        12px;
+
+    outline:
+        none;
+
+    transition:
+        .2s;
+
+}
+
+
+.form-control:focus {
+
+    background:
+        white;
+
+    border-color:
+        var(--blue);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(7,92,168,.08);
+
+}
+
+
+textarea.form-control {
+
+    height:
+        85px;
+
+    padding:
+        12px;
+
+    resize:
+        vertical;
+
+}
+
+
+.form-row {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        10px;
+
+}
+
+
+.file-input {
+
+    padding:
+        12px;
+
+}
+
+
+.submit-btn {
+
+    width:
+        100%;
+
+    height:
+        48px;
+
+    border:
+        none;
+
+    border-radius:
+        11px;
+
+    background:
+        var(--yellow);
+
+    color:
+        var(--navy);
+
+    font-family:
+        inherit;
+
+    font-weight:
+        900;
+
+    font-size:
+        12px;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s;
+
+}
+
+
+.submit-btn:hover {
+
+    background:
+        #ffca25;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(255,189,0,.25);
+
+}
+
+
+/* =========================================================
+   DIRECTORY
+========================================================= */
+
+.directory {
+
+    background:
+        white;
+
+    border-radius:
+        25px;
+
+    border:
+        1px solid
+        var(--border);
+
+    box-shadow:
+        var(--shadow);
+
+    overflow:
+        hidden;
+
+}
+
+
+.directory-header {
+
+    padding:
+        24px;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+}
+
+
+.directory-title-row {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+}
+
+
+.directory-title {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+}
+
+
+.directory-title-icon {
+
+    width:
+        43px;
+
+    height:
+        43px;
+
+    border-radius:
+        13px;
+
+    background:
+        var(--yellow-light);
+
+    color:
+        var(--navy);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+}
+
+
+.directory-title h2 {
+
+    font-size:
+        20px;
+
+    font-weight:
+        900;
+
+}
+
+
+.directory-title p {
+
+    font-size:
+        10px;
+
+    color:
+        var(--muted);
+
+    margin-top:
+        3px;
+
+}
+
+
+.count-badge {
+
+    min-width:
+        42px;
+
+    height:
+        42px;
+
+    padding:
+        0 12px;
+
+    border-radius:
+        50px;
+
+    background:
+        var(--yellow);
+
+    color:
+        var(--navy);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        12px;
+
+    font-weight:
+        900;
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+.filters {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1.5fr 1fr 1fr auto;
+
+    gap:
+        10px;
+
+    margin-top:
+        20px;
+
+}
+
+
+.search {
+
+    position:
+        relative;
+
+}
+
+
+.search i {
+
+    position:
+        absolute;
+
+    left:
+        14px;
+
+    top:
+        50%;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        #8da0b3;
+
+}
+
+
+.search input,
+.filters select {
+
+    width:
+        100%;
+
+    height:
+        45px;
+
+    border:
+        1px solid
+        var(--border);
+
+    background:
+        #f7fafd;
+
+    border-radius:
+        10px;
+
+    outline:
+        none;
+
+    font-family:
+        inherit;
+
+    color:
+        var(--text);
+
+    font-size:
+        11px;
+
+}
+
+
+.search input {
+
+    padding:
+        0 12px 0 38px;
+
+}
+
+
+.filters select {
+
+    padding:
+        0 12px;
+
+}
+
+
+.search input:focus,
+.filters select:focus {
+
+    border-color:
+        var(--blue);
+
+}
+
+
+.reset-btn {
+
+    height:
+        45px;
+
+    padding:
+        0 15px;
+
+    border:
+        none;
+
+    border-radius:
+        10px;
+
+    background:
+        var(--navy);
+
+    color:
+        white;
+
+    font-family:
+        inherit;
+
+    font-size:
+        11px;
+
+    font-weight:
+        800;
+
+    cursor:
+        pointer;
+
+}
+
+
+.reset-btn:hover {
+
+    background:
+        var(--blue);
+
+}
+
+
+/* =========================================================
+   RECORDS
+========================================================= */
+
+.records {
+
+    padding:
+        22px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:
+        15px;
+
+}
+
+
+.record {
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        19px;
+
+    padding:
+        16px;
+
+    display:
+        flex;
+
+    gap:
+        15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f8fbfe
+        );
+
+    position:
+        relative;
+
+    transition:
+        .2s;
+
+}
+
+
+.record:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        #c9d9e8;
+
+    box-shadow:
+        0 10px 25px
+        rgba(0,43,87,.08);
+
+}
+
+
+.student-photo {
+
+    width:
+        88px;
+
+    height:
+        108px;
+
+    min-width:
+        88px;
+
+    border-radius:
+        15px;
+
+    background:
+        #eaf1f8;
+
+    border:
+        1px solid
+        #d8e3ed;
+
+    overflow:
+        hidden;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    color:
+        #71879d;
+
+    font-size:
+        25px;
+
+}
+
+
+.student-photo img {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        cover;
+
+}
+
+
+.record-content {
+
+    flex:
+        1;
+
+    min-width:
+        0;
+
+}
+
+
+.record-name {
+
+    font-size:
+        15px;
+
+    font-weight:
+        900;
+
+    color:
+        var(--navy);
+
+    padding-right:
+        70px;
+
+}
+
+
+.record-meta {
+
+    color:
+        var(--muted);
+
+    font-size:
+        10px;
+
+    margin-top:
+        3px;
+
+}
+
+
+.achievement-badge {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        5px;
+
+    padding:
+        5px 8px;
+
+    border-radius:
+        20px;
+
+    margin-top:
+        9px;
+
+    font-size:
+        8px;
+
+    font-weight:
+        900;
+
+}
+
+
+.state {
+
+    color:
+        #1769d2;
+
+    background:
+        #e8f2ff;
+
+}
+
+
+.district {
+
+    color:
+        var(--purple);
+
+    background:
+        #f0ebff;
+
+}
+
+
+.school {
+
+    color:
+        #078a57;
+
+    background:
+        #e6f8ef;
+
+}
+
+
+.sports {
+
+    color:
+        #df3447;
+
+    background:
+        #fff0f2;
+
+}
+
+
+.record-info {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        7px 13px;
+
+    margin-top:
+        10px;
+
+}
+
+
+.info-item {
+
+    font-size:
+        9px;
+
+    color:
+        #71869a;
+
+}
+
+
+.info-item strong {
+
+    color:
+        var(--navy);
+
+    font-weight:
+        900;
+
+}
+
+
+.result {
+
+    margin-top:
+        9px;
+
+    color:
+        var(--green);
+
+    font-size:
+        12px;
+
+    font-weight:
+        900;
+
+}
+
+
+.priority {
+
+    position:
+        absolute;
+
+    right:
+        14px;
+
+    top:
+        14px;
+
+    background:
+        var(--yellow-light);
+
+    color:
+        #a16f00;
+
+    padding:
+        4px 8px;
+
+    border-radius:
+        7px;
+
+    font-size:
+        8px;
+
+    font-weight:
+        900;
+
+}
+
+
+.record-actions {
+
+    display:
+        flex;
+
+    gap:
+        6px;
+
+    margin-top:
+        11px;
+
+}
+
+
+.action {
+
+    width:
+        31px;
+
+    height:
+        31px;
+
+    border-radius:
+        8px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        none;
+
+    cursor:
+        pointer;
+
+    text-decoration:
+        none;
+
+    font-size:
+        10px;
+
+}
+
+
+.edit {
+
+    color:
+        #1267dc;
+
+    background:
+        #e9f2ff;
+
+}
+
+
+.delete {
+
+    color:
+        var(--red);
+
+    background:
+        #fff0f2;
+
+}
+
+
+.edit:hover {
+
+    background:
+        #d6e8ff;
+
+}
+
+
+.delete:hover {
+
+    background:
+        #ffdfe3;
+
+}
+
+
+.delete-form {
+
+    margin:
+        0;
+
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty {
+
+    padding:
+        65px 20px;
+
+    text-align:
+        center;
+
+}
+
+
+.empty-icon {
+
+    width:
+        70px;
+
+    height:
+        70px;
+
+    margin:
+        auto;
+
+    border-radius:
+        20px;
+
+    background:
+        var(--yellow-light);
+
+    color:
+        var(--navy);
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size:
+        25px;
+
+}
+
+
+.empty h3 {
+
+    margin-top:
+        15px;
+
+    font-size:
+        17px;
+
+}
+
+
+.empty p {
+
+    color:
+        var(--muted);
+
+    font-size:
+        11px;
+
+    margin-top:
+        5px;
+
+}
+
+
+/* =========================================================
+   NO FILTER
+========================================================= */
+
+.no-results {
+
+    display:
+        none;
+
+    text-align:
+        center;
+
+    padding:
+        50px;
+
+    color:
+        var(--muted);
+
+}
+
+
+.no-results i {
+
+    font-size:
+        25px;
+
+    margin-bottom:
+        10px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1200px) {
+
+    .main-grid {
+
+        grid-template-columns:
+            330px 1fr;
+
+    }
+
+    .records {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+
+@media(max-width:950px) {
+
+    .stats {
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+    .main-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .filters {
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+}
+
+
+@media(max-width:650px) {
+
+    .topbar {
+
+        padding:
+            0 15px;
+
+    }
+
+    .brand-subtitle {
+
+        display:
+            none;
+
+    }
+
+    .dashboard-btn span {
+
+        display:
+            none;
+
+    }
+
+    .page {
+
+        width:
+            calc(100% - 20px);
+
+    }
+
+    .hero {
+
+        padding:
+            25px;
+
+    }
+
+    .hero-title {
+
+        font-size:
+            34px;
+
+    }
+
+    .hero-icon {
+
+        display:
+            none;
+
+    }
+
+    .stats {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .filters {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .record {
+
+        flex-direction:
+            column;
+
+    }
+
+    .student-photo {
+
+        width:
+            100%;
+
+        height:
+            160px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
+
+<header class="topbar">
+
+
+    <div class="brand">
+
+        <div class="brand-icon">
+
+            <i class="fa-solid fa-trophy"></i>
+
+        </div>
+
+
+        <div>
+
+            <div class="brand-title">
+                Student & Academics
+            </div>
+
+            <div class="brand-subtitle">
+                Academic Achievements Manager
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <a
+        href="/admin/dashboard"
+        class="dashboard-btn">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+</header>
+
+
+
+<main class="page">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+
+    <div class="hero-content">
+
+        <h1 class="hero-title">
+
+            Academic
+            <span>
+                Achievements
+            </span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+            Manage your school's toppers, achievers,
+            academic excellence and sports records
+            from one professional workspace.
+
+        </p>
+
+    </div>
+
+
+    <div class="hero-icon">
+
+        <i class="fa-solid fa-award"></i>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     STATS
+========================================================= -->
+
+<section class="stats">
+
+
+    <div class="stat">
+
+        <div class="stat-icon">
+
+            <i class="fa-solid fa-users"></i>
+
+        </div>
+
+
+        <div class="stat-number">
+
+            <%= records.length %>
+
+        </div>
+
+
+        <div class="stat-label">
+
+            Total Achievements
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stat">
+
+        <div class="stat-icon">
+
+            <i class="fa-solid fa-star"></i>
+
+        </div>
+
+
+        <div class="stat-number">
+
+            <%= records.filter(
+                r =>
+                r.rankType === 'State Topper'
+            ).length %>
+
+        </div>
+
+
+        <div class="stat-label">
+
+            State Toppers
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stat">
+
+        <div class="stat-icon">
+
+            <i class="fa-solid fa-school"></i>
+
+        </div>
+
+
+        <div class="stat-number">
+
+            <%= records.filter(
+                r =>
+                r.rankType === 'School Topper'
+            ).length %>
+
+        </div>
+
+
+        <div class="stat-label">
+
+            School Toppers
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stat">
+
+        <div class="stat-icon">
+
+            <i class="fa-solid fa-medal"></i>
+
+        </div>
+
+
+        <div class="stat-number">
+
+            <%= records.filter(
+                r =>
+                r.rankType === 'Sports Achievement'
+            ).length %>
+
+        </div>
+
+
+        <div class="stat-label">
+
+            Sports Achievements
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<section class="main-grid">
+
+
+
+<!-- =========================================================
+     ADD ACHIEVEMENT
+========================================================= -->
+
+<div class="add-card">
+
+
+    <div class="add-header">
+
+
+        <div class="add-header-icon">
+
+            <i class="fa-solid fa-user-plus"></i>
+
+        </div>
+
+
+        <div>
+
+            <h2>
+                Add Achievement
+            </h2>
+
+            <p>
+                Create a new student achievement
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="add-body">
+
+
+        <form
+            action="/admin/academics/add"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+
+            <% if (
+                typeof csrfToken !== 'undefined'
+            ) { %>
+
+                <input
+                    type="hidden"
+                    name="_csrf"
+                    value="<%= csrfToken %>"
+                >
+
+            <% } %>
+
+
+
+            <!-- STUDENT -->
+
+            <div class="form-group">
+
+                <label>
+
+                    <i class="fa-solid fa-user"></i>
+
+                    Student Name
+
+                </label>
+
+
+                <input
+                    type="text"
+                    name="studentName"
+                    class="form-control"
+                    placeholder="e.g. Priya Sharma"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- CLASS -->
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label>
+
+                        <i class="fa-solid fa-graduation-cap"></i>
+
+                        Class
+
+                    </label>
+
+
+                    <select
+                        name="className"
+                        class="form-control"
+                        required
+                    >
+
+                        <option value="">
+                            Select Class
+                        </option>
+
+                        <option value="10th">
+                            10th
+                        </option>
+
+                        <option value="12th">
+                            12th
+                        </option>
+
+                        <option value="sports">
+                            Sports
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+
+                        <i class="fa-solid fa-calendar"></i>
+
+                        Year
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        name="year"
+                        class="form-control"
+                        placeholder="2025"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- BATCH -->
+
+            <div class="form-group">
+
+                <label>
+
+                    <i class="fa-solid fa-layer-group"></i>
+
+                    Batch / Session
+
+                </label>
+
+
+                <input
+                    type="text"
+                    name="batch"
+                    class="form-control"
+                    placeholder="e.g. 2024-25"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- TYPE -->
+
+            <div class="form-group">
+
+                <label>
+
+                    <i class="fa-solid fa-ranking-star"></i>
+
+                    Achievement Type
+
+                </label>
+
+
+                <select
+                    name="rankType"
+                    class="form-control"
+                    required
+                >
+
+                    <option value="">
+                        Select Achievement
+                    </option>
+
+                    <option value="State Topper">
+                        State Topper
+                    </option>
+
+                    <option value="District Topper">
+                        District Topper
+                    </option>
+
+                    <option value="School Topper">
+                        School Topper
+                    </option>
+
+                    <option value="Sports Achievement">
+                        Sports Achievement
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- PERCENTAGE -->
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label>
+
+                        <i class="fa-solid fa-percent"></i>
+
+                        Percentage
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        name="percentage"
+                        class="form-control"
+                        placeholder="99.2%"
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+
+                        <i class="fa-solid fa-arrow-up-1-9"></i>
+
+                        Priority
+
+                    </label>
+
+
+                    <input
+                        type="number"
+                        name="priority"
+                        class="form-control"
+                        value="0"
+                        min="0"
+                    >
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- STREAM -->
+
+            <div class="form-group">
+
+                <label>
+
+                    <i class="fa-solid fa-book"></i>
+
+                    Stream / Category
+
+                </label>
+
+
+                <input
+                    type="text"
+                    name="stream"
+                    class="form-control"
+                    placeholder="e.g. Science"
+                >
+
+            </div>
+
+
+
+            <!-- ACHIEVEMENT -->
+
+            <div class="form-group">
+
+                <label>
+
+                    <i class="fa-solid fa-medal"></i>
+
+                    Achievement Details
+
+                </label>
+
+
+                <textarea
+                    name="achievement"
+                    class="form-control"
+                    placeholder="Describe achievement..."
+                ></textarea>
+
+            </div>
+
+
+
+            <!-- PHOTO -->
+
+            <div class="form-group">
+
+                <label>
+
+                    <i class="fa-solid fa-image"></i>
+
+                    Student Photo
+
+                </label>
+
+
+                <input
+                    type="file"
+                    name="photo"
+                    class="form-control file-input"
+                    accept="image/jpeg,image/png,image/webp"
+                >
+
+            </div>
+
+
+
+            <button
+                type="submit"
+                class="submit-btn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Achievement
+
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     DIRECTORY
+========================================================= -->
+
+<div class="directory">
+
+
+    <div class="directory-header">
+
+
+        <div class="directory-title-row">
+
+
+            <div class="directory-title">
+
+
+                <div class="directory-title-icon">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Achievement Directory
+                    </h2>
+
+                    <p>
+                        Search, filter and manage all student achievements.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <div
+                class="count-badge"
+                id="recordCount">
+
+                <%= records.length %>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- FILTERS -->
+
+        <div class="filters">
+
+
+            <div class="search">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Search student..."
+                >
+
+            </div>
+
+
+
+            <select id="typeFilter">
+
+                <option value="">
+                    All Categories
+                </option>
+
+                <option value="State Topper">
+                    State Topper
+                </option>
+
+                <option value="District Topper">
+                    District Topper
+                </option>
+
+                <option value="School Topper">
+                    School Topper
+                </option>
+
+                <option value="Sports Achievement">
+                    Sports Achievement
+                </option>
+
+            </select>
+
+
+
+            <select id="yearFilter">
+
+                <option value="">
+                    All Sessions
+                </option>
+
+
+                <%
+
+                    const uniqueYears =
+                        [
+                            ...new Set(
+                                records
+                                    .map(
+                                        r =>
+                                        r.year
+                                    )
+                                    .filter(Boolean)
+                            )
+                        ];
+
+                %>
+
+
+                <% uniqueYears.forEach(year => { %>
+
+                    <option value="<%= year %>">
+
+                        <%= year %>
+
+                    </option>
+
+                <% }) %>
+
+
+            </select>
+
+
+
+            <button
+                type="button"
+                class="reset-btn"
+                onclick="resetFilters()">
+
+                <i class="fa-solid fa-rotate-left"></i>
+
+                Reset
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- RECORDS -->
+
+    <% if (records.length === 0) { %>
+
+
+        <div class="empty">
+
+
+            <div class="empty-icon">
+
+                <i class="fa-solid fa-trophy"></i>
+
+            </div>
+
+
+            <h3>
+                No achievements found
+            </h3>
+
+
+            <p>
+                Add your first student achievement
+                using the form.
+            </p>
+
+
+        </div>
+
+
+    <% } else { %>
+
+
+        <div
+            class="records"
+            id="records">
+
+
+            <% records.forEach(record => { %>
+
+
+                <div
+                    class="record"
+                    data-name="<%= (record.studentName || '').toLowerCase() %>"
+                    data-type="<%= record.rankType || '' %>"
+                    data-year="<%= record.year || '' %>"
+                >
+
+
+                    <!-- PHOTO -->
+
+                    <div class="student-photo">
+
+
+                        <% if (record.photo) { %>
+
+
+                            <img
+                                src="<%= record.photo %>"
+                                alt="<%= record.studentName %>"
+                                loading="lazy"
+                                onerror="this.style.display='none';this.parentElement.innerHTML='<i class=&quot;fa-solid fa-user&quot;></i>';"
+                            >
+
+
+                        <% } else { %>
+
+
+                            <i class="fa-solid fa-user"></i>
+
+
+                        <% } %>
+
+
+                    </div>
+
+
+
+                    <!-- CONTENT -->
+
+                    <div class="record-content">
+
+
+                        <div class="record-name">
+
+                            <%= record.studentName %>
+
+                        </div>
+
+
+                        <div class="record-meta">
+
+                            <%= record.stream ||
+                                record.achievement ||
+                                'Student Achievement'
+                            %>
+
+                        </div>
+
+
+
+                        <!-- BADGE -->
+
+
+                        <% if (
+                            record.rankType ===
+                            'State Topper'
+                        ) { %>
+
+
+                            <span
+                                class="achievement-badge state">
+
+                                <i class="fa-solid fa-location-dot"></i>
+
+                                State Topper
+
+                            </span>
+
+
+                        <% } else if (
+                            record.rankType ===
+                            'District Topper'
+                        ) { %>
+
+
+                            <span
+                                class="achievement-badge district">
+
+                                <i class="fa-solid fa-location-crosshairs"></i>
+
+                                District Topper
+
+                            </span>
+
+
+                        <% } else if (
+                            record.rankType ===
+                            'School Topper'
+                        ) { %>
+
+
+                            <span
+                                class="achievement-badge school">
+
+                                <i class="fa-solid fa-school"></i>
+
+                                School Topper
+
+                            </span>
+
+
+                        <% } else { %>
+
+
+                            <span
+                                class="achievement-badge sports">
+
+                                <i class="fa-solid fa-medal"></i>
+
+                                Sports Achievement
+
+                            </span>
+
+
+                        <% } %>
+
+
+
+                        <!-- INFO -->
+
+                        <div class="record-info">
+
+
+                            <div class="info-item">
+
+                                Class:
+                                <strong>
+                                    <%= record.className || '—' %>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-item">
+
+                                Batch:
+                                <strong>
+                                    <%= record.batch || '—' %>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-item">
+
+                                Year:
+                                <strong>
+                                    <%= record.year || '—' %>
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- RESULT -->
+
+                        <% if (record.percentage) { %>
+
+
+                            <div class="result">
+
+                                <i class="fa-solid fa-chart-line"></i>
+
+                                <%= record.percentage %>
+
+                            </div>
+
+
+                        <% } else if (
+                            record.achievement
+                        ) { %>
+
+
+                            <div class="result">
+
+                                <i class="fa-solid fa-medal"></i>
+
+                                <%= record.achievement %>
+
+                            </div>
+
+
+                        <% } %>
+
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="record-actions">
+
+
+                            <a
+                                href="/admin/academics/edit/<%= record._id %>"
+                                class="action edit"
+                                title="Edit">
+
+                                <i class="fa-solid fa-pen"></i>
+
+                            </a>
+
+
+
+                            <form
+                                action="/admin/academics/delete/<%= record._id %>"
+                                method="POST"
+                                class="delete-form"
+                                onsubmit="return confirmDelete('<%= record.studentName %>')"
+                            >
+
+
+                                <% if (
+                                    typeof csrfToken !==
+                                    'undefined'
+                                ) { %>
+
+
+                                    <input
+                                        type="hidden"
+                                        name="_csrf"
+                                        value="<%= csrfToken %>"
+                                    >
+
+
+                                <% } %>
+
+
+                                <button
+                                    type="submit"
+                                    class="action delete"
+                                    title="Delete">
+
+                                    <i class="fa-solid fa-trash"></i>
+
+                                </button>
+
+
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- PRIORITY -->
+
+                    <div class="priority">
+
+                        Priority:
+                        <%= record.priority || 0 %>
+
+                    </div>
+
+
+                </div>
+
+
+            <% }) %>
+
+
+        </div>
+
+
+        <div
+            class="no-results"
+            id="noResults">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <div>
+                No matching achievements found.
+            </div>
+
+        </div>
+
+
+    <% } %>
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+
+<script>
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+const search =
+    document.getElementById(
+        'search'
+    );
+
+const typeFilter =
+    document.getElementById(
+        'typeFilter'
+    );
+
+const yearFilter =
+    document.getElementById(
+        'yearFilter'
+    );
+
+const recordCount =
+    document.getElementById(
+        'recordCount'
+    );
+
+const noResults =
+    document.getElementById(
+        'noResults'
+    );
+
+
+function applyFilters() {
+
+    const searchValue =
+        (
+            search?.value ||
+            ''
+        )
+        .toLowerCase()
+        .trim();
+
+
+    const typeValue =
+        typeFilter?.value ||
+        '';
+
+
+    const yearValue =
+        yearFilter?.value ||
+        '';
+
+
+    const records =
+        document.querySelectorAll(
+            '.record'
+        );
+
+
+    let visible =
+        0;
+
+
+    records.forEach(
+        record => {
+
+
+            const name =
+                record.dataset.name ||
+                '';
+
+
+            const type =
+                record.dataset.type ||
+                '';
+
+
+            const year =
+                record.dataset.year ||
+                '';
+
+
+            const searchMatch =
+                !searchValue ||
+                name.includes(
+                    searchValue
+                );
+
+
+            const typeMatch =
+                !typeValue ||
+                type === typeValue;
+
+
+            const yearMatch =
+                !yearValue ||
+                year === yearValue;
+
+
+            const show =
+                searchMatch &&
+                typeMatch &&
+                yearMatch;
+
+
+            record.style.display =
+                show
+                    ? 'flex'
+                    : 'none';
+
+
+            if (show) {
+
+                visible++;
+
+            }
+
+        }
+    );
+
+
+    if (recordCount) {
+
+        recordCount.textContent =
+            visible;
+
+    }
+
+
+    if (noResults) {
+
+        noResults.style.display =
+            visible === 0
+                ? 'block'
+                : 'none';
+
+    }
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetFilters() {
+
+    if (search) {
+
+        search.value =
+            '';
+
+    }
+
+
+    if (typeFilter) {
+
+        typeFilter.value =
+            '';
+
+    }
+
+
+    if (yearFilter) {
+
+        yearFilter.value =
+            '';
+
+    }
+
+
+    applyFilters();
+
+}
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+search?.addEventListener(
+    'input',
+    applyFilters
+);
+
+
+typeFilter?.addEventListener(
+    'change',
+    applyFilters
+);
+
+
+yearFilter?.addEventListener(
+    'change',
+    applyFilters
+);
+
+
+/* =========================================================
+   DELETE CONFIRM
+========================================================= */
+
+function confirmDelete(
+    name
+) {
+
+    return confirm(
+
+        'Are you sure you want to delete the achievement of "' +
+        name +
+        '"?'
+
+    );
+
+}
+
+
+/* =========================================================
+   INITIAL
+========================================================= */
+
+applyFilters();
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,38 +1,93 @@
 /* =========================================================
-   GYAN JYOTI SCHOOL - FINAL RESPONSIVE CSS
-   Paste/replace in: public/stylesheets/responsive.css
-   Purpose: Mobile + tablet fixes without breaking desktop UI
+   GYAN JYOTI SCHOOL
+   PREMIUM RESPONSIVE.CSS — GLOBAL RESPONSIVE SYSTEM
+   Replace: public/stylesheets/responsive.css
+
+   Designed around the existing EJS pages/header/footer:
+   - Home / hero / carousel
+   - About / Founder / Advantages / Principal
+   - Academics / Top Achievers
+   - Events / Sports / Galleries
+   - Fees
+   - Admission / Registration / Enquiry / Guidelines / Map
+   - Faculty / Developer & Management
+   - Contact
+   - Admin / Dashboard tables
    ========================================================= */
 
-/* -------------------------
-   Global safety
-------------------------- */
-html,
-body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
+
+/* =========================================================
+   01. GLOBAL SAFETY + PERFORMANCE
+   ========================================================= */
+
+html {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
 }
 
-* {
-  box-sizing: border-box;
+body {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
 img,
 video,
+canvas,
+svg,
 iframe {
-  max-width: 100%;
+    max-width: 100%;
+}
+
+img,
+video {
+    height: auto;
 }
 
 img {
-  height: auto;
+    display: block;
 }
 
-table {
-  width: 100%;
+iframe {
+    display: block;
 }
 
-/* Common containers */
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+a {
+    overflow-wrap: anywhere;
+}
+
+section {
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   02. SHARED CONTAINERS
+   ========================================================= */
+
 .container,
 .about-container,
 .contact-container,
@@ -47,928 +102,1407 @@ table {
 .mis-container,
 .dev-container,
 .rd-container,
-.ind-container {
-  max-width: 1200px;
+.ind-container,
+.founder-container,
+.advantages-container,
+.school-map-container,
+.achievers-container {
+    width: min(1200px, 92%);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/* -------------------------
-   Tablet fixes
-------------------------- */
+
+/* =========================================================
+   03. LARGE TABLET — 1100px
+   ========================================================= */
+
 @media (max-width: 1100px) {
-  .container,
-  .about-container,
-  .contact-container,
-  .admission-container,
-  .reg-container,
-  .enquiry-container,
-  .principal-container,
-  .faculty-container,
-  .records-container,
-  .map-container,
-  .fees-container,
-  .mis-container,
-  .dev-container,
-  .rd-container,
-  .ind-container {
-    width: 92% !important;
-    max-width: 100% !important;
-  }
 
-  .main-header .container,
-  .main-header-container {
-    width: 94% !important;
-  }
+    .container,
+    .about-container,
+    .contact-container,
+    .admission-container,
+    .reg-container,
+    .enquiry-container,
+    .principal-container,
+    .faculty-container,
+    .records-container,
+    .map-container,
+    .fees-container,
+    .mis-container,
+    .dev-container,
+    .rd-container,
+    .ind-container,
+    .founder-container,
+    .advantages-container,
+    .school-map-container,
+    .achievers-container {
+        width: 94% !important;
+        max-width: 100% !important;
+    }
 
-  .welcome-grid,
-  .values-grid,
-  .support-grid,
-  .why-grid,
-  .vision-grid,
-  .members-grid,
-  .fees-grid,
-  .mis-grid,
-  .process-grid,
-  .guide-grid,
-  .jrc-grid,
-  .event-card-grid,
-  .timeline,
-  .timeline-grid,
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
+    /* Common 3-column areas → 2 */
+    .welcome-grid,
+    .values-grid,
+    .support-grid,
+    .why-grid,
+    .vision-grid,
+    .members-grid,
+    .fees-grid,
+    .mis-grid,
+    .process-grid,
+    .guide-grid,
+    .jrc-grid,
+    .event-card-grid,
+    .timeline-grid,
+    .stats-grid,
+    .records-grid,
+    .faculty-grid,
+    .events-grid,
+    .guidelines-grid,
+    .dev-team-grid,
+    .records-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
 
-  .contact-grid,
-  .registration-layout,
-  .enquiry-layout,
-  .principal-card,
-  .contact-wrapper,
-  .about-history-card,
-  .highlight-wrapper,
-  .visit-card,
-  .location-wrapper,
-  .map-layout,
-  .form-layout,
-  .dance-wrapper,
-  .march-wrapper,
-  .photo-showcase,
-  .rd-gallery {
-    grid-template-columns: 1fr !important;
-  }
+    /* Two-panel layouts → one */
+    .contact-grid,
+    .registration-layout,
+    .enquiry-layout,
+    .principal-card,
+    .contact-wrapper,
+    .about-history-card,
+    .highlight-wrapper,
+    .visit-card,
+    .location-wrapper,
+    .map-layout,
+    .form-layout,
+    .dance-wrapper,
+    .march-wrapper,
+    .photo-showcase,
+    .rd-gallery,
+    .founder-card {
+        grid-template-columns: 1fr !important;
+    }
 
-  .reg-info-card {
-    position: relative !important;
-    top: 0 !important;
-  }
+    .reg-info-card {
+        position: relative !important;
+        top: auto !important;
+    }
 }
 
-/* -------------------------
-   Main mobile layout
-------------------------- */
+
+/* =========================================================
+   04. TABLET / MOBILE — 900px
+   ========================================================= */
+
 @media (max-width: 900px) {
 
-  body {
-    font-size: 14px;
-  }
+    html {
+        scroll-padding-top: 85px;
+    }
 
-  section {
-    overflow: hidden;
-  }
+    body {
+        font-size: 14px;
+    }
 
-  /* Header handled mostly inside header.ejs */
-  .main-header {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 99999 !important;
-  }
+    section {
+        overflow: hidden;
+    }
 
-  /* Generic hero sizing */
-  .admission-hero,
-  .contact-hero,
-  .principal-hero,
-  .about-page-hero,
-  .faculty-hero,
-  .records-hero,
-  .school-map-hero,
-  .fees-hero,
-  .mis-hero,
-  .team-hero,
-  .dev-hero,
-  .rd-hero,
-  .ind-hero,
-  .reg-hero,
-  .enquiry-hero {
-    min-height: 360px !important;
-    height: auto !important;
-    padding: 70px 0 !important;
-    display: flex !important;
-    align-items: center !important;
-  }
+    /* Header is already controlled by header.ejs.
+       These rules only keep it stable. */
+    .main-header {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 99999 !important;
+    }
 
-  .admission-hero h1,
-  .contact-hero h1,
-  .principal-hero h1,
-  .about-page-hero h1,
-  .faculty-hero h1,
-  .records-hero h1,
-  .school-map-hero h1,
-  .fees-hero h1,
-  .mis-hero h1,
-  .team-hero h1,
-  .dev-hero h1,
-  .rd-hero h1,
-  .ind-hero h1,
-  .reg-hero h1,
-  .enquiry-hero h1 {
-    font-size: 42px !important;
-    line-height: 1.15 !important;
-    text-align: center !important;
-  }
+    .main-header-container {
+        width: 94% !important;
+        max-width: none !important;
+    }
 
-  .admission-hero p,
-  .contact-hero p,
-  .principal-hero p,
-  .about-page-hero p,
-  .faculty-hero p,
-  .records-hero p,
-  .school-map-hero p,
-  .fees-hero p,
-  .mis-hero p,
-  .team-hero p,
-  .dev-hero p,
-  .rd-hero p,
-  .ind-hero p,
-  .reg-hero p,
-  .enquiry-hero p {
-    font-size: 16px !important;
-    line-height: 1.6 !important;
-    text-align: center !important;
-  }
 
-  /* Headings */
-  .section-heading h2,
-  .contact-heading h2,
-  .enquiry-heading h2,
-  .home-section-heading h2,
-  .about-history-text h2,
-  .faculty-heading h2,
-  .records-heading h2,
-  .guide-heading h2,
-  .mis-heading h2,
-  .rd-heading h2,
-  .ind-heading h2,
-  .fees-heading h2,
-  .principal-message h2,
-  .contact-left h2,
-  .highlight-left h2,
-  .visit-content h2,
-  .march-content h2,
-  .dance-content h2 {
-    font-size: 34px !important;
-    line-height: 1.2 !important;
-  }
+    /* =====================================================
+       GENERIC HEROES
+       ===================================================== */
 
-  .section-heading p,
-  .contact-heading p,
-  .enquiry-heading p,
-  .home-section-heading p,
-  .faculty-heading p,
-  .records-heading p,
-  .guide-heading p,
-  .mis-heading p,
-  .rd-heading p,
-  .fees-heading p {
-    font-size: 16px !important;
-    line-height: 1.65 !important;
-  }
+    .admission-hero,
+    .contact-hero,
+    .principal-hero,
+    .about-page-hero,
+    .faculty-hero,
+    .records-hero,
+    .school-map-hero,
+    .fees-hero,
+    .mis-hero,
+    .team-hero,
+    .dev-hero,
+    .rd-hero,
+    .ind-hero,
+    .reg-hero,
+    .enquiry-hero,
+    .founder-hero,
+    .advantages-hero,
+    .event-hero,
+    .achievers-hero {
+        min-height: 350px !important;
+        height: auto !important;
+        padding: 70px 0 !important;
+        display: flex !important;
+        align-items: center !important;
+    }
 
-  /* All major grids become one column */
-  .welcome-grid,
-  .values-grid,
-  .support-grid,
-  .why-grid,
-  .vision-grid,
-  .members-grid,
-  .fees-grid,
-  .mis-grid,
-  .process-grid,
-  .guide-grid,
-  .jrc-grid,
-  .event-card-grid,
-  .timeline,
-  .timeline-grid,
-  .stats-grid,
-  .form-grid,
-  .form-row,
-  .records-grid,
-  .faculty-grid,
-  .events-grid,
-  .guidelines-grid,
-  .process-timeline,
-  .footer-grid {
-    grid-template-columns: 1fr !important;
-  }
+    .admission-hero h1,
+    .contact-hero h1,
+    .principal-hero h1,
+    .about-page-hero h1,
+    .faculty-hero h1,
+    .records-hero h1,
+    .school-map-hero h1,
+    .fees-hero h1,
+    .mis-hero h1,
+    .team-hero h1,
+    .dev-hero h1,
+    .rd-hero h1,
+    .ind-hero h1,
+    .reg-hero h1,
+    .enquiry-hero h1,
+    .founder-hero h1,
+    .advantages-hero h1,
+    .event-hero h1,
+    .achievers-hero h1 {
+        font-size: clamp(34px, 6vw, 48px) !important;
+        line-height: 1.12 !important;
+        overflow-wrap: anywhere;
+    }
 
-  .contact-grid,
-  .registration-layout,
-  .enquiry-layout,
-  .principal-card,
-  .contact-wrapper,
-  .about-history-card,
-  .highlight-wrapper,
-  .visit-card,
-  .location-wrapper,
-  .map-layout,
-  .form-layout,
-  .dance-wrapper,
-  .march-wrapper,
-  .photo-showcase,
-  .rd-gallery,
-  .connect-card,
-  .dev-team-grid {
-    grid-template-columns: 1fr !important;
-  }
+    .admission-hero p,
+    .contact-hero p,
+    .principal-hero p,
+    .about-page-hero p,
+    .faculty-hero p,
+    .records-hero p,
+    .school-map-hero p,
+    .fees-hero p,
+    .mis-hero p,
+    .team-hero p,
+    .dev-hero p,
+    .rd-hero p,
+    .ind-hero p,
+    .reg-hero p,
+    .enquiry-hero p,
+    .founder-hero p,
+    .advantages-hero p,
+    .event-hero p,
+    .achievers-hero p {
+        font-size: 16px !important;
+        line-height: 1.65 !important;
+    }
 
-  /* Cards padding */
-  .registration-card,
-  .enquiry-form-card,
-  .enquiry-info-card,
-  .contact-form-card,
-  .contact-info-card,
-  .reg-info-card,
-  .principal-card,
-  .contact-left,
-  .about-history-card,
-  .highlight-left,
-  .visit-content,
-  .location-info,
-  .fees-card,
-  .mis-card,
-  .value-card,
-  .support-card,
-  .why-card,
-  .vision-card,
-  .member-card,
-  .welcome-box,
-  .stat-card,
-  .event-card,
-  .jrc-card,
-  .timeline-item,
-  .timeline-card,
-  .process-step,
-  .guide-card {
-    padding: 26px !important;
-    border-radius: 22px !important;
-  }
 
-  /* Forms */
-  input,
-  select,
-  textarea {
-    font-size: 14px !important;
-  }
+    /* =====================================================
+       COMMON HEADINGS
+       ===================================================== */
 
-  textarea {
-    min-height: 120px !important;
-  }
+    .section-heading h2,
+    .contact-heading h2,
+    .enquiry-heading h2,
+    .home-section-heading h2,
+    .about-history-text h2,
+    .faculty-heading h2,
+    .records-heading h2,
+    .guide-heading h2,
+    .mis-heading h2,
+    .rd-heading h2,
+    .ind-heading h2,
+    .fees-heading h2,
+    .principal-message h2,
+    .contact-left h2,
+    .highlight-left h2,
+    .visit-content h2,
+    .march-content h2,
+    .dance-content h2,
+    .home-cta-card h2,
+    .founder-content h2,
+    .dev-heading h2,
+    .intro h2 {
+        font-size: clamp(28px, 4.8vw, 38px) !important;
+        line-height: 1.2 !important;
+    }
 
-  button,
-  .submit-btn,
-  .btn,
-  .btn-cta,
-  .btn-primary,
-  .home-primary-btn,
-  .admission-btn,
-  .map-btn,
-  .direction-btn,
-  .visit-btn {
-    width: 100%;
-    max-width: 320px;
-    text-align: center;
-    justify-content: center;
-  }
+    .section-heading p,
+    .contact-heading p,
+    .enquiry-heading p,
+    .home-section-heading p,
+    .faculty-heading p,
+    .records-heading p,
+    .guide-heading p,
+    .mis-heading p,
+    .rd-heading p,
+    .ind-heading p,
+    .fees-heading p,
+    .intro p {
+        font-size: 16px !important;
+        line-height: 1.7 !important;
+    }
 
-  /* Images */
-  .principal-photo,
-  .faculty-image,
-  .topper-image,
-  .team-photo,
-  .dev-photo,
-  .gallery-big img,
-  .gallery-small img,
-  .dance-photo-grid img,
-  .march-images img,
-  .big-photo img,
-  .side-photos img {
-    height: 320px !important;
-  }
 
-  .map-panel iframe,
-  .map-box iframe,
-  .visit-right iframe {
-    min-height: 380px !important;
-  }
+    /* =====================================================
+       MAJOR GRIDS → SINGLE COLUMN
+       ===================================================== */
 
-  /* Table overflow */
-  .table-wrapper,
-  .dashboard-table-wrap,
-  .records-table-wrap {
-    overflow-x: auto !important;
-    width: 100% !important;
-  }
+    .welcome-grid,
+    .values-grid,
+    .support-grid,
+    .why-grid,
+    .vision-grid,
+    .members-grid,
+    .fees-grid,
+    .mis-grid,
+    .process-grid,
+    .guide-grid,
+    .jrc-grid,
+    .event-card-grid,
+    .timeline,
+    .timeline-grid,
+    .stats-grid,
+    .form-grid,
+    .form-row,
+    .records-grid,
+    .faculty-grid,
+    .events-grid,
+    .guidelines-grid,
+    .process-timeline,
+    .footer-grid,
+    .dev-team-grid,
+    .achievement-section .records-grid {
+        grid-template-columns: 1fr !important;
+    }
 
-  table {
-    min-width: 600px;
-  }
+    .contact-grid,
+    .registration-layout,
+    .enquiry-layout,
+    .principal-card,
+    .contact-wrapper,
+    .about-history-card,
+    .highlight-wrapper,
+    .visit-card,
+    .location-wrapper,
+    .map-layout,
+    .form-layout,
+    .dance-wrapper,
+    .march-wrapper,
+    .photo-showcase,
+    .rd-gallery,
+    .connect-card,
+    .founder-card {
+        grid-template-columns: 1fr !important;
+    }
 
-  /* Footer */
-  footer,
-  .footer {
-    text-align: center !important;
-  }
 
-  .footer .container,
-  .footer-container,
-  .footer-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 28px !important;
-  }
+    /* =====================================================
+       COMMON CARDS
+       ===================================================== */
 
-  .footer-section h4::after,
-  .footer h3::after {
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-  }
+    .registration-card,
+    .enquiry-form-card,
+    .enquiry-info-card,
+    .contact-form-card,
+    .contact-info-card,
+    .reg-info-card,
+    .principal-card,
+    .contact-left,
+    .about-history-card,
+    .highlight-left,
+    .visit-content,
+    .location-info,
+    .fees-card,
+    .mis-card,
+    .value-card,
+    .support-card,
+    .why-card,
+    .vision-card,
+    .member-card,
+    .welcome-box,
+    .stat-card,
+    .event-card,
+    .jrc-card,
+    .timeline-item,
+    .timeline-card,
+    .process-step,
+    .guide-card {
+        padding: 26px !important;
+        border-radius: 22px !important;
+    }
+
+
+    /* =====================================================
+       FORMS
+       ===================================================== */
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        max-width: 100%;
+        font-size: 16px !important; /* prevents iOS zoom */
+    }
+
+    textarea {
+        min-height: 120px !important;
+        resize: vertical;
+    }
+
+    button,
+    .submit-btn,
+    .btn,
+    .btn-cta,
+    .btn-primary,
+    .home-primary-btn,
+    .admission-btn,
+    .map-btn,
+    .direction-btn,
+    .visit-btn {
+        max-width: 100%;
+    }
+
+
+    /* =====================================================
+       IMAGES
+       ===================================================== */
+
+    .principal-photo,
+    .faculty-image,
+    .topper-image,
+    .team-photo,
+    .dev-photo,
+    .gallery-big img,
+    .gallery-small img,
+    .dance-photo-grid img,
+    .march-images img,
+    .big-photo img,
+    .side-photos img {
+        height: 320px !important;
+        max-height: 70vw;
+    }
+
+    .founder-photo {
+        height: min(420px, 80vw) !important;
+    }
+
+
+    /* =====================================================
+       MAPS
+       ===================================================== */
+
+    .map-panel iframe,
+    .map-box iframe,
+    .visit-right iframe {
+        width: 100% !important;
+        min-height: 380px !important;
+    }
+
+
+    /* =====================================================
+       TABLES — NEVER BREAK PAGE WIDTH
+       ===================================================== */
+
+    .table-wrapper,
+    .dashboard-table-wrap,
+    .records-table-wrap,
+    .table-responsive {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+    }
+
+    .table-wrapper table,
+    .dashboard-table-wrap table,
+    .records-table-wrap table,
+    .table-responsive table {
+        min-width: 620px;
+        width: 100%;
+    }
+
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    footer,
+    .footer {
+        text-align: center !important;
+    }
+
+    .footer .container,
+    .footer-container,
+    .footer-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+    }
+
+    .footer-section h4::after,
+    .footer h3::after {
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+    }
+
+
+    /* =====================================================
+       BUTTON ROWS
+       ===================================================== */
+
+    .hero-actions,
+    .cta-actions,
+    .connect-actions {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
 }
 
-/* -------------------------
-   Home page mobile fixes
-------------------------- */
+
+/* =========================================================
+   05. HOME PAGE — MOBILE HERO
+   ========================================================= */
+
 @media (max-width: 900px) {
-  .hero-section,
-  .home-hero-section {
-    margin-top: 0 !important;
-  }
 
-  .hero-container,
-  .home-hero-wrapper {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    min-height: auto !important;
-  }
+    .hero-section,
+    .home-hero-section {
+        margin-top: 0 !important;
+        width: 100% !important;
+        overflow: hidden !important;
+    }
 
-  .carousel,
-  .home-carousel {
-    width: 100% !important;
-    order: 1;
-  }
+    .hero-container,
+    .home-hero-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        min-height: auto !important;
+        overflow: hidden !important;
+    }
 
-  .carousel-item,
-  .home-carousel-item {
-    height: 540px !important;
-    min-height: 540px !important;
-  }
+    .carousel,
+    .home-carousel {
+        width: 100% !important;
+        order: 1;
+        overflow: hidden !important;
+    }
 
-  .carousel-content,
-  .home-carousel-content {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 0 20px !important;
-    text-align: center !important;
-    left: 50% !important;
-    top: 50% !important;
-  }
+    .carousel-item,
+    .home-carousel-item {
+        position: relative !important;
+        width: 100% !important;
+        height: 520px !important;
+        min-height: 520px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
 
-  .carousel-content h2,
-  .home-carousel-content h2 {
-    font-size: 42px !important;
-    line-height: 1.15 !important;
-  }
+    .carousel-content,
+    .home-carousel-content {
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: translate(-50%, -50%) !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 58px !important;
+        text-align: center !important;
+        z-index: 20 !important;
+    }
 
-  .carousel-content p,
-  .home-carousel-content p {
-    font-size: 17px !important;
-    line-height: 1.6 !important;
-  }
+    .carousel-content h2,
+    .home-carousel-content h2 {
+        font-size: clamp(30px, 6vw, 40px) !important;
+        line-height: 1.15 !important;
+        margin-bottom: 14px !important;
+        white-space: normal !important;
+    }
 
-  .carousel-btn,
-  .home-carousel-btn {
-    width: 44px !important;
-    height: 44px !important;
-    font-size: 18px !important;
-    border-radius: 10px !important;
-  }
+    .carousel-content p,
+    .home-carousel-content p {
+        max-width: 500px !important;
+        margin: 0 auto 22px !important;
+        font-size: 16px !important;
+        line-height: 1.55 !important;
+    }
 
-  .carousel-btn.prev,
-  .home-carousel-btn.prev {
-    left: 10px !important;
-  }
+    .hero-mini-text {
+        display: inline-block !important;
+        max-width: 280px !important;
+        margin: 0 auto 14px !important;
+        white-space: normal !important;
+    }
 
-  .carousel-btn.next,
-  .home-carousel-btn.next {
-    right: 10px !important;
-  }
+    .carousel-btn,
+    .home-carousel-btn {
+        width: 44px !important;
+        height: 44px !important;
+        flex: 0 0 44px;
+        font-size: 18px !important;
+        border-radius: 10px !important;
+    }
 
-  .home-side-panel,
-  .about-side-panel,
-  .home-side-panel.home-side-panel {
-    width: 100% !important;
-    min-height: auto !important;
-    order: 2;
-    border-left: none !important;
-    border-top: 5px solid #ffc300 !important;
-  }
+    .carousel-btn.prev,
+    .home-carousel-btn.prev {
+        left: 12px !important;
+    }
 
-  .home-side-panel ul,
-  .about-side-panel ul {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
+    .carousel-btn.next,
+    .home-carousel-btn.next {
+        right: 12px !important;
+    }
 
-  .home-side-panel li a,
-  .about-side-panel li a {
-    font-size: 12px !important;
-    padding: 15px 20px !important;
-  }
+    .home-side-panel,
+    .about-side-panel {
+        width: 100% !important;
+        min-height: auto !important;
+        order: 2;
+        border-left: none !important;
+        border-top: 5px solid #ffc300 !important;
+    }
+
+    .home-side-panel ul,
+    .about-side-panel ul {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .home-side-panel li a,
+    .about-side-panel li a {
+        font-size: 12px !important;
+        padding: 15px 20px !important;
+    }
 }
 
-/* -------------------------
-   Small mobile
-------------------------- */
+
+/* =========================================================
+   06. EVENTS / SPORTS — MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .event-showcase-card {
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
+    }
+
+    .event-photo img {
+        width: 100% !important;
+        height: 300px !important;
+        object-fit: cover !important;
+    }
+
+    .event-details {
+        padding: 24px !important;
+    }
+
+    .event-details h2 {
+        font-size: clamp(26px, 6vw, 34px) !important;
+    }
+
+    .event-description {
+        font-size: 16px !important;
+        line-height: 1.75 !important;
+        text-align: left !important;
+    }
+
+    .event-date {
+        font-size: 17px !important;
+    }
+}
+
+
+/* =========================================================
+   07. TOP ACHIEVERS — MOBILE / TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+
+    .achievers-page .records-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .hero-trophy {
+        right: 25px !important;
+        width: 115px !important;
+        height: 115px !important;
+        font-size: 48px !important;
+    }
+}
+
+@media (max-width: 900px) {
+
+    .achievers-page .records-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .achievers-hero {
+        min-height: 330px !important;
+    }
+
+    .achievers-page .hero-trophy {
+        display: none !important;
+    }
+
+    .achievers-page .achievement-card {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .achievers-page .card-image {
+        height: min(330px, 72vw) !important;
+    }
+
+    .achievers-page .card-body {
+        padding: 22px !important;
+    }
+
+    .achievers-page .meta-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .achievers-page .filter-card {
+        overflow: hidden;
+    }
+
+    .achievers-page .filters {
+        display: flex !important;
+        flex-wrap: wrap !important;
+    }
+
+    .achievers-page .filter-btn {
+        min-height: 44px;
+    }
+}
+
+
+/* =========================================================
+   08. FOUNDER / TEAM / DEVELOPER
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .founder-card {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+    }
+
+    .founder-photo {
+        height: min(430px, 82vw) !important;
+    }
+
+    .founder-content p {
+        font-size: 16px !important;
+        line-height: 1.75 !important;
+    }
+
+    .founder-points {
+        flex-direction: column !important;
+    }
+
+    .founder-points div {
+        width: 100%;
+    }
+
+    .dev-team-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .dev-photo {
+        height: min(430px, 82vw) !important;
+    }
+
+    .dev-content h3 {
+        font-size: 27px !important;
+    }
+}
+
+
+/* =========================================================
+   09. SCHOOL MAP
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .location-wrapper {
+        grid-template-columns: 1fr !important;
+        width: 92% !important;
+    }
+
+    .location-info {
+        padding: 30px !important;
+    }
+
+    .location-info h2 {
+        font-size: 32px !important;
+    }
+
+    .map-header {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+
+    .map-panel iframe {
+        min-height: 420px !important;
+        height: 420px !important;
+    }
+
+    .guide-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+
+/* =========================================================
+   10. FEES — TABLE / CARDS
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .fees-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .fees-card {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .fee-table-wrap,
+    .fees-table-wrap {
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .fee-table-wrap table,
+    .fees-table-wrap table {
+        min-width: 600px;
+    }
+}
+
+
+/* =========================================================
+   11. ADMIN / DASHBOARD
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .admin-layout,
+    .dashboard-layout {
+        grid-template-columns: 1fr !important;
+    }
+
+    .admin-sidebar,
+    .dashboard-sidebar {
+        position: relative !important;
+        width: 100% !important;
+        min-height: auto !important;
+    }
+
+    .admin-main,
+    .dashboard-main {
+        margin-left: 0 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 22px !important;
+    }
+
+    .dashboard-cards,
+    .stats-cards,
+    .analytics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .dashboard-cards,
+    .stats-cards,
+    .analytics-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .admin-main,
+    .dashboard-main {
+        padding: 16px !important;
+    }
+}
+
+
+/* =========================================================
+   12. MOBILE HEADER / NAV
+   Header.ejs already contains the main behaviour.
+   This file only protects it from page-specific CSS.
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .main-header {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 999999 !important;
+    }
+
+    .main-header-container {
+        position: relative !important;
+    }
+
+    .navbar {
+        position: fixed !important;
+        top: 0 !important;
+        right: -100% !important;
+        left: auto !important;
+        width: 82% !important;
+        max-width: 370px !important;
+        height: 100dvh !important;
+        min-height: 100vh !important;
+        background: #fff !important;
+        display: block !important;
+        z-index: 9999999 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        transition: right .3s ease !important;
+        box-shadow: -18px 0 45px rgba(0,0,0,.24) !important;
+        padding-top: 90px !important;
+    }
+
+    .navbar.open {
+        right: 0 !important;
+    }
+
+    .nav-menu {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .nav-menu > li {
+        width: 100% !important;
+    }
+
+    .nav-menu > li > a,
+    .nav-dropdown-btn {
+        width: 100% !important;
+        min-height: 58px !important;
+        padding: 18px 24px !important;
+        font-size: 15px !important;
+        justify-content: space-between !important;
+    }
+
+    .dropdown-menu {
+        position: static !important;
+        display: none !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        border-top: none !important;
+    }
+
+    .dropdown.open > .dropdown-menu {
+        display: block !important;
+    }
+
+    .dropdown:hover > .dropdown-menu {
+        display: none !important;
+    }
+
+    .dropdown.open:hover > .dropdown-menu {
+        display: block !important;
+    }
+
+    .dropdown-menu li a {
+        white-space: normal !important;
+        font-size: 14px !important;
+        padding: 15px 30px !important;
+    }
+
+    .hamburger {
+        position: relative !important;
+        z-index: 10000000 !important;
+    }
+
+    body.menu-open {
+        overflow: hidden !important;
+        height: 100dvh !important;
+    }
+}
+
+
+/* =========================================================
+   13. SMALL MOBILE — 600px
+   ========================================================= */
+
 @media (max-width: 600px) {
-  .container,
-  .about-container,
-  .contact-container,
-  .admission-container,
-  .reg-container,
-  .enquiry-container,
-  .principal-container,
-  .faculty-container,
-  .records-container,
-  .map-container,
-  .fees-container,
-  .mis-container,
-  .dev-container,
-  .rd-container,
-  .ind-container {
-    width: 92% !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
 
-  .admission-hero,
-  .contact-hero,
-  .principal-hero,
-  .about-page-hero,
-  .faculty-hero,
-  .records-hero,
-  .school-map-hero,
-  .fees-hero,
-  .mis-hero,
-  .team-hero,
-  .dev-hero,
-  .rd-hero,
-  .ind-hero,
-  .reg-hero,
-  .enquiry-hero {
-    min-height: 320px !important;
-    padding: 55px 0 !important;
-  }
+    .container,
+    .about-container,
+    .contact-container,
+    .admission-container,
+    .reg-container,
+    .enquiry-container,
+    .principal-container,
+    .faculty-container,
+    .records-container,
+    .map-container,
+    .fees-container,
+    .mis-container,
+    .dev-container,
+    .rd-container,
+    .ind-container,
+    .founder-container,
+    .advantages-container,
+    .school-map-container,
+    .achievers-container {
+        width: 92% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
 
-  .admission-hero h1,
-  .contact-hero h1,
-  .principal-hero h1,
-  .about-page-hero h1,
-  .faculty-hero h1,
-  .records-hero h1,
-  .school-map-hero h1,
-  .fees-hero h1,
-  .mis-hero h1,
-  .team-hero h1,
-  .dev-hero h1,
-  .rd-hero h1,
-  .ind-hero h1,
-  .reg-hero h1,
-  .enquiry-hero h1 {
-    font-size: 32px !important;
-  }
+    .admission-hero,
+    .contact-hero,
+    .principal-hero,
+    .about-page-hero,
+    .faculty-hero,
+    .records-hero,
+    .school-map-hero,
+    .fees-hero,
+    .mis-hero,
+    .team-hero,
+    .dev-hero,
+    .rd-hero,
+    .ind-hero,
+    .reg-hero,
+    .enquiry-hero,
+    .founder-hero,
+    .advantages-hero,
+    .event-hero,
+    .achievers-hero {
+        min-height: 300px !important;
+        padding: 52px 0 !important;
+    }
 
-  .carousel-item,
-  .home-carousel-item {
-    height: 500px !important;
-    min-height: 500px !important;
-  }
+    .admission-hero h1,
+    .contact-hero h1,
+    .principal-hero h1,
+    .about-page-hero h1,
+    .faculty-hero h1,
+    .records-hero h1,
+    .school-map-hero h1,
+    .fees-hero h1,
+    .mis-hero h1,
+    .team-hero h1,
+    .dev-hero h1,
+    .rd-hero h1,
+    .ind-hero h1,
+    .reg-hero h1,
+    .enquiry-hero h1,
+    .founder-hero h1,
+    .advantages-hero h1,
+    .event-hero h1,
+    .achievers-hero h1 {
+        font-size: clamp(28px, 8vw, 36px) !important;
+    }
 
-  .carousel-content h2,
-  .home-carousel-content h2 {
-    font-size: 32px !important;
-  }
+    .carousel-item,
+    .home-carousel-item {
+        height: 500px !important;
+        min-height: 500px !important;
+    }
 
-  .carousel-content p,
-  .home-carousel-content p {
-    font-size: 15px !important;
-  }
+    .carousel-content,
+    .home-carousel-content {
+        padding: 0 50px !important;
+    }
 
-  .hero-mini-text,
-  .section-tag,
-  .hero-badge,
-  .contact-badge,
-  .principal-badge,
-  .map-badge,
-  .mis-badge,
-  .team-badge,
-  .dev-badge,
-  .rd-badge,
-  .ind-badge {
-    font-size: 12px !important;
-    padding: 8px 16px !important;
-  }
+    .carousel-content h2,
+    .home-carousel-content h2 {
+        font-size: 32px !important;
+    }
 
-  .section-heading h2,
-  .contact-heading h2,
-  .enquiry-heading h2,
-  .home-section-heading h2,
-  .about-history-text h2,
-  .faculty-heading h2,
-  .records-heading h2,
-  .guide-heading h2,
-  .mis-heading h2,
-  .rd-heading h2,
-  .fees-heading h2,
-  .principal-message h2,
-  .contact-left h2,
-  .highlight-left h2,
-  .visit-content h2,
-  .march-content h2,
-  .dance-content h2,
-  .home-cta-card h2 {
-    font-size: 28px !important;
-  }
+    .carousel-content p,
+    .home-carousel-content p {
+        font-size: 15px !important;
+    }
 
-  .welcome-box,
-  .value-card,
-  .support-card,
-  .why-card,
-  .vision-card,
-  .member-card,
-  .registration-card,
-  .enquiry-form-card,
-  .enquiry-info-card,
-  .contact-form-card,
-  .contact-info-card,
-  .reg-info-card,
-  .principal-card,
-  .contact-left,
-  .about-history-card,
-  .highlight-left,
-  .visit-content,
-  .location-info,
-  .fees-card,
-  .mis-card {
-    padding: 22px !important;
-    border-radius: 18px !important;
-  }
+    .hero-mini-text,
+    .section-tag,
+    .hero-badge,
+    .contact-badge,
+    .principal-badge,
+    .map-badge,
+    .mis-badge,
+    .team-badge,
+    .dev-badge,
+    .rd-badge,
+    .ind-badge {
+        font-size: 11px !important;
+        padding: 8px 15px !important;
+        max-width: 100%;
+    }
 
-  .home-side-panel ul,
-  .about-side-panel ul {
-    grid-template-columns: 1fr !important;
-  }
+    .section-heading h2,
+    .contact-heading h2,
+    .enquiry-heading h2,
+    .home-section-heading h2,
+    .about-history-text h2,
+    .faculty-heading h2,
+    .records-heading h2,
+    .guide-heading h2,
+    .mis-heading h2,
+    .rd-heading h2,
+    .ind-heading h2,
+    .fees-heading h2,
+    .principal-message h2,
+    .contact-left h2,
+    .highlight-left h2,
+    .visit-content h2,
+    .march-content h2,
+    .dance-content h2,
+    .home-cta-card h2,
+    .founder-content h2,
+    .dev-heading h2 {
+        font-size: 27px !important;
+    }
 
-  .principal-photo,
-  .faculty-image,
-  .topper-image,
-  .team-photo,
-  .dev-photo,
-  .gallery-big img,
-  .gallery-small img,
-  .dance-photo-grid img,
-  .march-images img,
-  .big-photo img,
-  .side-photos img {
-    height: 260px !important;
-  }
+    .welcome-box,
+    .value-card,
+    .support-card,
+    .why-card,
+    .vision-card,
+    .member-card,
+    .registration-card,
+    .enquiry-form-card,
+    .enquiry-info-card,
+    .contact-form-card,
+    .contact-info-card,
+    .reg-info-card,
+    .principal-card,
+    .contact-left,
+    .about-history-card,
+    .highlight-left,
+    .visit-content,
+    .location-info,
+    .fees-card,
+    .mis-card,
+    .guide-card {
+        padding: 21px !important;
+        border-radius: 18px !important;
+    }
 
-  .map-panel iframe,
-  .map-box iframe,
-  .visit-right iframe {
-    min-height: 320px !important;
-  }
+    .home-side-panel ul,
+    .about-side-panel ul {
+        grid-template-columns: 1fr !important;
+    }
 
-  .hero-actions,
-  .cta-actions,
-  .connect-actions {
-    flex-direction: column !important;
-    align-items: center !important;
-  }
+    .principal-photo,
+    .faculty-image,
+    .topper-image,
+    .team-photo,
+    .dev-photo,
+    .gallery-big img,
+    .gallery-small img,
+    .dance-photo-grid img,
+    .march-images img,
+    .big-photo img,
+    .side-photos img {
+        height: 260px !important;
+        max-height: 72vw;
+    }
 
-  .hero-actions a,
-  .cta-actions a,
-  .connect-actions a {
-    width: 100%;
-    max-width: 300px;
-    text-align: center;
-  }
+    .founder-photo {
+        height: min(380px, 85vw) !important;
+    }
 
-  .stats-grid {
-    grid-template-columns: 1fr !important;
-  }
+    .map-panel iframe,
+    .map-box iframe,
+    .visit-right iframe {
+        min-height: 320px !important;
+        height: 320px !important;
+    }
 
-  table {
-    min-width: 520px;
-  }
+    .hero-actions,
+    .cta-actions,
+    .connect-actions {
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100%;
+    }
+
+    .hero-actions a,
+    .cta-actions a,
+    .connect-actions a {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    table {
+        min-width: 520px;
+    }
+
+    /* Achiever filter */
+    .achievers-page .filters {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+    }
+
+    .achievers-page .filter-btn {
+        min-width: 0 !important;
+        padding: 0 8px !important;
+        font-size: 10px !important;
+    }
+
+    .achievers-page .meta-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .achievers-page .card-image {
+        height: min(300px, 76vw) !important;
+    }
+
+    .achievers-page .result-value {
+        font-size: 18px !important;
+    }
+
+    .event-photo img {
+        height: min(280px, 68vw) !important;
+    }
 }
 
-/* -------------------------
-   Extra small mobile
-------------------------- */
+
+/* =========================================================
+   14. EXTRA SMALL — 420px
+   ========================================================= */
+
 @media (max-width: 420px) {
-  .carousel-item,
-  .home-carousel-item {
-    height: 460px !important;
-    min-height: 460px !important;
-  }
 
-  .carousel-content h2,
-  .home-carousel-content h2 {
-    font-size: 28px !important;
-  }
+    .main-header-container {
+        width: 94% !important;
+    }
 
-  .carousel-content p,
-  .home-carousel-content p {
-    font-size: 14px !important;
-  }
+    .carousel-item,
+    .home-carousel-item {
+        height: 460px !important;
+        min-height: 460px !important;
+    }
 
-  .carousel-btn,
-  .home-carousel-btn {
-    width: 38px !important;
-    height: 38px !important;
-    font-size: 15px !important;
-  }
+    .carousel-content,
+    .home-carousel-content {
+        padding: 0 48px !important;
+    }
 
-  .section-heading h2,
-  .contact-heading h2,
-  .enquiry-heading h2,
-  .home-section-heading h2,
-  .home-cta-card h2 {
-    font-size: 25px !important;
-  }
+    .carousel-content h2,
+    .home-carousel-content h2 {
+        font-size: 28px !important;
+    }
 
-  .admission-hero h1,
-  .contact-hero h1,
-  .principal-hero h1,
-  .about-page-hero h1,
-  .faculty-hero h1,
-  .records-hero h1,
-  .school-map-hero h1,
-  .fees-hero h1,
-  .mis-hero h1,
-  .team-hero h1,
-  .dev-hero h1,
-  .rd-hero h1,
-  .ind-hero h1,
-  .reg-hero h1,
-  .enquiry-hero h1 {
-    font-size: 28px !important;
-  }
+    .carousel-content p,
+    .home-carousel-content p {
+        font-size: 14px !important;
+    }
+
+    .carousel-btn,
+    .home-carousel-btn {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 15px !important;
+    }
+
+    .home-primary-btn {
+        max-width: 230px !important;
+        width: auto !important;
+        padding: 13px 24px !important;
+    }
+
+    .admission-hero h1,
+    .contact-hero h1,
+    .principal-hero h1,
+    .about-page-hero h1,
+    .faculty-hero h1,
+    .records-hero h1,
+    .school-map-hero h1,
+    .fees-hero h1,
+    .mis-hero h1,
+    .team-hero h1,
+    .dev-hero h1,
+    .rd-hero h1,
+    .ind-hero h1,
+    .reg-hero h1,
+    .enquiry-hero h1,
+    .founder-hero h1,
+    .advantages-hero h1,
+    .event-hero h1,
+    .achievers-hero h1 {
+        font-size: 27px !important;
+    }
+
+    .section-heading h2,
+    .contact-heading h2,
+    .enquiry-heading h2,
+    .home-section-heading h2,
+    .home-cta-card h2 {
+        font-size: 24px !important;
+    }
+
+    .achievers-page .filters {
+        grid-template-columns: 1fr !important;
+    }
+
+    .achievers-page .filter-btn {
+        min-height: 42px !important;
+    }
 }
 
-/* -------------------------
-   Dashboard / admin quick fixes
-------------------------- */
-@media (max-width: 900px) {
-  .admin-layout,
-  .dashboard-layout {
-    grid-template-columns: 1fr !important;
-  }
 
-  .admin-sidebar,
-  .dashboard-sidebar {
-    position: relative !important;
-    width: 100% !important;
-    min-height: auto !important;
-  }
+/* =========================================================
+   15. VERY WIDE / DESKTOP PROTECTION
+   ========================================================= */
 
-  .admin-main,
-  .dashboard-main {
-    margin-left: 0 !important;
-    width: 100% !important;
-    padding: 20px !important;
-  }
+@media (min-width: 1400px) {
 
-  .dashboard-cards,
-  .stats-cards,
-  .analytics-grid {
-    grid-template-columns: 1fr !important;
-  }
+    .container,
+    .about-container,
+    .contact-container,
+    .admission-container,
+    .reg-container,
+    .enquiry-container,
+    .principal-container,
+    .faculty-container,
+    .records-container,
+    .map-container,
+    .fees-container,
+    .mis-container,
+    .dev-container,
+    .rd-container,
+    .ind-container,
+    .founder-container,
+    .advantages-container,
+    .school-map-container,
+    .achievers-container {
+        width: min(1200px, 88%);
+    }
 }
 
-/* -------------------------
-   Prevent white/invisible table text
-------------------------- */
-table,
-table th,
-table td,
-.dashboard-table,
-.dashboard-table th,
-.dashboard-table td {
-  color: #374151 !important;
+
+/* =========================================================
+   16. TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+
+    .achievement-card:hover,
+    .dev-card:hover,
+    .guide-card:hover,
+    .vision-grid div:hover {
+        transform: none !important;
+    }
+
+    /* Avoid hover-only UI traps on phones */
+    .dropdown:hover > .dropdown-menu {
+        display: none !important;
+    }
+
+    button,
+    a {
+        touch-action: manipulation;
+    }
 }
 
-table th,
-.dashboard-table th {
-  color: #001f3f !important;
-  font-weight: 900 !important;
-}
 
-/* -------------------------
-   Accessibility
-------------------------- */
+/* =========================================================
+   17. SAFE MOTION
+   ========================================================= */
+
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-  /* PHASE 1 MOBILE HERO FINAL FIX */
 
-@media (max-width: 900px) {
-  .home-carousel-content {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 0 55px !important;
-    text-align: center !important;
-  }
+    html {
+        scroll-behavior: auto !important;
+    }
 
-  .home-carousel-item {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    height: 520px !important;
-    min-height: 520px !important;
-  }
-
-  .home-carousel-content h2 {
-    font-size: 38px !important;
-    line-height: 1.15 !important;
-    margin-bottom: 14px !important;
-  }
-
-  .home-carousel-content p {
-    font-size: 16px !important;
-    line-height: 1.5 !important;
-    margin-bottom: 24px !important;
-  }
-
-  .hero-mini-text {
-    margin-bottom: 14px !important;
-  }
-
-  .home-carousel-btn.prev {
-    left: 14px !important;
-  }
-
-  .home-carousel-btn.next {
-    right: 14px !important;
-  }
+    *,
+    *::before,
+    *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+    }
 }
 
-@media (max-width: 600px) {
-  .home-carousel-content {
-    padding: 0 50px !important;
-  }
 
-  .home-carousel-item {
-    height: 500px !important;
-    min-height: 500px !important;
-  }
+/* =========================================================
+   18. ACCESSIBILITY / TEXT SAFETY
+   ========================================================= */
 
-  .home-carousel-content h2 {
-    font-size: 32px !important;
-  }
-
-  .home-carousel-content p {
-    font-size: 15px !important;
-  }
-
-  .home-primary-btn {
-    max-width: 230px !important;
-    width: auto !important;
-    padding: 13px 26px !important;
-  }
+:focus-visible {
+    outline: 3px solid #ffc300;
+    outline-offset: 3px;
 }
 
-@media (max-width: 420px) {
-  .home-carousel-content {
-    padding: 0 48px !important;
-  }
-
-  .home-carousel-content h2 {
-    font-size: 28px !important;
-  }
-
-  .home-carousel-btn {
-    width: 40px !important;
-    height: 40px !important;
-  }
-}
-/* FINAL FORCE FIX - MOBILE HOME HERO */
-
-@media (max-width: 900px) {
-  .home-hero-wrapper {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    overflow: hidden !important;
-  }
-
-  .home-carousel {
-    width: 100% !important;
-    overflow: hidden !important;
-  }
-
-  .home-carousel-item {
-    height: 520px !important;
-    min-height: 520px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    position: relative !important;
-  }
-
-  .home-carousel-content {
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    right: auto !important;
-    bottom: auto !important;
-    transform: translate(-50%, -50%) !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 0 58px !important;
-    text-align: center !important;
-    z-index: 20 !important;
-  }
-
-  .home-carousel-content h2 {
-    font-size: 34px !important;
-    line-height: 1.15 !important;
-    text-align: center !important;
-    margin: 0 0 14px !important;
-    white-space: normal !important;
-  }
-
-  .home-carousel-content p {
-    font-size: 15px !important;
-    text-align: center !important;
-    margin: 0 auto 22px !important;
-    max-width: 320px !important;
-  }
-
-  .hero-mini-text {
-    display: inline-block !important;
-    margin: 0 auto 14px !important;
-    max-width: 260px !important;
-    white-space: normal !important;
-  }
-
-  .home-primary-btn {
-    width: auto !important;
-    max-width: 230px !important;
-    padding: 13px 25px !important;
-  }
-
-  .home-carousel-btn.prev {
-    left: 12px !important;
-  }
-
-  .home-carousel-btn.next {
-    right: 12px !important;
-  }
-
-  .home-side-panel {
-    width: 100% !important;
-    min-height: auto !important;
-  }
+input,
+select,
+textarea {
+    min-width: 0;
 }
 
-@media (max-width: 420px) {
-  .home-carousel-content {
-    padding: 0 52px !important;
-  }
-
-  .home-carousel-content h2 {
-    font-size: 30px !important;
-  }
-
-  .home-carousel-item {
-    height: 500px !important;
-    min-height: 500px !important;
-  }
+pre,
+code {
+    max-width: 100%;
+    overflow-x: auto;
 }
+
+svg,
+i {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   19. FINAL OVERFLOW GUARD
+   ========================================================= */
+
+.row,
+.grid,
+.flex {
+    min-width: 0;
+}
+
+[class*="grid"] > *,
+[class*="wrapper"] > *,
+[class*="layout"] > * {
+    min-width: 0;
+}
+
+.hero-content,
+.carousel-content,
+.home-carousel-content,
+.event-details,
+.card-body,
+.founder-content,
+.dev-content {
+    overflow-wrap: anywhere;
 }

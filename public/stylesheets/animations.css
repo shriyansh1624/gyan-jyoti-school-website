@@ -1,0 +1,102 @@
+/* ===================================
+   HERO IMAGE ANIMATION
+=================================== */
+
+.home-carousel-item{
+    overflow:hidden;
+}
+
+.home-carousel-item::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:inherit;
+    background-size:cover;
+    background-position:center;
+    z-index:-1;
+
+    animation:kenBurns 12s ease-in-out infinite alternate;
+}
+
+@keyframes kenBurns{
+
+0%{
+    transform:scale(1);
+}
+
+100%{
+    transform:scale(1.08);
+}
+
+}
+
+/* Fade */
+
+.home-carousel-item{
+
+animation:heroFade .8s ease;
+
+}
+
+@keyframes heroFade{
+
+from{
+opacity:0;
+}
+
+to{
+opacity:1;
+}
+
+}
+.hero-mini-text,
+.home-carousel-content h2,
+.home-carousel-content p,
+.home-primary-btn{
+
+opacity:0;
+
+transform:translateY(40px);
+
+}
+.home-carousel-overlay::after{
+
+content:"";
+
+position:absolute;
+
+top:-40%;
+
+left:-20%;
+
+width:150%;
+
+height:180%;
+
+background:
+
+radial-gradient(circle,
+rgba(255,255,255,.12),
+transparent 55%);
+
+animation:floatingLight 18s linear infinite;
+
+pointer-events:none;
+
+}
+
+@keyframes floatingLight{
+
+0%{
+
+transform:translateX(-8%) rotate(0deg);
+
+}
+
+100%{
+
+transform:translateX(8%) rotate(360deg);
+
+}
+
+}

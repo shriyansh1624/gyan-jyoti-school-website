@@ -1,167 +1,3397 @@
-<footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>About School</h4>
-                <p>Gyan Jyoti International School is committed to providing quality education and holistic development of students.</p>
-            </div>
+<!-- =========================================================
+     GYAN JYOTI — PREMIUM FOOTER
+     Backend-safe replacement:
+     - Keeps schoolInfo dynamic fields
+     - Keeps existing social links
+     - Keeps existing contact/map data
+     - Keeps existing routes
+     - No backend/controller/model changes
+========================================================= -->
 
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about/vision">About Us</a></li>
-                    <li><a href="#">Academics</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
-            </div>
+<section class="gj-footer-cta">
+    <div class="gj-footer-orb gj-footer-orb-1"></div>
+    <div class="gj-footer-orb gj-footer-orb-2"></div>
 
-            <div class="footer-section">
-                <h4>Contact Info</h4>
-              <% if (typeof schoolInfo !== 'undefined' && schoolInfo) { %>
-                    <p><i class="fas fa-map-marker-alt"></i> <%= schoolInfo.address %></p>
-                    <p><i class="fas fa-phone"></i> <%= schoolInfo.phone %></p>
-                    <p><i class="fas fa-envelope"></i> <%= schoolInfo.email %></p>
-                <% } %>
-            </div>
+    <div class="gj-footer-container gj-footer-cta-inner">
 
-            <div class="footer-section">
-                <h4>Follow Us</h4>
-                <div class="footer-social">
-                   <% if (typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.socialLinks) { %>
-    <a href="<%= schoolInfo.socialLinks.facebook %>" target="_blank"><i class="fab fa-facebook"></i></a>
-    <a href="<%= schoolInfo.socialLinks.instagram %>" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="<%= schoolInfo.socialLinks.youtube %>" target="_blank"><i class="fab fa-youtube"></i></a>
-    <a href="<%= schoolInfo.socialLinks.whatsapp %>" target="_blank"><i class="fab fa-whatsapp"></i></a>
-<% } %>
-                </div>
-            </div>
+        <div class="gj-footer-cta-copy">
+            <span class="gj-footer-eyebrow">
+                <i class="fas fa-sparkles"></i>
+                BEGIN THE JOURNEY
+            </span>
+
+            <h2>
+                Give Your Child a
+                <span>Brighter Tomorrow.</span>
+            </h2>
+
+            <p>
+                Discover a learning environment where knowledge,
+                character, confidence and creativity grow together.
+            </p>
         </div>
 
-        <div class="footer-bottom">
-            <p>&copy; 2026 Gyan Jyoti School. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+        <div class="gj-footer-cta-actions">
+            <a href="/admission/process" class="gj-footer-btn gj-footer-btn-gold">
+                Start Admission
+                <i class="fas fa-arrow-right"></i>
+            </a>
+
+            <a href="/contact" class="gj-footer-btn gj-footer-btn-glass">
+                Visit Our Campus
+                <i class="fas fa-location-dot"></i>
+            </a>
         </div>
+
     </div>
+</section>
+
+
+<footer class="gj-premium-footer">
+
+    <div class="gj-footer-noise"></div>
+    <div class="gj-footer-grid-bg"></div>
+
+    <div class="gj-footer-glow gj-footer-glow-1"></div>
+    <div class="gj-footer-glow gj-footer-glow-2"></div>
+
+    <div class="gj-footer-container">
+
+        <!-- =====================================================
+             TOP BRAND / TRUST BAR
+        ====================================================== -->
+
+        <div class="gj-footer-brand-row">
+
+            <div class="gj-footer-brand">
+
+                <div class="gj-footer-logo-wrap">
+                    <img
+                        src="/images/logo.png"
+                        alt="Gyan Jyoti International School"
+                        loading="lazy"
+                    >
+                </div>
+
+                <div class="gj-footer-brand-text">
+                    <strong>GYAN JYOTI</strong>
+                    <span>INTERNATIONAL SCHOOL</span>
+                </div>
+
+            </div>
+
+
+            <div class="gj-footer-trust">
+
+                <div class="gj-trust-item">
+                    <span class="gj-trust-icon">
+                        <i class="fas fa-shield-halved"></i>
+                    </span>
+                    <div>
+                        <strong>Safe & Secure</strong>
+                        <small>Student-first environment</small>
+                    </div>
+                </div>
+
+                <div class="gj-trust-item">
+                    <span class="gj-trust-icon">
+                        <i class="fas fa-award"></i>
+                    </span>
+                    <div>
+                        <strong>Excellence</strong>
+                        <small>Learning beyond classrooms</small>
+                    </div>
+                </div>
+
+                <div class="gj-trust-item">
+                    <span class="gj-trust-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </span>
+                    <div>
+                        <strong>Future Ready</strong>
+                        <small>Skills for tomorrow</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="gj-footer-main">
+
+            <!-- =================================================
+                 ABOUT
+            ================================================== -->
+
+            <div class="gj-footer-column gj-footer-about">
+
+                <span class="gj-footer-kicker">ABOUT OUR SCHOOL</span>
+
+                <h3>
+                    Education with
+                    <em>Purpose.</em>
+                </h3>
+
+                <p>
+                    Gyan Jyoti International School is committed to
+                    academic excellence, innovation, discipline and
+                    holistic development of every child in a safe
+                    and inspiring learning environment.
+                </p>
+
+                <a href="/about" class="gj-footer-readmore">
+                    Discover Our Story
+                    <span>
+                        <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
+
+
+                <!-- Socials -->
+
+                <div class="gj-footer-social-label">
+                    FOLLOW OUR JOURNEY
+                </div>
+
+                <div class="gj-footer-social">
+
+                    <% if(typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.socialLinks && schoolInfo.socialLinks.facebook){ %>
+                        <a
+                            href="<%= schoolInfo.socialLinks.facebook %>"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Facebook"
+                        >
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    <% } %>
+
+                    <% if(typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.socialLinks && schoolInfo.socialLinks.instagram){ %>
+                        <a
+                            href="<%= schoolInfo.socialLinks.instagram %>"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Instagram"
+                        >
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    <% } %>
+
+                    <% if(typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.socialLinks && schoolInfo.socialLinks.youtube){ %>
+                        <a
+                            href="<%= schoolInfo.socialLinks.youtube %>"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="YouTube"
+                        >
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    <% } %>
+
+                    <% if(typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.socialLinks && schoolInfo.socialLinks.whatsapp){ %>
+                        <a
+                            href="<%= schoolInfo.socialLinks.whatsapp %>"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="WhatsApp"
+                        >
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    <% } %>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 EXPLORE
+            ================================================== -->
+
+            <div class="gj-footer-column">
+
+                <span class="gj-footer-kicker">EXPLORE</span>
+
+                <h3>Quick Links</h3>
+
+                <ul class="gj-footer-links">
+
+                    <li>
+                        <a href="/">
+                            <span class="gj-link-number">01</span>
+                            <span>Home</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/about/vision">
+                            <span class="gj-link-number">02</span>
+                            <span>About Us</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/academics">
+                            <span class="gj-link-number">03</span>
+                            <span>Academics</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/events">
+                            <span class="gj-link-number">04</span>
+                            <span>Events</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/gallery">
+                            <span class="gj-link-number">05</span>
+                            <span>Gallery</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/contact">
+                            <span class="gj-link-number">06</span>
+                            <span>Contact</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- =================================================
+                 ADMISSIONS
+            ================================================== -->
+
+            <div class="gj-footer-column">
+
+                <span class="gj-footer-kicker">JOIN US</span>
+
+                <h3>Admissions</h3>
+
+                <div class="gj-footer-admission-card">
+
+                    <div class="gj-footer-admission-icon">
+                        <i class="fas fa-school"></i>
+                    </div>
+
+                    <div>
+                        <strong>Admissions Open</strong>
+                        <span>2026–27 Academic Session</span>
+                    </div>
+
+                </div>
+
+
+                <div class="gj-footer-admission-links">
+
+                    <a href="/admission/process">
+                        <span>
+                            <i class="fas fa-file-pen"></i>
+                        </span>
+                        <div>
+                            <strong>Admission Process</strong>
+                            <small>Know the complete process</small>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+
+                    <a href="/fees">
+                        <span>
+                            <i class="fas fa-receipt"></i>
+                        </span>
+                        <div>
+                            <strong>Fee Structure</strong>
+                            <small>View available fee details</small>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+
+                    <a href="/contact">
+                        <span>
+                            <i class="fas fa-calendar-check"></i>
+                        </span>
+                        <div>
+                            <strong>Campus Visit</strong>
+                            <small>Plan your visit with us</small>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CONTACT
+            ================================================== -->
+
+            <div class="gj-footer-column gj-footer-contact-column">
+
+                <span class="gj-footer-kicker">GET IN TOUCH</span>
+
+                <h3>Contact Us</h3>
+
+                <% if(typeof schoolInfo !== 'undefined' && schoolInfo){ %>
+
+                    <div class="gj-footer-contact-list">
+
+                        <a
+                            href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(schoolInfo.address || '') %>"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="gj-footer-contact-item"
+                        >
+                            <span class="gj-contact-icon">
+                                <i class="fas fa-location-dot"></i>
+                            </span>
+
+                            <span class="gj-contact-copy">
+                                <small>VISIT US</small>
+                                <strong><%= schoolInfo.address %></strong>
+                            </span>
+                        </a>
+
+
+                        <a
+                            href="tel:<%= schoolInfo.phone %>"
+                            class="gj-footer-contact-item"
+                        >
+                            <span class="gj-contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </span>
+
+                            <span class="gj-contact-copy">
+                                <small>CALL US</small>
+                                <strong><%= schoolInfo.phone %></strong>
+                            </span>
+                        </a>
+
+
+                        <a
+                            href="mailto:<%= schoolInfo.email %>"
+                            class="gj-footer-contact-item"
+                        >
+                            <span class="gj-contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+
+                            <span class="gj-contact-copy">
+                                <small>EMAIL US</small>
+                                <strong><%= schoolInfo.email %></strong>
+                            </span>
+                        </a>
+
+                    </div>
+
+                <% } %>
+
+
+                <!-- Newsletter is UI-only, exactly like the existing
+                     footer: it does not call a backend endpoint. -->
+
+                <div class="gj-footer-newsletter">
+
+                    <span class="gj-newsletter-label">
+                        SCHOOL UPDATES
+                    </span>
+
+                    <p>
+                        Get important announcements and school updates.
+                    </p>
+
+                    <form
+                        class="gj-newsletter-form"
+                        novalidate
+                    >
+                        <div class="gj-newsletter-input">
+
+                            <i class="fas fa-envelope"></i>
+
+                            <input
+                                type="email"
+                                name="newsletterEmail"
+                                placeholder="Your email address"
+                                autocomplete="email"
+                                aria-label="Email address"
+                                required
+                            >
+
+                            <button
+                                type="submit"
+                                aria-label="Subscribe"
+                            >
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+
+                        </div>
+
+                        <small class="gj-newsletter-status"></small>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             MAP / CAMPUS BAR
+        ====================================================== -->
+
+        <% if(typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.mapEmbedUrl){ %>
+
+            <div class="gj-footer-campus">
+
+                <div class="gj-footer-campus-copy">
+
+                    <span class="gj-footer-kicker">
+                        FIND US
+                    </span>
+
+                    <h3>
+                        Come and
+                        <em>experience</em>
+                        our campus.
+                    </h3>
+
+                    <p>
+                        A welcoming environment designed to make
+                        learning meaningful, engaging and memorable.
+                    </p>
+
+                    <a
+                        href="https://www.google.com/maps/search/?api=1&query=<%= encodeURIComponent(schoolInfo.address || '') %>"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="gj-footer-map-btn"
+                    >
+                        Open in Maps
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </a>
+
+                </div>
+
+
+                <div class="gj-footer-map">
+
+                    <div class="gj-map-overlay">
+
+                        <span>
+                            <i class="fas fa-location-dot"></i>
+                        </span>
+
+                        <strong>Gyan Jyoti International School</strong>
+
+                    </div>
+
+                    <iframe
+                        src="<%= schoolInfo.mapEmbedUrl %>"
+                        loading="lazy"
+                        title="Gyan Jyoti International School location"
+                        allowfullscreen
+                    ></iframe>
+
+                </div>
+
+            </div>
+
+        <% } %>
+
+
+        <!-- =====================================================
+             BOTTOM
+        ====================================================== -->
+
+        <div class="gj-footer-bottom">
+
+            <div class="gj-footer-copyright">
+
+                <span class="gj-copyright-symbol">
+                    ©
+                </span>
+
+                <span>
+                    <%= new Date().getFullYear() %>
+                    <strong> Gyan Jyoti International School</strong>
+                </span>
+
+            </div>
+
+
+            <div class="gj-footer-legal">
+
+                <a href="/privacy-policy">
+                    Privacy
+                </a>
+
+                <span></span>
+
+                <a href="/terms">
+                    Terms
+                </a>
+
+                <span></span>
+
+                <a href="/contact">
+                    Support
+                </a>
+
+            </div>
+
+
+            <div class="gj-footer-credit">
+
+                Crafted with
+                <i class="fas fa-heart"></i>
+                by
+                <strong>Gyan Jyoti Web Team</strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </footer>
 
-<!-- WhatsApp Float Button -->
-<% if (typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.socialLinks && schoolInfo.socialLinks.whatsapp) { %>
-    <a href="<%= schoolInfo.socialLinks.whatsapp %>" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+
+<!-- =========================================================
+     FLOATING ACTIONS
+========================================================= -->
+
+<% if(typeof schoolInfo !== 'undefined' && schoolInfo && schoolInfo.socialLinks && schoolInfo.socialLinks.whatsapp){ %>
+
+    <a
+        href="<%= schoolInfo.socialLinks.whatsapp %>"
+        class="gj-whatsapp-float"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat on WhatsApp"
+    >
+        <span class="gj-whatsapp-ring"></span>
         <i class="fab fa-whatsapp"></i>
+        <span class="gj-whatsapp-tooltip">
+            Chat with us
+        </span>
     </a>
+
 <% } %>
 
+
+<button
+    id="gjTopBtn"
+    class="gj-top-btn"
+    type="button"
+    aria-label="Back to top"
+>
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+
 <style>
-    .footer {
-        background: #001f3f;
-        color: white;
-        padding: 50px 0 20px;
-        margin-top: 60px;
+
+/* =========================================================
+   GYAN JYOTI PREMIUM FOOTER — DESIGN SYSTEM
+========================================================= */
+
+.gj-footer-cta,
+.gj-premium-footer {
+
+    --gj-navy: #001f3f;
+    --gj-navy-2: #003d70;
+    --gj-blue: #075d98;
+    --gj-gold: #ffc300;
+    --gj-gold-light: #ffdf70;
+    --gj-white: #ffffff;
+    --gj-text: rgba(255,255,255,.72);
+    --gj-line: rgba(255,255,255,.11);
+
+    font-family: inherit;
+
+}
+
+
+.gj-footer-container {
+
+    width: min(1180px, 90%);
+
+    margin: 0 auto;
+
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.gj-footer-cta {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 75px 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00162d 0%,
+            #00315c 52%,
+            #005487 100%
+        );
+
+    color: #fff;
+
+}
+
+
+.gj-footer-cta::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: .16;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.25) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.25) 1px,
+            transparent 1px
+        );
+
+    background-size: 55px 55px;
+
+    mask-image:
+        linear-gradient(
+            90deg,
+            black,
+            transparent 85%
+        );
+
+}
+
+
+.gj-footer-cta-inner {
+
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 50px;
+
+}
+
+
+.gj-footer-eyebrow,
+.gj-footer-kicker {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: var(--gj-gold);
+
+    font-size: 12px;
+
+    font-weight: 950;
+
+    letter-spacing: 2px;
+
+}
+
+
+.gj-footer-eyebrow i {
+
+    font-size: 12px;
+
+}
+
+
+.gj-footer-cta-copy h2 {
+
+    max-width: 760px;
+
+    margin: 14px 0 12px;
+
+    color: #fff;
+
+    font-size: clamp(38px, 5vw, 63px);
+
+    line-height: 1.02;
+
+    letter-spacing: -2.5px;
+
+    font-weight: 950;
+
+}
+
+
+.gj-footer-cta-copy h2 span {
+
+    display: block;
+
+    color: var(--gj-gold);
+
+}
+
+
+.gj-footer-cta-copy p {
+
+    max-width: 670px;
+
+    margin: 0;
+
+    color: rgba(255,255,255,.67);
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+}
+
+
+.gj-footer-cta-actions {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    min-width: 210px;
+
+}
+
+
+.gj-footer-btn {
+
+    min-height: 51px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 11px;
+
+    padding: 13px 20px;
+
+    border-radius: 999px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 950;
+
+    transition: .3s ease;
+
+}
+
+
+.gj-footer-btn:hover {
+
+    transform: translateY(-4px);
+
+    text-decoration: none;
+
+}
+
+
+.gj-footer-btn-gold {
+
+    color: var(--gj-navy);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--gj-gold),
+            var(--gj-gold-light)
+        );
+
+    box-shadow:
+        0 18px 40px rgba(255,195,0,.2);
+
+}
+
+
+.gj-footer-btn-gold:hover {
+
+    color: var(--gj-navy);
+
+    box-shadow:
+        0 22px 48px rgba(255,195,0,.35);
+
+}
+
+
+.gj-footer-btn-glass {
+
+    color: #fff;
+
+    border: 1px solid rgba(255,255,255,.2);
+
+    background: rgba(255,255,255,.06);
+
+    backdrop-filter: blur(12px);
+
+}
+
+
+.gj-footer-btn-glass:hover {
+
+    color: var(--gj-navy);
+
+    background: #fff;
+
+}
+
+
+/* Orbs */
+
+.gj-footer-orb {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+}
+
+
+.gj-footer-orb-1 {
+
+    width: 300px;
+
+    height: 300px;
+
+    right: 5%;
+
+    top: -210px;
+
+    border: 1px solid rgba(255,195,0,.22);
+
+    box-shadow:
+        0 0 0 55px rgba(255,195,0,.025),
+        0 0 0 110px rgba(255,195,0,.015);
+
+}
+
+
+.gj-footer-orb-2 {
+
+    width: 180px;
+
+    height: 180px;
+
+    left: 38%;
+
+    bottom: -145px;
+
+    border: 1px solid rgba(255,255,255,.11);
+
+}
+
+
+/* =========================================================
+   MAIN FOOTER
+========================================================= */
+
+.gj-premium-footer {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 0 0 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #001426 0%,
+            #001e39 48%,
+            #00345f 100%
+        );
+
+    color: #fff;
+
+}
+
+
+.gj-footer-noise {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: .035;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+
+}
+
+
+.gj-footer-grid-bg {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: .045;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.35) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.35) 1px,
+            transparent 1px
+        );
+
+    background-size: 80px 80px;
+
+    mask-image:
+        radial-gradient(
+            circle at 50% 0%,
+            black,
+            transparent 72%
+        );
+
+}
+
+
+.gj-footer-glow {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(80px);
+
+    pointer-events: none;
+
+}
+
+
+.gj-footer-glow-1 {
+
+    width: 360px;
+
+    height: 360px;
+
+    left: -170px;
+
+    top: 90px;
+
+    background: rgba(255,195,0,.13);
+
+}
+
+
+.gj-footer-glow-2 {
+
+    width: 450px;
+
+    height: 450px;
+
+    right: -220px;
+
+    bottom: -180px;
+
+    background: rgba(0,132,204,.16);
+
+}
+
+
+/* =========================================================
+   BRAND ROW
+========================================================= */
+
+.gj-footer-brand-row {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 35px;
+
+    padding: 42px 0;
+
+    border-bottom: 1px solid var(--gj-line);
+
+}
+
+
+.gj-footer-brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+
+.gj-footer-logo-wrap {
+
+    width: 66px;
+
+    height: 66px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 19px;
+
+    background: #fff;
+
+    border: 1px solid rgba(255,255,255,.25);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.25);
+
+    overflow: hidden;
+
+}
+
+
+.gj-footer-logo-wrap img {
+
+    width: 52px;
+
+    height: 52px;
+
+    object-fit: contain;
+
+}
+
+
+.gj-footer-brand-text strong {
+
+    display: block;
+
+    color: #fff;
+
+    font-size: 23px;
+
+    font-weight: 950;
+
+    letter-spacing: .5px;
+
+    line-height: 1;
+
+}
+
+
+.gj-footer-brand-text span {
+
+    display: block;
+
+    margin-top: 6px;
+
+    color: var(--gj-gold);
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: 2.2px;
+
+}
+
+
+.gj-footer-trust {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+.gj-trust-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 13px;
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: 14px;
+
+    background: rgba(255,255,255,.045);
+
+    backdrop-filter: blur(10px);
+
+}
+
+
+.gj-trust-icon {
+
+    width: 35px;
+
+    height: 35px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: rgba(255,195,0,.1);
+
+    color: var(--gj-gold);
+
+    font-size: 13px;
+
+}
+
+
+.gj-trust-item strong {
+
+    display: block;
+
+    color: #fff;
+
+    font-size: 11px;
+
+}
+
+
+.gj-trust-item small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: rgba(255,255,255,.42);
+
+    font-size: 9px;
+
+}
+
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.gj-footer-main {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns:
+        1.35fr
+        .82fr
+        .95fr
+        1.18fr;
+
+    gap: 50px;
+
+    padding: 70px 0 65px;
+
+}
+
+
+.gj-footer-column {
+
+    min-width: 0;
+
+}
+
+
+.gj-footer-column h3 {
+
+    margin: 10px 0 25px;
+
+    color: #fff;
+
+    font-size: 22px;
+
+    line-height: 1.1;
+
+    font-weight: 900;
+
+}
+
+
+.gj-footer-column h3::after {
+
+    content: "";
+
+    display: block;
+
+    width: 34px;
+
+    height: 3px;
+
+    margin-top: 11px;
+
+    border-radius: 10px;
+
+    background: var(--gj-gold);
+
+}
+
+
+.gj-footer-about h3 em {
+
+    color: var(--gj-gold);
+
+    font-style: normal;
+
+}
+
+
+.gj-footer-about p {
+
+    max-width: 360px;
+
+    margin: 0;
+
+    color: rgba(255,255,255,.58);
+
+    font-size: 13px;
+
+    line-height: 1.85;
+
+}
+
+
+.gj-footer-readmore {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-top: 21px;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 900;
+
+}
+
+
+.gj-footer-readmore:hover {
+
+    color: var(--gj-gold);
+
+    text-decoration: none;
+
+}
+
+
+.gj-footer-readmore span {
+
+    width: 29px;
+
+    height: 29px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--gj-gold);
+
+    color: var(--gj-navy);
+
+    transition: .3s;
+
+}
+
+
+.gj-footer-readmore:hover span {
+
+    transform: translateX(4px);
+
+}
+
+
+/* =========================================================
+   SOCIAL
+========================================================= */
+
+.gj-footer-social-label {
+
+    margin-top: 31px;
+
+    margin-bottom: 12px;
+
+    color: rgba(255,255,255,.38);
+
+    font-size: 10px;
+
+    font-weight: 950;
+
+    letter-spacing: 1.7px;
+
+}
+
+
+.gj-footer-social {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+}
+
+
+.gj-footer-social a {
+
+    position: relative;
+
+    width: 39px;
+
+    height: 39px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,.055);
+
+    color: #fff;
+
+    text-decoration: none;
+
+    overflow: hidden;
+
+    transition: .3s ease;
+
+}
+
+
+.gj-footer-social a::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.2),
+            transparent 55%
+        );
+
+    opacity: 0;
+
+    transition: .3s;
+
+}
+
+
+.gj-footer-social a i {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+.gj-footer-social a:hover {
+
+    color: var(--gj-navy);
+
+    background: var(--gj-gold);
+
+    border-color: var(--gj-gold);
+
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 12px 25px rgba(255,195,0,.2);
+
+}
+
+
+.gj-footer-social a:hover::before {
+
+    opacity: 1;
+
+}
+
+
+/* =========================================================
+   QUICK LINKS
+========================================================= */
+
+.gj-footer-links {
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+
+.gj-footer-links li {
+
+    margin-bottom: 3px;
+
+}
+
+
+.gj-footer-links a {
+
+    display: grid;
+
+    grid-template-columns: 26px 1fr 15px;
+
+    align-items: center;
+
+    gap: 5px;
+
+    min-height: 38px;
+
+    border-bottom: 1px solid rgba(255,255,255,.055);
+
+    color: rgba(255,255,255,.58);
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+    transition: .3s;
+
+}
+
+
+.gj-link-number {
+
+    color: rgba(255,195,0,.48);
+
+    font-size: 10px;
+
+    font-weight: 950;
+
+}
+
+
+.gj-footer-links a > i {
+
+    color: var(--gj-gold);
+
+    font-size: 10px;
+
+    opacity: 0;
+
+    transform: translateX(-6px);
+
+    transition: .3s;
+
+}
+
+
+.gj-footer-links a:hover {
+
+    color: #fff;
+
+    padding-left: 5px;
+
+}
+
+
+.gj-footer-links a:hover > i {
+
+    opacity: 1;
+
+    transform: translateX(0);
+
+}
+
+
+/* =========================================================
+   ADMISSION CARD
+========================================================= */
+
+.gj-footer-admission-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 13px;
+
+    margin-bottom: 12px;
+
+    border: 1px solid rgba(255,195,0,.17);
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,195,0,.1),
+            rgba(255,255,255,.035)
+        );
+
+}
+
+
+.gj-footer-admission-icon {
+
+    width: 39px;
+
+    height: 39px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    background: var(--gj-gold);
+
+    color: var(--gj-navy);
+
+}
+
+
+.gj-footer-admission-card strong {
+
+    display: block;
+
+    color: #fff;
+
+    font-size: 12px;
+
+}
+
+
+.gj-footer-admission-card span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: rgba(255,255,255,.45);
+
+    font-size: 10px;
+
+}
+
+
+.gj-footer-admission-links {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+}
+
+
+.gj-footer-admission-links a {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    min-width: 0;
+
+    padding: 9px;
+
+    border-radius: 12px;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    transition: .3s;
+
+}
+
+
+.gj-footer-admission-links a:hover {
+
+    background: rgba(255,255,255,.06);
+
+    transform: translateX(4px);
+
+}
+
+
+.gj-footer-admission-links a > span {
+
+    width: 31px;
+
+    height: 31px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    background: rgba(255,255,255,.07);
+
+    color: var(--gj-gold);
+
+    font-size: 13px;
+
+}
+
+
+.gj-footer-admission-links a div {
+
+    min-width: 0;
+
+    flex: 1;
+
+}
+
+
+.gj-footer-admission-links strong {
+
+    display: block;
+
+    color: rgba(255,255,255,.86);
+
+    font-size: 11px;
+
+}
+
+
+.gj-footer-admission-links small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    overflow: hidden;
+
+    color: rgba(255,255,255,.37);
+
+    font-size: 9px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.gj-footer-admission-links > a > i {
+
+    color: rgba(255,195,0,.55);
+
+    font-size: 10px;
+
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.gj-footer-contact-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 11px;
+
+}
+
+
+.gj-footer-contact-item {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    padding: 8px 0;
+
+    color: inherit;
+
+    text-decoration: none;
+
+    border-bottom: 1px solid rgba(255,255,255,.045);
+
+}
+
+
+.gj-footer-contact-item:hover {
+
+    color: inherit;
+
+    text-decoration: none;
+
+}
+
+
+.gj-contact-icon {
+
+    width: 34px;
+
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: rgba(255,195,0,.08);
+
+    color: var(--gj-gold);
+
+    font-size: 12px;
+
+    transition: .3s;
+
+}
+
+
+.gj-footer-contact-item:hover .gj-contact-icon {
+
+    color: var(--gj-navy);
+
+    background: var(--gj-gold);
+
+    transform: scale(1.06);
+
+}
+
+
+.gj-contact-copy {
+
+    min-width: 0;
+
+}
+
+
+.gj-contact-copy small {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: rgba(255,255,255,.32);
+
+    font-size: 9px;
+
+    font-weight: 950;
+
+    letter-spacing: 1.2px;
+
+}
+
+
+.gj-contact-copy strong {
+
+    display: block;
+
+    overflow-wrap: anywhere;
+
+    color: rgba(255,255,255,.7);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+    font-weight: 650;
+
+}
+
+
+.gj-footer-contact-item:hover .gj-contact-copy strong {
+
+    color: #fff;
+
+}
+
+
+/* =========================================================
+   NEWSLETTER
+========================================================= */
+
+.gj-footer-newsletter {
+
+    margin-top: 22px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(255,255,255,.08);
+
+}
+
+
+.gj-newsletter-label {
+
+    color: var(--gj-gold);
+
+    font-size: 10px;
+
+    font-weight: 950;
+
+    letter-spacing: 1.6px;
+
+}
+
+
+.gj-footer-newsletter p {
+
+    margin: 7px 0 11px;
+
+    color: rgba(255,255,255,.42);
+
+    font-size: 10px;
+
+    line-height: 1.55;
+
+}
+
+
+.gj-newsletter-input {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    height: 46px;
+
+    padding: 4px 5px 4px 13px;
+
+    border: 1px solid rgba(255,255,255,.11);
+
+    border-radius: 14px;
+
+    background: rgba(255,255,255,.055);
+
+    transition: .3s;
+
+}
+
+
+.gj-newsletter-input:focus-within {
+
+    border-color: rgba(255,195,0,.5);
+
+    box-shadow:
+        0 0 0 4px rgba(255,195,0,.06);
+
+}
+
+
+.gj-newsletter-input > i {
+
+    color: rgba(255,255,255,.35);
+
+    font-size: 12px;
+
+}
+
+
+.gj-newsletter-input input {
+
+    min-width: 0;
+
+    flex: 1;
+
+    height: 100%;
+
+    border: 0;
+
+    outline: 0;
+
+    background: transparent;
+
+    color: #fff;
+
+    font: inherit;
+
+    font-size: 11px;
+
+}
+
+
+.gj-newsletter-input input::placeholder {
+
+    color: rgba(255,255,255,.35);
+
+}
+
+
+.gj-newsletter-input button {
+
+    width: 36px;
+
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    background: var(--gj-gold);
+
+    color: var(--gj-navy);
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+
+.gj-newsletter-input button:hover {
+
+    transform: translateX(2px) scale(1.04);
+
+}
+
+
+.gj-newsletter-input button:disabled {
+
+    cursor: default;
+
+    opacity: .9;
+
+}
+
+
+.gj-newsletter-status {
+
+    display: block;
+
+    min-height: 13px;
+
+    margin-top: 5px;
+
+    color: var(--gj-gold);
+
+    font-size: 9px;
+
+}
+
+
+/* =========================================================
+   CAMPUS / MAP
+========================================================= */
+
+.gj-footer-campus {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns: .8fr 1.2fr;
+
+    gap: 18px;
+
+    padding: 22px;
+
+    border: 1px solid rgba(255,255,255,.1);
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.025)
+        );
+
+    backdrop-filter: blur(12px);
+
+}
+
+
+.gj-footer-campus-copy {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding: 20px;
+
+}
+
+
+.gj-footer-campus-copy h3 {
+
+    margin: 11px 0;
+
+    color: #fff;
+
+    font-size: clamp(28px, 3vw, 42px);
+
+    line-height: 1.05;
+
+    letter-spacing: -1.4px;
+
+    font-weight: 950;
+
+}
+
+
+.gj-footer-campus-copy h3 em {
+
+    color: var(--gj-gold);
+
+    font-style: normal;
+
+}
+
+
+.gj-footer-campus-copy p {
+
+    max-width: 400px;
+
+    margin: 0 0 20px;
+
+    color: rgba(255,255,255,.48);
+
+    font-size: 12px;
+
+    line-height: 1.75;
+
+}
+
+
+.gj-footer-map-btn {
+
+    width: fit-content;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 14px;
+
+    border: 1px solid rgba(255,195,0,.35);
+
+    border-radius: 50px;
+
+    color: var(--gj-gold);
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    transition: .3s;
+
+}
+
+
+.gj-footer-map-btn:hover {
+
+    color: var(--gj-navy);
+
+    background: var(--gj-gold);
+
+    border-color: var(--gj-gold);
+
+    transform: translateY(-2px);
+
+    text-decoration: none;
+
+}
+
+
+.gj-footer-map {
+
+    position: relative;
+
+    min-height: 300px;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    background: #081a2d;
+
+}
+
+
+.gj-footer-map iframe {
+
+    width: 100%;
+
+    height: 100%;
+
+    min-height: 300px;
+
+    display: block;
+
+    border: 0;
+
+    filter:
+        saturate(.8)
+        contrast(1.02);
+
+}
+
+
+.gj-map-overlay {
+
+    position: absolute;
+
+    left: 14px;
+
+    top: 14px;
+
+    z-index: 5;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    max-width: calc(100% - 28px);
+
+    padding: 8px 11px;
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    border-radius: 12px;
+
+    background: rgba(0,24,47,.86);
+
+    color: #fff;
+
+    backdrop-filter: blur(10px);
+
+}
+
+
+.gj-map-overlay span {
+
+    width: 25px;
+
+    height: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: var(--gj-gold);
+
+    color: var(--gj-navy);
+
+    font-size: 11px;
+
+}
+
+
+.gj-map-overlay strong {
+
+    overflow: hidden;
+
+    color: rgba(255,255,255,.85);
+
+    font-size: 10px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   BOTTOM BAR
+========================================================= */
+
+.gj-footer-bottom {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns: 1fr auto 1fr;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-top: 28px;
+
+    padding-top: 23px;
+
+    border-top: 1px solid var(--gj-line);
+
+}
+
+
+.gj-footer-copyright {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: rgba(255,255,255,.42);
+
+    font-size: 10px;
+
+}
+
+
+.gj-copyright-symbol {
+
+    width: 23px;
+
+    height: 23px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    border-radius: 50%;
+
+    color: rgba(255,255,255,.6);
+
+}
+
+
+.gj-footer-copyright strong {
+
+    color: rgba(255,255,255,.68);
+
+}
+
+
+.gj-footer-legal {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.gj-footer-legal a {
+
+    color: rgba(255,255,255,.4);
+
+    text-decoration: none;
+
+    font-size: 10px;
+
+    transition: .25s;
+
+}
+
+
+.gj-footer-legal a:hover {
+
+    color: var(--gj-gold);
+
+}
+
+
+.gj-footer-legal > span {
+
+    width: 3px;
+
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.25);
+
+}
+
+
+.gj-footer-credit {
+
+    justify-self: end;
+
+    color: rgba(255,255,255,.36);
+
+    font-size: 10px;
+
+}
+
+
+.gj-footer-credit i {
+
+    margin: 0 3px;
+
+    color: #ff647c;
+
+}
+
+
+.gj-footer-credit strong {
+
+    color: var(--gj-gold);
+
+}
+
+
+/* =========================================================
+   FLOATING WHATSAPP
+========================================================= */
+
+.gj-whatsapp-float {
+
+    position: fixed;
+
+    right: 25px;
+
+    bottom: 28px;
+
+    z-index: 9998;
+
+    width: 57px;
+
+    height: 57px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background: #25d366;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    font-size: 25px;
+
+    box-shadow:
+        0 15px 38px rgba(0,0,0,.25);
+
+    transition: .3s;
+
+}
+
+
+.gj-whatsapp-float:hover {
+
+    color: #fff;
+
+    transform: translateY(-6px) rotate(4deg);
+
+    box-shadow:
+        0 20px 45px rgba(37,211,102,.28);
+
+    text-decoration: none;
+
+}
+
+
+.gj-whatsapp-ring {
+
+    position: absolute;
+
+    inset: -6px;
+
+    border: 1px solid rgba(37,211,102,.5);
+
+    border-radius: 23px;
+
+    animation:
+        gjWhatsappRing 2.2s infinite;
+
+}
+
+
+.gj-whatsapp-tooltip {
+
+    position: absolute;
+
+    right: 67px;
+
+    top: 50%;
+
+    padding: 8px 11px;
+
+    border-radius: 9px;
+
+    background: #001f3f;
+
+    color: #fff;
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    white-space: nowrap;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform:
+        translateY(-50%)
+        translateX(7px);
+
+    transition: .25s;
+
+}
+
+
+.gj-whatsapp-float:hover .gj-whatsapp-tooltip {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translateY(-50%)
+        translateX(0);
+
+}
+
+
+@keyframes gjWhatsappRing {
+
+    0% {
+        opacity: .75;
+        transform: scale(.85);
     }
 
-    .footer-content {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 30px;
-        margin-bottom: 30px;
+    70% {
+        opacity: 0;
+        transform: scale(1.18);
     }
 
-    .footer-section h4 {
-        color: #ffc300;
-        margin-bottom: 15px;
-        font-size: 15px;
+    100% {
+        opacity: 0;
+        transform: scale(1.18);
     }
 
-    .footer-section p {
-        font-size: 13px;
-        line-height: 1.8;
-        color: #ddd;
+}
+
+
+/* =========================================================
+   BACK TO TOP
+========================================================= */
+
+.gj-top-btn {
+
+    position: fixed;
+
+    right: 25px;
+
+    bottom: 101px;
+
+    z-index: 9997;
+
+    width: 48px;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid rgba(0,31,63,.08);
+
+    border-radius: 15px;
+
+    background: #fff;
+
+    color: var(--gj-navy);
+
+    box-shadow:
+        0 14px 35px rgba(0,31,63,.15);
+
+    cursor: pointer;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform:
+        translateY(10px);
+
+    transition: .3s;
+
+}
+
+
+.gj-top-btn.is-visible {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translateY(0);
+
+}
+
+
+.gj-top-btn:hover {
+
+    color: var(--gj-navy);
+
+    background: var(--gj-gold);
+
+    border-color: var(--gj-gold);
+
+    transform:
+        translateY(-4px);
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .gj-footer-main {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
     }
 
-    .footer-section ul {
-        list-style: none;
-        padding: 0;
+    .gj-footer-trust {
+
+        display: none;
+
     }
 
-    .footer-section ul li {
-        margin-bottom: 10px;
+}
+
+
+@media (max-width: 850px) {
+
+    .gj-footer-cta-inner {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
     }
 
-    .footer-section ul li a {
-        color: #ddd;
-        text-decoration: none;
-        transition: 0.3s;
-        font-size: 13px;
+    .gj-footer-cta-actions {
+
+        width: 100%;
+
+        flex-direction: row;
+
     }
 
-    .footer-section ul li a:hover {
-        color: #ffc300;
+    .gj-footer-btn {
+
+        flex: 1;
+
     }
 
-    .footer-social {
-        display: flex;
-        gap: 15px;
+    .gj-footer-campus {
+
+        grid-template-columns: 1fr;
+
     }
 
-    .footer-social a {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background: #ffc300;
-        color: #001f3f;
-        border-radius: 50%;
-        transition: 0.3s;
+    .gj-footer-campus-copy {
+
+        padding: 8px;
+
     }
 
-    .footer-social a:hover {
-        background: white;
-    }
+    .gj-footer-bottom {
 
-    .footer-bottom {
-        border-top: 1px solid #ffc300;
-        padding-top: 20px;
+        grid-template-columns: 1fr;
+
         text-align: center;
-        font-size: 12px;
-        color: #ddd;
+
     }
 
-    .footer-bottom a {
-        color: #ffc300;
-        text-decoration: none;
-    }
+    .gj-footer-copyright,
+    .gj-footer-legal {
 
-    /* WhatsApp Float Button */
-    .whatsapp-float {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 60px;
-        height: 60px;
-        background: #25d366;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
         justify-content: center;
-        color: white;
-        font-size: 28px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        animation: float 3s ease-in-out infinite;
-        z-index: 999;
-        transition: 0.3s;
+
     }
 
-    .whatsapp-float:hover {
-        background: #20ba5a;
-        transform: scale(1.1);
+    .gj-footer-credit {
+
+        justify-self: center;
+
     }
 
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-20px); }
+}
+
+
+@media (max-width: 600px) {
+
+    .gj-footer-container {
+
+        width: 92%;
+
     }
+
+    .gj-footer-cta {
+
+        padding: 60px 0;
+
+    }
+
+    .gj-footer-cta-copy h2 {
+
+        font-size: 40px;
+
+        letter-spacing: -1.5px;
+
+    }
+
+    .gj-footer-cta-actions {
+
+        flex-direction: column;
+
+    }
+
+    .gj-footer-main {
+
+        grid-template-columns: 1fr;
+
+        gap: 43px;
+
+        padding: 55px 0;
+
+    }
+
+    .gj-footer-brand-row {
+
+        padding: 30px 0;
+
+    }
+
+    .gj-footer-brand-text strong {
+
+        font-size: 19px;
+
+    }
+
+    .gj-footer-map {
+
+        min-height: 245px;
+
+    }
+
+    .gj-footer-map iframe {
+
+        min-height: 245px;
+
+    }
+
+    .gj-whatsapp-float {
+
+        right: 17px;
+
+        bottom: 18px;
+
+        width: 53px;
+
+        height: 53px;
+
+        border-radius: 16px;
+
+    }
+
+    .gj-top-btn {
+
+        right: 17px;
+
+        bottom: 83px;
+
+        width: 45px;
+
+        height: 45px;
+
+        border-radius: 14px;
+
+    }
+
+    .gj-whatsapp-tooltip {
+
+        display: none;
+
+    }
+
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        scroll-behavior: auto !important;
+
+        animation-duration: .01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: .01ms !important;
+
+    }
+
+}
+
+
+/* =========================================================
+   TYPOGRAPHY ENHANCEMENT — BETTER READABILITY
+========================================================= */
+
+.gj-footer-cta-copy p {
+    font-size: 17px !important;
+    line-height: 1.8;
+}
+
+.gj-footer-column h3 {
+    font-size: 26px !important;
+}
+
+.gj-footer-about p {
+    font-size: 14px !important;
+    line-height: 1.9;
+}
+
+.gj-footer-readmore {
+    font-size: 13px !important;
+}
+
+.gj-footer-social-label,
+.gj-newsletter-label,
+.gj-footer-kicker {
+    font-size: 11px !important;
+}
+
+.gj-footer-links a {
+    font-size: 13px !important;
+    min-height: 44px;
+}
+
+.gj-link-number {
+    font-size: 10px !important;
+}
+
+.gj-footer-admission-card strong {
+    font-size: 13px !important;
+}
+
+.gj-footer-admission-card span {
+    font-size: 10px !important;
+}
+
+.gj-footer-admission-links strong {
+    font-size: 12px !important;
+}
+
+.gj-footer-admission-links small {
+    font-size: 10px !important;
+}
+
+.gj-contact-copy small {
+    font-size: 9px !important;
+}
+
+.gj-contact-copy strong {
+    font-size: 12px !important;
+    line-height: 1.65;
+}
+
+.gj-footer-newsletter p {
+    font-size: 11px !important;
+    line-height: 1.6;
+}
+
+.gj-newsletter-input input {
+    font-size: 12px !important;
+}
+
+.gj-footer-campus-copy p {
+    font-size: 12px !important;
+    line-height: 1.8;
+}
+
+.gj-footer-map-btn {
+    font-size: 11px !important;
+}
+
+.gj-map-overlay strong {
+    font-size: 10px !important;
+}
+
+.gj-footer-copyright,
+.gj-footer-legal a,
+.gj-footer-credit {
+    font-size: 10px !important;
+}
+
+@media (max-width: 600px) {
+
+    .gj-footer-cta-copy p {
+        font-size: 15px !important;
+    }
+
+    .gj-footer-column h3 {
+        font-size: 23px !important;
+    }
+
+    .gj-footer-about p {
+        font-size: 13px !important;
+    }
+
+    .gj-footer-links a {
+        font-size: 13px !important;
+    }
+
+    .gj-footer-admission-links strong {
+        font-size: 12px !important;
+    }
+
+    .gj-contact-copy strong {
+        font-size: 12px !important;
+    }
+
+}
+
 </style>
 
-</body>
-</html>
+
+<script>
+
+/* =========================================================
+   GYAN JYOTI PREMIUM FOOTER JS
+   No backend calls. No route manipulation.
+========================================================= */
+
+(function () {
+
+    'use strict';
+
+
+    function initFooter() {
+
+        /* =====================================================
+           BACK TO TOP
+        ====================================================== */
+
+        const topBtn =
+            document.getElementById('gjTopBtn');
+
+
+        if (topBtn) {
+
+            const updateTopButton =
+                function () {
+
+                    topBtn.classList.toggle(
+                        'is-visible',
+                        window.scrollY > 450
+                    );
+
+                };
+
+
+            window.addEventListener(
+                'scroll',
+                updateTopButton,
+                { passive: true }
+            );
+
+
+            updateTopButton();
+
+
+            topBtn.addEventListener(
+                'click',
+                function () {
+
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           NEWSLETTER — FRONTEND ONLY
+           The existing footer did not submit this to a backend.
+           Keep it UI-only to avoid changing backend/CSRF behavior.
+        ====================================================== */
+
+        const newsletter =
+            document.querySelector(
+                '.gj-newsletter-form'
+            );
+
+
+        if (newsletter) {
+
+            newsletter.addEventListener(
+                'submit',
+                function (event) {
+
+                    event.preventDefault();
+
+
+                    const input =
+                        newsletter.querySelector(
+                            'input[type="email"]'
+                        );
+
+                    const button =
+                        newsletter.querySelector(
+                            'button'
+                        );
+
+                    const status =
+                        newsletter.querySelector(
+                            '.gj-newsletter-status'
+                        );
+
+
+                    if (!input || !button) {
+                        return;
+                    }
+
+
+                    const email =
+                        input.value.trim();
+
+
+                    const valid =
+                        /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+                        .test(email);
+
+
+                    if (!valid) {
+
+                        input.focus();
+
+                        input.animate(
+                            [
+                                {
+                                    transform:
+                                        'translateX(-6px)'
+                                },
+                                {
+                                    transform:
+                                        'translateX(6px)'
+                                },
+                                {
+                                    transform:
+                                        'translateX(-4px)'
+                                },
+                                {
+                                    transform:
+                                        'translateX(0)'
+                                }
+                            ],
+                            {
+                                duration: 260
+                            }
+                        );
+
+
+                        if (status) {
+
+                            status.textContent =
+                                'Please enter a valid email address.';
+
+                            status.style.color =
+                                '#ffb4b4';
+
+                        }
+
+                        return;
+
+                    }
+
+
+                    button.disabled = true;
+
+                    button.innerHTML =
+                        '<i class="fas fa-check"></i>';
+
+
+                    if (status) {
+
+                        status.textContent =
+                            'You are subscribed for school updates.';
+
+                        status.style.color =
+                            '#ffc300';
+
+                    }
+
+
+                    input.value = '';
+
+
+                    window.setTimeout(
+                        function () {
+
+                            button.disabled = false;
+
+                            button.innerHTML =
+                                '<i class="fas fa-arrow-right"></i>';
+
+                            if (status) {
+                                status.textContent = '';
+                            }
+
+                        },
+                        3200
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           FOOTER MICRO-REVEAL
+        ====================================================== */
+
+        const columns =
+            document.querySelectorAll(
+                '.gj-footer-column'
+            );
+
+
+        if (
+            'IntersectionObserver' in window &&
+            columns.length
+        ) {
+
+            const observer =
+                new IntersectionObserver(
+                    function (entries, obs) {
+
+                        entries.forEach(
+                            function (entry) {
+
+                                if (
+                                    entry.isIntersecting
+                                ) {
+
+                                    entry.target.style.opacity =
+                                        '1';
+
+                                    entry.target.style.transform =
+                                        'translateY(0)';
+
+                                    obs.unobserve(
+                                        entry.target
+                                    );
+
+                                }
+
+                            }
+                        );
+
+                    },
+                    {
+                        threshold: .12
+                    }
+                );
+
+
+            columns.forEach(
+                function (column, index) {
+
+                    column.style.opacity = '0';
+
+                    column.style.transform =
+                        'translateY(24px)';
+
+                    column.style.transition =
+                        'opacity .7s ease ' +
+                        (index * .08) +
+                        's, transform .7s ease ' +
+                        (index * .08) +
+                        's';
+
+                    observer.observe(column);
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           NEWSLETTER FOCUS POLISH
+        ====================================================== */
+
+        document
+            .querySelectorAll(
+                '.gj-newsletter-input input'
+            )
+            .forEach(
+                function (input) {
+
+                    input.addEventListener(
+                        'focus',
+                        function () {
+
+                            const wrapper =
+                                input.closest(
+                                    '.gj-newsletter-input'
+                                );
+
+                            if (wrapper) {
+
+                                wrapper.style.transform =
+                                    'translateY(-2px)';
+
+                            }
+
+                        }
+                    );
+
+
+                    input.addEventListener(
+                        'blur',
+                        function () {
+
+                            const wrapper =
+                                input.closest(
+                                    '.gj-newsletter-input'
+                                );
+
+                            if (wrapper) {
+
+                                wrapper.style.transform =
+                                    '';
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+
+        /* =====================================================
+           CONTACT ICON TILT — LIGHTWEIGHT
+        ====================================================== */
+
+        document
+            .querySelectorAll(
+                '.gj-footer-contact-item'
+            )
+            .forEach(
+                function (item) {
+
+                    item.addEventListener(
+                        'mouseenter',
+                        function () {
+
+                            const icon =
+                                item.querySelector(
+                                    '.gj-contact-icon'
+                                );
+
+                            if (icon) {
+
+                                icon.style.transform =
+                                    'translateY(-2px) scale(1.05)';
+
+                            }
+
+                        }
+                    );
+
+
+                    item.addEventListener(
+                        'mouseleave',
+                        function () {
+
+                            const icon =
+                                item.querySelector(
+                                    '.gj-contact-icon'
+                                );
+
+                            if (icon) {
+
+                                icon.style.transform =
+                                    '';
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+
+
+    if (
+        document.readyState === 'loading'
+    ) {
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            initFooter
+        );
+
+    } else {
+
+        initFooter();
+
+    }
+
+})();
+
+</script>

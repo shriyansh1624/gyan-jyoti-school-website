@@ -1,647 +1,6296 @@
-from pathlib import Path
-
-code = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8">
 
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Segoe UI',sans-serif;background:#eef3fb;color:#1f2937}
-    .layout{display:flex;min-height:100vh}
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    .sidebar{
-      width:270px;background:linear-gradient(180deg,#001f3f,#003b73);
-      color:white;padding:25px;position:fixed;height:100vh;left:0;top:0;
-      box-shadow:10px 0 30px rgba(0,0,0,.15);z-index:10
-    }
-    .brand{font-size:24px;font-weight:900;margin-bottom:35px;letter-spacing:.3px}
-    .brand i{color:#ffc300}
-    .menu a{
-      display:flex;gap:12px;align-items:center;color:white;text-decoration:none;
-      padding:14px 16px;border-radius:14px;margin-bottom:10px;font-weight:700;
-      transition:.3s ease
-    }
-    .menu a:hover,.menu a.active{background:#ffc300;color:#001f3f;transform:translateX(5px)}
+<title>
+    <%= title || 'Admin Dashboard - Gyan Jyoti School' %>
+</title>
 
-    .main{margin-left:270px;width:calc(100% - 270px);padding:30px}
 
-    .hero{
-      background:linear-gradient(135deg,#001f3f,#0053a6);
-      color:white;border-radius:28px;padding:35px;
-      display:flex;justify-content:space-between;align-items:center;gap:25px;
-      box-shadow:0 15px 35px rgba(0,31,63,.25);margin-bottom:25px;
-      position:relative;overflow:hidden
-    }
-    .hero::after{
-      content:"";position:absolute;inset:-80px;
-      background:radial-gradient(circle,rgba(255,195,0,.18) 2px,transparent 2px);
-      background-size:80px 80px;animation:floatDots 18s linear infinite
-    }
-    @keyframes floatDots{from{transform:translateY(0)}to{transform:translateY(-90px)}}
-    .hero > *{position:relative;z-index:2}
-    .hero h1{font-size:34px;color:white}
-    .hero p{opacity:.92;margin-top:8px}
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+>
 
-    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
-    .bell,.theme-toggle{
-      display:inline-flex;align-items:center;gap:8px;
-      background:white;color:#001f3f;padding:14px 22px;border-radius:18px;
-      font-weight:900;box-shadow:0 10px 25px #0002;text-decoration:none;white-space:nowrap;
-      border:none;cursor:pointer
-    }
-    .bell span{background:#ef4444;color:white;border-radius:50%;padding:5px 10px}
+<script
+    src="https://cdn.jsdelivr.net/npm/chart.js"
+></script>
 
-    .search-form{
-      background:white;border-radius:24px;padding:22px;margin-bottom:25px;
-      display:flex;gap:12px;box-shadow:0 12px 30px rgba(0,0,0,.08);
-      border:1px solid #e5e7eb
-    }
-    .search-form input{
-      flex:1;padding:15px 18px;border:1px solid #d1d5db;border-radius:14px;
-      font-size:15px;outline:none
-    }
-    .search-form input:focus{border-color:#ffc300;box-shadow:0 0 0 4px rgba(255,195,0,.20)}
-    .search-form button,.clear-btn{
-      border:none;background:#001f3f;color:white;padding:0 24px;border-radius:14px;
-      font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center
-    }
-    .clear-btn{background:#64748b}
 
-    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:25px}
-    .card{
-      background:white;border-radius:24px;padding:24px;
-      box-shadow:0 12px 30px rgba(0,0,0,.08);border:1px solid #e5e7eb;
-      transition:.35s ease;position:relative;overflow:hidden
-    }
-    .card::before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:#ffc300}
-    .card:hover{transform:translateY(-8px);box-shadow:0 22px 45px rgba(0,0,0,.14)}
-    .card i{font-size:30px;color:#ffc300;margin-bottom:15px}
-    .card h3{font-size:34px;color:#001f3f}
-    .card p{color:#6b7280;font-weight:700}
+<style>
 
-    .analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:25px}
-    .chart-card{
-      background:white;border-radius:24px;padding:24px;
-      box-shadow:0 12px 30px rgba(0,0,0,.08);border:1px solid #e5e7eb
-    }
-    .chart-card h2{font-size:20px;color:#001f3f;margin-bottom:18px}
+/* =========================================================
+   ROOT
+========================================================= */
 
-    .section{
-      background:white;border-radius:24px;margin-bottom:25px;
-      box-shadow:0 12px 30px rgba(0,0,0,.08);overflow:hidden;border:1px solid #e5e7eb
-    }
-    .section-title{
-      padding:20px 25px;background:#f8fafc;
-      display:flex;justify-content:space-between;align-items:center;
-      border-bottom:1px solid #e5e7eb;gap:14px;flex-wrap:wrap
-    }
-    .section-title h2{color:#001f3f;font-size:22px}
-    .pill{background:#001f3f;color:white;padding:7px 13px;border-radius:999px;font-size:13px;font-weight:800}
+:root{
 
-    .table-wrap{width:100%;overflow-x:auto}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:15px 20px;text-align:left;border-bottom:1px solid #eef2f7;font-size:14px;vertical-align:middle}
-    th{background:#fbfdff;color:#091b35;text-transform:uppercase;font-size:12px;white-space:nowrap}
-    tr:hover{background:#f8fafc}
+    --navy:#001f3f;
+    --blue:#0053a6;
+    --gold:#ffc300;
 
-    .badge{padding:7px 12px;border-radius:999px;font-size:12px;font-weight:900;white-space:nowrap}
-    .admission{background:#dbeafe;color:#1d4ed8}
-    .enquiry{background:#dcfce7;color:#15803d}
-    .contact{background:#fef3c7;color:#92400e}
+    --bg:#eef3fb;
+    --card:#fff;
 
-    .message{max-width:360px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .empty{text-align:center;padding:35px;color:#64748b}
-    .empty i{font-size:38px;color:#cbd5e1;margin-bottom:10px}
+    --text:#172033;
+    --muted:#64748b;
 
-    .doc-link,.action-btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:6px;
-      color:white;padding:8px 12px;border-radius:10px;text-decoration:none;
-      font-weight:800;font-size:12px;border:none;cursor:pointer;transition:.3s;margin:2px
-    }
-    .doc-link{background:#001f3f}
-    .doc-link:hover{background:#ffc300;color:#001f3f}
-    .edit-btn{background:#2563eb}
-    .delete-btn{background:#dc2626}
-    .view-btn{background:#10b981}
-    .pdf-btn{background:#7c3aed}
-    .action-btn:hover{transform:translateY(-3px);opacity:.92}
+    --line:#e5e7eb;
 
-    .record-link{color:#001f3f;text-decoration:none;font-weight:800}
-    .record-link:hover{color:#0053a6;text-decoration:underline}
+    --green:#10b981;
+    --red:#dc2626;
+    --purple:#7c3aed;
 
-    .modal{
-      display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);
-      z-index:999999;padding:25px
-    }
-    .modal-content{
-      background:white;max-width:1000px;height:88vh;margin:auto;border-radius:22px;
-      overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.35);display:flex;flex-direction:column
-    }
-    .modal-head{
-      padding:16px 22px;background:#001f3f;color:white;
-      display:flex;align-items:center;justify-content:space-between
-    }
-    .modal-head h3{color:white}
-    .modal-close{background:#ffc300;color:#001f3f;border:none;border-radius:10px;padding:8px 13px;font-weight:900;cursor:pointer}
-    .modal-body{flex:1}
-    .modal-body iframe{width:100%;height:100%;border:0}
+    --shadow:
+        0 16px 45px rgba(0,31,63,.09);
+}
 
-    body.dark-mode{background:#0f172a;color:#e5e7eb}
-    body.dark-mode .main{background:#0f172a}
-    body.dark-mode .card,
-    body.dark-mode .section,
-    body.dark-mode .search-form,
-    body.dark-mode .chart-card{background:#111827;color:#e5e7eb;border-color:#263244}
-    body.dark-mode .section-title,
-    body.dark-mode th{background:#182235}
-    body.dark-mode td{border-color:#263244}
-    body.dark-mode .card h3,
-    body.dark-mode .section-title h2,
-    body.dark-mode .chart-card h2{color:#ffc300}
-    body.dark-mode .card p,
-    body.dark-mode .message{color:#cbd5e1}
-    body.dark-mode tr:hover{background:#1f2937}
-    body.dark-mode .search-form input{background:#0f172a;color:white;border-color:#334155}
 
-    @media(max-width:1000px){
-      .analytics-grid{grid-template-columns:1fr}
-      .cards{grid-template-columns:repeat(2,1fr)}
-    }
-    @media(max-width:900px){
-      .sidebar{position:relative;width:100%;height:auto}
-      .layout{display:block}
-      .main{margin-left:0;width:100%;padding:18px}
-      .cards{grid-template-columns:1fr}
-      .hero{display:block}
-      .hero-actions{justify-content:flex-start;margin-top:18px}
-      .search-form{flex-direction:column}
-      .search-form button,.clear-btn{justify-content:center;padding:14px 20px}
-    }
-    .sidebar-logo{
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background:
+        var(--bg);
+
+    color:
+        var(--text);
+
+    min-height:100vh;
+}
+
+a{
+    text-decoration:none;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.layout{
+
+    display:flex;
+
+    min-height:100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+
+    width:280px;
+
+    position:fixed;
+
+    inset:
+        0 auto 0 0;
+
+    z-index:1000;
+
+    padding:18px;
+
+    color:#fff;
+
+    overflow-y:auto;
+
+    background:
+        linear-gradient(
+            180deg,
+            #00172f,
+            #002b55 55%,
+            #003b73
+        );
+
+    box-shadow:
+        12px 0 35px rgba(0,0,0,.14);
+}
+
+
+.sidebar-logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:
+        15px 10px 23px;
+
+    margin-bottom:20px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.1);
+}
+
+
+.sidebar-logo img{
+
+    width:62px;
+    height:62px;
+
+    object-fit:contain;
+
+    border-radius:17px;
+
+    background:#fff;
+
+    padding:4px;
+}
+
+
+.logo-text h2{
+
+    color:#fff;
+
+    font-size:23px;
+
+    font-weight:900;
+}
+
+
+.logo-text span{
+
+    display:block;
+
+    margin-top:4px;
+
+    color:#ffffff99;
+
+    font-size:9px;
+
+    letter-spacing:1.2px;
+
+    text-transform:uppercase;
+}
+
+
+.menu-title{
+
+    padding:
+        0 12px 9px;
+
+    color:#ffffff70;
+
+    font-size:10px;
+
+    font-weight:900;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+}
+
+
+.menu a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:
+        13px 14px;
+
+    margin-bottom:7px;
+
+    border-radius:14px;
+
+    color:#ffffffd9;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    transition:.25s;
+}
+
+
+.menu a i{
+
+    width:22px;
+
+    text-align:center;
+
+    color:#8eb9e8;
+}
+
+
+.menu a:hover,
+.menu a.active{
+
+    color:var(--navy);
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffc300,
+            #ffdc55
+        );
+
+    transform:
+        translateX(4px);
+}
+
+
+.menu a:hover i,
+.menu a.active i{
+
+    color:var(--navy);
+}
+
+
+/* =========================================================
+   SIDEBAR SPECIAL LINKS
+========================================================= */
+
+.menu .faculty-menu,
+.menu .academic-menu,
+.menu .sports-menu,
+.menu .events-menu,
+.menu .popup-menu,
+.menu .whatsapp-menu{
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffc30022,
+            #ffffff08
+        );
+
+    border:
+        1px solid
+        #ffc30030;
+}
+
+
+.menu .faculty-menu i,
+.menu .academic-menu i,
+.menu .sports-menu i,
+.menu .events-menu i,
+.menu .popup-menu i,
+.menu .whatsapp-menu i{
+
+    color:
+        var(--gold);
+}
+
+
+.menu .academic-menu::after{
+
+    content:"TOPPERS";
+
+    margin-left:auto;
+
+    padding:
+        3px 7px;
+
+    border-radius:99px;
+
+    background:
+        var(--gold);
+
+    color:
+        var(--navy);
+
+    font-size:7px;
+
+    font-weight:1000;
+}
+
+
+.menu .sports-menu::after{
+
+    content:"NEW";
+
+    margin-left:auto;
+
+    padding:
+        3px 7px;
+
+    border-radius:99px;
+
+    background:
+        var(--gold);
+
+    color:
+        var(--navy);
+
+    font-size:7px;
+
+    font-weight:1000;
+}
+
+
+.menu-new{
+
+    margin-left:auto;
+
+    padding:
+        3px 7px;
+
+    border-radius:99px;
+
+    background:
+        #10b981;
+
+    color:#fff;
+
+    font-size:7px;
+
+    font-weight:1000;
+
+    letter-spacing:.5px;
+}
+
+
+.sidebar-footer{
+
+    margin-top:24px;
+
+    padding:14px;
+
+    border-radius:16px;
+
+    background:#ffffff0a;
+
+    border:
+        1px solid
+        #ffffff10;
+}
+
+
+.sidebar-footer small{
+
+    display:block;
+
+    color:#ffffff70;
+
+    font-size:9px;
+
+    margin-bottom:4px;
+}
+
+
+.sidebar-footer strong{
+
+    color:#fff;
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+
+    margin-left:280px;
+
+    width:
+        calc(100% - 280px);
+
+    padding:28px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:25px;
+
+    min-height:185px;
+
+    padding:32px;
+
+    margin-bottom:22px;
+
+    color:#fff;
+
+    border-radius:30px;
+
+    background:
+
+        radial-gradient(
+            circle at 85% 20%,
+            #ffc30033,
+            transparent 24%
+        ),
+
+        linear-gradient(
+            135deg,
+            #00172f,
+            #0053a6
+        );
+
+    box-shadow:
+        0 20px 50px
+        #001f3f38;
+}
+
+
+.hero:after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    opacity:.13;
+
+    background-image:
+        radial-gradient(
+            #fff 1px,
+            transparent 1px
+        );
+
+    background-size:
+        30px 30px;
+
+    pointer-events:none;
+}
+
+
+.hero>*{
+
+    position:relative;
+
+    z-index:2;
+}
+
+
+.hero-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    margin-bottom:11px;
+
+    padding:
+        7px 11px;
+
+    border-radius:99px;
+
+    color:var(--gold);
+
+    background:#ffc30015;
+
+    border:
+        1px solid
+        #ffc30045;
+
+    font-size:9px;
+
+    font-weight:900;
+
+    letter-spacing:1.2px;
+
+    text-transform:uppercase;
+}
+
+
+.hero h1{
+
+    color:#fff;
+
+    font-size:
+        clamp(
+            30px,
+            3vw,
+            42px
+        );
+
+    font-weight:950;
+}
+
+
+.hero p{
+
+    margin-top:9px;
+
+    color:#ffffffc9;
+
+    line-height:1.6;
+
+    font-size:14px;
+}
+
+
+.hero-actions{
+
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+}
+
+
+.bell,
+.theme-toggle{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    min-height:46px;
+
+    padding:
+        0 17px;
+
+    border:0;
+
+    border-radius:14px;
+
+    color:var(--navy);
+
+    background:#fff;
+
+    box-shadow:
+        0 12px 28px #0002;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+
+.bell:hover,
+.theme-toggle:hover{
+
+    transform:
+        translateY(-3px);
+}
+
+
+.bell span{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:23px;
+
+    height:23px;
+
+    padding:
+        0 6px;
+
+    border-radius:99px;
+
+    background:#ef4444;
+
+    color:#fff;
+
+    font-size:11px;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-form{
+
+    display:flex;
+
+    gap:10px;
+
+    padding:14px;
+
+    margin-bottom:22px;
+
+    background:#fffffff0;
+
+    border:
+        1px solid
+        #e5e7eb;
+
+    border-radius:20px;
+
+    box-shadow:
+        var(--shadow);
+
+    backdrop-filter:
+        blur(10px);
+}
+
+
+.search-form input{
+
+    flex:1;
+
+    min-width:0;
+
+    height:50px;
+
+    padding:
+        0 17px;
+
+    border:
+        1px solid
+        #dbe1ea;
+
+    outline:none;
+
+    border-radius:13px;
+
+    background:#fff;
+}
+
+
+.search-form input:focus{
+
+    border-color:
+        var(--gold);
+
+    box-shadow:
+        0 0 0 4px
+        #ffc30026;
+}
+
+
+.search-form button,
+.clear-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    height:50px;
+
+    padding:
+        0 20px;
+
+    border:0;
+
+    border-radius:13px;
+
+    background:
+        var(--navy);
+
+    color:#fff;
+
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+
+.clear-btn{
+
+    background:
+        #64748b;
+}
+
+
+/* =========================================================
+   STAT CARDS
+========================================================= */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:17px;
+
+    margin-bottom:22px;
+}
+
+
+.card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    min-height:145px;
+
+    padding:22px;
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius:22px;
+
+    background:
+        var(--card);
+
+    box-shadow:
+        var(--shadow);
+
+    transition:.3s;
+}
+
+
+.card:hover{
+
+    transform:
+        translateY(-6px);
+}
+
+
+.card:before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:
+        0 0 auto;
+
+    height:4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--gold),
+            #ffe37c
+        );
+}
+
+
+.card i{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:45px;
+
+    height:45px;
+
+    margin-bottom:12px;
+
+    border-radius:14px;
+
+    background:#fff6d8;
+
+    color:var(--navy);
+
+    font-size:18px;
+}
+
+
+.card h3{
+
+    color:var(--navy);
+
+    font-size:34px;
+
+    line-height:1;
+
+    font-weight:950;
+}
+
+
+.card p{
+
+    margin-top:7px;
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    font-weight:800;
+}
+
+
+/* =========================================================
+   COMMON MANAGEMENT CARD
+========================================================= */
+
+.management-box{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:25px;
+
+    margin-bottom:22px;
+
+    border:
+        1px solid
+        #e0e8f3;
+
+    border-radius:28px;
+
+    background:
+
+        radial-gradient(
+            circle at 95% 10%,
+            #ffc30030,
+            transparent 25%
+        ),
+
+        linear-gradient(
+            135deg,
+            #fff,
+            #f7fbff
+        );
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+.management-box::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:250px;
+
+    height:250px;
+
+    right:-110px;
+
+    bottom:-140px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #0053a620,
+            transparent 70%
+        );
+
+    pointer-events:none;
+}
+
+
+.management-head{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    margin-bottom:20px;
+}
+
+
+.management-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+}
+
+
+.management-icon{
+
+    width:56px;
+
+    height:56px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex:none;
+
+    border-radius:17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #001f3f,
+            #0053a6
+        );
+
+    color:
+        var(--gold);
+
+    font-size:22px;
+
+    box-shadow:
+        0 12px 28px
+        #001f3f2e;
+}
+
+
+.management-title h2{
+
+    color:
+        var(--navy);
+
+    font-size:23px;
+
+    font-weight:950;
+}
+
+
+.management-title p{
+
+    margin-top:5px;
+
+    color:
+        var(--muted);
+
+    font-size:12px;
+
+    line-height:1.5;
+}
+
+
+.management-main-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:9px;
+
+    padding:
+        14px 18px;
+
+    border-radius:14px;
+
+    background:
+        var(--navy);
+
+    color:#fff;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    white-space:nowrap;
+
+    transition:.25s;
+}
+
+
+.management-main-btn:hover{
+
+    transform:
+        translateY(-3px);
+
+    background:
+        var(--gold);
+
+    color:
+        var(--navy);
+}
+
+
+.management-actions{
+
+    position:relative;
+
+    z-index:2;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:14px;
+}
+
+
+.management-action{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:16px;
+
+    border:
+        1px solid
+        #e4eaf2;
+
+    border-radius:18px;
+
+    background:
+        #f8fafc;
+
+    color:
+        var(--navy);
+
+    transition:.3s;
+}
+
+
+.management-action:hover{
+
+    transform:
+        translateY(-5px);
+
+    background:#fff;
+
+    border-color:
+        var(--gold);
+
+    box-shadow:
+        0 15px 32px
+        #00000012;
+}
+
+
+.management-action i{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex:none;
+
+    border-radius:13px;
+
+    background:
+        #fff5d5;
+
+    color:
+        #d89b00;
+}
+
+
+.management-action strong{
+
+    display:block;
+
+    font-size:13px;
+
+    font-weight:950;
+}
+
+
+.management-action span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:
+        var(--muted);
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   EVENTS MANAGEMENT
+========================================================= */
+
+.events-management{
+    position:relative;
+    overflow:hidden;
+    padding:25px;
+    margin-bottom:22px;
+    border:1px solid #dfe7f2;
+    border-radius:28px;
+    background:
+        radial-gradient(circle at 95% 8%,#ffc30030,transparent 25%),
+        linear-gradient(135deg,#fff,#f7fbff);
+    box-shadow:var(--shadow);
+}
+
+.events-management:after{
+    content:"";
+    position:absolute;
+    width:250px;
+    height:250px;
+    right:-120px;
+    bottom:-140px;
+    border-radius:50%;
+    background:radial-gradient(circle,#0053a620,transparent 70%);
+    pointer-events:none;
+}
+
+.events-management-header{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:20px;
+}
+
+.events-management-title{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.events-management-icon{
+    width:56px;
+    height:56px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+    border-radius:17px;
+    background:linear-gradient(135deg,#001f3f,#0053a6);
+    color:var(--gold);
+    font-size:22px;
+    box-shadow:0 12px 28px #001f3f2e;
+}
+
+.events-management h2{
+    color:var(--navy);
+    font-size:23px;
+    font-weight:950;
+}
+
+.events-management-title p{
+    margin-top:5px;
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+}
+
+.events-main-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    padding:14px 18px;
+    border-radius:14px;
+    color:#fff;
+    background:var(--navy);
+    font-size:11px;
+    font-weight:900;
+    white-space:nowrap;
+    transition:.25s;
+}
+
+.events-main-btn:hover{
+    transform:translateY(-3px);
+    color:var(--navy);
+    background:var(--gold);
+}
+
+.events-stats{
+    position:relative;
+    z-index:2;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:14px;
+}
+
+.event-stat-card{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:14px;
+    border:1px solid #e4eaf2;
+    border-radius:16px;
+    background:#f8fafc;
+    transition:.25s;
+}
+
+.event-stat-card:hover{
+    transform:translateY(-3px);
+    background:#fff;
+    border-color:var(--gold);
+}
+
+.event-stat-icon{
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+    border-radius:12px;
+    font-size:16px;
+}
+
+.event-stat-icon.blue{color:#2563eb;background:#eff6ff;}
+.event-stat-icon.green{color:#16a34a;background:#dcfce7;}
+.event-stat-icon.orange{color:#ea580c;background:#fff7ed;}
+.event-stat-icon.purple{color:#7c3aed;background:#f5f3ff;}
+
+.event-stat-card strong{
+    display:block;
+    color:var(--navy);
+    font-size:22px;
+    line-height:1;
+    font-weight:950;
+}
+
+.event-stat-card span{
+    display:block;
+    margin-top:4px;
+    color:var(--muted);
+    font-size:9px;
+    font-weight:800;
+}
+
+.events-category-grid{
+    position:relative;
+    z-index:2;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.event-category-card{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+    padding:14px;
+    border:1px solid #e4eaf2;
+    border-radius:16px;
+    color:var(--navy);
+    background:#fff;
+    transition:.25s;
+}
+
+.event-category-card:hover{
+    transform:translateY(-4px);
+    border-color:var(--gold);
+    box-shadow:0 12px 28px #00000010;
+}
+
+.event-category-icon{
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+    border-radius:12px;
+    font-size:15px;
+}
+
+.event-category-icon.fiesta{color:#db2777;background:#fce7f3;}
+.event-category-icon.sports{color:#d97706;background:#fef3c7;}
+.event-category-icon.national{color:#ea580c;background:#ffedd5;}
+.event-category-icon.memory{color:#475569;background:#f1f5f9;}
+
+.event-category-card strong{
+    display:block;
+    overflow:hidden;
+    font-size:11px;
+    font-weight:950;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.event-category-card span{
+    display:block;
+    margin-top:3px;
+    color:var(--muted);
+    font-size:9px;
+}
+
+.event-category-card .arrow{
+    margin-left:auto;
+    color:#94a3b8;
+    font-size:9px;
+}
+
+.events-quick-actions{
+    position:relative;
+    z-index:2;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:13px;
+}
+
+.event-quick-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    min-height:42px;
+    padding:10px 13px;
+    border-radius:12px;
+    font-size:9px;
+    font-weight:950;
+    transition:.25s;
+}
+
+.event-quick-btn.primary{color:var(--navy);background:var(--gold);}
+.event-quick-btn.secondary{color:var(--navy);border:1px solid #dfe7f2;background:#f8fafc;}
+.event-quick-btn:hover{transform:translateY(-3px);}
+.event-quick-btn.secondary:hover{border-color:var(--gold);background:#fff;}
+
+/* =========================================================
+   FACULTY MANAGEMENT
+========================================================= */
+
+.faculty-management{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:25px;
+
+    margin-bottom:22px;
+
+    border:
+        1px solid
+        #dfe7f2;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #f7fbff
+        );
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+.faculty-management:before{
+
+    content:"";
+
+    position:absolute;
+
+    width:260px;
+
+    height:260px;
+
+    right:-125px;
+
+    top:-130px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #ffc30040,
+            transparent 70%
+        );
+}
+
+
+.faculty-management-header{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    margin-bottom:21px;
+}
+
+
+.faculty-management-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+}
+
+
+.faculty-management-icon{
+
+    width:56px;
+
+    height:56px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex:none;
+
+    border-radius:17px;
+
+    background:
+        var(--navy);
+
+    color:
+        var(--gold);
+
+    font-size:22px;
+
+    box-shadow:
+        0 12px 28px
+        #001f3f2e;
+}
+
+
+.faculty-management h2{
+
+    color:
+        var(--navy);
+
+    font-size:23px;
+
+    font-weight:950;
+}
+
+
+.faculty-management-title p{
+
+    color:
+        var(--muted);
+
+    font-size:12px;
+
+    margin-top:5px;
+}
+
+
+.faculty-main-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:
+        14px 18px;
+
+    border-radius:14px;
+
+    background:
+        var(--navy);
+
+    color:#fff;
+
+    font-weight:900;
+
+    transition:.25s;
+
+    white-space:nowrap;
+}
+
+
+.faculty-main-btn:hover{
+
+    transform:
+        translateY(-3px);
+
+    background:
+        var(--gold);
+
+    color:
+        var(--navy);
+}
+
+
+.faculty-actions{
+
+    position:relative;
+
+    z-index:2;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:14px;
+}
+
+
+.faculty-action{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:16px;
+
+    border:
+        1px solid
+        #e4eaf2;
+
+    border-radius:18px;
+
+    background:
+        #f8fafc;
+
+    color:
+        var(--navy);
+
+    transition:.3s;
+}
+
+
+.faculty-action:hover{
+
+    transform:
+        translateY(-5px);
+
+    background:#fff;
+
+    border-color:
+        var(--gold);
+
+    box-shadow:
+        0 15px 32px
+        #00000012;
+}
+
+
+.faculty-action i{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex:none;
+
+    border-radius:13px;
+
+    background:
+        #eaf2ff;
+
+    color:
+        var(--blue);
+}
+
+
+.faculty-action strong{
+
+    display:block;
+
+    font-size:13px;
+}
+
+
+.faculty-action span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:
+        var(--muted);
+
+    font-size:10px;
+}
+
+
+/* =========================================================
+   WHATSAPP ANNOUNCEMENT MANAGEMENT
+========================================================= */
+
+.whatsapp-management{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:25px;
+
+    margin-bottom:22px;
+
+    border:1px solid #d9eadf;
+
+    border-radius:28px;
+
+    background:
+        radial-gradient(
+            circle at 95% 10%,
+            #25d36628,
+            transparent 25%
+        ),
+        linear-gradient(135deg,#ffffff,#f6fffa);
+
+    box-shadow:var(--shadow);
+}
+
+.whatsapp-management:after{
+
+    content:"";
+
+    position:absolute;
+
+    width:250px;
+    height:250px;
+
+    right:-110px;
+    bottom:-140px;
+
+    border-radius:50%;
+
+    background:radial-gradient(
+        circle,
+        #25d36620,
+        transparent 70%
+    );
+
+    pointer-events:none;
+}
+
+.whatsapp-management-head{
+
+    position:relative;
+    z-index:2;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:20px;
+}
+
+.whatsapp-management-title{
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.whatsapp-management-icon{
+
+    width:56px;
+    height:56px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+
+    border-radius:17px;
+
+    background:linear-gradient(135deg,#075e54,#25d366);
+
+    color:#fff;
+    font-size:24px;
+
+    box-shadow:0 12px 28px #25d36635;
+}
+
+.whatsapp-management h2{
+
+    color:#075e54;
+    font-size:23px;
+    font-weight:950;
+}
+
+.whatsapp-management-title p{
+
+    margin-top:5px;
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+}
+
+.whatsapp-main-btn{
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+
+    padding:14px 18px;
+    border-radius:14px;
+
+    background:#075e54;
+    color:#fff;
+
+    font-size:11px;
+    font-weight:900;
+    white-space:nowrap;
+    transition:.25s;
+}
+
+.whatsapp-main-btn:hover{
+
+    transform:translateY(-3px);
+    background:#25d366;
+    color:#073b34;
+}
+
+.whatsapp-actions{
+
+    position:relative;
+    z-index:2;
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+
+.whatsapp-action{
+
     display:flex;
     align-items:center;
     gap:12px;
-    padding:20px;
-    background:#08254a;
+
+    padding:16px;
+
+    border:1px solid #dcefe3;
+    border-radius:18px;
+    background:#f7fffa;
+    color:#075e54;
+    transition:.3s;
 }
 
-.sidebar-logo img{
-    width:68px;
-    height:68px;
-    object-fit:contain;
+.whatsapp-action:hover{
+
+    transform:translateY(-5px);
+    background:#fff;
+    border-color:#25d366;
+    box-shadow:0 15px 32px #25d36618;
+}
+
+.whatsapp-action i{
+
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+
+    border-radius:13px;
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.whatsapp-action strong{
+    display:block;
+    font-size:13px;
+}
+
+.whatsapp-action span{
+    display:block;
+    margin-top:3px;
+    color:var(--muted);
+    font-size:10px;
+}
+
+/* =========================================================
+   POPUP MANAGEMENT
+========================================================= */
+
+.popup-management{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:25px;
+
+    margin-bottom:22px;
+
+    border:
+        1px solid
+        #e0e8f3;
+
+    border-radius:28px;
+
+    background:
+
+        radial-gradient(
+            circle at 95% 10%,
+            #ffc30030,
+            transparent 25%
+        ),
+
+        linear-gradient(
+            135deg,
+            #fff,
+            #f7fbff
+        );
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+.popup-management:after{
+
+    content:"";
+
+    position:absolute;
+
+    width:230px;
+
+    height:230px;
+
+    right:-100px;
+
+    bottom:-130px;
+
     border-radius:50%;
-    background:white;
-    padding:3px;
+
+    background:
+        radial-gradient(
+            circle,
+            #0053a620,
+            transparent 70%
+        );
 }
 
-.logo-text h2{
-    margin:0;
+
+.popup-management-head{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    margin-bottom:20px;
+}
+
+
+.popup-management-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+}
+
+
+.popup-management-icon{
+
+    width:56px;
+
+    height:56px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex:none;
+
+    border-radius:17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #001f3f,
+            #0053a6
+        );
+
+    color:
+        var(--gold);
+
+    font-size:22px;
+}
+
+
+.popup-management h2{
+
+    color:
+        var(--navy);
+
+    font-size:23px;
+
+    font-weight:950;
+}
+
+
+.popup-management-title p{
+
+    color:
+        var(--muted);
+
+    font-size:12px;
+
+    margin-top:5px;
+}
+
+
+.popup-main-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:
+        14px 18px;
+
+    border-radius:14px;
+
+    background:
+        var(--navy);
+
     color:#fff;
-    font-size:25px;
-    font-weight:500;
+
+    font-weight:900;
+
+    transition:.25s;
+
+    white-space:nowrap;
 }
 
-  </style>
+
+.popup-main-btn:hover{
+
+    transform:
+        translateY(-3px);
+
+    background:
+        var(--gold);
+
+    color:
+        var(--navy);
+}
+
+
+.popup-actions{
+
+    position:relative;
+
+    z-index:2;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:14px;
+}
+
+
+.popup-action{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:16px;
+
+    border:
+        1px solid
+        #e4eaf2;
+
+    border-radius:18px;
+
+    background:
+        #f8fafc;
+
+    color:
+        var(--navy);
+
+    transition:.3s;
+}
+
+
+.popup-action:hover{
+
+    transform:
+        translateY(-5px);
+
+    background:#fff;
+
+    border-color:
+        var(--gold);
+
+    box-shadow:
+        0 15px 32px
+        #00000012;
+}
+
+
+.popup-action i{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex:none;
+
+    border-radius:13px;
+
+    background:
+        #fff5d5;
+
+    color:
+        #d89b00;
+}
+
+
+.popup-action strong{
+
+    display:block;
+
+    font-size:13px;
+}
+
+
+.popup-action span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:
+        var(--muted);
+
+    font-size:10px;
+}
+
+
+.popup-live{
+
+    position:absolute;
+
+    top:20px;
+
+    right:24px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:
+        6px 10px;
+
+    border-radius:99px;
+
+    background:
+        #dcfce7;
+
+    color:
+        #15803d;
+
+    font-size:9px;
+
+    font-weight:950;
+
+    z-index:3;
+}
+
+
+.popup-live:before{
+
+    content:"";
+
+    width:7px;
+
+    height:7px;
+
+    border-radius:50%;
+
+    background:
+        #10b981;
+
+    box-shadow:
+        0 0 0 4px
+        #10b98122;
+}
+
+
+/* =========================================================
+   CHARTS
+========================================================= */
+
+.analytics-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:18px;
+
+    margin-bottom:22px;
+}
+
+
+.chart-card{
+
+    min-height:350px;
+
+    padding:23px;
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius:23px;
+
+    background:
+        var(--card);
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+.chart-head{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:17px;
+}
+
+
+.chart-card h2{
+
+    color:
+        var(--navy);
+
+    font-size:18px;
+
+    font-weight:950;
+}
+
+
+.chart-card h2 i{
+
+    color:
+        var(--gold);
+
+    margin-right:7px;
+}
+
+
+.chart-sub{
+
+    margin-top:4px;
+
+    color:
+        var(--muted);
+
+    font-size:11px;
+}
+
+
+.chart-wrap{
+
+    position:relative;
+
+    height:265px;
+}
+
+
+/* =========================================================
+   SECTIONS / TABLES
+========================================================= */
+
+.section{
+
+    overflow:hidden;
+
+    margin-bottom:22px;
+
+    border:
+        1px solid
+        var(--line);
+
+    border-radius:23px;
+
+    background:
+        var(--card);
+
+    box-shadow:
+        var(--shadow);
+}
+
+
+.section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    padding:
+        19px 22px;
+
+    border-bottom:
+        1px solid
+        var(--line);
+
+    background:
+        linear-gradient(
+            180deg,
+            #fbfdff,
+            #f8fafc
+        );
+}
+
+
+.section-title h2{
+
+    color:
+        var(--navy);
+
+    font-size:19px;
+
+    font-weight:950;
+}
+
+
+.section-title h2 i{
+
+    color:
+        var(--gold);
+
+    margin-right:7px;
+}
+
+
+.pill{
+
+    padding:
+        7px 12px;
+
+    border-radius:99px;
+
+    background:
+        var(--navy);
+
+    color:#fff;
+
+    font-size:10px;
+
+    font-weight:900;
+}
+
+
+.table-wrap{
+
+    width:100%;
+
+    overflow-x:auto;
+}
+
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:760px;
+}
+
+
+th,
+td{
+
+    padding:
+        14px 18px;
+
+    text-align:left;
+
+    vertical-align:middle;
+
+    border-bottom:
+        1px solid
+        #eef2f7;
+
+    font-size:13px;
+}
+
+
+th{
+
+    color:
+        #536174;
+
+    background:
+        #fbfdff;
+
+    font-size:10px;
+
+    letter-spacing:.7px;
+
+    text-transform:uppercase;
+
+    white-space:nowrap;
+}
+
+
+tbody tr:hover{
+
+    background:
+        #f8fbff;
+}
+
+
+.badge{
+
+    display:inline-flex;
+
+    padding:
+        6px 10px;
+
+    border-radius:99px;
+
+    font-size:10px;
+
+    font-weight:950;
+
+    white-space:nowrap;
+}
+
+
+.admission{
+
+    background:#dbeafe;
+
+    color:#1d4ed8;
+}
+
+
+.enquiry{
+
+    background:#dcfce7;
+
+    color:#15803d;
+}
+
+
+.contact{
+
+    background:#fef3c7;
+
+    color:#92400e;
+}
+
+
+.message{
+
+    max-width:340px;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+}
+
+
+.record-link{
+
+    color:
+        var(--navy);
+
+    font-weight:900;
+}
+
+
+.action-btn,
+.doc-link{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:5px;
+
+    min-width:32px;
+
+    min-height:32px;
+
+    margin:2px;
+
+    padding:
+        7px 9px;
+
+    border:0;
+
+    border-radius:9px;
+
+    color:#fff;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+
+.action-btn:hover,
+.doc-link:hover{
+
+    transform:
+        translateY(-2px);
+
+    opacity:.9;
+}
+
+
+.doc-link{
+
+    background:
+        var(--navy);
+}
+
+
+.edit-btn{
+
+    background:#2563eb;
+}
+
+
+.delete-btn{
+
+    background:
+        var(--red);
+}
+
+
+.view-btn{
+
+    background:
+        var(--green);
+}
+
+
+.pdf-btn{
+
+    background:
+        var(--purple);
+}
+
+
+.empty{
+
+    padding:
+        42px 20px;
+
+    text-align:center;
+
+    color:
+        var(--muted);
+}
+
+
+.empty i{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    color:#cbd5e1;
+
+    font-size:38px;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:999999;
+
+    padding:22px;
+
+    background:
+        #000000b8;
+
+    backdrop-filter:
+        blur(7px);
+}
+
+
+.modal-content{
+
+    display:flex;
+
+    flex-direction:column;
+
+    width:
+        min(1050px,100%);
+
+    height:
+        min(88vh,850px);
+
+    margin:auto;
+
+    overflow:hidden;
+
+    border-radius:23px;
+
+    background:#fff;
+
+    box-shadow:
+        0 30px 100px
+        #0006;
+}
+
+
+.modal-head{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+        14px 19px;
+
+    color:#fff;
+
+    background:
+        var(--navy);
+}
+
+
+.modal-head h3{
+
+    color:#fff;
+
+    font-size:16px;
+}
+
+
+.modal-close{
+
+    padding:
+        8px 12px;
+
+    border:0;
+
+    border-radius:9px;
+
+    background:
+        var(--gold);
+
+    color:
+        var(--navy);
+
+    font-weight:950;
+
+    cursor:pointer;
+}
+
+
+.modal-body{
+
+    flex:1;
+}
+
+
+.modal-body iframe{
+
+    width:100%;
+
+    height:100%;
+
+    border:0;
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark-mode{
+
+    --bg:#0b1220;
+
+    --card:#111827;
+
+    --text:#e5e7eb;
+
+    --muted:#94a3b8;
+
+    --line:#263244;
+
+    background:
+        #0b1220;
+}
+
+
+body.dark-mode .search-form{
+
+    background:
+        #111827;
+
+    border-color:
+        #263244;
+}
+
+
+body.dark-mode .search-form input{
+
+    background:
+        #0b1220;
+
+    color:#fff;
+
+    border-color:
+        #334155;
+}
+
+
+body.dark-mode .card h3,
+body.dark-mode .chart-card h2,
+body.dark-mode .section-title h2,
+body.dark-mode .faculty-management h2,
+body.dark-mode .management-title h2,
+body.dark-mode .popup-management h2{
+
+    color:
+        var(--gold);
+}
+
+
+body.dark-mode .section-title,
+body.dark-mode th{
+
+    background:
+        #182235;
+
+    border-color:
+        #263244;
+}
+
+
+body.dark-mode td{
+
+    border-color:
+        #263244;
+}
+
+
+body.dark-mode tbody tr:hover{
+
+    background:
+        #172033;
+}
+
+
+body.dark-mode .faculty-management,
+body.dark-mode .management-box,
+body.dark-mode .popup-management{
+
+    background:
+        linear-gradient(
+            135deg,
+            #111827,
+            #0f1b2d
+        );
+
+    border-color:
+        #263244;
+}
+
+
+body.dark-mode .whatsapp-management{
+
+    background:linear-gradient(135deg,#10231f,#0f1b2d);
+    border-color:#244b40;
+}
+
+body.dark-mode .whatsapp-management h2{
+    color:#4ade80;
+}
+
+body.dark-mode .whatsapp-action{
+    background:#162a25;
+    border-color:#285044;
+    color:#bbf7d0;
+}
+
+body.dark-mode .faculty-action,
+body.dark-mode .management-action,
+body.dark-mode .popup-action{
+
+    background:
+        #182235;
+
+    border-color:
+        #334155;
+
+    color:#fff;
+}
+
+
+body.dark-mode .popup-live{
+
+    background:
+        #123c29;
+
+    color:
+        #86efac;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1150px){
+
+    .cards,
+    .faculty-actions,
+    .events-stats,
+    .events-category-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+
+@media(max-width:1000px){
+
+    .analytics-grid{
+
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+@media(max-width:900px){
+
+    .sidebar{
+
+        position:relative;
+
+        width:100%;
+
+        height:auto;
+    }
+
+
+    .layout{
+
+        display:block;
+    }
+
+
+    .main{
+
+        width:100%;
+
+        margin-left:0;
+
+        padding:18px;
+    }
+
+
+    .hero{
+
+        display:block;
+
+        padding:26px;
+    }
+
+
+    .hero-actions{
+
+        justify-content:flex-start;
+
+        margin-top:18px;
+    }
+
+
+    .faculty-management-header,
+    .events-management-header,
+    .management-head,
+    .popup-management-head,
+    .whatsapp-management-head{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+    }
+
+
+    .faculty-main-btn,
+    .events-main-btn,
+    .management-main-btn,
+    .popup-main-btn,
+    .whatsapp-main-btn{
+
+        width:100%;
+
+        justify-content:center;
+    }
+
+
+    .popup-live{
+
+        position:static;
+
+        width:max-content;
+
+        margin-bottom:14px;
+    }
+
+
+    .management-actions,
+    .events-quick-actions,
+    .popup-actions,
+    .whatsapp-actions{
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .search-form{
+
+        flex-direction:column;
+    }
+
+
+    .search-form button,
+    .search-form .clear-btn{
+
+        width:100%;
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .cards,
+    .faculty-actions,
+    .events-stats,
+    .events-category-grid{
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .hero h1{
+
+        font-size:30px;
+    }
+
+
+    .chart-wrap{
+
+        height:235px;
+    }
+
+}
+
+</style>
+
 </head>
 
+
 <body>
+
 <div class="layout">
 
-  <aside class="sidebar">
-   <div class="sidebar-logo">
-    <img src="/images/logo.png" alt="Gyan Jyoti Logo">
-    <div class="logo-text">
-        <h2>Gyan Jyoti</h2>
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar">
+
+
+    <div class="sidebar-logo">
+
+        <img
+            src="/images/logo.png"
+            alt="Gyan Jyoti School Logo"
+        >
+
+        <div class="logo-text">
+
+            <h2>
+                Gyan Jyoti
+            </h2>
+
+            <span>
+                School Administration
+            </span>
+
+        </div>
+
     </div>
-</div>
+
+
+    <div class="menu-title">
+        Management
+    </div>
+
+
     <div class="menu">
-      <a class="active" href="/admin/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
-      <a href="#analytics"><i class="fas fa-chart-pie"></i> Analytics</a>
-      <a href="#notifications"><i class="fas fa-bell"></i> Notifications</a>
-      <a href="#admissions"><i class="fas fa-user-graduate"></i> Admissions</a>
-      <a href="#enquiries"><i class="fas fa-phone"></i> Enquiries</a>
-      <a href="#contacts"><i class="fas fa-envelope"></i> Contacts</a>
-      <a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </div>
-  </aside>
 
-  <main class="main">
 
-    <div class="hero">
-      <div>
-        <h1>Admin Dashboard</h1>
-        <p>Welcome back, <%= adminName %> 👋 Manage enquiries, admissions, records and documents here.</p>
-      </div>
+        <a
+            class="active"
+            href="/admin/dashboard"
+        >
 
-      <div class="hero-actions">
-        <a href="#notifications" class="bell">
-          <i class="fas fa-bell"></i> Notifications
-          <span><%= notificationCount || 0 %></span>
+            <i class="fas fa-chart-line"></i>
+
+            Dashboard
+
         </a>
-        <button class="theme-toggle" onclick="toggleDarkMode()">
-          <i class="fas fa-moon"></i> Dark
-        </button>
-      </div>
+
+
+        <a href="#analytics">
+
+            <i class="fas fa-chart-pie"></i>
+
+            Analytics
+
+        </a>
+
+
+        <a href="#notifications">
+
+            <i class="fas fa-bell"></i>
+
+            Notifications
+
+        </a>
+
+
+        <a href="#admissions">
+
+            <i class="fas fa-user-graduate"></i>
+
+            Admissions
+
+        </a>
+
+
+        <a href="#enquiries">
+
+            <i class="fas fa-comments"></i>
+
+            Enquiries
+
+        </a>
+
+
+        <a href="#contacts">
+
+            <i class="fas fa-envelope"></i>
+
+            Contacts
+
+        </a>
+
+
+        <!-- FACULTY -->
+
+        <a
+            href="/admin/faculty"
+            class="faculty-menu"
+        >
+
+            <i class="fas fa-chalkboard-teacher"></i>
+
+            Faculty Management
+
+        </a>
+
+
+        <!-- EVENTS -->
+
+        <a
+            href="/admin/events"
+            class="events-menu"
+        >
+
+            <i class="fas fa-calendar-days"></i>
+
+            Events Management
+
+            <span class="menu-new">NEW</span>
+
+        </a>
+
+
+        <!-- TOPPERS -->
+
+        <a
+            href="/admin/academics"
+            class="academic-menu"
+        >
+
+            <i class="fas fa-graduation-cap"></i>
+
+            Topper & Academic Records
+
+        </a>
+
+
+        <!-- SPORTS -->
+
+        <a
+            href="/admin/sports-dance"
+            class="sports-menu"
+        >
+
+            <i class="fas fa-trophy"></i>
+
+            Sports & Dance
+
+        </a>
+
+
+        <!-- WHATSAPP ANNOUNCEMENTS -->
+
+        <a
+            href="/admin/whatsapp"
+            class="whatsapp-menu"
+        >
+
+            <i class="fab fa-whatsapp"></i>
+
+            WhatsApp Announcements
+
+            <span class="menu-new">NEW</span>
+
+        </a>
+
+
+        <!-- POPUP -->
+
+        <a
+            href="/admin/popup"
+            class="popup-menu"
+        >
+
+            <i class="fas fa-images"></i>
+
+            Popup Management
+
+            <span class="menu-new">
+                LIVE
+            </span>
+
+        </a>
+
+
+        <!-- LOGOUT -->
+
+        <a href="/admin/logout">
+
+            <i class="fas fa-sign-out-alt"></i>
+
+            Logout
+
+        </a>
+
+
     </div>
 
-    <form method="GET" action="/admin/dashboard" class="search-form">
-      <input
+
+    <div class="sidebar-footer">
+
+        <small>
+            ADMIN ACCOUNT
+        </small>
+
+        <strong>
+            <%= adminName || 'Administrator' %>
+        </strong>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+
+    <div>
+
+        <div class="hero-badge">
+
+            <i class="fas fa-shield-halved"></i>
+
+            Secure Administration
+
+        </div>
+
+
+        <h1>
+            Admin Dashboard
+        </h1>
+
+
+        <p>
+
+            Welcome back,
+            <strong>
+                <%= adminName || 'Administrator' %>
+            </strong>
+            👋
+
+            Manage admissions, enquiries, contacts,
+            documents, faculty, toppers, achievements
+            and homepage popups from one central dashboard.
+
+        </p>
+
+    </div>
+
+
+    <div class="hero-actions">
+
+
+        <a
+            href="#notifications"
+            class="bell"
+        >
+
+            <i class="fas fa-bell"></i>
+
+            Notifications
+
+            <span>
+                <%= notificationCount || 0 %>
+            </span>
+
+        </a>
+
+
+        <button
+            type="button"
+            class="theme-toggle"
+            onclick="toggleDarkMode()"
+        >
+
+            <i class="fas fa-moon"></i>
+
+            Dark Mode
+
+        </button>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     SEARCH
+========================================================= -->
+
+<form
+    method="GET"
+    action="/admin/dashboard"
+    class="search-form"
+>
+
+    <input
         type="text"
         name="keyword"
-        placeholder="Search by name, phone, email, class, parent name or message..."
+        placeholder="Search name, phone, email, class, parent or message..."
         value="<%= typeof keyword !== 'undefined' ? keyword : '' %>"
-      >
-      <button type="submit"><i class="fas fa-search"></i> Search</button>
-      <% if (typeof keyword !== 'undefined' && keyword) { %>
-        <a href="/admin/dashboard" class="clear-btn">Clear</a>
-      <% } %>
-    </form>
+        autocomplete="off"
+    >
 
-    <div class="cards">
-      <div class="card"><i class="fas fa-database"></i><h3 class="counter" data-count="<%= totalCount || 0 %>">0</h3><p>Total Records</p></div>
-      <div class="card"><i class="fas fa-envelope-open-text"></i><h3 class="counter" data-count="<%= contactCount || 0 %>">0</h3><p>Contact Messages</p></div>
-      <div class="card"><i class="fas fa-comments"></i><h3 class="counter" data-count="<%= enquiryCount || 0 %>">0</h3><p>Enquiries</p></div>
-      <div class="card"><i class="fas fa-user-graduate"></i><h3 class="counter" data-count="<%= admissionCount || 0 %>">0</h3><p>Admissions</p></div>
+
+    <button type="submit">
+
+        <i class="fas fa-search"></i>
+
+        Search
+
+    </button>
+
+
+    <% if (
+        typeof keyword !== 'undefined'
+        && keyword
+    ) { %>
+
+        <a
+            href="/admin/dashboard"
+            class="clear-btn"
+        >
+
+            <i class="fas fa-xmark"></i>
+
+            Clear
+
+        </a>
+
+    <% } %>
+
+
+</form>
+
+
+
+<!-- =========================================================
+     STATISTICS
+========================================================= -->
+
+<div class="cards">
+
+
+    <div class="card">
+
+        <i class="fas fa-database"></i>
+
+        <h3
+            class="counter"
+            data-count="<%= totalCount || 0 %>"
+        >
+            0
+        </h3>
+
+        <p>
+            Total Records
+        </p>
+
     </div>
 
-    <section id="analytics" class="analytics-grid">
-      <div class="chart-card">
-        <h2><i class="fas fa-chart-line"></i> Monthly Admissions</h2>
-        <canvas id="monthlyAdmissionChart"></canvas>
-      </div>
 
-      <div class="chart-card">
-        <h2><i class="fas fa-chart-bar"></i> Admission vs Enquiry</h2>
-        <canvas id="admissionEnquiryChart"></canvas>
-      </div>
-    </section>
+    <div class="card">
 
-    <section class="section" id="notifications">
-      <div class="section-title">
-        <h2><i class="fas fa-bell"></i> Latest Notifications</h2>
-        <span class="pill"><%= notificationCount || 0 %> New</span>
-      </div>
+        <i class="fas fa-envelope-open-text"></i>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>Type</th><th>Name</th><th>Contact</th><th>Message</th><th>Date</th><th>Open</th></tr>
-          </thead>
-          <tbody>
-            <% if ((admissions && admissions.length) || (enquiries && enquiries.length) || (contacts && contacts.length)) { %>
-              <% admissions.forEach(a => { %>
-                <tr>
-                  <td><span class="badge admission">Admission</span></td>
-                  <td><a class="record-link" href="#admission-<%= a._id %>"><%= a.studentName || '-' %></a></td>
-                  <td><%= a.phone || '-' %></td>
-                  <td class="message">Class: <%= a.class || '-' %>, Parent: <%= a.parentName || '-' %></td>
-                  <td><%= a.createdAt ? new Date(a.createdAt).toLocaleDateString('en-IN') : '-' %></td>
-                  <td><a href="#admission-<%= a._id %>" class="action-btn view-btn"><i class="fas fa-arrow-right"></i></a></td>
-                </tr>
-              <% }) %>
+        <h3
+            class="counter"
+            data-count="<%= contactCount || 0 %>"
+        >
+            0
+        </h3>
 
-              <% enquiries.forEach(e => { %>
-                <tr>
-                  <td><span class="badge enquiry">Enquiry</span></td>
-                  <td><a class="record-link" href="#enquiry-<%= e._id %>"><%= e.name || '-' %></a></td>
-                  <td><%= e.phone || '-' %></td>
-                  <td class="message"><%= e.message || '-' %></td>
-                  <td><%= e.createdAt ? new Date(e.createdAt).toLocaleDateString('en-IN') : '-' %></td>
-                  <td><a href="#enquiry-<%= e._id %>" class="action-btn view-btn"><i class="fas fa-arrow-right"></i></a></td>
-                </tr>
-              <% }) %>
+        <p>
+            Contact Messages
+        </p>
 
-              <% contacts.forEach(c => { %>
-                <tr>
-                  <td><span class="badge contact">Contact</span></td>
-                  <td><a class="record-link" href="#contact-<%= c._id %>"><%= c.name || '-' %></a></td>
-                  <td><%= c.email || '-' %></td>
-                  <td class="message"><%= c.subject || '-' %></td>
-                  <td><%= c.createdAt ? new Date(c.createdAt).toLocaleDateString('en-IN') : '-' %></td>
-                  <td><a href="#contact-<%= c._id %>" class="action-btn view-btn"><i class="fas fa-arrow-right"></i></a></td>
-                </tr>
-              <% }) %>
-            <% } else { %>
-              <tr><td colspan="6" class="empty">No notifications found</td></tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
-    </section>
+    </div>
 
-    <section class="section" id="admissions">
-      <div class="section-title">
-        <h2><i class="fas fa-user-graduate"></i> Registration / Admission Forms</h2>
-        <span class="pill"><%= admissionCount || 0 %> Records</span>
-      </div>
 
-      <% if (admissions && admissions.length > 0) { %>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Student</th><th>Class</th><th>Parent</th><th>Phone</th><th>Email</th>
-              <th>Address</th><th>Document</th><th>Date</th><th>Type</th><th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% admissions.forEach(a => { %>
-            <tr id="admission-<%= a._id %>">
-              <td><strong><%= a.studentName || '-' %></strong></td>
-              <td><%= a.class || '-' %></td>
-              <td><%= a.parentName || '-' %></td>
-              <td><%= a.phone || '-' %></td>
-              <td><%= a.email || '-' %></td>
-              <td class="message"><%= a.address || '-' %></td>
+    <div class="card">
 
-              <td>
-                <% if (a.document) { %>
-                  <button class="doc-link" onclick="openDocument('/uploads/<%= a.document %>')">
-                    <i class="fas fa-folder-open"></i> Preview
-                  </button>
-                <% } else { %>
-                  -
-                <% } %>
-              </td>
+        <i class="fas fa-comments"></i>
 
-              <td><%= a.createdAt ? new Date(a.createdAt).toLocaleDateString('en-IN') : '-' %></td>
-              <td><span class="badge admission">Admission</span></td>
-              <td>
-                <a href="/admin/admission/edit/<%= a._id %>" class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></a>
+        <h3
+            class="counter"
+            data-count="<%= enquiryCount || 0 %>"
+        >
+            0
+        </h3>
 
-                <a href="/admin/admission/delete/<%= a._id %>" class="action-btn delete-btn"
-                   onclick="return confirm('Are you sure you want to delete this admission record?')" title="Delete">
-                  <i class="fas fa-trash"></i>
-                </a>
+        <p>
+            Enquiries
+        </p>
 
-                <% if (a.document) { %>
-                  <a href="/uploads/<%= a.document %>" target="_blank" class="action-btn view-btn" title="Open document">
-                    <i class="fas fa-eye"></i>
-                  </a>
-                <% } %>
-<%
-  const pdfStudentName = JSON.stringify(a.studentName || '');
-  const pdfClassName = JSON.stringify(a.class || '');
-  const pdfParentName = JSON.stringify(a.parentName || '');
-  const pdfPhone = JSON.stringify(a.phone || '');
-  const pdfEmail = JSON.stringify(a.email || '');
-  const pdfAddress = JSON.stringify(a.address || '');
-  const pdfDate = JSON.stringify(
-    a.createdAt ? new Date(a.createdAt).toLocaleDateString("en-IN") : "-"
-  );
-%>
+    </div>
 
-<button
-  type="button"
-  class="action-btn pdf-btn"
-  title="Print / Save PDF"
-  onclick='printAdmission(
-    <%- pdfStudentName %>,
-    <%- pdfClassName %>,
-    <%- pdfParentName %>,
-    <%- pdfPhone %>,
-    <%- pdfEmail %>,
-    <%- pdfAddress %>,
-    <%- pdfDate %>
-  )'
+
+    <div class="card">
+
+        <i class="fas fa-user-graduate"></i>
+
+        <h3
+            class="counter"
+            data-count="<%= admissionCount || 0 %>"
+        >
+            0
+        </h3>
+
+        <p>
+            Admissions
+        </p>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     EVENTS MANAGEMENT
+========================================================= -->
+
+<section class="events-management" id="events">
+
+    <div class="events-management-header">
+
+        <div class="events-management-title">
+
+            <div class="events-management-icon">
+                <i class="fas fa-calendar-days"></i>
+            </div>
+
+            <div>
+                <h2>Events Management</h2>
+                <p>
+                    Manage school events, categories,
+                    photos, videos and publication status.
+                </p>
+            </div>
+
+        </div>
+
+        <a
+            href="/admin/events"
+            class="events-main-btn"
+        >
+            Open Events Manager
+            <i class="fas fa-arrow-right"></i>
+        </a>
+
+    </div>
+
+
+    <div class="events-stats">
+
+        <div class="event-stat-card">
+            <div class="event-stat-icon blue">
+                <i class="fas fa-calendar"></i>
+            </div>
+            <div>
+                <strong><%= totalEvents || 0 %></strong>
+                <span>Total Events</span>
+            </div>
+        </div>
+
+        <div class="event-stat-card">
+            <div class="event-stat-icon green">
+                <i class="fas fa-circle-check"></i>
+            </div>
+            <div>
+                <strong><%= publishedEvents || 0 %></strong>
+                <span>Published</span>
+            </div>
+        </div>
+
+        <div class="event-stat-card">
+            <div class="event-stat-icon orange">
+                <i class="fas fa-file-pen"></i>
+            </div>
+            <div>
+                <strong><%= draftEvents || 0 %></strong>
+                <span>Drafts</span>
+            </div>
+        </div>
+
+        <div class="event-stat-card">
+            <div class="event-stat-icon purple">
+                <i class="fas fa-images"></i>
+            </div>
+            <div>
+                <strong><%= (totalEvents || 0) %></strong>
+                <span>Gallery Events</span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="events-category-grid">
+
+        <a
+            href="/admin/events?category=fun-fiesta"
+            class="event-category-card"
+        >
+            <div class="event-category-icon fiesta">
+                <i class="fas fa-face-grin-stars"></i>
+            </div>
+            <div>
+                <strong>Fun &amp; Fiesta</strong>
+                <span><%= funFiestaCount || 0 %> events</span>
+            </div>
+            <i class="fas fa-chevron-right arrow"></i>
+        </a>
+
+        <a
+            href="/admin/events?category=sports"
+            class="event-category-card"
+        >
+            <div class="event-category-icon sports">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div>
+                <strong>Sports</strong>
+                <span><%= sportsCount || 0 %> events</span>
+            </div>
+            <i class="fas fa-chevron-right arrow"></i>
+        </a>
+
+        <a
+            href="/admin/events?category=national-celebration"
+            class="event-category-card"
+        >
+            <div class="event-category-icon national">
+                <i class="fas fa-flag"></i>
+            </div>
+            <div>
+                <strong>National Celebrations</strong>
+                <span><%= nationalCount || 0 %> events</span>
+            </div>
+            <i class="fas fa-chevron-right arrow"></i>
+        </a>
+
+        <a
+            href="/admin/events?category=old-memory"
+            class="event-category-card"
+        >
+            <div class="event-category-icon memory">
+                <i class="fas fa-clock-rotate-left"></i>
+            </div>
+            <div>
+                <strong>Old Memories</strong>
+                <span><%= oldMemoryCount || 0 %> events</span>
+            </div>
+            <i class="fas fa-chevron-right arrow"></i>
+        </a>
+
+    </div>
+
+
+    <div class="events-quick-actions">
+
+        <a
+            href="/admin/events/add"
+            class="event-quick-btn primary"
+        >
+            <i class="fas fa-plus"></i>
+            Add New Event
+        </a>
+
+        <a
+            href="/admin/events"
+            class="event-quick-btn secondary"
+        >
+            <i class="fas fa-images"></i>
+            Manage Photos &amp; Videos
+        </a>
+
+        <a
+            href="/events"
+            target="_blank"
+            class="event-quick-btn secondary"
+        >
+            <i class="fas fa-external-link-alt"></i>
+            View Public Events
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FACULTY MANAGEMENT
+========================================================= -->
+
+<section class="faculty-management">
+
+
+    <div class="faculty-management-header">
+
+
+        <div class="faculty-management-title">
+
+
+            <div class="faculty-management-icon">
+
+                <i class="fas fa-chalkboard-teacher"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Faculty Management
+                </h2>
+
+                <p>
+                    Manage top faculty, section incharges
+                    and teaching staff.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <a
+            href="/admin/faculty"
+            class="faculty-main-btn"
+        >
+
+            Open Faculty Management
+
+            <i class="fas fa-arrow-right"></i>
+
+        </a>
+
+
+    </div>
+
+
+
+    <div class="faculty-actions">
+
+
+        <a
+            href="/admin/faculty"
+            class="faculty-action"
+        >
+
+            <i class="fas fa-users"></i>
+
+            <div>
+
+                <strong>
+                    All Faculty
+                </strong>
+
+                <span>
+                    View &amp; manage staff
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="/admin/faculty"
+            class="faculty-action"
+        >
+
+            <i class="fas fa-star"></i>
+
+            <div>
+
+                <strong>
+                    Top Faculty
+                </strong>
+
+                <span>
+                    Featured educators
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="/admin/faculty"
+            class="faculty-action"
+        >
+
+            <i class="fas fa-user-tie"></i>
+
+            <div>
+
+                <strong>
+                    Section Incharges
+                </strong>
+
+                <span>
+                    Primary · Middle · Higher
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="/admin/faculty"
+            class="faculty-action"
+        >
+
+            <i class="fas fa-user-plus"></i>
+
+            <div>
+
+                <strong>
+                    Add Faculty
+                </strong>
+
+                <span>
+                    Create new record
+                </span>
+
+            </div>
+
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     WHATSAPP ANNOUNCEMENT MANAGEMENT
+========================================================= -->
+
+<section class="whatsapp-management">
+
+    <div class="whatsapp-management-head">
+
+        <div class="whatsapp-management-title">
+
+            <div class="whatsapp-management-icon">
+                <i class="fab fa-whatsapp"></i>
+            </div>
+
+            <div>
+
+                <h2>
+                    WhatsApp Announcements
+                </h2>
+
+                <p>
+                    Send important notices to selected faculty individually
+                    or prepare announcements for your WhatsApp group.
+                </p>
+
+            </div>
+
+        </div>
+
+        <a
+            href="/admin/whatsapp"
+            class="whatsapp-main-btn"
+        >
+
+            Open Announcement Center
+
+            <i class="fas fa-arrow-right"></i>
+
+        </a>
+
+    </div>
+
+    <div class="whatsapp-actions">
+
+        <a
+            href="/admin/whatsapp"
+            class="whatsapp-action"
+        >
+
+            <i class="fas fa-paper-plane"></i>
+
+            <div>
+                <strong>Individual Notice</strong>
+                <span>Select faculty and open WhatsApp with the message.</span>
+            </div>
+
+        </a>
+
+        <a
+            href="/admin/whatsapp"
+            class="whatsapp-action"
+        >
+
+            <i class="fas fa-users"></i>
+
+            <div>
+                <strong>Faculty Selection</strong>
+                <span>Choose the faculty members who should receive the notice.</span>
+            </div>
+
+        </a>
+
+        <a
+            href="/admin/whatsapp"
+            class="whatsapp-action"
+        >
+
+            <i class="fas fa-bullhorn"></i>
+
+            <div>
+                <strong>Announcement Center</strong>
+                <span>Write an important notice from one premium admin page.</span>
+            </div>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     TOPPER & ACADEMIC RECORDS
+========================================================= -->
+
+<section class="management-box">
+
+
+    <div class="management-head">
+
+
+        <div class="management-title">
+
+
+            <div class="management-icon">
+
+                <i class="fas fa-graduation-cap"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Topper &amp; Academic Records
+                </h2>
+
+                <p>
+                    Manage 10th and 12th state, district
+                    and school toppers with year, batch,
+                    percentage and student details.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <a
+            href="/admin/academics"
+            class="management-main-btn"
+        >
+
+            Open Academic Manager
+
+            <i class="fas fa-arrow-right"></i>
+
+        </a>
+
+
+    </div>
+
+
+
+    <div class="management-actions">
+
+
+        <a
+            href="/admin/academics"
+            class="management-action"
+        >
+
+            <i class="fas fa-list"></i>
+
+            <div>
+
+                <strong>
+                    All Topper Records
+                </strong>
+
+                <span>
+                    View and manage academic toppers
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="/admin/academics/add"
+            class="management-action"
+        >
+
+            <i class="fas fa-user-plus"></i>
+
+            <div>
+
+                <strong>
+                    Add Topper
+                </strong>
+
+                <span>
+                    Add a new 10th or 12th topper
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="/admin/academics"
+            class="management-action"
+        >
+
+            <i class="fas fa-chart-column"></i>
+
+            <div>
+
+                <strong>
+                    Academic Overview
+                </strong>
+
+                <span>
+                    Manage academic achievement records
+                </span>
+
+            </div>
+
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     SPORTS & DANCE MANAGEMENT
+========================================================= -->
+
+<section class="management-box">
+
+
+    <div class="management-head">
+
+
+        <div class="management-title">
+
+
+            <div class="management-icon">
+
+                <i class="fas fa-trophy"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Sports &amp; Dance Management
+                </h2>
+
+                <p>
+                    Manage individual winners, sports teams,
+                    dance groups and achievement records.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <a
+            href="/admin/sports-dance"
+            class="management-main-btn"
+        >
+
+            Open Sports &amp; Dance
+
+            <i class="fas fa-arrow-right"></i>
+
+        </a>
+
+
+    </div>
+
+
+
+    <div class="management-actions">
+
+
+        <a
+            href="/admin/sports-dance"
+            class="management-action"
+        >
+
+            <i class="fas fa-list-check"></i>
+
+            <div>
+
+                <strong>
+                    All Records
+                </strong>
+
+                <span>
+                    View sports and dance achievements
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="/admin/sports-dance/add"
+            class="management-action"
+        >
+
+            <i class="fas fa-plus-circle"></i>
+
+            <div>
+
+                <strong>
+                    Add Achievement
+                </strong>
+
+                <span>
+                    Add student or group achievement
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="/admin/sports-dance"
+            class="management-action"
+        >
+
+            <i class="fas fa-medal"></i>
+
+            <div>
+
+                <strong>
+                    Winners &amp; Groups
+                </strong>
+
+                <span>
+                    Manage winners and team records
+                </span>
+
+            </div>
+
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     POPUP MANAGEMENT
+========================================================= -->
+
+<section class="popup-management">
+
+
+    <span class="popup-live">
+
+        POPUP SYSTEM ACTIVE
+
+    </span>
+
+
+    <div class="popup-management-head">
+
+
+        <div class="popup-management-title">
+
+
+            <div class="popup-management-icon">
+
+                <i class="fas fa-images"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Popup Management
+                </h2>
+
+                <p>
+                    Create, edit and control the promotional
+                    popups displayed on the homepage.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <a
+            href="/admin/popup/add"
+            class="popup-main-btn"
+        >
+
+            <i class="fas fa-plus"></i>
+
+            Add New Popup
+
+        </a>
+
+
+    </div>
+
+
+
+    <div class="popup-actions">
+
+
+        <a
+            href="/admin/popup"
+            class="popup-action"
+        >
+
+            <i class="fas fa-layer-group"></i>
+
+            <div>
+
+                <strong>
+                    All Popups
+                </strong>
+
+                <span>
+                    View and manage existing popups
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="/admin/popup/add"
+            class="popup-action"
+        >
+
+            <i class="fas fa-square-plus"></i>
+
+            <div>
+
+                <strong>
+                    Create Popup
+                </strong>
+
+                <span>
+                    Add a new homepage promotion
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <a
+            href="/admin/popup"
+            class="popup-action"
+        >
+
+            <i class="fas fa-sliders"></i>
+
+            <div>
+
+                <strong>
+                    Popup Controls
+                </strong>
+
+                <span>
+                    Edit status, priority and display settings
+                </span>
+
+            </div>
+
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     ANALYTICS
+========================================================= -->
+
+<section
+    id="analytics"
+    class="analytics-grid"
 >
-  <i class="fas fa-file-pdf"></i>
-</button>
-              </td>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      </div>
-      <% } else { %>
-        <div class="empty"><i class="fas fa-folder-open"></i><p>No admission forms yet</p></div>
-      <% } %>
-    </section>
 
-    <section class="section" id="enquiries">
-      <div class="section-title">
-        <h2><i class="fas fa-comments"></i> Enquiries</h2>
-        <span class="pill"><%= enquiryCount || 0 %> Records</span>
-      </div>
 
-      <% if (enquiries && enquiries.length > 0) { %>
-      <div class="table-wrap">
+    <div class="chart-card">
+
+
+        <div class="chart-head">
+
+            <div>
+
+                <h2>
+
+                    <i class="fas fa-chart-line"></i>
+
+                    Monthly Admissions
+
+                </h2>
+
+                <p class="chart-sub">
+                    Admission activity across recent months
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="chart-wrap">
+
+            <canvas
+                id="monthlyAdmissionChart"
+            ></canvas>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="chart-card">
+
+
+        <div class="chart-head">
+
+            <div>
+
+                <h2>
+
+                    <i class="fas fa-chart-column"></i>
+
+                    Admission vs Enquiry
+
+                </h2>
+
+                <p class="chart-sub">
+                    Compare incoming admissions and enquiries
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="chart-wrap">
+
+            <canvas
+                id="admissionEnquiryChart"
+            ></canvas>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     NOTIFICATIONS
+========================================================= -->
+
+<section
+    class="section"
+    id="notifications"
+>
+
+
+    <div class="section-title">
+
+        <h2>
+
+            <i class="fas fa-bell"></i>
+
+            Latest Notifications
+
+        </h2>
+
+
+        <span class="pill">
+
+            <%= notificationCount || 0 %>
+
+            New
+
+        </span>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+
         <table>
-          <thead>
-            <tr><th>Name</th><th>Phone</th><th>Email</th><th>Message</th><th>Date</th><th>Type</th><th>Actions</th></tr>
-          </thead>
-          <tbody>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>Type</th>
+
+                    <th>Name</th>
+
+                    <th>Contact</th>
+
+                    <th>Message</th>
+
+                    <th>Date</th>
+
+                    <th>Open</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+            <% if (
+                (admissions && admissions.length) ||
+                (enquiries && enquiries.length) ||
+                (contacts && contacts.length)
+            ) { %>
+
+
+                <% if (admissions) {
+                    admissions.forEach(a => { %>
+
+                    <tr>
+
+                        <td>
+                            <span class="badge admission">
+                                Admission
+                            </span>
+                        </td>
+
+
+                        <td>
+
+                            <a
+                                class="record-link"
+                                href="#admission-<%= a._id %>"
+                            >
+
+                                <%= a.studentName || '-' %>
+
+                            </a>
+
+                        </td>
+
+
+                        <td>
+                            <%= a.phone || '-' %>
+                        </td>
+
+
+                        <td class="message">
+
+                            Class:
+                            <%= a.class || '-' %>,
+
+                            Parent:
+                            <%= a.parentName || '-' %>
+
+                        </td>
+
+
+                        <td>
+
+                            <%= a.createdAt
+                                ? new Date(a.createdAt)
+                                    .toLocaleDateString('en-IN')
+                                : '-'
+                            %>
+
+                        </td>
+
+
+                        <td>
+
+                            <a
+                                href="#admission-<%= a._id %>"
+                                class="action-btn view-btn"
+                            >
+
+                                <i class="fas fa-arrow-right"></i>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                <% }) } %>
+
+
+
+                <% if (enquiries) {
+                    enquiries.forEach(e => { %>
+
+                    <tr>
+
+                        <td>
+
+                            <span class="badge enquiry">
+                                Enquiry
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <a
+                                class="record-link"
+                                href="#enquiry-<%= e._id %>"
+                            >
+
+                                <%= e.name || '-' %>
+
+                            </a>
+
+                        </td>
+
+
+                        <td>
+                            <%= e.phone || '-' %>
+                        </td>
+
+
+                        <td class="message">
+                            <%= e.message || '-' %>
+                        </td>
+
+
+                        <td>
+
+                            <%= e.createdAt
+                                ? new Date(e.createdAt)
+                                    .toLocaleDateString('en-IN')
+                                : '-'
+                            %>
+
+                        </td>
+
+
+                        <td>
+
+                            <a
+                                href="#enquiry-<%= e._id %>"
+                                class="action-btn view-btn"
+                            >
+
+                                <i class="fas fa-arrow-right"></i>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                <% }) } %>
+
+
+
+                <% if (contacts) {
+                    contacts.forEach(c => { %>
+
+                    <tr>
+
+                        <td>
+
+                            <span class="badge contact">
+                                Contact
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <a
+                                class="record-link"
+                                href="#contact-<%= c._id %>"
+                            >
+
+                                <%= c.name || '-' %>
+
+                            </a>
+
+                        </td>
+
+
+                        <td>
+                            <%= c.email || '-' %>
+                        </td>
+
+
+                        <td class="message">
+                            <%= c.subject || '-' %>
+                        </td>
+
+
+                        <td>
+
+                            <%= c.createdAt
+                                ? new Date(c.createdAt)
+                                    .toLocaleDateString('en-IN')
+                                : '-'
+                            %>
+
+                        </td>
+
+
+                        <td>
+
+                            <a
+                                href="#contact-<%= c._id %>"
+                                class="action-btn view-btn"
+                            >
+
+                                <i class="fas fa-arrow-right"></i>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                <% }) } %>
+
+
+            <% } else { %>
+
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        class="empty"
+                    >
+
+                        <i class="fas fa-bell-slash"></i>
+
+                        No notifications found
+
+                    </td>
+
+                </tr>
+
+
+            <% } %>
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     ADMISSIONS
+========================================================= -->
+
+<section
+    class="section"
+    id="admissions"
+>
+
+
+    <div class="section-title">
+
+        <h2>
+
+            <i class="fas fa-user-graduate"></i>
+
+            Registration / Admission Forms
+
+        </h2>
+
+
+        <span class="pill">
+
+            <%= admissionCount || 0 %>
+
+            Records
+
+        </span>
+
+    </div>
+
+
+    <% if (
+        admissions &&
+        admissions.length > 0
+    ) { %>
+
+
+    <div class="table-wrap">
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>Student</th>
+
+                    <th>Class</th>
+
+                    <th>Parent</th>
+
+                    <th>Phone</th>
+
+                    <th>Email</th>
+
+                    <th>Address</th>
+
+                    <th>Document</th>
+
+                    <th>Date</th>
+
+                    <th>Type</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+            <% admissions.forEach(a => { %>
+
+
+                <tr
+                    id="admission-<%= a._id %>"
+                >
+
+
+                    <td>
+
+                        <strong>
+                            <%= a.studentName || '-' %>
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+                        <%= a.class || '-' %>
+                    </td>
+
+
+                    <td>
+                        <%= a.parentName || '-' %>
+                    </td>
+
+
+                    <td>
+                        <%= a.phone || '-' %>
+                    </td>
+
+
+                    <td>
+                        <%= a.email || '-' %>
+                    </td>
+
+
+                    <td class="message">
+                        <%= a.address || '-' %>
+                    </td>
+
+
+                    <td>
+
+                        <% if (a.document) { %>
+
+
+                            <button
+                                class="doc-link"
+                                onclick="openDocument('/uploads/<%= a.document %>')"
+                            >
+
+                                <i class="fas fa-folder-open"></i>
+
+                                Preview
+
+                            </button>
+
+
+                        <% } else { %>
+
+                            -
+
+                        <% } %>
+
+                    </td>
+
+
+                    <td>
+
+                        <%= a.createdAt
+                            ? new Date(a.createdAt)
+                                .toLocaleDateString('en-IN')
+                            : '-'
+                        %>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="badge admission">
+                            Admission
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+
+                        <a
+                            href="/admin/admission/edit/<%= a._id %>"
+                            class="action-btn edit-btn"
+                            title="Edit"
+                        >
+
+                            <i class="fas fa-edit"></i>
+
+                        </a>
+
+
+                        <a
+                            href="/admin/admission/delete/<%= a._id %>"
+                            class="action-btn delete-btn"
+                            title="Delete"
+
+                            onclick="
+                                return confirm(
+                                    'Are you sure you want to delete this admission record?'
+                                )
+                            "
+                        >
+
+                            <i class="fas fa-trash"></i>
+
+                        </a>
+
+
+                        <% if (a.document) { %>
+
+
+                            <a
+                                href="/uploads/<%= a.document %>"
+                                target="_blank"
+                                class="action-btn view-btn"
+                                title="Open document"
+                            >
+
+                                <i class="fas fa-eye"></i>
+
+                            </a>
+
+
+                        <% } %>
+
+
+                        <%
+
+                            const pdfStudentName =
+                                JSON.stringify(
+                                    a.studentName || ''
+                                );
+
+                            const pdfClassName =
+                                JSON.stringify(
+                                    a.class || ''
+                                );
+
+                            const pdfParentName =
+                                JSON.stringify(
+                                    a.parentName || ''
+                                );
+
+                            const pdfPhone =
+                                JSON.stringify(
+                                    a.phone || ''
+                                );
+
+                            const pdfEmail =
+                                JSON.stringify(
+                                    a.email || ''
+                                );
+
+                            const pdfAddress =
+                                JSON.stringify(
+                                    a.address || ''
+                                );
+
+                            const pdfDate =
+                                JSON.stringify(
+                                    a.createdAt
+                                        ? new Date(
+                                            a.createdAt
+                                        ).toLocaleDateString(
+                                            'en-IN'
+                                        )
+                                        : '-'
+                                );
+
+                        %>
+
+
+                        <button
+                            type="button"
+                            class="action-btn pdf-btn"
+                            title="Print / Save PDF"
+
+                            onclick='printAdmission(
+                                <%- pdfStudentName %>,
+                                <%- pdfClassName %>,
+                                <%- pdfParentName %>,
+                                <%- pdfPhone %>,
+                                <%- pdfEmail %>,
+                                <%- pdfAddress %>,
+                                <%- pdfDate %>
+                            )'
+                        >
+
+                            <i class="fas fa-file-pdf"></i>
+
+                        </button>
+
+
+                    </td>
+
+
+                </tr>
+
+
+            <% }) %>
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+    <% } else { %>
+
+
+        <div class="empty">
+
+            <i class="fas fa-folder-open"></i>
+
+            <p>
+                No admission forms yet
+            </p>
+
+        </div>
+
+
+    <% } %>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     ENQUIRIES
+========================================================= -->
+
+<section
+    class="section"
+    id="enquiries"
+>
+
+
+    <div class="section-title">
+
+        <h2>
+
+            <i class="fas fa-comments"></i>
+
+            Enquiries
+
+        </h2>
+
+
+        <span class="pill">
+
+            <%= enquiryCount || 0 %>
+
+            Records
+
+        </span>
+
+    </div>
+
+
+    <% if (
+        enquiries &&
+        enquiries.length > 0
+    ) { %>
+
+
+    <div class="table-wrap">
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>Phone</th>
+
+                    <th>Email</th>
+
+                    <th>Message</th>
+
+                    <th>Date</th>
+
+                    <th>Type</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
             <% enquiries.forEach(e => { %>
-            <tr id="enquiry-<%= e._id %>">
-              <td><strong><%= e.name || '-' %></strong></td>
-              <td><%= e.phone || '-' %></td>
-              <td><%= e.email || '-' %></td>
-              <td class="message"><%= e.message || '-' %></td>
-              <td><%= e.createdAt ? new Date(e.createdAt).toLocaleDateString('en-IN') : '-' %></td>
-              <td><span class="badge enquiry">Enquiry</span></td>
-              <td>
-                <a href="/admin/enquiry/edit/<%= e._id %>" class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></a>
-                <a href="/admin/enquiry/delete/<%= e._id %>" class="action-btn delete-btn"
-                   onclick="return confirm('Are you sure you want to delete this enquiry?')" title="Delete">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </td>
-            </tr>
+
+
+                <tr
+                    id="enquiry-<%= e._id %>"
+                >
+
+
+                    <td>
+
+                        <strong>
+                            <%= e.name || '-' %>
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+                        <%= e.phone || '-' %>
+                    </td>
+
+
+                    <td>
+                        <%= e.email || '-' %>
+                    </td>
+
+
+                    <td class="message">
+                        <%= e.message || '-' %>
+                    </td>
+
+
+                    <td>
+
+                        <%= e.createdAt
+                            ? new Date(
+                                e.createdAt
+                            ).toLocaleDateString(
+                                'en-IN'
+                            )
+                            : '-'
+                        %>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="badge enquiry">
+                            Enquiry
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+
+                        <a
+                            href="/admin/enquiry/edit/<%= e._id %>"
+                            class="action-btn edit-btn"
+                            title="Edit"
+                        >
+
+                            <i class="fas fa-edit"></i>
+
+                        </a>
+
+
+                        <a
+                            href="/admin/enquiry/delete/<%= e._id %>"
+                            class="action-btn delete-btn"
+                            title="Delete"
+
+                            onclick="
+                                return confirm(
+                                    'Are you sure you want to delete this enquiry?'
+                                )
+                            "
+                        >
+
+                            <i class="fas fa-trash"></i>
+
+                        </a>
+
+
+                    </td>
+
+
+                </tr>
+
+
             <% }) %>
-          </tbody>
+
+
+            </tbody>
+
+
         </table>
-      </div>
-      <% } else { %>
-        <div class="empty"><i class="fas fa-inbox"></i><p>No enquiries yet</p></div>
-      <% } %>
-    </section>
 
-    <section class="section" id="contacts">
-      <div class="section-title">
-        <h2><i class="fas fa-envelope"></i> Contact Submissions</h2>
-        <span class="pill"><%= contactCount || 0 %> Records</span>
-      </div>
 
-      <% if (contacts && contacts.length > 0) { %>
-      <div class="table-wrap">
+    </div>
+
+
+    <% } else { %>
+
+
+        <div class="empty">
+
+            <i class="fas fa-inbox"></i>
+
+            <p>
+                No enquiries yet
+            </p>
+
+        </div>
+
+
+    <% } %>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     CONTACTS
+========================================================= -->
+
+<section
+    class="section"
+    id="contacts"
+>
+
+
+    <div class="section-title">
+
+        <h2>
+
+            <i class="fas fa-envelope"></i>
+
+            Contact Submissions
+
+        </h2>
+
+
+        <span class="pill">
+
+            <%= contactCount || 0 %>
+
+            Records
+
+        </span>
+
+    </div>
+
+
+    <% if (
+        contacts &&
+        contacts.length > 0
+    ) { %>
+
+
+    <div class="table-wrap">
+
+
         <table>
-          <thead>
-            <tr><th>Name</th><th>Email</th><th>Category</th><th>Subject</th><th>Date</th><th>Status</th><th>Actions</th></tr>
-          </thead>
-          <tbody>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                    <th>Category</th>
+
+                    <th>Subject</th>
+
+                    <th>Date</th>
+
+                    <th>Status</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
             <% contacts.forEach(c => { %>
-            <tr id="contact-<%= c._id %>">
-              <td><strong><%= c.name || '-' %></strong></td>
-              <td><%= c.email || '-' %></td>
-              <td><%= c.category || '-' %></td>
-              <td class="message"><%= c.subject || '-' %></td>
-              <td><%= c.createdAt ? new Date(c.createdAt).toLocaleDateString('en-IN') : '-' %></td>
-              <td><span class="badge contact"><%= c.status || 'new' %></span></td>
-              <td>
-                <a href="/admin/contact/<%= c._id %>" class="action-btn view-btn" title="View"><i class="fas fa-eye"></i></a>
-                <a href="/admin/contact/delete/<%= c._id %>" class="action-btn delete-btn"
-                   onclick="return confirm('Are you sure you want to delete this contact?')" title="Delete">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </td>
-            </tr>
+
+
+                <tr
+                    id="contact-<%= c._id %>"
+                >
+
+
+                    <td>
+
+                        <strong>
+                            <%= c.name || '-' %>
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+                        <%= c.email || '-' %>
+                    </td>
+
+
+                    <td>
+                        <%= c.category || '-' %>
+                    </td>
+
+
+                    <td class="message">
+                        <%= c.subject || '-' %>
+                    </td>
+
+
+                    <td>
+
+                        <%= c.createdAt
+                            ? new Date(
+                                c.createdAt
+                            ).toLocaleDateString(
+                                'en-IN'
+                            )
+                            : '-'
+                        %>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="badge contact">
+
+                            <%= c.status || 'new' %>
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+
+                        <a
+                            href="/admin/contact/<%= c._id %>"
+                            class="action-btn view-btn"
+                            title="View"
+                        >
+
+                            <i class="fas fa-eye"></i>
+
+                        </a>
+
+
+                        <a
+                            href="/admin/contact/delete/<%= c._id %>"
+                            class="action-btn delete-btn"
+                            title="Delete"
+
+                            onclick="
+                                return confirm(
+                                    'Are you sure you want to delete this contact?'
+                                )
+                            "
+                        >
+
+                            <i class="fas fa-trash"></i>
+
+                        </a>
+
+
+                    </td>
+
+
+                </tr>
+
+
             <% }) %>
-          </tbody>
+
+
+            </tbody>
+
+
         </table>
-      </div>
-      <% } else { %>
-        <div class="empty"><i class="fas fa-inbox"></i><p>No contact submissions yet</p></div>
-      <% } %>
-    </section>
 
-  </main>
+
+    </div>
+
+
+    <% } else { %>
+
+
+        <div class="empty">
+
+            <i class="fas fa-inbox"></i>
+
+            <p>
+                No contact submissions yet
+            </p>
+
+        </div>
+
+
+    <% } %>
+
+
+</section>
+
+
+
+</main>
+
 </div>
 
-<div class="modal" id="docModal">
-  <div class="modal-content">
-    <div class="modal-head">
-      <h3><i class="fas fa-file"></i> Document Preview</h3>
-      <button class="modal-close" onclick="closeDocument()">Close</button>
+
+
+<!-- =========================================================
+     DOCUMENT PREVIEW
+========================================================= -->
+
+<div
+    class="modal"
+    id="docModal"
+>
+
+
+    <div class="modal-content">
+
+
+        <div class="modal-head">
+
+
+            <h3>
+
+                <i class="fas fa-file"></i>
+
+                Document Preview
+
+            </h3>
+
+
+            <button
+                class="modal-close"
+                onclick="closeDocument()"
+            >
+
+                Close
+
+            </button>
+
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <iframe
+                id="docFrame"
+                src=""
+                title="Document Preview"
+            ></iframe>
+
+        </div>
+
+
     </div>
-    <div class="modal-body">
-      <iframe id="docFrame" src=""></iframe>
-    </div>
-  </div>
+
+
 </div>
+
+
 
 <script>
-  const monthlyLabels = <%- JSON.stringify(typeof monthlyLabels !== 'undefined' ? monthlyLabels : []) %>;
-  const monthlyAdmissions = <%- JSON.stringify(typeof monthlyAdmissions !== 'undefined' ? monthlyAdmissions : []) %>;
-  const monthlyEnquiries = <%- JSON.stringify(typeof monthlyEnquiries !== 'undefined' ? monthlyEnquiries : []) %>;
 
-  function toggleDarkMode(){
-    document.body.classList.toggle('dark-mode');
-    localStorage.setItem('adminDarkMode', document.body.classList.contains('dark-mode'));
-  }
+/* =========================================================
+   CHART DATA
+========================================================= */
 
-  if(localStorage.getItem('adminDarkMode') === 'true'){
-    document.body.classList.add('dark-mode');
-  }
+const monthlyLabels =
+    <%- JSON.stringify(
+        typeof monthlyLabels !== 'undefined'
+            ? monthlyLabels
+            : []
+    ) %>;
 
-  document.querySelectorAll('.counter').forEach(counter => {
-    const target = Number(counter.dataset.count || 0);
-    let current = 0;
-    const step = Math.max(1, Math.ceil(target / 40));
 
-    const update = () => {
-      current += step;
-      if(current >= target){
-        counter.textContent = target;
-      } else {
-        counter.textContent = current;
-        requestAnimationFrame(update);
-      }
-    };
+const monthlyAdmissions =
+    <%- JSON.stringify(
+        typeof monthlyAdmissions !== 'undefined'
+            ? monthlyAdmissions
+            : []
+    ) %>;
 
-    update();
-  });
 
-  function openDocument(url){
-    document.getElementById('docFrame').src = url;
-    document.getElementById('docModal').style.display = 'block';
-  }
+const monthlyEnquiries =
+    <%- JSON.stringify(
+        typeof monthlyEnquiries !== 'undefined'
+            ? monthlyEnquiries
+            : []
+    ) %>;
 
-  function closeDocument(){
-    document.getElementById('docFrame').src = '';
-    document.getElementById('docModal').style.display = 'none';
-  }
 
-  window.onclick = function(event){
-    const modal = document.getElementById('docModal');
-    if(event.target === modal){
-      closeDocument();
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function toggleDarkMode(){
+
+    const enabled =
+        !document.body.classList.contains(
+            'dark-mode'
+        );
+
+
+    document.body.classList.toggle(
+        'dark-mode',
+        enabled
+    );
+
+
+    localStorage.setItem(
+        'adminDarkMode',
+        enabled
+    );
+
+}
+
+
+if (
+    localStorage.getItem(
+        'adminDarkMode'
+    ) === 'true'
+){
+
+    document.body.classList.add(
+        'dark-mode'
+    );
+
+}
+
+
+
+/* =========================================================
+   COUNTER ANIMATION
+========================================================= */
+
+document
+    .querySelectorAll('.counter')
+    .forEach(counter => {
+
+
+        const target =
+            Number(
+                counter.dataset.count || 0
+            );
+
+
+        if(!target){
+
+            counter.textContent =
+                '0';
+
+            return;
+
+        }
+
+
+        const start =
+            performance.now();
+
+
+        const duration =
+            850;
+
+
+        function animate(now){
+
+            const progress =
+                Math.min(
+                    (now - start) /
+                    duration,
+                    1
+                );
+
+
+            const eased =
+                1 -
+                Math.pow(
+                    1 - progress,
+                    3
+                );
+
+
+            counter.textContent =
+                Math.floor(
+                    target * eased
+                ).toLocaleString(
+                    'en-IN'
+                );
+
+
+            if(progress < 1){
+
+                requestAnimationFrame(
+                    animate
+                );
+
+            } else {
+
+                counter.textContent =
+                    target.toLocaleString(
+                        'en-IN'
+                    );
+
+            }
+
+        }
+
+
+        requestAnimationFrame(
+            animate
+        );
+
+    });
+
+
+
+/* =========================================================
+   DOCUMENT PREVIEW
+========================================================= */
+
+function openDocument(url){
+
+    if(!url){
+
+        return;
+
     }
-  };
 
-  function printAdmission(studentName, className, parentName, phone, email, address, date){
+
+    document
+        .getElementById(
+            'docFrame'
+        )
+        .src = url;
+
+
+    document
+        .getElementById(
+            'docModal'
+        )
+        .style.display =
+            'block';
+
+
+    document.body.style.overflow =
+        'hidden';
+
+}
+
+
+function closeDocument(){
+
+    document
+        .getElementById(
+            'docFrame'
+        )
+        .src = '';
+
+
+    document
+        .getElementById(
+            'docModal'
+        )
+        .style.display =
+            'none';
+
+
+    document.body.style.overflow =
+        '';
+
+}
+
+
+window.addEventListener(
+    'click',
+    function(e){
+
+        const modal =
+            document.getElementById(
+                'docModal'
+            );
+
+
+        if(
+            e.target === modal
+        ){
+
+            closeDocument();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    'keydown',
+    function(e){
+
+        if(
+            e.key === 'Escape'
+        ){
+
+            closeDocument();
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   PRINT ADMISSION
+========================================================= */
+
+function printAdmission(
+    studentName,
+    className,
+    parentName,
+    phone,
+    email,
+    address,
+    date
+){
+
     const content = `
-      <html>
-      <head>
-        <title>Admission Form</title>
+
+    <!DOCTYPE html>
+
+    <html>
+
+    <head>
+
+        <title>
+            Gyan Jyoti School - Admission Form
+        </title>
+
         <style>
-          body{font-family:Arial;padding:35px;color:#111}
-          .box{border:2px solid #001f3f;padding:25px;border-radius:12px}
-          h1{text-align:center;color:#001f3f}
-          table{width:100%;border-collapse:collapse;margin-top:20px}
-          td{padding:12px;border:1px solid #ddd}
-          .label{font-weight:bold;background:#f3f4f6;width:220px}
+
+            body{
+                font-family:Arial;
+                padding:35px;
+                color:#111;
+            }
+
+            .box{
+                max-width:850px;
+                margin:auto;
+                border:2px solid #001f3f;
+                padding:30px;
+                border-radius:16px;
+            }
+
+            h1{
+                text-align:center;
+                color:#001f3f;
+                margin-bottom:4px;
+            }
+
+            h2{
+                text-align:center;
+                color:#001f3f;
+            }
+
+            .sub{
+                text-align:center;
+                color:#64748b;
+                margin-bottom:25px;
+            }
+
+            table{
+                width:100%;
+                border-collapse:collapse;
+                margin-top:20px;
+            }
+
+            td{
+                padding:12px;
+                border:1px solid #ddd;
+            }
+
+            .label{
+                font-weight:bold;
+                background:#f3f4f6;
+                width:220px;
+            }
+
         </style>
-      </head>
-      <body>
+
+    </head>
+
+
+    <body>
+
+
         <div class="box">
-          <h1>Gyan Jyoti School</h1>
-          <h2>Admission / Registration Form</h2>
-          <table>
-            <tr><td class="label">Student Name</td><td>${studentName}</td></tr>
-            <tr><td class="label">Class</td><td>${className}</td></tr>
-            <tr><td class="label">Parent Name</td><td>${parentName}</td></tr>
-            <tr><td class="label">Phone</td><td>${phone}</td></tr>
-            <tr><td class="label">Email</td><td>${email}</td></tr>
-            <tr><td class="label">Address</td><td>${address}</td></tr>
-            <tr><td class="label">Submitted Date</td><td>${date}</td></tr>
-          </table>
+
+
+            <h1>
+                Gyan Jyoti School
+            </h1>
+
+
+            <div class="sub">
+                Admission & Registration Department
+            </div>
+
+
+            <h2>
+                Admission / Registration Form
+            </h2>
+
+
+            <table>
+
+
+                <tr>
+
+                    <td class="label">
+                        Student Name
+                    </td>
+
+                    <td>
+                        ${studentName}
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="label">
+                        Class
+                    </td>
+
+                    <td>
+                        ${className}
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="label">
+                        Parent Name
+                    </td>
+
+                    <td>
+                        ${parentName}
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="label">
+                        Phone
+                    </td>
+
+                    <td>
+                        ${phone}
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="label">
+                        Email
+                    </td>
+
+                    <td>
+                        ${email}
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="label">
+                        Address
+                    </td>
+
+                    <td>
+                        ${address}
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="label">
+                        Submitted Date
+                    </td>
+
+                    <td>
+                        ${date}
+                    </td>
+
+                </tr>
+
+
+            </table>
+
+
         </div>
-      </body>
-      </html>
+
+
+    </body>
+
+    </html>
+
     `;
 
-    const win = window.open('', '_blank');
-    win.document.write(content);
+
+    const win =
+        window.open(
+            '',
+            '_blank'
+        );
+
+
+    if(!win){
+
+        alert(
+            'Please allow pop-ups to print the admission form.'
+        );
+
+        return;
+
+    }
+
+
+    win.document.write(
+        content
+    );
+
+
     win.document.close();
-    win.print();
-  }
 
-  const chartLabels = monthlyLabels.length ? monthlyLabels : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-  const chartAdmissions = monthlyAdmissions.length ? monthlyAdmissions : [0, 0, 0, 0, 0, <%= admissionCount || 0 %>];
-  const chartEnquiries = monthlyEnquiries.length ? monthlyEnquiries : [0, 0, 0, 0, 0, <%= enquiryCount || 0 %>];
 
-  new Chart(document.getElementById('monthlyAdmissionChart'), {
-    type: 'line',
-    data: {
-      labels: chartLabels,
-      datasets: [{
-        label: 'Admissions',
-        data: chartAdmissions,
-        borderWidth: 3,
-        tension: .35,
-        fill: true
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: true } },
-      scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
-    }
-  });
+    setTimeout(
+        () => win.print(),
+        250
+    );
 
-  new Chart(document.getElementById('admissionEnquiryChart'), {
-    type: 'bar',
-    data: {
-      labels: chartLabels,
-      datasets: [
-        { label: 'Admissions', data: chartAdmissions },
-        { label: 'Enquiries', data: chartEnquiries }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: true } },
-      scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
-    }
-  });
+}
+
+
+
+/* =========================================================
+   CHARTS
+========================================================= */
+
+const labels =
+    monthlyLabels.length
+
+        ? monthlyLabels
+
+        : [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun'
+        ];
+
+
+const admissions =
+    monthlyAdmissions.length
+
+        ? monthlyAdmissions
+
+        : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            <%= admissionCount || 0 %>
+        ];
+
+
+const enquiries =
+    monthlyEnquiries.length
+
+        ? monthlyEnquiries
+
+        : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            <%= enquiryCount || 0 %>
+        ];
+
+
+const dark =
+    document.body.classList.contains(
+        'dark-mode'
+    );
+
+
+const fontColor =
+    dark
+        ? '#cbd5e1'
+        : '#64748b';
+
+
+const gridColor =
+    dark
+        ? 'rgba(148,163,184,.12)'
+        : 'rgba(100,116,139,.12)';
+
+
+const lineCanvas =
+    document.getElementById(
+        'monthlyAdmissionChart'
+    );
+
+
+const barCanvas =
+    document.getElementById(
+        'admissionEnquiryChart'
+    );
+
+
+
+if(
+    typeof Chart !== 'undefined'
+    &&
+    lineCanvas
+){
+
+    new Chart(
+        lineCanvas,
+        {
+
+            type:'line',
+
+            data:{
+
+                labels,
+
+                datasets:[{
+
+                    label:
+                        'Admissions',
+
+                    data:
+                        admissions,
+
+                    borderWidth:
+                        3,
+
+                    tension:
+                        .38,
+
+                    fill:
+                        true,
+
+                    borderColor:
+                        '#0053a6',
+
+                    backgroundColor:
+                        'rgba(0,83,166,.10)',
+
+                    pointBackgroundColor:
+                        '#ffc300',
+
+                    pointBorderColor:
+                        '#0053a6',
+
+                    pointRadius:
+                        4,
+
+                    pointHoverRadius:
+                        6
+
+                }]
+
+            },
+
+
+            options:{
+
+                responsive:true,
+
+                maintainAspectRatio:false,
+
+                interaction:{
+                    intersect:false,
+                    mode:'index'
+                },
+
+
+                plugins:{
+
+                    legend:{
+                        labels:{
+                            color:
+                                fontColor,
+
+                            font:{
+                                weight:'700'
+                            }
+                        }
+                    }
+
+                },
+
+
+                scales:{
+
+                    x:{
+                        grid:{
+                            color:
+                                gridColor
+                        },
+
+                        ticks:{
+                            color:
+                                fontColor
+                        }
+                    },
+
+
+                    y:{
+
+                        beginAtZero:true,
+
+                        ticks:{
+                            precision:0,
+                            color:
+                                fontColor
+                        },
+
+                        grid:{
+                            color:
+                                gridColor
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+
+if(
+    typeof Chart !== 'undefined'
+    &&
+    barCanvas
+){
+
+    new Chart(
+        barCanvas,
+        {
+
+            type:'bar',
+
+
+            data:{
+
+                labels,
+
+
+                datasets:[
+
+                    {
+
+                        label:
+                            'Admissions',
+
+                        data:
+                            admissions,
+
+                        backgroundColor:
+                            '#0053a6',
+
+                        borderRadius:
+                            7
+
+                    },
+
+
+                    {
+
+                        label:
+                            'Enquiries',
+
+                        data:
+                            enquiries,
+
+                        backgroundColor:
+                            '#ffc300',
+
+                        borderRadius:
+                            7
+
+                    }
+
+                ]
+
+            },
+
+
+            options:{
+
+                responsive:true,
+
+                maintainAspectRatio:false,
+
+
+                plugins:{
+
+                    legend:{
+
+                        labels:{
+
+                            color:
+                                fontColor,
+
+                            font:{
+                                weight:'700'
+                            }
+
+                        }
+
+                    }
+
+                },
+
+
+                scales:{
+
+                    x:{
+
+                        grid:{
+                            display:false
+                        },
+
+                        ticks:{
+                            color:
+                                fontColor
+                        }
+
+                    },
+
+
+                    y:{
+
+                        beginAtZero:true,
+
+                        ticks:{
+                            precision:0,
+
+                            color:
+                                fontColor
+                        },
+
+                        grid:{
+                            color:
+                                gridColor
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
 </script>
 
-</body>
-</html>
 
+</body>
+
+</html>

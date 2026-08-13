@@ -4,113 +4,411 @@ const router = express.Router();
 const Event = require('../models/Event');
 const SchoolInfo = require('../models/SchoolInfo');
 
-// Default Route
+// =========================================================
+// HELPER
+// =========================================================
+
+async function getSchoolInfo() {
+
+    return await SchoolInfo.findOne().lean();
+
+}
+
+
+// =========================================================
+// DEFAULT EVENTS ROUTE
+// GET /events
+// =========================================================
+
 router.get('/', (req, res) => {
-  res.redirect('/events/fun-fiesta');
-});
 
-// Fun & Fiesta
-router.get('/fun-fiesta', async (req, res) => {
-
-  try {
-
-    const events = await Event.find({
-      category: 'fun-fiesta'
-    }).sort({ date: -1 });
-
-    const schoolInfo = await SchoolInfo.findOne();
-
-    res.render('events/fun-fiesta', {
-      events,
-      schoolInfo,
-      title: 'Fun & Fiesta'
-    });
-
-  } catch (error) {
-
-    console.log(error);
-    res.send('Error loading Fun & Fiesta');
-
-  }
+    return res.redirect(
+        '/events/fun-fiesta'
+    );
 
 });
 
-// Sports
-router.get('/sports', async (req, res) => {
 
-  try {
+// =========================================================
+// FUN & FIESTA
+// GET /events/fun-fiesta
+// =========================================================
 
-    const events = await Event.find({
-      category: 'sports'
-    }).sort({ date: -1 });
+router.get(
+    '/fun-fiesta',
+    async (req, res) => {
 
-    const schoolInfo = await SchoolInfo.findOne();
+        try {
 
-    res.render('events/sports', {
-      events,
-      schoolInfo,
-      title: 'Sports'
-    });
+            const events =
+                await Event.find({
 
-  } catch (error) {
+                    category:
+                        'fun-fiesta',
 
-    console.log(error);
-    res.send('Error loading Sports');
+                    published:
+                        true
 
-  }
+                })
+                .sort({
 
-});
+                    priority: 1,
 
-// Republic Day
-router.get('/republic-day', async (req, res) => {
+                    date: -1
 
-  try {
+                })
+                .lean();
 
-    const events = await Event.find({
-      category: 'republic-day'
-    }).sort({ date: -1 });
 
-    const schoolInfo = await SchoolInfo.findOne();
+            const schoolInfo =
+                await getSchoolInfo();
 
-    res.render('events/republic-day', {
-      events,
-      schoolInfo,
-      title: 'Republic Day'
-    });
 
-  } catch (error) {
+            return res.render(
+                'events/fun-fiesta',
+                {
 
-    console.log(error);
-    res.send('Error loading Republic Day');
+                    events,
 
-  }
+                    schoolInfo,
 
-});
+                    title:
+                        'Fun & Fiesta',
 
-// Independence Day
-router.get('/independence-day', async (req, res) => {
+                    active:
+                        'events'
 
-  try {
+                }
+            );
 
-    const events = await Event.find({
-      category: 'independence-day'
-    }).sort({ date: -1 });
 
-    const schoolInfo = await SchoolInfo.findOne();
+        } catch (error) {
 
-    res.render('events/independence-day', {
-      events,
-      schoolInfo,
-      title: 'Independence Day'
-    });
+            console.error(
+                '❌ Error loading Fun & Fiesta:',
+                error
+            );
 
-  } catch (error) {
 
-    console.log(error);
-    res.send('Error loading Independence Day');
+            return res.status(
+                500
+            ).send(
+                'Error loading Fun & Fiesta'
+            );
 
-  }
+        }
 
-});
+    }
+);
+
+
+// =========================================================
+// SPORTS
+// GET /events/sports
+// =========================================================
+
+router.get(
+    '/sports',
+    async (req, res) => {
+
+        try {
+
+            const events =
+                await Event.find({
+
+                    category:
+                        'sports',
+
+                    published:
+                        true
+
+                })
+                .sort({
+
+                    priority: 1,
+
+                    date: -1
+
+                })
+                .lean();
+
+
+            const schoolInfo =
+                await getSchoolInfo();
+
+
+            return res.render(
+                'events/sports',
+                {
+
+                    events,
+
+                    schoolInfo,
+
+                    title:
+                        'Sports',
+
+                    active:
+                        'events'
+
+                }
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                '❌ Error loading Sports:',
+                error
+            );
+
+
+            return res.status(
+                500
+            ).send(
+                'Error loading Sports'
+            );
+
+        }
+
+    }
+);
+
+
+// =========================================================
+// NATIONAL CELEBRATIONS
+// GET /events/national-days
+// =========================================================
+
+router.get(
+    '/national-days',
+    async (req, res) => {
+
+        try {
+
+            const events =
+                await Event.find({
+
+                    category: {
+
+                        $in: [
+
+                            'republic-day',
+
+                            'independence-day'
+
+                        ]
+
+                    },
+
+                    published:
+                        true
+
+                })
+                .sort({
+
+                    priority: 1,
+
+                    date: -1
+
+                })
+                .lean();
+
+
+            const schoolInfo =
+                await getSchoolInfo();
+
+
+            return res.render(
+                'events/national-days',
+                {
+
+                    events,
+
+                    schoolInfo,
+
+                    title:
+                        'National Celebrations',
+
+                    active:
+                        'events'
+
+                }
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                '❌ Error loading National Celebrations:',
+                error
+            );
+
+
+            return res.status(
+                500
+            ).send(
+                'Error loading National Celebrations'
+            );
+
+        }
+
+    }
+);
+
+
+// =========================================================
+// OLD MEMORIES
+// GET /events/old-memories
+// =========================================================
+
+router.get(
+    '/old-memories',
+    async (req, res) => {
+
+        try {
+
+            const events =
+                await Event.find({
+
+                    category:
+                        'old-memory',
+
+                    published:
+                        true
+
+                })
+                .sort({
+
+                    priority: 1,
+
+                    date: -1
+
+                })
+                .lean();
+
+
+            const schoolInfo =
+                await getSchoolInfo();
+
+
+            return res.render(
+                'events/old-memories',
+                {
+
+                    events,
+
+                    schoolInfo,
+
+                    title:
+                        'Old Memories',
+
+                    active:
+                        'events'
+
+                }
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                '❌ Error loading Old Memories:',
+                error
+            );
+
+
+            return res.status(
+                500
+            ).send(
+                'Error loading Old Memories'
+            );
+
+        }
+
+    }
+);
+
+
+// =========================================================
+// SINGLE EVENT DETAILS
+// GET /events/event/:id
+// =========================================================
+
+router.get(
+    '/event/:id',
+    async (req, res) => {
+
+        try {
+
+            const event =
+                await Event.findOne({
+
+                    _id:
+                        req.params.id,
+
+                    published:
+                        true
+
+                })
+                .lean();
+
+
+            if (!event) {
+
+                return res.status(
+                    404
+                ).send(
+                    'Event not found'
+                );
+
+            }
+
+
+            const schoolInfo =
+                await getSchoolInfo();
+
+
+            return res.render(
+                'events/details',
+                {
+
+                    event,
+
+                    schoolInfo,
+
+                    title:
+                        event.title,
+
+                    active:
+                        'events'
+
+                }
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                '❌ Error loading event details:',
+                error
+            );
+
+
+            return res.status(
+                500
+            ).send(
+                'Error loading event'
+            );
+
+        }
+
+    }
+);
+
+
+// =========================================================
+// EXPORT
+// =========================================================
 
 module.exports = router;

@@ -1,0 +1,2925 @@
+<%- include('../partials/header') %>
+
+<!-- =========================================================
+     OLD MEMORIES — DIARY / YEARBOOK EXPERIENCE
+     Backend variables preserved:
+     events, event._id, event.coverImage, event.image,
+     event.title, event.date, event.photos, event.videos,
+     event.batch, event.session, event.description
+========================================================= -->
+
+<section class="diary-hero">
+
+  <div class="diary-hero-paper"></div>
+
+  <div class="diary-floating diary-float-1">
+    <i class="fas fa-paperclip"></i>
+  </div>
+
+  <div class="diary-floating diary-float-2">
+    <i class="fas fa-camera-retro"></i>
+  </div>
+
+  <div class="diary-floating diary-float-3">
+    <i class="fas fa-star"></i>
+  </div>
+
+  <div class="diary-hero-content">
+
+    <span class="diary-eyebrow">
+      <i class="fas fa-book-open"></i>
+      FROM THE SCHOOL ARCHIVES
+    </span>
+
+    <h1>
+      Our
+      <span>Old Memories</span>
+    </h1>
+
+    <p>
+      Turn the pages of our journey and revisit the people, celebrations,
+      achievements and little moments that made Gyan Jyoti special.
+    </p>
+
+    <div class="diary-hero-actions">
+      <a href="#memory-book" class="diary-primary-btn">
+        <i class="fas fa-book-open"></i>
+        Open Memory Book
+      </a>
+
+      <a href="/" class="diary-secondary-btn">
+        <i class="fas fa-house"></i>
+        Back Home
+      </a>
+    </div>
+
+    <div class="diary-breadcrumb">
+      <a href="/">Home</a>
+      <span>/</span>
+      <strong>Old Memories</strong>
+    </div>
+
+  </div>
+
+  <div class="diary-scroll">
+    <span>TURN THE PAGE</span>
+    <i class="fas fa-arrow-down"></i>
+  </div>
+
+</section>
+
+
+<main class="diary-page" id="memory-book">
+
+  <!-- =======================================================
+       INTRO NOTE
+  ======================================================== -->
+
+  <section class="diary-intro">
+
+    <div class="diary-paperclip"></div>
+
+    <div class="diary-intro-date">
+      <span>OUR ARCHIVE</span>
+      <strong>MEMORIES</strong>
+    </div>
+
+    <div class="diary-intro-copy">
+
+      <span class="diary-section-label">
+        <i class="fas fa-pen-nib"></i>
+        A PAGE FROM OUR JOURNEY
+      </span>
+
+      <h2>
+        Some moments are
+        <em>too precious</em>
+        to forget.
+      </h2>
+
+      <p>
+        Revisit old batches, school functions, celebrations, competitions
+        and the beautiful moments that became a part of our school's history.
+        Every photograph is another page in the Gyan Jyoti story.
+      </p>
+
+    </div>
+
+    <div class="diary-handwritten">
+      <i class="fas fa-heart"></i>
+      Memories worth keeping
+    </div>
+
+  </section>
+
+
+  <%
+    const memoryEvents =
+      Array.isArray(events) ? events : [];
+  %>
+
+
+  <% if (memoryEvents.length > 0) { %>
+
+    <!-- =====================================================
+         MEMORY TIMELINE
+    ====================================================== -->
+
+    <section class="memory-chapter">
+
+      <div class="chapter-heading">
+
+        <div class="chapter-number">
+          01
+        </div>
+
+        <div>
+          <span class="diary-section-label">
+            <i class="fas fa-bookmark"></i>
+            THE MEMORY CHAPTERS
+          </span>
+
+          <h2>
+            Pages from
+            <span>our past</span>
+          </h2>
+        </div>
+
+        <div class="chapter-rule"></div>
+
+      </div>
+
+
+      <div class="memory-timeline">
+
+        <% memoryEvents.forEach(function(event, index) { %>
+
+          <article
+            class="diary-memory-entry <%= index % 2 === 1 ? 'entry-reverse' : '' %>"
+            style="--entry-delay:<%= index * 0.08 %>s;"
+          >
+
+            <div class="timeline-dot">
+              <span><%= String(index + 1).padStart(2, '0') %></span>
+            </div>
+
+
+            <!-- =================================================
+                 PHOTO / POLAROID
+            ================================================== -->
+
+            <div class="memory-polaroid-wrap">
+
+              <a
+                href="/events/event/<%= event._id %>"
+                class="memory-polaroid"
+              >
+
+                <div class="polaroid-tape"></div>
+
+                <div class="polaroid-photo">
+
+                  <% if (event.coverImage) { %>
+
+                    <img
+                      src="<%= event.coverImage %>"
+                      alt="<%= event.title || 'Old School Memory' %>"
+                      loading="lazy"
+                    >
+
+                  <% } else if (event.image) { %>
+
+                    <img
+                      src="<%= event.image %>"
+                      alt="<%= event.title || 'Old School Memory' %>"
+                      loading="lazy"
+                    >
+
+                  <% } else { %>
+
+                    <div class="memory-placeholder">
+                      <i class="fas fa-camera-retro"></i>
+                    </div>
+
+                  <% } %>
+
+                  <div class="photo-hover">
+                    <span>
+                      <i class="fas fa-expand"></i>
+                      Open Memory
+                    </span>
+                  </div>
+
+                </div>
+
+
+                <div class="polaroid-caption">
+
+                  <span>
+                    <i class="fas fa-camera"></i>
+                    Gyan Jyoti Archives
+                  </span>
+
+                  <strong>
+                    <%= event.title || 'School Memory' %>
+                  </strong>
+
+                  <small>
+                    <%= event.date
+                      ? new Date(event.date).toLocaleDateString(
+                          'en-IN',
+                          {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric'
+                          }
+                        )
+                      : 'Archived Memory'
+                    %>
+                  </small>
+
+                </div>
+
+              </a>
+
+            </div>
+
+
+            <!-- =================================================
+                 JOURNAL NOTE
+            ================================================== -->
+
+            <div class="memory-journal">
+
+              <div class="journal-top">
+
+                <span class="journal-date">
+
+                  <i class="far fa-calendar"></i>
+
+                  <%= event.date
+                    ? new Date(event.date).toLocaleDateString(
+                        'en-IN',
+                        {
+                          day: '2-digit',
+                          month: 'long',
+                          year: 'numeric'
+                        }
+                      )
+                    : 'Memory Archive'
+                  %>
+
+                </span>
+
+                <span class="journal-number">
+                  PAGE <%= String(index + 1).padStart(2, '0') %>
+                </span>
+
+              </div>
+
+
+              <div class="journal-tags">
+
+                <% if (event.batch) { %>
+
+                  <span>
+                    <i class="fas fa-users"></i>
+                    <%= event.batch %>
+                  </span>
+
+                <% } %>
+
+                <% if (event.session) { %>
+
+                  <span>
+                    <i class="fas fa-calendar-days"></i>
+                    <%= event.session %>
+                  </span>
+
+                <% } %>
+
+                <span>
+                  <i class="fas fa-heart"></i>
+                  MEMORY
+                </span>
+
+              </div>
+
+
+              <h3>
+                <%= event.title || 'A Beautiful School Memory' %>
+              </h3>
+
+              <div class="journal-underline"></div>
+
+
+              <% if (event.description) { %>
+
+                <p class="journal-description">
+                  <%= event.description %>
+                </p>
+
+              <% } else { %>
+
+                <p class="journal-description">
+                  A beautiful moment from the Gyan Jyoti journey,
+                  preserved in our school archives.
+                </p>
+
+              <% } %>
+
+
+              <div class="journal-media">
+
+                <span>
+                  <i class="fas fa-images"></i>
+                  <%= Array.isArray(event.photos) ? event.photos.length : 0 %>
+                  Photos
+                </span>
+
+                <span>
+                  <i class="fas fa-video"></i>
+                  <%= Array.isArray(event.videos) ? event.videos.length : 0 %>
+                  Videos
+                </span>
+
+              </div>
+
+
+              <a
+                href="/events/event/<%= event._id %>"
+                class="journal-link"
+              >
+                <span>Read this memory</span>
+                <i class="fas fa-arrow-right"></i>
+              </a>
+
+
+              <div class="journal-signature">
+                Gyan Jyoti School
+              </div>
+
+            </div>
+
+          </article>
+
+        <% }) %>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CLOSING NOTE
+    ====================================================== -->
+
+    <section class="diary-closing">
+
+      <div class="closing-paper">
+
+        <div class="closing-stamp">
+          <i class="fas fa-heart"></i>
+          ARCHIVED
+        </div>
+
+        <span class="diary-section-label">
+          <i class="fas fa-feather-pointed"></i>
+          ONE LAST NOTE
+        </span>
+
+        <h2>
+          The photographs may grow old,
+          <span>but the memories never do.</span>
+        </h2>
+
+        <p>
+          Every generation leaves something behind — a smile, a celebration,
+          a friendship, a victory or simply a day worth remembering.
+          These pages keep those moments alive.
+        </p>
+
+        <div class="closing-signature">
+          <span>With memories,</span>
+          <strong>Gyan Jyoti School</strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+  <% } else { %>
+
+
+    <!-- =====================================================
+         EMPTY ARCHIVE
+    ====================================================== -->
+
+    <section class="diary-empty">
+
+      <div class="empty-page">
+
+        <div class="empty-tape"></div>
+
+        <div class="empty-icon">
+          <i class="fas fa-camera-retro"></i>
+        </div>
+
+        <span class="diary-section-label">
+          SCHOOL ARCHIVES
+        </span>
+
+        <h2>
+          This page is waiting
+          <span>for memories.</span>
+        </h2>
+
+        <p>
+          Old school photographs and videos will appear here as they are
+          added to the archive.
+        </p>
+
+        <div class="empty-doodle">
+          <span></span>
+          <i class="fas fa-heart"></i>
+          <span></span>
+        </div>
+
+      </div>
+
+    </section>
+
+  <% } %>
+
+</main>
+
+
+<style>
+
+/* =========================================================
+   DIARY DESIGN SYSTEM
+========================================================= */
+
+.diary-hero,
+.diary-page {
+
+  --ink: #172b3a;
+  --navy: #002147;
+  --blue: #005f8f;
+  --gold: #e4aa00;
+  --yellow: #ffc928;
+  --paper: #fffdf6;
+  --paper-dark: #f3ead4;
+  --line: #d9ccb0;
+  --muted: #708090;
+
+  font-family:
+    "Segoe UI",
+    Tahoma,
+    Geneva,
+    Verdana,
+    sans-serif;
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.diary-hero {
+
+  position: relative;
+  min-height: 620px;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      125deg,
+      rgba(0, 25, 48, .96),
+      rgba(0, 59, 91, .90)
+    ),
+    url("/images/school-bg.jpg")
+    center / cover no-repeat;
+
+}
+
+
+.diary-hero::before {
+
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  opacity: .20;
+
+  background-image:
+    radial-gradient(
+      circle at 20% 20%,
+      #ffc928 1px,
+      transparent 1.5px
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      white 1px,
+      transparent 1.5px
+    );
+
+  background-size:
+    90px 90px,
+    120px 120px;
+
+  animation:
+    diaryStars 22s linear infinite;
+
+}
+
+
+@keyframes diaryStars {
+
+  from {
+    background-position: 0 0, 0 0;
+  }
+
+  to {
+    background-position: 90px 90px, -120px 120px;
+  }
+
+}
+
+
+.diary-hero-paper {
+
+  position: absolute;
+
+  width: 520px;
+  height: 700px;
+
+  right: -130px;
+  top: -180px;
+
+  opacity: .10;
+
+  background: #fffdf6;
+
+  transform:
+    rotate(17deg);
+
+  box-shadow:
+    0 0 80px rgba(255,255,255,.12);
+
+}
+
+
+.diary-hero-paper::before {
+
+  content: "";
+
+  position: absolute;
+  inset: 35px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.55);
+
+}
+
+
+.diary-hero-content {
+
+  position: relative;
+  z-index: 3;
+
+  width: min(1150px, 90%);
+
+  margin: auto;
+
+  padding: 90px 0 100px;
+
+}
+
+
+.diary-eyebrow {
+
+  display: inline-flex;
+
+  align-items: center;
+  gap: 9px;
+
+  padding: 11px 18px;
+
+  border:
+    1px solid
+    rgba(255,201,40,.42);
+
+  border-radius: 999px;
+
+  color: #ffd64e;
+
+  background:
+    rgba(255,201,40,.08);
+
+  font-size: 11px;
+  font-weight: 900;
+
+  letter-spacing: 1.8px;
+
+  animation:
+    diaryRise .8s ease both;
+
+}
+
+
+.diary-hero h1 {
+
+  margin: 22px 0 0;
+
+  color: white;
+
+  font-size:
+    clamp(55px, 8vw, 100px);
+
+  line-height: .95;
+
+  font-weight: 950;
+
+  letter-spacing: -4px;
+
+  animation:
+    diaryRise .9s .1s ease both;
+
+}
+
+
+.diary-hero h1 span {
+
+  display: block;
+
+  color: #ffc928;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-style: italic;
+
+  font-weight: 700;
+
+  letter-spacing: -3px;
+
+}
+
+
+.diary-hero-content > p {
+
+  max-width: 720px;
+
+  margin: 28px 0 0;
+
+  color:
+    rgba(255,255,255,.78);
+
+  font-size: 19px;
+
+  line-height: 1.85;
+
+  animation:
+    diaryRise .9s .2s ease both;
+
+}
+
+
+.diary-hero-actions {
+
+  display: flex;
+
+  gap: 13px;
+
+  flex-wrap: wrap;
+
+  margin-top: 32px;
+
+  animation:
+    diaryRise .9s .3s ease both;
+
+}
+
+
+.diary-primary-btn,
+.diary-secondary-btn {
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  min-height: 52px;
+
+  padding: 0 22px;
+
+  border-radius: 13px;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: 900;
+
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease,
+    background .3s ease;
+
+}
+
+
+.diary-primary-btn {
+
+  color: #142536;
+
+  background: #ffc928;
+
+  box-shadow:
+    0 14px 35px
+    rgba(255,201,40,.22);
+
+}
+
+
+.diary-primary-btn:hover {
+
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 20px 45px
+    rgba(255,201,40,.32);
+
+}
+
+
+.diary-secondary-btn {
+
+  color: white;
+
+  border:
+    1px solid
+    rgba(255,255,255,.25);
+
+  background:
+    rgba(255,255,255,.07);
+
+  backdrop-filter: blur(8px);
+
+}
+
+
+.diary-secondary-btn:hover {
+
+  transform: translateY(-5px);
+
+  background:
+    rgba(255,255,255,.14);
+
+}
+
+
+.diary-breadcrumb {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 28px;
+
+  font-size: 13px;
+
+  animation:
+    diaryRise .9s .4s ease both;
+
+}
+
+
+.diary-breadcrumb a {
+
+  color: #ffc928;
+
+  text-decoration: none;
+
+  font-weight: 900;
+
+}
+
+
+.diary-breadcrumb span {
+
+  opacity: .4;
+
+}
+
+
+.diary-breadcrumb strong {
+
+  color: rgba(255,255,255,.75);
+
+}
+
+
+.diary-scroll {
+
+  position: absolute;
+
+  z-index: 4;
+
+  right: 4%;
+
+  bottom: 30px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: rgba(255,255,255,.52);
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+  writing-mode: vertical-rl;
+
+}
+
+
+.diary-scroll i {
+
+  color: #ffc928;
+
+  animation:
+    diaryBounce 1.6s ease-in-out infinite;
+
+}
+
+
+@keyframes diaryBounce {
+
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(8px);
+  }
+
+}
+
+
+@keyframes diaryRise {
+
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   FLOATING SCRAPBOOK ELEMENTS
+========================================================= */
+
+.diary-floating {
+
+  position: absolute;
+
+  z-index: 2;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 62px;
+  height: 62px;
+
+  color: #17344a;
+
+  background: #ffc928;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 18px 35px
+    rgba(0,0,0,.18);
+
+  opacity: .9;
+
+}
+
+
+.diary-float-1 {
+
+  right: 14%;
+  top: 18%;
+
+  transform: rotate(12deg);
+
+  animation:
+    diaryFloat 5s ease-in-out infinite;
+
+}
+
+
+.diary-float-2 {
+
+  right: 9%;
+  bottom: 20%;
+
+  background: #fffdf6;
+
+  transform: rotate(-10deg);
+
+  animation:
+    diaryFloat 6s 1s ease-in-out infinite;
+
+}
+
+
+.diary-float-3 {
+
+  left: 8%;
+  bottom: 15%;
+
+  width: 43px;
+  height: 43px;
+
+  border-radius: 50%;
+
+  background: #ffc928;
+
+  animation:
+    diaryFloat 5.5s .5s ease-in-out infinite;
+
+}
+
+
+@keyframes diaryFloat {
+
+  0%, 100% {
+    margin-top: 0;
+  }
+
+  50% {
+    margin-top: -14px;
+  }
+
+}
+
+
+/* =========================================================
+   MAIN PAPER BACKGROUND
+========================================================= */
+
+.diary-page {
+
+  position: relative;
+
+  padding:
+    75px 0 110px;
+
+  background:
+    #e9e4d7;
+
+  overflow: hidden;
+
+}
+
+
+.diary-page::before {
+
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: .23;
+
+  background-image:
+    radial-gradient(
+      rgba(80,65,40,.20) .6px,
+      transparent .7px
+    );
+
+  background-size: 8px 8px;
+
+}
+
+
+/* =========================================================
+   INTRO JOURNAL PAGE
+========================================================= */
+
+.diary-intro {
+
+  position: relative;
+
+  width: min(1080px, 90%);
+
+  margin: 0 auto 90px;
+
+  padding:
+    60px 75px 70px;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 38px,
+      rgba(74,111,140,.10) 39px,
+      transparent 40px
+    ),
+    #fffdf4;
+
+  border:
+    1px solid
+    #e2d7bd;
+
+  box-shadow:
+    0 22px 55px
+    rgba(55,45,30,.15);
+
+  transform:
+    rotate(-.35deg);
+
+}
+
+
+.diary-intro::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+  left: 68px;
+
+  width: 1px;
+
+  background:
+    rgba(213,94,94,.20);
+
+}
+
+
+.diary-intro-date {
+
+  position: absolute;
+
+  right: 42px;
+  top: 38px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  color: #b59a62;
+
+  transform:
+    rotate(4deg);
+
+}
+
+
+.diary-intro-date span {
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+}
+
+
+.diary-intro-date strong {
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 18px;
+
+  letter-spacing: 2px;
+
+}
+
+
+.diary-intro-copy {
+
+  position: relative;
+
+  max-width: 760px;
+
+  margin: auto;
+
+  text-align: center;
+
+}
+
+
+.diary-section-label {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #9b761b;
+
+  font-size: 10px;
+
+  font-weight: 950;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+}
+
+
+.diary-intro h2 {
+
+  margin:
+    18px 0 17px;
+
+  color: #21394a;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(34px, 5vw, 52px);
+
+  line-height: 1.15;
+
+  font-weight: 700;
+
+}
+
+
+.diary-intro h2 em {
+
+  color: #c28d0a;
+
+  font-weight: 700;
+
+}
+
+
+.diary-intro-copy > p {
+
+  margin: 0;
+
+  color: #65717b;
+
+  font-size: 16px;
+
+  line-height: 1.9;
+
+}
+
+
+.diary-handwritten {
+
+  position: absolute;
+
+  right: 70px;
+  bottom: 25px;
+
+  color: #bd8c1c;
+
+  font-family:
+    "Brush Script MT",
+    "Segoe Script",
+    cursive;
+
+  font-size: 19px;
+
+  transform:
+    rotate(-4deg);
+
+}
+
+
+.diary-handwritten i {
+
+  font-size: 12px;
+
+  margin-right: 4px;
+
+}
+
+
+.diary-paperclip {
+
+  position: absolute;
+
+  top: -22px;
+  left: 48%;
+
+  width: 28px;
+  height: 80px;
+
+  border:
+    5px solid
+    #8b969d;
+
+  border-bottom: 0;
+
+  border-radius:
+    16px 16px 0 0;
+
+  transform:
+    rotate(5deg);
+
+  z-index: 5;
+
+}
+
+
+.diary-paperclip::after {
+
+  content: "";
+
+  position: absolute;
+
+  top: 8px;
+  left: 7px;
+
+  width: 12px;
+  height: 55px;
+
+  border:
+    3px solid
+    #b8c0c4;
+
+  border-bottom: 0;
+
+  border-radius:
+    9px 9px 0 0;
+
+}
+
+
+/* =========================================================
+   CHAPTER HEADER
+========================================================= */
+
+.memory-chapter {
+
+  position: relative;
+
+  width: min(1180px, 92%);
+
+  margin: auto;
+
+}
+
+
+.chapter-heading {
+
+  display: grid;
+
+  grid-template-columns:
+    auto
+    auto
+    1fr;
+
+  align-items: center;
+
+  gap: 22px;
+
+  margin-bottom: 75px;
+
+}
+
+
+.chapter-number {
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 66px;
+  height: 66px;
+
+  color: white;
+
+  background: #002147;
+
+  border-radius: 50%;
+
+  font-size: 18px;
+
+  font-weight: 950;
+
+  box-shadow:
+    0 12px 28px
+    rgba(0,33,71,.18);
+
+}
+
+
+.chapter-heading h2 {
+
+  margin: 10px 0 0;
+
+  color: #20384a;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(35px, 5vw, 50px);
+
+  line-height: 1;
+
+}
+
+
+.chapter-heading h2 span {
+
+  color: #c08b0b;
+
+  font-style: italic;
+
+}
+
+
+.chapter-rule {
+
+  height: 1px;
+
+  background:
+    repeating-linear-gradient(
+      to right,
+      #bbaa86 0,
+      #bbaa86 6px,
+      transparent 6px,
+      transparent 13px
+    );
+
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.memory-timeline {
+
+  position: relative;
+
+  padding-bottom: 30px;
+
+}
+
+
+.memory-timeline::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  left: 50%;
+
+  width: 2px;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      #b7a886 0,
+      #b7a886 9px,
+      transparent 9px,
+      transparent 17px
+    );
+
+  transform:
+    translateX(-50%);
+
+}
+
+
+.diary-memory-entry {
+
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap: 85px;
+
+  align-items: center;
+
+  margin-bottom: 95px;
+
+  opacity: 0;
+
+  animation:
+    entryReveal .8s var(--entry-delay) ease forwards;
+
+}
+
+
+@keyframes entryReveal {
+
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+.diary-memory-entry::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 45px;
+
+  width: 85px;
+
+  height: 1px;
+
+  background:
+    #b7a886;
+
+}
+
+
+.diary-memory-entry:not(.entry-reverse)::before {
+
+  right: 50%;
+
+}
+
+
+.diary-memory-entry.entry-reverse::before {
+
+  left: 50%;
+
+}
+
+
+.entry-reverse .memory-polaroid-wrap {
+
+  grid-column: 2;
+
+  grid-row: 1;
+
+}
+
+
+.entry-reverse .memory-journal {
+
+  grid-column: 1;
+
+  grid-row: 1;
+
+}
+
+
+/* =========================================================
+   TIMELINE DOT
+========================================================= */
+
+.timeline-dot {
+
+  position: absolute;
+
+  z-index: 10;
+
+  top: 17px;
+  left: 50%;
+
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    5px solid
+    #e9e4d7;
+
+  border-radius: 50%;
+
+  color: #183248;
+
+  background: #ffc928;
+
+  box-shadow:
+    0 8px 20px
+    rgba(40,35,25,.18);
+
+  transform:
+    translateX(-50%);
+
+  font-size: 11px;
+
+  font-weight: 950;
+
+}
+
+
+/* =========================================================
+   POLAROID
+========================================================= */
+
+.memory-polaroid-wrap {
+
+  display: flex;
+
+  justify-content: flex-end;
+
+}
+
+
+.entry-reverse .memory-polaroid-wrap {
+
+  justify-content: flex-start;
+
+}
+
+
+.memory-polaroid {
+
+  position: relative;
+
+  display: block;
+
+  width: min(100%, 480px);
+
+  padding:
+    15px 15px 22px;
+
+  color: inherit;
+
+  background:
+    #fffefa;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 18px 38px
+    rgba(46,40,27,.16);
+
+  transform:
+    rotate(-2.2deg);
+
+  transition:
+    transform .5s ease,
+    box-shadow .5s ease;
+
+}
+
+
+.entry-reverse .memory-polaroid {
+
+  transform:
+    rotate(2.2deg);
+
+}
+
+
+.memory-polaroid:hover {
+
+  z-index: 5;
+
+  transform:
+    rotate(0)
+    translateY(-10px)
+    scale(1.025);
+
+  box-shadow:
+    0 28px 55px
+    rgba(46,40,27,.24);
+
+}
+
+
+.polaroid-tape {
+
+  position: absolute;
+
+  z-index: 8;
+
+  width: 92px;
+  height: 27px;
+
+  top: -12px;
+  left: 50%;
+
+  background:
+    rgba(239,210,143,.78);
+
+  box-shadow:
+    0 3px 7px
+    rgba(0,0,0,.08);
+
+  transform:
+    translateX(-50%)
+    rotate(-2deg);
+
+}
+
+
+.polaroid-photo {
+
+  position: relative;
+
+  height: 330px;
+
+  overflow: hidden;
+
+  background:
+    #e8e1d1;
+
+}
+
+
+.polaroid-photo img {
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  filter:
+    saturate(.88)
+    contrast(.96);
+
+  transition:
+    transform .8s ease,
+    filter .5s ease;
+
+}
+
+
+.memory-polaroid:hover
+.polaroid-photo img {
+
+  transform: scale(1.06);
+
+  filter:
+    saturate(1)
+    contrast(1);
+
+}
+
+
+.photo-hover {
+
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+
+  background:
+    rgba(0,33,71,.48);
+
+  transition: .35s ease;
+
+}
+
+
+.memory-polaroid:hover
+.photo-hover {
+
+  opacity: 1;
+
+}
+
+
+.photo-hover span {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding:
+    11px 16px;
+
+  border-radius: 999px;
+
+  color: #183248;
+
+  background: #ffc928;
+
+  font-size: 11px;
+
+  font-weight: 950;
+
+}
+
+
+.memory-placeholder {
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #b28b31;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f4ecd9,
+      #e7ddc5
+    );
+
+  font-size: 55px;
+
+}
+
+
+.polaroid-caption {
+
+  display: flex;
+
+  flex-direction: column;
+
+  padding:
+    15px 6px 0;
+
+}
+
+
+.polaroid-caption span {
+
+  color: #a08d69;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+}
+
+
+.polaroid-caption strong {
+
+  margin-top: 6px;
+
+  overflow: hidden;
+
+  color: #21394a;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 18px;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+
+}
+
+
+.polaroid-caption small {
+
+  margin-top: 5px;
+
+  color: #a2947c;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 11px;
+
+}
+
+
+/* =========================================================
+   JOURNAL NOTE
+========================================================= */
+
+.memory-journal {
+
+  position: relative;
+
+  min-height: 410px;
+
+  padding:
+    38px 40px 45px;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 35px,
+      rgba(73,107,130,.11) 36px,
+      transparent 37px
+    ),
+    #fffdf6;
+
+  border:
+    1px solid
+    #e2d7bd;
+
+  box-shadow:
+    0 17px 35px
+    rgba(55,45,30,.11);
+
+  transform:
+    rotate(.7deg);
+
+}
+
+
+.entry-reverse .memory-journal {
+
+  transform:
+    rotate(-.7deg);
+
+}
+
+
+.memory-journal::before {
+
+  content: "";
+
+  position: absolute;
+
+  left: 28px;
+  top: 0;
+  bottom: 0;
+
+  width: 1px;
+
+  background:
+    rgba(204,88,88,.17);
+
+}
+
+
+.journal-top {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 18px;
+
+}
+
+
+.journal-date {
+
+  color: #9c7c38;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+}
+
+
+.journal-number {
+
+  color: #9d9a91;
+
+  font-size: 8px;
+
+  font-weight: 950;
+
+  letter-spacing: 1.5px;
+
+}
+
+
+.journal-tags {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  margin-bottom: 14px;
+
+}
+
+
+.journal-tags span {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding:
+    6px 9px;
+
+  color: #547086;
+
+  background: #eef3f5;
+
+  border-radius: 6px;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+}
+
+
+.journal-tags i {
+
+  color: #c18e0b;
+
+}
+
+
+.memory-journal h3 {
+
+  margin:
+    0 0 11px;
+
+  color: #1f394c;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(25px, 3vw, 36px);
+
+  line-height: 1.18;
+
+  font-weight: 700;
+
+}
+
+
+.journal-underline {
+
+  width: 60px;
+
+  height: 3px;
+
+  margin-bottom: 19px;
+
+  background: #d5a521;
+
+}
+
+
+.journal-description {
+
+  margin: 0;
+
+  color: #687681;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 15px;
+
+  line-height: 1.9;
+
+}
+
+
+.journal-media {
+
+  display: flex;
+
+  gap: 16px;
+
+  margin-top: 22px;
+
+  padding-top: 18px;
+
+  border-top:
+    1px dashed
+    #d8cdb7;
+
+}
+
+
+.journal-media span {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #7f7b70;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+}
+
+
+.journal-media i {
+
+  color: #b78a16;
+
+}
+
+
+.journal-link {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 22px;
+
+  color: #005f8f;
+
+  text-decoration: none;
+
+  font-size: 12px;
+
+  font-weight: 950;
+
+  transition: .3s;
+
+}
+
+
+.journal-link:hover {
+
+  color: #b47f00;
+
+  gap: 14px;
+
+}
+
+
+.journal-signature {
+
+  position: absolute;
+
+  right: 35px;
+  bottom: 18px;
+
+  color: #b59a65;
+
+  font-family:
+    "Brush Script MT",
+    "Segoe Script",
+    cursive;
+
+  font-size: 17px;
+
+  transform:
+    rotate(-4deg);
+
+}
+
+
+/* =========================================================
+   CLOSING PAGE
+========================================================= */
+
+.diary-closing {
+
+  width: min(930px, 90%);
+
+  margin:
+    20px auto 0;
+
+}
+
+
+.closing-paper {
+
+  position: relative;
+
+  padding:
+    75px 70px 70px;
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      rgba(255,255,255,.5),
+      rgba(255,255,255,.5)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 38px,
+      rgba(73,107,130,.10) 39px,
+      transparent 40px
+    ),
+    #fffdf4;
+
+  border:
+    1px solid
+    #dfd3b9;
+
+  box-shadow:
+    0 22px 55px
+    rgba(55,45,30,.13);
+
+  transform:
+    rotate(.35deg);
+
+}
+
+
+.closing-stamp {
+
+  position: absolute;
+
+  right: 35px;
+  top: 28px;
+
+  width: 78px;
+  height: 78px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    2px dashed
+    #c5a24d;
+
+  border-radius: 50%;
+
+  color: #b38a21;
+
+  font-size: 8px;
+
+  font-weight: 950;
+
+  letter-spacing: 1px;
+
+  transform:
+    rotate(12deg);
+
+}
+
+
+.closing-stamp i {
+
+  font-size: 18px;
+
+  margin-bottom: 5px;
+
+}
+
+
+.closing-paper h2 {
+
+  max-width: 750px;
+
+  margin:
+    17px auto;
+
+  color: #20394b;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(31px, 5vw, 48px);
+
+  line-height: 1.2;
+
+}
+
+
+.closing-paper h2 span {
+
+  display: block;
+
+  color: #bd8b0d;
+
+  font-style: italic;
+
+}
+
+
+.closing-paper > p {
+
+  max-width: 650px;
+
+  margin: auto;
+
+  color: #687681;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 15px;
+
+  line-height: 1.9;
+
+}
+
+
+.closing-signature {
+
+  display: flex;
+
+  flex-direction: column;
+
+  margin-top: 30px;
+
+  color: #9c8a69;
+
+  font-family:
+    "Brush Script MT",
+    "Segoe Script",
+    cursive;
+
+  font-size: 18px;
+
+}
+
+
+.closing-signature strong {
+
+  color: #a97d15;
+
+  font-size: 24px;
+
+}
+
+
+/* =========================================================
+   EMPTY PAGE
+========================================================= */
+
+.diary-empty {
+
+  width: min(900px, 90%);
+
+  margin: auto;
+
+}
+
+
+.empty-page {
+
+  position: relative;
+
+  padding:
+    90px 35px;
+
+  text-align: center;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 38px,
+      rgba(73,107,130,.11) 39px,
+      transparent 40px
+    ),
+    #fffdf5;
+
+  border:
+    1px solid
+    #dfd3b9;
+
+  box-shadow:
+    0 24px 55px
+    rgba(55,45,30,.14);
+
+  transform:
+    rotate(-.4deg);
+
+}
+
+
+.empty-tape {
+
+  position: absolute;
+
+  top: -13px;
+  left: 50%;
+
+  width: 105px;
+  height: 30px;
+
+  background:
+    rgba(239,210,143,.8);
+
+  transform:
+    translateX(-50%)
+    rotate(-2deg);
+
+}
+
+
+.empty-icon {
+
+  width: 92px;
+  height: 92px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin:
+    0 auto 25px;
+
+  border-radius: 50%;
+
+  color: #bd8c18;
+
+  background: #f5ecd5;
+
+  font-size: 38px;
+
+}
+
+
+.empty-page h2 {
+
+  margin:
+    16px 0;
+
+  color: #20394b;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(32px, 5vw, 45px);
+
+}
+
+
+.empty-page h2 span {
+
+  color: #c08b0b;
+
+  font-style: italic;
+
+}
+
+
+.empty-page p {
+
+  max-width: 570px;
+
+  margin: auto;
+
+  color: #73808a;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 15px;
+
+  line-height: 1.9;
+
+}
+
+
+.empty-doodle {
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-top: 25px;
+
+  color: #bd8b15;
+
+}
+
+
+.empty-doodle span {
+
+  width: 60px;
+  height: 1px;
+
+  background:
+    #c9b27b;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1050px) {
+
+  .diary-floating {
+    display: none;
+  }
+
+  .diary-memory-entry {
+
+    gap: 45px;
+
+  }
+
+  .memory-polaroid {
+
+    width: 100%;
+
+  }
+
+  .polaroid-photo {
+
+    height: 290px;
+
+  }
+
+}
+
+
+@media (max-width: 800px) {
+
+  .diary-hero {
+
+    min-height: 560px;
+
+  }
+
+  .diary-hero-content {
+
+    padding:
+      75px 0 80px;
+
+  }
+
+  .diary-hero h1 {
+
+    letter-spacing: -2px;
+
+  }
+
+  .diary-scroll {
+
+    display: none;
+
+  }
+
+  .diary-intro {
+
+    width: 92%;
+
+    padding:
+      50px 35px 60px;
+
+  }
+
+  .diary-intro::before {
+
+    left: 28px;
+
+  }
+
+  .diary-intro-date {
+
+    display: none;
+
+  }
+
+  .diary-handwritten {
+
+    right: 25px;
+
+  }
+
+  .chapter-heading {
+
+    grid-template-columns:
+      auto 1fr;
+
+  }
+
+  .chapter-rule {
+
+    display: none;
+
+  }
+
+  .memory-timeline::before {
+
+    left: 20px;
+
+  }
+
+  .diary-memory-entry,
+  .diary-memory-entry.entry-reverse {
+
+    display: block;
+
+    margin-bottom: 70px;
+
+    padding-left: 50px;
+
+  }
+
+  .diary-memory-entry::before,
+  .diary-memory-entry.entry-reverse::before {
+
+    left: 20px;
+    right: auto;
+
+    top: 28px;
+
+    width: 30px;
+
+  }
+
+  .timeline-dot {
+
+    left: 20px;
+    top: 0;
+
+    width: 45px;
+    height: 45px;
+
+    font-size: 9px;
+
+  }
+
+  .memory-polaroid-wrap,
+  .entry-reverse .memory-polaroid-wrap {
+
+    display: block;
+
+  }
+
+  .memory-polaroid {
+
+    width: 100%;
+
+    transform:
+      rotate(-1.2deg);
+
+  }
+
+  .entry-reverse .memory-polaroid {
+
+    transform:
+      rotate(1.2deg);
+
+  }
+
+  .memory-journal,
+  .entry-reverse .memory-journal {
+
+    margin-top: 25px;
+
+    transform: none;
+
+  }
+
+  .polaroid-photo {
+
+    height: 300px;
+
+  }
+
+  .closing-paper {
+
+    padding:
+      65px 35px;
+
+  }
+
+}
+
+
+@media (max-width: 520px) {
+
+  .diary-hero h1 {
+
+    font-size: 52px;
+
+  }
+
+  .diary-hero h1 span {
+
+    font-size: .92em;
+
+  }
+
+  .diary-hero-content > p {
+
+    font-size: 16px;
+
+  }
+
+  .diary-hero-actions {
+
+    flex-direction: column;
+
+  }
+
+  .diary-primary-btn,
+  .diary-secondary-btn {
+
+    width: 100%;
+
+  }
+
+  .diary-intro {
+
+    padding:
+      45px 25px 55px;
+
+  }
+
+  .diary-intro h2 {
+
+    font-size: 32px;
+
+  }
+
+  .diary-handwritten {
+
+    font-size: 15px;
+
+  }
+
+  .chapter-heading {
+
+    gap: 14px;
+
+  }
+
+  .chapter-number {
+
+    width: 52px;
+    height: 52px;
+
+    font-size: 14px;
+
+  }
+
+  .chapter-heading h2 {
+
+    font-size: 34px;
+
+  }
+
+  .diary-memory-entry,
+  .diary-memory-entry.entry-reverse {
+
+    padding-left: 40px;
+
+  }
+
+  .memory-timeline::before {
+
+    left: 16px;
+
+  }
+
+  .timeline-dot {
+
+    left: 16px;
+
+    width: 38px;
+    height: 38px;
+
+    border-width: 3px;
+
+  }
+
+  .diary-memory-entry::before,
+  .diary-memory-entry.entry-reverse::before {
+
+    left: 16px;
+
+    width: 25px;
+
+  }
+
+  .polaroid-photo {
+
+    height: 245px;
+
+  }
+
+  .memory-journal {
+
+    padding:
+      30px 25px 40px;
+
+  }
+
+  .memory-journal::before {
+
+    left: 17px;
+
+  }
+
+  .journal-signature {
+
+    right: 20px;
+
+  }
+
+  .closing-stamp {
+
+    display: none;
+
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .diary-hero::before,
+  .diary-floating,
+  .diary-scroll i,
+  .diary-memory-entry {
+
+    animation: none !important;
+
+  }
+
+  .diary-primary-btn,
+  .diary-secondary-btn,
+  .memory-polaroid,
+  .polaroid-photo img,
+  .photo-hover,
+  .journal-link {
+
+    transition: none !important;
+
+  }
+
+}
+
+</style>
+
+
+<script>
+
+/* =========================================================
+   SUBTLE SCROLL REVEAL
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+
+    const entries =
+      document.querySelectorAll(
+        ".diary-memory-entry"
+      );
+
+    if (
+      !("IntersectionObserver" in window)
+    ) {
+      entries.forEach(function (entry) {
+        entry.style.opacity = "1";
+      });
+      return;
+    }
+
+    const observer =
+      new IntersectionObserver(
+        function (items) {
+
+          items.forEach(function (item) {
+
+            if (item.isIntersecting) {
+
+              item.target.classList.add(
+                "memory-visible"
+              );
+
+              observer.unobserve(
+                item.target
+              );
+
+            }
+
+          });
+
+        },
+        {
+          threshold: .12
+        }
+      );
+
+    entries.forEach(function (entry) {
+      observer.observe(entry);
+    });
+
+  }
+);
+
+</script>
+
+
+<%- include('../partials/footer') %>

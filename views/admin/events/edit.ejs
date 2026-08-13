@@ -1,0 +1,2878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        <%= title || 'Edit Event' %>
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #001f3f;
+            --navy2: #003b73;
+            --blue: #0066c7;
+            --gold: #ffc300;
+            --gold2: #ffe16a;
+            --bg: #f3f6fb;
+            --white: #fff;
+            --text: #172033;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --green: #16a34a;
+            --red: #dc2626;
+            --red-bg: #fef2f2;
+            --shadow: 0 18px 50px rgba(0,31,63,.08);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(
+                    circle at 10% 0%,
+                    #e6f0ff,
+                    transparent 28%
+                ),
+                var(--bg);
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        /* =====================================================
+           PAGE
+        ====================================================== */
+
+        .page {
+            width: min(1180px, calc(100% - 32px));
+            margin: auto;
+            padding: 24px 0 55px;
+        }
+
+        /* =====================================================
+           TOP BAR
+        ====================================================== */
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .top-btn {
+            min-height: 43px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 15px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 900;
+            transition: .25s;
+        }
+
+        .back-btn {
+            color: var(--navy);
+            background: #fff;
+            border: 1px solid var(--border);
+        }
+
+        .dashboard-btn {
+            color: #fff;
+            background: var(--navy);
+        }
+
+        .top-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .dashboard-btn:hover {
+            color: var(--navy);
+            background: var(--gold);
+        }
+
+        /* =====================================================
+           HERO
+        ====================================================== */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            min-height: 215px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            padding: 36px;
+            border-radius: 28px;
+            color: #fff;
+
+            background:
+                radial-gradient(
+                    circle at 85% 15%,
+                    rgba(255,195,0,.30),
+                    transparent 27%
+                ),
+                linear-gradient(
+                    135deg,
+                    #00172f,
+                    #003b73,
+                    #005cae
+                );
+
+            box-shadow:
+                0 25px 70px rgba(0,31,63,.20);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 12px;
+            margin-bottom: 13px;
+            border: 1px solid rgba(255,195,0,.35);
+            border-radius: 999px;
+            color: var(--gold);
+            background: rgba(255,195,0,.10);
+            font-size: 9px;
+            font-weight: 950;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 4vw, 50px);
+            line-height: 1;
+            letter-spacing: -1.5px;
+            font-weight: 950;
+        }
+
+        .hero h1 span {
+            color: var(--gold);
+        }
+
+        .hero p {
+            max-width: 720px;
+            margin-top: 12px;
+            color: rgba(255,255,255,.76);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .hero-icon {
+            width: 98px;
+            height: 98px;
+            flex: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 27px;
+            color: var(--gold);
+            background: rgba(255,255,255,.08);
+            backdrop-filter: blur(12px);
+            font-size: 38px;
+        }
+
+        /* =====================================================
+           CARD
+        ====================================================== */
+
+        .card {
+            margin-top: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: #fff;
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 20px 24px;
+            color: #fff;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--navy),
+                    var(--navy2)
+                );
+        }
+
+        .header-icon {
+            width: 43px;
+            height: 43px;
+            flex: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: var(--navy);
+            background: var(--gold);
+        }
+
+        .card-header h2 {
+            font-size: 17px;
+            font-weight: 950;
+        }
+
+        .card-header p {
+            margin-top: 3px;
+            color: rgba(255,255,255,.66);
+            font-size: 9px;
+        }
+
+        .form {
+            padding: 27px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 20px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        /* =====================================================
+           FIELDS
+        ====================================================== */
+
+        .field label {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 8px;
+            color: #334155;
+            font-size: 10px;
+            font-weight: 950;
+        }
+
+        .field label i {
+            color: var(--blue);
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            outline: none;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            background: #f8fafc;
+            transition: .2s;
+        }
+
+        .field input,
+        .field select {
+            height: 47px;
+            padding: 0 13px;
+            font-size: 11px;
+        }
+
+        .field textarea {
+            min-height: 105px;
+            padding: 12px 13px;
+            resize: vertical;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--gold);
+            background: #fff;
+            box-shadow:
+                0 0 0 4px
+                rgba(255,195,0,.12);
+        }
+
+        .help {
+            display: block;
+            margin-top: 6px;
+            color: #94a3b8;
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           CATEGORY INFO
+        ====================================================== */
+
+        .category-info {
+            display: none;
+            margin-top: 8px;
+            padding: 9px 11px;
+            border-radius: 10px;
+            color: #475569;
+            background: #f8fafc;
+            font-size: 9px;
+        }
+
+        .category-info.active {
+            display: block;
+        }
+
+        /* =====================================================
+           MEDIA SECTION
+        ====================================================== */
+
+        .media-section {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #fbfdff,
+                    #f7faff
+                );
+        }
+
+        .media-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 14px;
+        }
+
+        .media-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .media-icon {
+            width: 39px;
+            height: 39px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            color: var(--blue);
+            background: #eff6ff;
+        }
+
+        .media-title strong {
+            display: block;
+            color: var(--navy);
+            font-size: 12px;
+            font-weight: 950;
+        }
+
+        .media-title span {
+            display: block;
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .count-pill {
+            padding: 7px 9px;
+            border-radius: 8px;
+            color: #475569;
+            background: #f1f5f9;
+            font-size: 8px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        /* =====================================================
+           COVER
+        ====================================================== */
+
+        .cover-current {
+            position: relative;
+            overflow: hidden;
+            height: 240px;
+            margin-bottom: 13px;
+            border-radius: 16px;
+            background: #e2e8f0;
+        }
+
+        .cover-current img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .cover-label {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            padding: 7px 9px;
+            border-radius: 8px;
+            color: #fff;
+            background: rgba(0,31,63,.82);
+            font-size: 8px;
+            font-weight: 900;
+        }
+
+        /* =====================================================
+           DROPZONE
+        ====================================================== */
+
+        .dropzone {
+            position: relative;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            border: 2px dashed #cbd5e1;
+            border-radius: 16px;
+            background: #fff;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .dropzone:hover,
+        .dropzone.dragover {
+            border-color: var(--blue);
+            background: #f4f9ff;
+        }
+
+        .drop-icon {
+            width: 47px;
+            height: 47px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            border-radius: 14px;
+            color: var(--blue);
+            background: #eff6ff;
+            font-size: 19px;
+        }
+
+        .dropzone strong {
+            color: var(--navy);
+            font-size: 11px;
+            font-weight: 950;
+        }
+
+        .dropzone span {
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .browse {
+            display: inline-flex !important;
+            align-items: center;
+            gap: 6px;
+            margin-top: 11px;
+            padding: 8px 12px;
+            border-radius: 9px;
+            color: var(--navy) !important;
+            background: var(--gold);
+            font-size: 9px !important;
+            font-weight: 950;
+        }
+
+        .file-input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* =====================================================
+           MEDIA GRID
+        ====================================================== */
+
+        .media-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(
+                    auto-fill,
+                    minmax(130px,1fr)
+                );
+            gap: 11px;
+            margin-bottom: 14px;
+        }
+
+        .media-card {
+            position: relative;
+            overflow: hidden;
+            min-height: 130px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: #e2e8f0;
+        }
+
+        .media-card img,
+        .media-card video {
+            width: 100%;
+            height: 130px;
+            display: block;
+            object-fit: cover;
+        }
+
+        .media-card .remove-media {
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            z-index: 3;
+            width: 29px;
+            height: 29px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 50%;
+            color: #fff;
+            background: rgba(220,38,38,.94);
+            cursor: pointer;
+        }
+
+        .media-name {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            padding: 8px 7px;
+            color: #fff;
+            background:
+                linear-gradient(
+                    transparent,
+                    rgba(0,0,0,.78)
+                );
+            font-size: 8px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .new-file {
+            border-color: #93c5fd;
+        }
+
+        /* =====================================================
+           PUBLISH
+        ====================================================== */
+
+        .publish-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 16px 17px;
+            border: 1px solid #dbeafe;
+            border-radius: 16px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fbff,
+                    #eef6ff
+                );
+        }
+
+        .publish-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .publish-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            color: var(--green);
+            background: #dcfce7;
+        }
+
+        .publish-content strong {
+            display: block;
+            color: var(--navy);
+            font-size: 11px;
+        }
+
+        .publish-content span {
+            display: block;
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        /* =====================================================
+           SWITCH
+        ====================================================== */
+
+        .switch {
+            position: relative;
+            width: 49px;
+            height: 27px;
+            flex: none;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            inset: 0;
+            cursor: pointer;
+            border-radius: 999px;
+            background: #cbd5e1;
+            transition: .25s;
+        }
+
+        .slider::before {
+            content: "";
+            position: absolute;
+            width: 21px;
+            height: 21px;
+            left: 3px;
+            top: 3px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,.15);
+            transition: .25s;
+        }
+
+        .switch input:checked + .slider {
+            background: var(--green);
+        }
+
+        .switch input:checked + .slider::before {
+            transform: translateX(22px);
+        }
+
+        /* =====================================================
+           ACTIONS
+        ====================================================== */
+
+        .actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 27px;
+            padding-top: 22px;
+            border-top: 1px solid var(--border);
+        }
+
+        .left-actions,
+        .right-actions {
+            display: flex;
+            gap: 9px;
+        }
+
+        .btn {
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 20px;
+            border: 0;
+            border-radius: 13px;
+            font-size: 10px;
+            font-weight: 950;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .cancel-btn {
+            color: #475569;
+            background: #e2e8f0;
+        }
+
+        .save-btn {
+            color: var(--navy);
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--gold),
+                    var(--gold2)
+                );
+            box-shadow:
+                0 12px 28px
+                rgba(255,195,0,.22);
+        }
+
+        .delete-btn {
+            color: var(--red);
+            background: var(--red-bg);
+        }
+
+        .btn:disabled {
+            opacity: .65;
+            cursor: wait;
+            transform: none;
+        }
+
+        /* =====================================================
+           ERROR
+        ====================================================== */
+
+        .error-box {
+            display: none;
+            margin-top: 15px;
+            padding: 11px 13px;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            color: #991b1b;
+            background: var(--red-bg);
+            font-size: 9px;
+        }
+
+        .error-box.active {
+            display: block;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 700px) {
+
+            .page {
+                width: min(100% - 24px, 1180px);
+                padding-top: 15px;
+            }
+
+            .hero {
+                padding: 28px;
+            }
+
+            .hero-icon {
+                display: none;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .form {
+                padding: 19px;
+            }
+
+            .media-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0,1fr));
+            }
+
+        }
+
+        @media (max-width: 480px) {
+
+            .topbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .top-btn {
+                width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .media-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .left-actions,
+            .right-actions {
+                width: 100%;
+            }
+
+            .btn {
+                flex: 1;
+            }
+
+            .cover-current {
+                height: 180px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
+
+    <div class="topbar">
+
+        <a
+            href="/admin/events"
+            class="top-btn back-btn"
+        >
+            <i class="fas fa-arrow-left"></i>
+            Back to Events
+        </a>
+
+
+        <a
+            href="/admin/dashboard"
+            class="top-btn dashboard-btn"
+        >
+            <i class="fas fa-chart-line"></i>
+            Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                <i class="fas fa-pen-to-square"></i>
+                Event Management
+            </div>
+
+            <h1>
+                Edit
+                <span>Event</span>
+            </h1>
+
+            <p>
+                Update event information, replace the cover,
+                add new photos and upload new videos.
+            </p>
+
+        </div>
+
+
+        <div class="hero-icon">
+            <i class="fas fa-images"></i>
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CARD
+    ====================================================== -->
+
+    <section class="card">
+
+
+        <div class="card-header">
+
+            <div class="header-icon">
+                <i class="fas fa-sliders"></i>
+            </div>
+
+            <div>
+
+                <h2>
+                    Update Event
+                </h2>
+
+                <p>
+                    Existing media is preserved unless you remove it.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
+
+        <form
+
+            method="POST"
+
+            action="/admin/events/edit/<%= event._id %>"
+
+            enctype="multipart/form-data"
+
+            class="form"
+
+            id="eventForm"
+
+        >
+
+
+            <!-- =================================================
+                 CSRF
+            ================================================== -->
+
+            <input
+                type="hidden"
+                name="_csrf"
+                value="<%= csrfToken %>"
+            >
+
+
+            <div class="grid">
+
+
+                <!-- =================================================
+                     TITLE
+                ================================================== -->
+
+                <div class="field full">
+
+                    <label>
+                        <i class="fas fa-heading"></i>
+                        Event Title
+                    </label>
+
+                    <input
+                        type="text"
+                        name="title"
+                        maxlength="150"
+                        required
+                        value="<%= event.title || '' %>"
+                        placeholder="Event title"
+                    >
+
+                </div>
+
+
+                <!-- =================================================
+                     CATEGORY
+                ================================================== -->
+
+                <div class="field">
+
+                    <label>
+                        <i class="fas fa-layer-group"></i>
+                        Event Category
+                    </label>
+
+                    <select
+                        name="category"
+                        id="category"
+                        required
+                    >
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        <option
+                            value="fun-fiesta"
+                            <%= event.category === 'fun-fiesta'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Fun &amp; Fiesta
+                        </option>
+
+                        <option
+                            value="sports"
+                            <%= event.category === 'sports'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Sports
+                        </option>
+
+                        <option
+                            value="national-celebration"
+                            <%= event.category === 'national-celebration'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            National Celebration
+                        </option>
+
+                        <option
+                            value="old-memory"
+                            <%= event.category === 'old-memory'
+                                ? 'selected'
+                                : '' %>
+                        >
+                            Old Memory
+                        </option>
+
+                    </select>
+
+                    <div
+                        class="category-info"
+                        id="categoryInfo"
+                    ></div>
+
+                </div>
+
+
+                <!-- =================================================
+                     DATE
+                ================================================== -->
+
+                <div class="field">
+
+                    <label>
+                        <i class="far fa-calendar"></i>
+                        Event Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="date"
+                        id="eventDate"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- =================================================
+                     SESSION
+                ================================================== -->
+
+                <div class="field">
+
+                    <label>
+                        <i class="fas fa-graduation-cap"></i>
+                        Academic Session
+                    </label>
+
+                    <input
+                        type="text"
+                        name="session"
+                        id="session"
+                        maxlength="30"
+                        value="<%= event.session || '' %>"
+                        placeholder="2026-27"
+                    >
+
+                    <span class="help">
+                        Required for Fun &amp; Fiesta.
+                    </span>
+
+                </div>
+
+
+                <!-- =================================================
+                     BATCH
+                ================================================== -->
+
+                <div class="field">
+
+                    <label>
+                        <i class="fas fa-users"></i>
+                        Batch
+                    </label>
+
+                    <input
+                        type="text"
+                        name="batch"
+                        id="batch"
+                        maxlength="100"
+                        value="<%= event.batch || '' %>"
+                        placeholder="Batch / Class"
+                    >
+
+                    <span class="help">
+                        Required for Fun &amp; Fiesta.
+                    </span>
+
+                </div>
+
+
+                <!-- =================================================
+                     DESCRIPTION
+                ================================================== -->
+
+                <div class="field full">
+
+                    <label>
+                        <i class="fas fa-align-left"></i>
+                        Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        maxlength="2000"
+                        required
+                        placeholder="Event description..."
+                    ><%= event.description || '' %></textarea>
+
+                </div>
+
+
+                <!-- =================================================
+                     COVER IMAGE
+                ================================================== -->
+
+                <div class="field full">
+
+                    <div class="media-section">
+
+                        <div class="media-header">
+
+                            <div class="media-title">
+
+                                <div class="media-icon">
+                                    <i class="fas fa-image"></i>
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Cover Photo
+                                    </strong>
+
+                                    <span>
+                                        Upload a new cover to replace the current one.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="count-pill">
+                                1 COVER
+                            </div>
+
+                        </div>
+
+
+                        <% if (event.coverImage) { %>
+
+                            <div class="cover-current">
+
+                                <img
+                                    src="<%= event.coverImage %>"
+                                    alt="<%= event.title %>"
+                                >
+
+                                <div class="cover-label">
+                                    Current Cover
+                                </div>
+
+                            </div>
+
+                        <% } %>
+
+
+                        <label
+                            class="dropzone"
+                            id="coverDropzone"
+                        >
+
+                            <input
+                                type="file"
+                                name="coverImage"
+                                id="coverImage"
+                                class="file-input"
+                                accept="image/jpeg,image/png,image/webp"
+                            >
+
+                            <div class="drop-icon">
+                                <i class="fas fa-cloud-arrow-up"></i>
+                            </div>
+
+                            <strong>
+                                Choose New Cover Photo
+                            </strong>
+
+                            <span>
+                                JPG, PNG or WEBP
+                            </span>
+
+                            <span class="browse">
+                                <i class="fas fa-folder-open"></i>
+                                Browse Photos
+                            </span>
+
+                        </label>
+
+
+                        <div
+                            class="error-box"
+                            id="coverError"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     EXISTING PHOTOS + NEW PHOTOS
+                ================================================== -->
+
+                <div class="field full">
+
+                    <div class="media-section">
+
+                        <div class="media-header">
+
+                            <div class="media-title">
+
+                                <div class="media-icon">
+                                    <i class="fas fa-images"></i>
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Event Photos
+                                    </strong>
+
+                                    <span>
+                                        Remove old photos or add new ones.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="count-pill">
+                                <%= event.photos
+                                    ? event.photos.length
+                                    : 0 %>
+                                EXISTING
+                            </div>
+
+                        </div>
+
+
+                        <!-- EXISTING PHOTOS -->
+
+                        <div
+                            class="media-grid"
+                            id="existingPhotosGrid"
+                        >
+
+                            <% if (
+                                event.photos &&
+                                event.photos.length
+                            ) { %>
+
+
+                                <% event.photos.forEach(
+                                    function(photo, index)
+                                { %>
+
+                                    <div
+                                        class="media-card existing-photo"
+                                        data-url="<%= photo %>"
+                                    >
+
+                                        <img
+                                            src="<%= photo %>"
+                                            alt="Event photo <%= index + 1 %>"
+                                        >
+
+
+                                        <button
+                                            type="button"
+                                            class="remove-media remove-existing-photo"
+                                            title="Remove this photo"
+                                        >
+
+                                            <i class="fas fa-xmark"></i>
+
+                                        </button>
+
+
+                                        <div class="media-name">
+                                            Photo <%= index + 1 %>
+                                        </div>
+
+                                    </div>
+
+
+                                <% }) %>
+
+
+                            <% } else { %>
+
+                                <div
+                                    style="
+                                        grid-column:1/-1;
+                                        padding:20px;
+                                        text-align:center;
+                                        color:#94a3b8;
+                                        font-size:10px;
+                                    "
+                                >
+
+                                    No existing photos.
+
+                                </div>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <!-- Hidden existing photo inputs -->
+
+                        <div id="existingPhotoInputs">
+
+                            <% if (
+                                event.photos &&
+                                event.photos.length
+                            ) { %>
+
+                                <% event.photos.forEach(
+                                    function(photo)
+                                { %>
+
+                                    <input
+                                        type="hidden"
+                                        name="existingPhotos"
+                                        value="<%= photo %>"
+                                    >
+
+                                <% }) %>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <!-- NEW PHOTOS -->
+
+                        <label
+                            class="dropzone"
+                            id="photosDropzone"
+                        >
+
+                            <input
+                                type="file"
+                                name="photos"
+                                id="photos"
+                                class="file-input"
+                                accept="image/jpeg,image/png,image/webp"
+                                multiple
+                            >
+
+                            <div class="drop-icon">
+                                <i class="fas fa-photo-film"></i>
+                            </div>
+
+                            <strong>
+                                Add More Photos
+                            </strong>
+
+                            <span>
+                                Select one or multiple photos
+                            </span>
+
+                            <span class="browse">
+                                <i class="fas fa-folder-open"></i>
+                                Browse Photos
+                            </span>
+
+                        </label>
+
+
+                        <div
+                            class="media-grid"
+                            id="newPhotosGrid"
+                        ></div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     EXISTING VIDEOS + NEW VIDEOS
+                ================================================== -->
+
+                <div class="field full">
+
+                    <div class="media-section">
+
+                        <div class="media-header">
+
+                            <div class="media-title">
+
+                                <div class="media-icon">
+                                    <i class="fas fa-video"></i>
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Event Videos
+                                    </strong>
+
+                                    <span>
+                                        Remove old videos or add new ones.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="count-pill">
+                                <%= event.videos
+                                    ? event.videos.length
+                                    : 0 %>
+                                EXISTING
+                            </div>
+
+                        </div>
+
+
+                        <!-- EXISTING VIDEOS -->
+
+                        <div
+                            class="media-grid"
+                            id="existingVideosGrid"
+                        >
+
+                            <% if (
+                                event.videos &&
+                                event.videos.length
+                            ) { %>
+
+
+                                <% event.videos.forEach(
+                                    function(video, index)
+                                { %>
+
+                                    <div
+                                        class="media-card existing-video"
+                                        data-url="<%= video %>"
+                                    >
+
+                                        <video
+                                            src="<%= video %>"
+                                            controls
+                                            preload="metadata"
+                                        ></video>
+
+
+                                        <button
+                                            type="button"
+                                            class="remove-media remove-existing-video"
+                                            title="Remove this video"
+                                        >
+
+                                            <i class="fas fa-xmark"></i>
+
+                                        </button>
+
+
+                                        <div class="media-name">
+                                            Video <%= index + 1 %>
+                                        </div>
+
+                                    </div>
+
+
+                                <% }) %>
+
+
+                            <% } else { %>
+
+                                <div
+                                    style="
+                                        grid-column:1/-1;
+                                        padding:20px;
+                                        text-align:center;
+                                        color:#94a3b8;
+                                        font-size:10px;
+                                    "
+                                >
+
+                                    No existing videos.
+
+                                </div>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <!-- Existing video inputs -->
+
+                        <div id="existingVideoInputs">
+
+                            <% if (
+                                event.videos &&
+                                event.videos.length
+                            ) { %>
+
+                                <% event.videos.forEach(
+                                    function(video)
+                                { %>
+
+                                    <input
+                                        type="hidden"
+                                        name="existingVideos"
+                                        value="<%= video %>"
+                                    >
+
+                                <% }) %>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <!-- NEW VIDEOS -->
+
+                        <label
+                            class="dropzone"
+                            id="videosDropzone"
+                        >
+
+                            <input
+                                type="file"
+                                name="videos"
+                                id="videos"
+                                class="file-input"
+                                accept="video/mp4,video/webm,video/quicktime,video/x-m4v"
+                                multiple
+                            >
+
+                            <div class="drop-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+
+                            <strong>
+                                Add More Videos
+                            </strong>
+
+                            <span>
+                                MP4, WEBM, MOV or M4V
+                            </span>
+
+                            <span class="browse">
+                                <i class="fas fa-folder-open"></i>
+                                Browse Videos
+                            </span>
+
+                        </label>
+
+
+                        <div
+                            class="media-grid"
+                            id="newVideosGrid"
+                        ></div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     PRIORITY
+                ================================================== -->
+
+                <div class="field">
+
+                    <label>
+                        <i class="fas fa-ranking-star"></i>
+                        Display Priority
+                    </label>
+
+                    <input
+                        type="number"
+                        name="priority"
+                        min="0"
+                        max="9999"
+                        value="<%= event.priority ?? 0 %>"
+                    >
+
+                    <span class="help">
+                        Lower number appears earlier.
+                    </span>
+
+                </div>
+
+
+                <!-- =================================================
+                     PUBLISHED
+                ================================================== -->
+
+                <div class="field">
+
+                    <div class="publish-box">
+
+                        <div class="publish-content">
+
+                            <div class="publish-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Publish Event
+                                </strong>
+
+                                <span>
+                                    Show this event on the public website.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                name="published"
+                                value="true"
+
+                                <%= event.published
+                                    ? 'checked'
+                                    : '' %>
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 ERROR
+            ================================================== -->
+
+            <div
+                class="error-box"
+                id="errorBox"
+            ></div>
+
+
+            <!-- =================================================
+                 ACTIONS
+            ================================================== -->
+
+            <div class="actions">
+
+
+                <div class="left-actions">
+
+                    <a
+                        href="/admin/events"
+                        class="btn cancel-btn"
+                    >
+
+                        <i class="fas fa-arrow-left"></i>
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+
+                <div class="right-actions">
+
+                    <button
+                        type="button"
+                        class="btn delete-btn"
+                        id="deleteButton"
+                    >
+
+                        <i class="fas fa-trash"></i>
+
+                        Delete Event
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="btn save-btn"
+                        id="saveButton"
+                    >
+
+                        <i class="fas fa-floppy-disk"></i>
+
+                        Save Changes
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+        </form>
+
+
+        <!-- =====================================================
+             DELETE FORM
+        ====================================================== -->
+
+        <form
+            method="POST"
+            action="/admin/events/delete/<%= event._id %>"
+            id="deleteForm"
+            style="display:none;"
+        >
+
+            <input
+                type="hidden"
+                name="_csrf"
+                value="<%= csrfToken %>"
+            >
+
+        </form>
+
+
+    </section>
+
+</div>
+
+
+<script>
+
+    // =========================================================
+    // ELEMENTS
+    // =========================================================
+
+    const form =
+        document.getElementById(
+            'eventForm'
+        );
+
+
+    const category =
+        document.getElementById(
+            'category'
+        );
+
+
+    const session =
+        document.getElementById(
+            'session'
+        );
+
+
+    const batch =
+        document.getElementById(
+            'batch'
+        );
+
+
+    const eventDate =
+        document.getElementById(
+            'eventDate'
+        );
+
+
+    const coverInput =
+        document.getElementById(
+            'coverImage'
+        );
+
+
+    const photosInput =
+        document.getElementById(
+            'photos'
+        );
+
+
+    const videosInput =
+        document.getElementById(
+            'videos'
+        );
+
+
+    const newPhotosGrid =
+        document.getElementById(
+            'newPhotosGrid'
+        );
+
+
+    const newVideosGrid =
+        document.getElementById(
+            'newVideosGrid'
+        );
+
+
+    const errorBox =
+        document.getElementById(
+            'errorBox'
+        );
+
+
+    const saveButton =
+        document.getElementById(
+            'saveButton'
+        );
+
+
+    const deleteButton =
+        document.getElementById(
+            'deleteButton'
+        );
+
+
+    // =========================================================
+    // DATE
+    // =========================================================
+
+    <% if (event.date) { %>
+
+        eventDate.value =
+            '<%= new Date(event.date)
+                .toISOString()
+                .slice(0,10) %>';
+
+    <% } %>
+
+
+    // =========================================================
+    // CATEGORY
+    // =========================================================
+
+    function updateCategory() {
+
+        const value =
+            category.value;
+
+
+        session.required =
+            value === 'fun-fiesta';
+
+
+        batch.required =
+            value === 'fun-fiesta';
+
+    }
+
+
+    category.addEventListener(
+        'change',
+        updateCategory
+    );
+
+
+    updateCategory();
+
+
+    // =========================================================
+    // ERROR
+    // =========================================================
+
+    function showError(message) {
+
+        errorBox.textContent =
+            message;
+
+        errorBox.classList.add(
+            'active'
+        );
+
+        errorBox.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+
+    }
+
+
+    function clearError() {
+
+        errorBox.textContent =
+            '';
+
+        errorBox.classList.remove(
+            'active'
+        );
+
+    }
+
+
+    // =========================================================
+    // COVER FILE
+    // =========================================================
+
+    coverInput.addEventListener(
+        'change',
+        function () {
+
+            clearError();
+
+
+            const file =
+                this.files[0];
+
+
+            if (!file) {
+                return;
+            }
+
+
+            if (
+                !file.type.startsWith(
+                    'image/'
+                )
+            ) {
+
+                showError(
+                    'Please select a valid cover image.'
+                );
+
+                this.value =
+                    '';
+
+                return;
+
+            }
+
+
+            if (
+                file.size >
+                100 * 1024 * 1024
+            ) {
+
+                showError(
+                    'Cover image must be smaller than 100 MB.'
+                );
+
+                this.value =
+                    '';
+
+                return;
+
+            }
+
+        }
+    );
+
+
+    // =========================================================
+    // EXISTING PHOTOS
+    // =========================================================
+
+    document
+        .querySelectorAll(
+            '.remove-existing-photo'
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    'click',
+                    function () {
+
+                        const card =
+                            this.closest(
+                                '.existing-photo'
+                            );
+
+
+                        if (!card) {
+                            return;
+                        }
+
+
+                        const url =
+                            card.dataset.url;
+
+
+                        card.remove();
+
+
+                        document
+                            .querySelectorAll(
+                                '#existingPhotoInputs input[name="existingPhotos"]'
+                            )
+                            .forEach(
+                                input => {
+
+                                    if (
+                                        input.value ===
+                                        url
+                                    ) {
+
+                                        input.remove();
+
+                                    }
+
+                                }
+                            );
+
+                    }
+                );
+
+            }
+        );
+
+
+    // =========================================================
+    // EXISTING VIDEOS
+    // =========================================================
+
+    document
+        .querySelectorAll(
+            '.remove-existing-video'
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    'click',
+                    function () {
+
+                        const card =
+                            this.closest(
+                                '.existing-video'
+                            );
+
+
+                        if (!card) {
+                            return;
+                        }
+
+
+                        const url =
+                            card.dataset.url;
+
+
+                        card.remove();
+
+
+                        document
+                            .querySelectorAll(
+                                '#existingVideoInputs input[name="existingVideos"]'
+                            )
+                            .forEach(
+                                input => {
+
+                                    if (
+                                        input.value ===
+                                        url
+                                    ) {
+
+                                        input.remove();
+
+                                    }
+
+                                }
+                            );
+
+                    }
+                );
+
+            }
+        );
+
+
+    // =========================================================
+    // NEW PHOTOS
+    // =========================================================
+
+    let selectedPhotos = [];
+
+
+    photosInput.addEventListener(
+        'change',
+        function () {
+
+            clearError();
+
+
+            const files =
+                Array.from(
+                    this.files
+                );
+
+
+            addPhotos(
+                files
+            );
+
+        }
+    );
+
+
+    function addPhotos(files) {
+
+        for (
+            const file of files
+        ) {
+
+            if (
+                !file.type.startsWith(
+                    'image/'
+                )
+            ) {
+
+                showError(
+                    `${file.name} is not a valid image.`
+                );
+
+                continue;
+
+            }
+
+
+            if (
+                file.size >
+                100 * 1024 * 1024
+            ) {
+
+                showError(
+                    `${file.name} is larger than 100 MB.`
+                );
+
+                continue;
+
+            }
+
+
+            if (
+                selectedPhotos.length >= 50
+            ) {
+
+                showError(
+                    'Maximum 50 new photos can be added at once.'
+                );
+
+                break;
+
+            }
+
+
+            const duplicate =
+                selectedPhotos.some(
+                    item =>
+                        item.name === file.name &&
+                        item.size === file.size &&
+                        item.lastModified === file.lastModified
+                );
+
+
+            if (!duplicate) {
+
+                selectedPhotos.push(
+                    file
+                );
+
+            }
+
+        }
+
+
+        rebuildPhotoInput();
+
+        renderNewPhotos();
+
+    }
+
+
+    function rebuildPhotoInput() {
+
+        const transfer =
+            new DataTransfer();
+
+
+        selectedPhotos.forEach(
+            file => {
+
+                transfer.items.add(
+                    file
+                );
+
+            }
+        );
+
+
+        photosInput.files =
+            transfer.files;
+
+    }
+
+
+    function renderNewPhotos() {
+
+        newPhotosGrid.innerHTML =
+            '';
+
+
+        selectedPhotos.forEach(
+            (
+                file,
+                index
+            ) => {
+
+                const card =
+                    document.createElement(
+                        'div'
+                    );
+
+                card.className =
+                    'media-card new-file';
+
+
+                const image =
+                    document.createElement(
+                        'img'
+                    );
+
+
+                const url =
+                    URL.createObjectURL(
+                        file
+                    );
+
+
+                image.src =
+                    url;
+
+                image.alt =
+                    file.name;
+
+
+                const remove =
+                    document.createElement(
+                        'button'
+                    );
+
+
+                remove.type =
+                    'button';
+
+                remove.className =
+                    'remove-media';
+
+
+                remove.innerHTML =
+                    '<i class="fas fa-xmark"></i>';
+
+
+                remove.addEventListener(
+                    'click',
+                    function () {
+
+                        selectedPhotos.splice(
+                            index,
+                            1
+                        );
+
+                        rebuildPhotoInput();
+
+                        renderNewPhotos();
+
+                    }
+                );
+
+
+                const name =
+                    document.createElement(
+                        'div'
+                    );
+
+
+                name.className =
+                    'media-name';
+
+                name.textContent =
+                    file.name;
+
+
+                card.appendChild(
+                    image
+                );
+
+                card.appendChild(
+                    remove
+                );
+
+                card.appendChild(
+                    name
+                );
+
+
+                newPhotosGrid.appendChild(
+                    card
+                );
+
+            }
+        );
+
+    }
+
+
+    // =========================================================
+    // NEW VIDEOS
+    // =========================================================
+
+    let selectedVideos = [];
+
+
+    videosInput.addEventListener(
+        'change',
+        function () {
+
+            clearError();
+
+
+            const files =
+                Array.from(
+                    this.files
+                );
+
+
+            addVideos(
+                files
+            );
+
+        }
+    );
+
+
+    function addVideos(files) {
+
+        for (
+            const file of files
+        ) {
+
+            if (
+                !file.type.startsWith(
+                    'video/'
+                )
+            ) {
+
+                showError(
+                    `${file.name} is not a valid video.`
+                );
+
+                continue;
+
+            }
+
+
+            if (
+                file.size >
+                100 * 1024 * 1024
+            ) {
+
+                showError(
+                    `${file.name} is larger than 100 MB.`
+                );
+
+                continue;
+
+            }
+
+
+            if (
+                selectedVideos.length >= 10
+            ) {
+
+                showError(
+                    'Maximum 10 new videos can be added at once.'
+                );
+
+                break;
+
+            }
+
+
+            const duplicate =
+                selectedVideos.some(
+                    item =>
+                        item.name === file.name &&
+                        item.size === file.size &&
+                        item.lastModified === file.lastModified
+                );
+
+
+            if (!duplicate) {
+
+                selectedVideos.push(
+                    file
+                );
+
+            }
+
+        }
+
+
+        rebuildVideoInput();
+
+        renderNewVideos();
+
+    }
+
+
+    function rebuildVideoInput() {
+
+        const transfer =
+            new DataTransfer();
+
+
+        selectedVideos.forEach(
+            file => {
+
+                transfer.items.add(
+                    file
+                );
+
+            }
+        );
+
+
+        videosInput.files =
+            transfer.files;
+
+    }
+
+
+    function renderNewVideos() {
+
+        newVideosGrid.innerHTML =
+            '';
+
+
+        selectedVideos.forEach(
+            (
+                file,
+                index
+            ) => {
+
+                const card =
+                    document.createElement(
+                        'div'
+                    );
+
+                card.className =
+                    'media-card new-file';
+
+
+                const video =
+                    document.createElement(
+                        'video'
+                    );
+
+
+                const url =
+                    URL.createObjectURL(
+                        file
+                    );
+
+
+                video.src =
+                    url;
+
+                video.controls =
+                    true;
+
+                video.preload =
+                    'metadata';
+
+
+                const remove =
+                    document.createElement(
+                        'button'
+                    );
+
+
+                remove.type =
+                    'button';
+
+                remove.className =
+                    'remove-media';
+
+
+                remove.innerHTML =
+                    '<i class="fas fa-xmark"></i>';
+
+
+                remove.addEventListener(
+                    'click',
+                    function () {
+
+                        selectedVideos.splice(
+                            index,
+                            1
+                        );
+
+                        rebuildVideoInput();
+
+                        renderNewVideos();
+
+                    }
+                );
+
+
+                const name =
+                    document.createElement(
+                        'div'
+                    );
+
+
+                name.className =
+                    'media-name';
+
+                name.textContent =
+                    file.name;
+
+
+                card.appendChild(
+                    video
+                );
+
+                card.appendChild(
+                    remove
+                );
+
+                card.appendChild(
+                    name
+                );
+
+
+                newVideosGrid.appendChild(
+                    card
+                );
+
+            }
+        );
+
+    }
+
+
+    // =========================================================
+    // DRAG & DROP
+    // =========================================================
+
+    function setupDropzone(
+        zone,
+        input,
+        type
+    ) {
+
+        if (!zone) {
+            return;
+        }
+
+
+        zone.addEventListener(
+            'dragover',
+            function (event) {
+
+                event.preventDefault();
+
+                zone.classList.add(
+                    'dragover'
+                );
+
+            }
+        );
+
+
+        zone.addEventListener(
+            'dragleave',
+            function () {
+
+                zone.classList.remove(
+                    'dragover'
+                );
+
+            }
+        );
+
+
+        zone.addEventListener(
+            'drop',
+            function (event) {
+
+                event.preventDefault();
+
+                zone.classList.remove(
+                    'dragover'
+                );
+
+
+                const files =
+                    Array.from(
+                        event.dataTransfer.files
+                    );
+
+
+                if (
+                    type === 'cover'
+                ) {
+
+                    const transfer =
+                        new DataTransfer();
+
+
+                    if (files[0]) {
+
+                        transfer.items.add(
+                            files[0]
+                        );
+
+                    }
+
+
+                    input.files =
+                        transfer.files;
+
+
+                    input.dispatchEvent(
+                        new Event(
+                            'change'
+                        )
+                    );
+
+                }
+
+
+                if (
+                    type === 'photos'
+                ) {
+
+                    addPhotos(
+                        files
+                    );
+
+                }
+
+
+                if (
+                    type === 'videos'
+                ) {
+
+                    addVideos(
+                        files
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    setupDropzone(
+        document.getElementById(
+            'coverDropzone'
+        ),
+        coverInput,
+        'cover'
+    );
+
+
+    setupDropzone(
+        document.getElementById(
+            'photosDropzone'
+        ),
+        photosInput,
+        'photos'
+    );
+
+
+    setupDropzone(
+        document.getElementById(
+            'videosDropzone'
+        ),
+        videosInput,
+        'videos'
+    );
+
+
+    // =========================================================
+    // SUBMIT
+    // =========================================================
+
+    form.addEventListener(
+        'submit',
+        function (event) {
+
+            clearError();
+
+
+            if (
+                !form.checkValidity()
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                category.value ===
+                    'fun-fiesta' &&
+                (
+                    !session.value.trim() ||
+                    !batch.value.trim()
+                )
+            ) {
+
+                event.preventDefault();
+
+
+                showError(
+                    'Fun & Fiesta requires Academic Session and Batch.'
+                );
+
+
+                return;
+
+            }
+
+
+            saveButton.disabled =
+                true;
+
+
+            deleteButton.disabled =
+                true;
+
+
+            saveButton.innerHTML = `
+
+                <i class="fas fa-spinner fa-spin"></i>
+
+                Saving Changes...
+
+            `;
+
+        }
+    );
+
+
+    // =========================================================
+    // DELETE EVENT
+    // =========================================================
+
+    deleteButton.addEventListener(
+        'click',
+        function () {
+
+            const confirmed =
+                confirm(
+                    'Are you sure you want to permanently delete this event and all its uploaded media? This cannot be undone.'
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            deleteButton.disabled =
+                true;
+
+
+            saveButton.disabled =
+                true;
+
+
+            deleteButton.innerHTML = `
+
+                <i class="fas fa-spinner fa-spin"></i>
+
+                Deleting...
+
+            `;
+
+
+            document
+                .getElementById(
+                    'deleteForm'
+                )
+                .submit();
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
