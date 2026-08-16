@@ -5,8 +5,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const csrf = require("csurf");
 const fs = require("fs");
-
-const Popup = require('../models/Popup');
+const Popup = require("../models/popup");
 const auth = require("../middleware/auth");
 const upload = require("../config/multerPopup");
 
