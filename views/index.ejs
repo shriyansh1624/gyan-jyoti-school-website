@@ -6727,9 +6727,9 @@ body {
                 'false'
             );
 
-            document.body.dataset.gjPreviousOverflow =
-                document.body.style.overflow || '';
-            document.body.style.overflow = 'hidden';
+            /* Keep the homepage scrollable while the floating popup is visible.
+               The popup itself remains interactive; only the page scroll lock
+               is removed on purpose for mobile/tablet usability. */
 
             showPopupSlide(0);
 
@@ -6748,10 +6748,6 @@ body {
                 'aria-hidden',
                 'true'
             );
-
-            document.body.style.overflow =
-                document.body.dataset.gjPreviousOverflow || '';
-            delete document.body.dataset.gjPreviousOverflow;
 
             if (popupTimer) {
 
