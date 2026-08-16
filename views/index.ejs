@@ -5580,681 +5580,323 @@
 }
 
 
-
 /* =========================================================
-   GYAN JYOTI — CLIENT PRESENTATION ENHANCEMENT PACK
-   Frontend-only. Existing backend, variables and links untouched.
-========================================================= */
+   FINAL MOBILE SAFETY LAYER
+   Backend / EJS structure / routes intentionally untouched.
+   This layer only fixes viewport overflow, touch targets,
+   mobile hero sizing and expensive effects.
+   ========================================================= */
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden !important;
+}
+
+body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: auto;
+}
 
 .gj-home {
-    position: relative;
-    isolation: isolate;
-    background:
-        radial-gradient(circle at 8% 12%, rgba(255,195,0,.055), transparent 24%),
-        radial-gradient(circle at 92% 58%, rgba(0,85,143,.055), transparent 28%),
-        #fff;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
 }
 
-.gj-home::selection {
-    background: var(--gj-gold);
-    color: var(--gj-navy);
+.gj-home *,
+.gj-home *::before,
+.gj-home *::after {
+    box-sizing: border-box;
 }
 
-/* Premium ambient motion */
-.gj-hero::after {
-    content: "";
-    position: absolute;
-    width: 520px;
-    height: 520px;
-    right: -170px;
-    top: 15%;
-    border: 1px solid rgba(255,195,0,.12);
-    border-radius: 50%;
-    box-shadow:
-        0 0 0 35px rgba(255,195,0,.025),
-        0 0 0 85px rgba(255,195,0,.018);
-    animation: gjOrbitGlow 12s linear infinite;
-    pointer-events: none;
-    z-index: 8;
+.gj-home img {
+    max-width: 100%;
 }
 
-.gj-hero-grid {
-    animation: gjGridDrift 18s linear infinite;
+.gj-home a,
+.gj-home button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
-.gj-hero-glow {
-    animation: gjGlowFloat 7s ease-in-out infinite;
-}
-
-.gj-glow-two {
-    animation-delay: -3.5s;
-}
-
-/* Hero entrance */
-.gj-hero-slide.is-active .gj-eyebrow {
-    animation: gjHeroIn .8s .08s both;
-}
-
-.gj-hero-slide.is-active h1 {
-    animation: gjHeroIn .9s .16s both;
-}
-
-.gj-hero-slide.is-active .gj-title-accent {
-    animation: gjHeroIn .75s .25s both;
-}
-
-.gj-hero-slide.is-active .gj-hero-subtitle {
-    animation: gjHeroIn .8s .32s both;
-}
-
-.gj-hero-slide.is-active .gj-hero-actions {
-    animation: gjHeroIn .8s .4s both;
-}
-
-.gj-hero-slide.is-active .gj-hero-features {
-    animation: gjHeroIn .8s .48s both;
-}
-
-/* Glassy quick navigation */
-.gj-quick-strip {
-    position: relative;
-}
-
-.gj-quick-strip::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-        linear-gradient(90deg,
-            transparent,
-            rgba(255,195,0,.08),
-            transparent);
-    transform: translateX(-100%);
-    animation: gjSweep 8s ease-in-out infinite;
-}
-
-/* Section headings get a premium underline */
-.gj-section-kicker {
-    position: relative;
-}
-
-.gj-section-kicker span {
-    box-shadow: 0 0 14px rgba(255,195,0,.35);
-}
-
-/* About image cinematic hover */
-.gj-image-frame {
-    transform: translateZ(0);
-    transition:
-        transform .5s cubic-bezier(.2,.8,.2,1),
-        box-shadow .5s ease;
-}
-
-.gj-image-frame:hover {
-    transform: translateY(-8px) rotateX(1deg);
-    box-shadow:
-        0 45px 100px rgba(0,31,63,.23),
-        0 0 0 1px rgba(255,195,0,.14);
-}
-
-.gj-floating-card {
-    animation: gjFloat 5s ease-in-out infinite;
-}
-
-/* Stat cards */
-.gj-stat-card {
-    position: relative;
-    overflow: hidden;
-    transform: translateZ(0);
-}
-
-.gj-stat-card::before {
-    content: "";
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    right: -90px;
-    top: -90px;
-    border-radius: 50%;
-    background: rgba(255,195,0,.12);
-    transition: transform .5s ease;
-    pointer-events: none;
-}
-
-.gj-stat-card:hover {
-    transform: translateY(-10px);
-    box-shadow:
-        0 25px 55px rgba(0,31,63,.14);
-}
-
-.gj-stat-card:hover::before {
-    transform: scale(1.7);
-}
-
-/* Feature cards */
-.gj-feature-card {
-    position: relative;
-    overflow: hidden;
-    transform: translateZ(0);
-}
-
-.gj-feature-card::after {
-    content: "";
-    position: absolute;
-    left: -120%;
-    top: 0;
-    width: 70%;
-    height: 100%;
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.55),
-            transparent
-        );
-    transform: skewX(-18deg);
-    transition: left .8s ease;
-    pointer-events: none;
-}
-
-.gj-feature-card:hover::after {
-    left: 150%;
-}
-
-.gj-feature-card:hover {
-    transform: translateY(-10px);
-}
-
-/* Gallery cinematic hover */
-.gj-gallery-item {
-    overflow: hidden;
-}
-
-.gj-gallery-item img {
-    transition:
-        transform 1s cubic-bezier(.2,.75,.2,1),
-        filter .7s ease;
-}
-
-.gj-gallery-item::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(
-            110deg,
-            transparent 20%,
-            rgba(255,255,255,.2) 45%,
-            transparent 70%
-        );
-    transform: translateX(-120%);
-    transition: transform .9s ease;
-    pointer-events: none;
-    z-index: 4;
-}
-
-.gj-gallery-item:hover img {
-    transform: scale(1.09);
-    filter: saturate(1.08) contrast(1.04);
-}
-
-.gj-gallery-item:hover::after {
-    transform: translateX(120%);
-}
-
-/* Discover cards */
-.gj-discover-card {
-    position: relative;
-    overflow: hidden;
-}
-
-.gj-discover-card::before {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 0;
-    left: var(--mx, 50%);
-    top: var(--my, 50%);
-    border-radius: 50%;
-    background: rgba(255,195,0,.12);
-    transform: translate(-50%, -50%);
-    transition:
-        width .55s ease,
-        height .55s ease;
-    pointer-events: none;
-}
-
-.gj-discover-card:hover::before {
-    width: 420px;
-    height: 420px;
-}
-
-.gj-discover-card > * {
-    position: relative;
-    z-index: 2;
-}
-
-/* Admission CTA breathing glow */
-.gj-admission {
-    position: relative;
-    overflow: hidden;
-}
-
-.gj-admission::before,
-.gj-admission::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 2;
-}
-
-.gj-admission::before {
-    width: 420px;
-    height: 420px;
-    right: -180px;
-    top: -180px;
-    border: 1px solid rgba(255,195,0,.22);
-    box-shadow:
-        0 0 0 40px rgba(255,195,0,.04),
-        0 0 0 90px rgba(255,195,0,.025);
-    animation: gjOrbitGlow 10s linear infinite reverse;
-}
-
-.gj-admission::after {
-    width: 180px;
-    height: 180px;
-    left: -90px;
-    bottom: -90px;
-    background: rgba(255,195,0,.08);
-    filter: blur(4px);
-}
-
-/* Buttons feel more premium */
-.gj-btn,
-.gj-text-btn,
-.gj-outline-btn {
-    position: relative;
-    overflow: hidden;
-}
-
-.gj-btn::before,
-.gj-outline-btn::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(
-            110deg,
-            transparent 30%,
-            rgba(255,255,255,.35),
-            transparent 70%
-        );
-    transform: translateX(-120%);
-    transition: transform .7s ease;
-    pointer-events: none;
-}
-
-.gj-btn:hover::before,
-.gj-outline-btn:hover::before {
-    transform: translateX(120%);
-}
-
-.gj-btn > *,
-.gj-outline-btn > * {
-    position: relative;
-    z-index: 2;
-}
-
-/* Popup = floating advertisement card, NOT full-screen modal */
-#gjPopupOverlay {
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 99999 !important;
-    display: flex !important;
-    align-items: flex-end !important;
-    justify-content: flex-end !important;
-    padding: 0 !important;
-    background: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+.gj-home .gj-hero-bg,
+.gj-home .gj-hero-grid,
+.gj-home .gj-hero-glow,
+.gj-home .gj-hero-overlay,
+.gj-home .gj-hero-number,
+.gj-home .gj-image-shine,
+.gj-home .gj-admission-overlay,
+.gj-home .gj-admission-shape {
     pointer-events: none !important;
 }
 
-#gjPopupOverlay.is-visible {
-    opacity: 1 !important;
-    visibility: visible !important;
+.gj-home .gj-hero-content,
+.gj-home .gj-hero-actions,
+.gj-home .gj-btn,
+.gj-home .gj-hero-arrow,
+.gj-home .gj-hero-dot,
+.gj-home .gj-quick-links a {
+    position: relative;
+    z-index: 100 !important;
+    pointer-events: auto !important;
 }
 
-#gjPopupOverlay .gj-popup {
-    pointer-events: auto;
-    width: min(420px, calc(100vw - 40px)) !important;
-    height: 500px !important;
-    margin: 0 28px 28px 0;
-    border-radius: 26px !important;
-    background: #fff !important;
-    border: 1px solid rgba(0,31,63,.12) !important;
-    box-shadow:
-        0 30px 90px rgba(0,15,35,.28),
-        0 10px 30px rgba(0,31,63,.12),
-        0 0 0 1px rgba(255,195,0,.08);
-    overflow: hidden;
-    transform: translateY(35px) scale(.94) !important;
-    transition:
-        transform .65s cubic-bezier(.16,1,.3,1),
-        box-shadow .35s ease;
+.gj-home .gj-hero-arrow {
+    z-index: 1000 !important;
 }
 
-#gjPopupOverlay.is-visible .gj-popup {
-    transform: translateY(0) scale(1) !important;
-}
+@media (max-width: 900px) {
 
-#gjPopupOverlay .gj-popup::before {
-    content: "";
-    position: absolute;
-    z-index: 25;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background:
-        linear-gradient(
-            90deg,
-            var(--gj-navy),
-            var(--gj-gold),
-            #fff0a8,
-            var(--gj-gold),
-            var(--gj-navy)
-        );
-    background-size: 220% 100%;
-    animation: gjPopupShine 4s linear infinite;
-}
-
-#gjPopupOverlay .gj-popup-slides,
-#gjPopupOverlay .gj-popup-slide {
-    inset: 0;
-}
-
-#gjPopupOverlay .gj-popup-slide {
-    background: #fff;
-}
-
-#gjPopupOverlay .gj-popup-image {
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 255px !important;
-    object-fit: cover !important;
-    object-position: center !important;
-    transform: scale(1.02);
-    transition: transform 7s ease;
-}
-
-#gjPopupOverlay .gj-popup-slide.is-active .gj-popup-image {
-    transform: scale(1.08);
-}
-
-/* This selector targets the overlay INSIDE the slide */
-#gjPopupOverlay .gj-popup-slide > .gj-popup-overlay {
-    position: absolute;
-    inset: 0 0 auto 0 !important;
-    height: 255px !important;
-    background:
-        linear-gradient(
-            180deg,
-            rgba(0,31,63,.08),
-            transparent 52%,
-            rgba(0,31,63,.28)
-        ) !important;
-    z-index: 2;
-}
-
-#gjPopupOverlay .gj-popup-content {
-    left: 0 !important;
-    bottom: 0 !important;
-    width: 100% !important;
-    height: 245px !important;
-    box-sizing: border-box;
-    padding: 20px 24px 20px !important;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-    color: var(--gj-ink) !important;
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,.96),
-            #fff 30%
-        ) !important;
-    z-index: 10;
-}
-
-#gjPopupOverlay .gj-popup-badge {
-    margin-bottom: 10px !important;
-    padding: 7px 10px !important;
-    background: #fff4c9 !important;
-    color: #8b6500 !important;
-    border: 1px solid rgba(255,195,0,.28);
-    font-size: 9px !important;
-    letter-spacing: 1.1px;
-}
-
-#gjPopupOverlay .gj-popup-content h2 {
-    margin: 0 0 8px !important;
-    color: var(--gj-navy) !important;
-    font-size: clamp(25px, 4vw, 34px) !important;
-    line-height: 1.05 !important;
-    letter-spacing: -.8px !important;
-}
-
-#gjPopupOverlay .gj-popup-content p {
-    margin: 0 0 15px !important;
-    color: #68798b !important;
-    font-size: 12.5px !important;
-    line-height: 1.55 !important;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-#gjPopupOverlay .gj-popup-button {
-    padding: 11px 17px !important;
-    gap: 9px;
-    background:
-        linear-gradient(135deg, var(--gj-gold), var(--gj-gold-2));
-    color: var(--gj-navy) !important;
-    box-shadow: 0 10px 25px rgba(255,195,0,.25);
-    font-size: 11px !important;
-}
-
-#gjPopupOverlay .gj-popup-button:hover {
-    transform: translateY(-3px) scale(1.02);
-}
-
-#gjPopupOverlay .gj-popup-close,
-#gjPopupOverlay .gj-popup-arrow {
-    width: 38px !important;
-    height: 38px !important;
-    background: rgba(0,31,63,.68) !important;
-    border-color: rgba(255,255,255,.35) !important;
-    box-shadow: 0 8px 20px rgba(0,0,0,.18);
-    backdrop-filter: blur(12px);
-}
-
-#gjPopupOverlay .gj-popup-close {
-    top: 13px !important;
-    right: 13px !important;
-}
-
-#gjPopupOverlay .gj-popup-close:hover,
-#gjPopupOverlay .gj-popup-arrow:hover {
-    background: var(--gj-gold) !important;
-    color: var(--gj-navy) !important;
-}
-
-#gjPopupOverlay .gj-popup-prev {
-    left: 12px !important;
-    top: 127px !important;
-}
-
-#gjPopupOverlay .gj-popup-next {
-    right: 12px !important;
-    top: 127px !important;
-}
-
-#gjPopupOverlay .gj-popup-footer {
-    left: 24px !important;
-    right: 24px !important;
-    bottom: 12px !important;
-    z-index: 40;
-}
-
-#gjPopupOverlay .gj-popup-progress {
-    background: #e8edf2 !important;
-}
-
-#gjPopupOverlay .gj-popup-progress span {
-    background: var(--gj-gold) !important;
-}
-
-/* Mobile ad card */
-@media (max-width: 620px) {
-    #gjPopupOverlay {
-        align-items: flex-end !important;
-        justify-content: center !important;
+    .gj-home .gj-hero {
+        width: 100% !important;
+        min-height: 0 !important;
+        height: clamp(610px, 88svh, 760px) !important;
+        max-height: none !important;
+        overflow: hidden !important;
+        contain: paint;
     }
 
-    #gjPopupOverlay .gj-popup {
-        width: calc(100vw - 24px) !important;
-        max-width: 420px;
-        height: 440px !important;
-        margin: 0 0 12px 0;
-        border-radius: 22px !important;
+    .gj-home .gj-hero-slider,
+    .gj-home .gj-hero-slide {
+        width: 100% !important;
+        max-width: 100% !important;
     }
 
-    #gjPopupOverlay .gj-popup-image {
-        height: 215px !important;
+    .gj-home .gj-hero-slide {
+        transform: none !important;
+        transition: opacity .35s ease !important;
+        will-change: opacity;
     }
 
-    #gjPopupOverlay .gj-popup-slide > .gj-popup-overlay {
-        height: 215px !important;
+    .gj-home .gj-hero-slide.is-active {
+        transform: none !important;
     }
 
-    #gjPopupOverlay .gj-popup-content {
-        height: 225px !important;
-        padding: 17px 19px 18px !important;
+    .gj-home .gj-hero-content {
+        width: calc(100% - 92px) !important;
+        max-width: 720px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        text-align: center !important;
     }
 
-    #gjPopupOverlay .gj-popup-content h2 {
-        font-size: 26px !important;
+    .gj-home .gj-hero-actions {
+        width: 100% !important;
+        max-width: 390px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
     }
 
-    #gjPopupOverlay .gj-popup-content p {
-        font-size: 12px !important;
+    .gj-home .gj-hero-actions .gj-btn {
+        width: 100% !important;
+        max-width: none !important;
+        min-height: 56px !important;
+        margin: 0 !important;
     }
 
-    #gjPopupOverlay .gj-popup-prev {
-        left: 9px !important;
-        top: 107px !important;
+    .gj-home .gj-hero-features {
+        width: 100% !important;
+        max-width: 390px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px 14px !important;
+        text-align: left !important;
     }
 
-    #gjPopupOverlay .gj-popup-next {
-        right: 9px !important;
-        top: 107px !important;
+    .gj-home .gj-hero-features span {
+        min-width: 0 !important;
+        line-height: 1.35 !important;
     }
-}
 
-/* Premium keyframes */
-@keyframes gjHeroIn {
-    from {
-        opacity: 0;
-        transform: translateY(22px);
-        filter: blur(4px);
+    .gj-home .gj-hero-arrow {
+        width: 48px !important;
+        height: 48px !important;
+        top: 58% !important;
+        margin: 0 !important;
+        transform: translateY(-50%) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
-}
 
-@keyframes gjOrbitGlow {
-    from {
-        transform: rotate(0deg);
+    .gj-home .gj-arrow-left {
+        left: 12px !important;
     }
-    to {
-        transform: rotate(360deg);
-    }
-}
 
-@keyframes gjGlowFloat {
-    0%, 100% {
-        transform: translate3d(0,0,0) scale(1);
+    .gj-home .gj-arrow-right {
+        right: 12px !important;
     }
-    50% {
-        transform: translate3d(0,18px,0) scale(1.04);
-    }
-}
 
-@keyframes gjGridDrift {
-    from {
-        background-position: 0 0, 0 0;
+    .gj-home .gj-hero-bottom {
+        left: 20px !important;
+        right: 20px !important;
+        bottom: 16px !important;
+        width: auto !important;
+        max-width: none !important;
+        gap: 12px !important;
     }
-    to {
-        background-position: 70px 70px, -70px 70px;
-    }
-}
 
-@keyframes gjSweep {
-    0%, 55%, 100% {
-        transform: translateX(-100%);
+    .gj-home .gj-hero-progress {
+        flex: 1 1 auto !important;
+        width: auto !important;
+        max-width: 160px !important;
     }
-    72% {
-        transform: translateX(100%);
-    }
-}
 
-@keyframes gjPopupShine {
-    from {
-        background-position: 0 0;
+    .gj-home .gj-scroll {
+        display: none !important;
     }
-    to {
-        background-position: 220% 0;
-    }
-}
 
-/* Accessibility */
-@media (prefers-reduced-motion: reduce) {
-    .gj-hero::after,
-    .gj-hero-grid,
-    .gj-hero-glow,
-    .gj-quick-strip::before,
-    .gj-floating-card,
-    .gj-admission::before,
-    #gjPopupOverlay .gj-popup::before {
+    /* Remove the most expensive mobile effects without changing the design. */
+    .gj-home .gj-eyebrow,
+    .gj-home .gj-btn-glass,
+    .gj-home .gj-floating-card,
+    .gj-home .gj-image-label,
+    .gj-home .gj-academic-small > div,
+    .gj-home .gj-hero-arrow {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    .gj-home .gj-hero-glow,
+    .gj-home .gj-glow-one,
+    .gj-home .gj-glow-two {
+        display: none !important;
+    }
+
+    .gj-home .gj-hero-grid {
+        opacity: .045;
+        background-size: 90px 90px;
+    }
+
+    .gj-home .gj-stats-bg {
         animation: none !important;
     }
-}
 
-/* Smaller screens: tone down heavy effects */
-@media (max-width: 850px) {
-    .gj-hero::after {
-        opacity: .45;
-        width: 360px;
-        height: 360px;
+    .gj-home .gj-feature-card:hover,
+    .gj-home .gj-stat-card:hover,
+    .gj-home .gj-testimonial:hover,
+    .gj-home .gj-discover-card:hover {
+        transform: none !important;
+    }
+
+    /* Never allow fixed-width children to create a sideways page. */
+    .gj-home .gj-container,
+    .gj-home .gj-quick-inner,
+    .gj-home .gj-about-grid,
+    .gj-home .gj-academic-grid,
+    .gj-home .gj-gallery-grid,
+    .gj-home .gj-testimonial-grid,
+    .gj-home .gj-discover-grid {
+        max-width: 100% !important;
     }
 }
 
-@media (max-width: 620px) {
-    .gj-hero::after {
-        display: none;
+@media (max-width: 480px) {
+
+    .gj-home .gj-hero {
+        height: clamp(590px, 92svh, 700px) !important;
     }
 
-    .gj-image-frame:hover {
-        transform: none;
+    .gj-home .gj-hero-content {
+        width: calc(100% - 76px) !important;
+    }
+
+    .gj-home .gj-hero-content h1 {
+        font-size: clamp(36px, 10.5vw, 46px) !important;
+        line-height: 1.02 !important;
+        letter-spacing: -1.2px !important;
+    }
+
+    .gj-home .gj-hero-subtitle {
+        font-size: 14px !important;
+        line-height: 1.45 !important;
+        margin-bottom: 20px !important;
+    }
+
+    .gj-home .gj-eyebrow {
+        font-size: 9px !important;
+        letter-spacing: 1.1px !important;
+        padding: 8px 11px !important;
+        margin-bottom: 18px !important;
+    }
+
+    .gj-home .gj-title-accent {
+        margin: 14px auto !important;
+    }
+
+    .gj-home .gj-hero-actions .gj-btn {
+        min-height: 54px !important;
+        font-size: 14px !important;
+        border-radius: 16px !important;
+    }
+
+    .gj-home .gj-hero-features {
+        gap: 8px 10px !important;
+    }
+
+    .gj-home .gj-hero-features span {
+        font-size: 9px !important;
+    }
+
+    .gj-home .gj-hero-arrow {
+        width: 44px !important;
+        height: 44px !important;
+        top: 57% !important;
+    }
+
+    .gj-home .gj-arrow-left {
+        left: 8px !important;
+    }
+
+    .gj-home .gj-arrow-right {
+        right: 8px !important;
+    }
+
+    .gj-home .gj-hero-bottom {
+        left: 18px !important;
+        right: 18px !important;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .gj-home .gj-hero {
+        height: 600px !important;
+    }
+
+    .gj-home .gj-hero-content {
+        width: calc(100% - 68px) !important;
+    }
+
+    .gj-home .gj-hero-content h1 {
+        font-size: 34px !important;
+    }
+
+    .gj-home .gj-hero-features {
+        grid-template-columns: 1fr !important;
+        gap: 6px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gj-home *,
+    .gj-home *::before,
+    .gj-home *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
     }
 }
 
@@ -6552,6 +6194,62 @@
         }
     );
 
+
+
+    /* =====================================================
+       MOBILE HERO SWIPE — uses existing carousel functions
+       and does not change routes/backend behaviour.
+    ====================================================== */
+
+    if (hero) {
+        let heroTouchStartX = 0;
+        let heroTouchStartY = 0;
+
+        hero.addEventListener(
+            'touchstart',
+            function (event) {
+                if (!event.touches || !event.touches.length) {
+                    return;
+                }
+
+                heroTouchStartX = event.touches[0].clientX;
+                heroTouchStartY = event.touches[0].clientY;
+            },
+            { passive: true }
+        );
+
+        hero.addEventListener(
+            'touchend',
+            function (event) {
+                if (!event.changedTouches || !event.changedTouches.length) {
+                    return;
+                }
+
+                const endX = event.changedTouches[0].clientX;
+                const endY = event.changedTouches[0].clientY;
+
+                const deltaX = endX - heroTouchStartX;
+                const deltaY = endY - heroTouchStartY;
+
+                /* Only treat clearly horizontal gestures as slides. */
+                if (
+                    Math.abs(deltaX) < 55 ||
+                    Math.abs(deltaX) <= Math.abs(deltaY)
+                ) {
+                    return;
+                }
+
+                if (deltaX < 0) {
+                    nextHero();
+                } else {
+                    previousHero();
+                }
+
+                restartHeroTimer();
+            },
+            { passive: true }
+        );
+    }
 
     /* =====================================================
        REVEAL ON SCROLL
@@ -7029,8 +6727,9 @@
                 'false'
             );
 
-            // Floating ad: keep the homepage scrollable.
-            document.body.style.overflow = '';
+            document.body.dataset.gjPreviousOverflow =
+                document.body.style.overflow || '';
+            document.body.style.overflow = 'hidden';
 
             showPopupSlide(0);
 
@@ -7050,7 +6749,9 @@
                 'true'
             );
 
-            document.body.style.overflow = '';
+            document.body.style.overflow =
+                document.body.dataset.gjPreviousOverflow || '';
+            delete document.body.dataset.gjPreviousOverflow;
 
             if (popupTimer) {
 
@@ -7197,7 +6898,7 @@
                     );
 
                 },
-                2200
+                1400
             );
 
         }
@@ -7254,128 +6955,6 @@
             }
         );
 
-
-
-
-    /* =====================================================
-       PREMIUM MICRO-INTERACTIONS
-       Frontend only — no backend dependency.
-    ====================================================== */
-
-    // Keep the page scrollable while the floating advertisement is open.
-    if (popupOverlay) {
-        // The popup is an advertisement card, not a blocking modal.
-        // Existing open/close functions remain responsible for visibility.
-    }
-
-    // Hide carousel arrows when there is only one advertisement.
-    if (popupOverlay) {
-        const adSlides =
-            popupOverlay.querySelectorAll('.gj-popup-slide');
-
-        if (adSlides.length <= 1) {
-            const adPrev =
-                document.getElementById('gjPopupPrev');
-
-            const adNext =
-                document.getElementById('gjPopupNext');
-
-            if (adPrev) {
-                adPrev.style.display = 'none';
-            }
-
-            if (adNext) {
-                adNext.style.display = 'none';
-            }
-        }
-    }
-
-    // Lightweight pointer spotlight for premium cards.
-    if (window.matchMedia('(pointer:fine)').matches) {
-
-        document
-            .querySelectorAll('.gj-discover-card')
-            .forEach(function (card) {
-
-                card.addEventListener(
-                    'pointermove',
-                    function (event) {
-
-                        const rect =
-                            card.getBoundingClientRect();
-
-                        const x =
-                            event.clientX - rect.left;
-
-                        const y =
-                            event.clientY - rect.top;
-
-                        card.style.setProperty(
-                            '--mx',
-                            x + 'px'
-                        );
-
-                        card.style.setProperty(
-                            '--my',
-                            y + 'px'
-                        );
-
-                    }
-                );
-
-            });
-
-
-        // Subtle 3D tilt on feature/stat cards.
-        document
-            .querySelectorAll(
-                '.gj-feature-card, .gj-stat-card'
-            )
-            .forEach(function (card) {
-
-                card.addEventListener(
-                    'pointermove',
-                    function (event) {
-
-                        const rect =
-                            card.getBoundingClientRect();
-
-                        const px =
-                            (event.clientX - rect.left)
-                            / rect.width;
-
-                        const py =
-                            (event.clientY - rect.top)
-                            / rect.height;
-
-                        const rotateY =
-                            (px - .5) * 5;
-
-                        const rotateX =
-                            (.5 - py) * 5;
-
-                        card.style.transform =
-                            'translateY(-8px) perspective(700px) rotateX(' +
-                            rotateX +
-                            'deg) rotateY(' +
-                            rotateY +
-                            'deg)';
-
-                    }
-                );
-
-                card.addEventListener(
-                    'pointerleave',
-                    function () {
-
-                        card.style.transform = '';
-
-                    }
-                );
-
-            });
-
-    }
 
 })();
 </script>
