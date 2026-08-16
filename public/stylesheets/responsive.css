@@ -1,3 +1,6 @@
+updated.css
+
+
 /* =========================================================
    GYAN JYOTI SCHOOL
    PREMIUM RESPONSIVE.CSS — GLOBAL RESPONSIVE SYSTEM
@@ -1505,4 +1508,671 @@ i {
 .founder-content,
 .dev-content {
     overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   20. GYAN JYOTI HOMEPAGE — INDEX.EJS RESPONSIVE PATCH
+   ---------------------------------------------------------
+   Added for the current .gj-* homepage in index.ejs.
+   Fixes mobile scrolling, overflow, cramped layouts and
+   improves rendering performance without changing backend.
+   ========================================================= */
+
+/* ---------- PAGE SCROLL SAFETY ---------- */
+html {
+    width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: auto;
+}
+
+body {
+    width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+    overflow-y: auto;
+    min-height: 100vh;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* The homepage itself must NEVER become the scroll container. */
+.gj-home {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 100%;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
+}
+
+/* Popup/menu may intentionally lock page scroll. */
+body.menu-open,
+body:has(.gj-popup-overlay.is-visible) {
+    overflow: hidden !important;
+    height: 100dvh;
+}
+
+/* ---------- HOMEPAGE CONTAINERS ---------- */
+.gj-container {
+    width: min(1180px, 92%);
+    max-width: 1180px;
+    margin-inline: auto;
+    min-width: 0;
+}
+
+.gj-section,
+.gj-about,
+.gj-why,
+.gj-gallery,
+.gj-testimonials,
+.gj-academics,
+.gj-stats,
+.gj-admission,
+.gj-discover {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.gj-home img {
+    max-width: 100%;
+}
+
+.gj-home .gj-hero,
+.gj-home .gj-quick-strip,
+.gj-home .gj-about,
+.gj-home .gj-stats,
+.gj-home .gj-why,
+.gj-home .gj-academics,
+.gj-home .gj-gallery,
+.gj-home .gj-testimonials,
+.gj-home .gj-admission,
+.gj-home .gj-discover {
+    isolation: isolate;
+}
+
+/* Prevent long words / URLs from creating a hidden horizontal page. */
+.gj-home h1,
+.gj-home h2,
+.gj-home h3,
+.gj-home h4,
+.gj-home p,
+.gj-home a,
+.gj-home span,
+.gj-home strong,
+.gj-home small {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+/* ---------- DESKTOP / TABLET ---------- */
+@media (max-width: 1100px) {
+    .gj-container {
+        width: 94%;
+    }
+
+    .gj-about-grid,
+    .gj-academic-grid {
+        min-width: 0;
+    }
+
+    .gj-feature-grid,
+    .gj-stats-grid {
+        min-width: 0;
+    }
+
+    .gj-hero-content {
+        max-width: 720px;
+    }
+}
+
+/* ---------- MOBILE 850px ---------- */
+@media (max-width: 850px) {
+    .gj-container {
+        width: calc(100% - 32px);
+        max-width: none;
+    }
+
+    .gj-section {
+        padding: 64px 0 !important;
+    }
+
+    /* Hero: never force desktop viewport height on phones. */
+    .gj-hero {
+        width: 100% !important;
+        height: clamp(620px, 92svh, 760px) !important;
+        min-height: 620px !important;
+        max-height: none !important;
+    }
+
+    .gj-hero-slider,
+    .gj-hero-slide {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+    }
+
+    .gj-hero-content {
+        width: calc(100% - 64px) !important;
+        max-width: 700px !important;
+        margin: 0 auto !important;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+
+    .gj-eyebrow,
+    .gj-title-accent {
+        margin-inline: auto;
+    }
+
+    .gj-hero-content h1 {
+        font-size: clamp(38px, 8.8vw, 62px) !important;
+        line-height: 1.04 !important;
+        letter-spacing: -1px;
+    }
+
+    .gj-hero-subtitle {
+        max-width: 560px;
+        margin-inline: auto;
+        font-size: 15px !important;
+        line-height: 1.6;
+    }
+
+    .gj-hero-actions,
+    .gj-hero-features {
+        justify-content: center !important;
+        flex-wrap: wrap;
+    }
+
+    .gj-hero-features {
+        gap: 8px 14px;
+    }
+
+    .gj-hero-number {
+        display: none !important;
+    }
+
+    .gj-hero-arrow {
+        width: 42px !important;
+        height: 42px !important;
+    }
+
+    .gj-arrow-left { left: 10px !important; }
+    .gj-arrow-right { right: 10px !important; }
+
+    /* Two-column homepage sections become clean single-column stacks. */
+    .gj-about-grid,
+    .gj-academic-grid,
+    .gj-testimonial-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+    }
+
+    .gj-academic-visual {
+        order: -1;
+    }
+
+    .gj-feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .gj-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .gj-gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .gj-gallery-wide {
+        grid-column: span 2 !important;
+    }
+
+    .gj-discover-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .gj-quick-inner {
+        min-width: 0;
+    }
+
+    .gj-quick-links {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+/* ---------- MOBILE 620px ---------- */
+@media (max-width: 620px) {
+    html,
+    body {
+        overflow-x: clip !important;
+        overflow-y: auto !important;
+    }
+
+    body.menu-open,
+    body:has(.gj-popup-overlay.is-visible) {
+        overflow: hidden !important;
+    }
+
+    .gj-container {
+        width: calc(100% - 28px) !important;
+    }
+
+    .gj-section {
+        padding: 54px 0 !important;
+    }
+
+    /* ---------- HERO ---------- */
+    .gj-hero {
+        height: 650px !important;
+        min-height: 590px !important;
+    }
+
+    .gj-hero-content {
+        width: calc(100% - 76px) !important;
+        padding: 0 !important;
+    }
+
+    .gj-hero-content h1 {
+        font-size: clamp(34px, 10vw, 46px) !important;
+        line-height: 1.08 !important;
+        letter-spacing: -1px;
+    }
+
+    .gj-hero-subtitle {
+        font-size: 14px !important;
+        line-height: 1.55 !important;
+    }
+
+    .gj-hero-actions {
+        width: 100%;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 10px !important;
+    }
+
+    .gj-hero-actions .gj-btn {
+        width: min(100%, 300px) !important;
+        max-width: 300px !important;
+    }
+
+    .gj-hero-features {
+        gap: 7px 10px !important;
+        margin-top: 18px !important;
+    }
+
+    .gj-hero-features span {
+        font-size: 9px !important;
+    }
+
+    .gj-hero-arrow {
+        width: 38px !important;
+        height: 38px !important;
+        top: 55% !important;
+        font-size: 13px !important;
+    }
+
+    .gj-arrow-left { left: 8px !important; }
+    .gj-arrow-right { right: 8px !important; }
+
+    .gj-hero-bottom {
+        left: 14px !important;
+        right: 14px !important;
+        bottom: 14px !important;
+    }
+
+    .gj-scroll {
+        display: none !important;
+    }
+
+    .gj-hero-progress {
+        width: 90px !important;
+    }
+
+    /* ---------- QUICK STRIP ---------- */
+    .gj-quick-strip {
+        overflow: hidden;
+    }
+
+    .gj-quick-links {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px !important;
+    }
+
+    .gj-quick-links a {
+        min-width: 0;
+        justify-content: center;
+        padding: 9px 6px !important;
+        font-size: 9px !important;
+        white-space: normal;
+        text-align: center;
+    }
+
+    /* ---------- ABOUT ---------- */
+    .gj-about-visual {
+        min-height: 380px !important;
+    }
+
+    .gj-image-frame {
+        width: 91% !important;
+        height: min(380px, 92vw) !important;
+        margin-inline: auto;
+    }
+
+    .gj-floating-card {
+        max-width: 190px;
+        right: -2px !important;
+        top: 26px !important;
+        padding: 9px !important;
+    }
+
+    .gj-floating-card > i {
+        width: 34px !important;
+        height: 34px !important;
+    }
+
+    .gj-about-content h2,
+    .gj-academic-content h2,
+    .gj-heading-center h2,
+    .gj-gallery-heading h2,
+    .gj-testimonials h2,
+    .gj-admission-content h2 {
+        font-size: clamp(28px, 8vw, 38px) !important;
+        line-height: 1.12 !important;
+    }
+
+    .gj-about-points {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    /* ---------- STATS ---------- */
+    .gj-stats {
+        padding: 62px 0 !important;
+    }
+
+    .gj-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 9px !important;
+    }
+
+    .gj-stat-card {
+        min-width: 0 !important;
+        padding: 18px 10px !important;
+    }
+
+    .gj-stat-value span {
+        font-size: clamp(30px, 9vw, 40px) !important;
+    }
+
+    .gj-stat-card h3 {
+        font-size: 11px !important;
+        line-height: 1.3 !important;
+    }
+
+    .gj-stat-card p {
+        font-size: 9px !important;
+        line-height: 1.4 !important;
+    }
+
+    /* ---------- FEATURES ---------- */
+    .gj-feature-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+
+    .gj-feature-card {
+        min-height: 0 !important;
+        padding: 25px !important;
+    }
+
+    /* ---------- ACADEMICS ---------- */
+    .gj-academic-visual {
+        min-height: 370px !important;
+    }
+
+    .gj-academic-image-main {
+        width: 82% !important;
+        height: min(370px, 80vw) !important;
+    }
+
+    .gj-academic-small {
+        width: 47% !important;
+        height: min(185px, 40vw) !important;
+    }
+
+    /* ---------- GALLERY ---------- */
+    .gj-gallery-heading {
+        display: block !important;
+    }
+
+    .gj-outline-btn {
+        display: inline-flex;
+        margin-top: 16px !important;
+    }
+
+    .gj-gallery-grid {
+        grid-template-columns: 1fr !important;
+        grid-auto-rows: minmax(220px, 62vw) !important;
+        gap: 10px !important;
+    }
+
+    .gj-gallery-wide,
+    .gj-gallery-large {
+        grid-column: span 1 !important;
+        grid-row: span 1 !important;
+    }
+
+    /* ---------- DISCOVER / ADMISSION ---------- */
+    .gj-discover-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .gj-admission-content {
+        padding: 62px 0 !important;
+    }
+
+    .gj-admission-actions {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .gj-admission-actions .gj-btn {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    /* ---------- POPUP ---------- */
+    .gj-popup-overlay {
+        padding: 10px !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .gj-popup {
+        width: min(96vw, 520px) !important;
+        max-width: 96vw !important;
+        height: min(78svh, 620px) !important;
+        max-height: calc(100svh - 20px) !important;
+        border-radius: 20px !important;
+    }
+
+    .gj-popup-content {
+        left: 22px !important;
+        right: 22px !important;
+        bottom: 58px !important;
+        width: auto !important;
+    }
+
+    .gj-popup-content h2 {
+        font-size: clamp(26px, 8vw, 36px) !important;
+        line-height: 1.08 !important;
+    }
+
+    .gj-popup-content p {
+        font-size: 12px !important;
+        line-height: 1.5 !important;
+    }
+}
+
+/* ---------- SMALL PHONES 480px ---------- */
+@media (max-width: 480px) {
+    .gj-container {
+        width: calc(100% - 24px) !important;
+    }
+
+    .gj-section {
+        padding: 46px 0 !important;
+    }
+
+    .gj-hero {
+        height: 610px !important;
+        min-height: 560px !important;
+    }
+
+    .gj-hero-content {
+        width: calc(100% - 68px) !important;
+    }
+
+    .gj-hero-content h1 {
+        font-size: clamp(31px, 9.5vw, 41px) !important;
+    }
+
+    .gj-hero-subtitle {
+        font-size: 13px !important;
+    }
+
+    .gj-eyebrow {
+        font-size: 9px !important;
+        letter-spacing: .8px !important;
+    }
+
+    .gj-hero-features span {
+        font-size: 8px !important;
+    }
+
+    .gj-quick-links {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .gj-quick-links a:last-child {
+        grid-column: 1 / -1;
+        max-width: 180px;
+        margin-inline: auto;
+        width: 100%;
+    }
+
+    .gj-stats-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    .gj-stat-card {
+        padding: 16px 8px !important;
+    }
+
+    .gj-stat-value span {
+        font-size: 29px !important;
+    }
+
+    .gj-feature-card {
+        padding: 22px !important;
+    }
+
+    .gj-academic-image-main {
+        height: 320px !important;
+    }
+
+    .gj-academic-small {
+        height: 160px !important;
+    }
+}
+
+/* ---------- VERY SMALL PHONES 360px ---------- */
+@media (max-width: 360px) {
+    .gj-container {
+        width: calc(100% - 20px) !important;
+    }
+
+    .gj-hero {
+        height: 590px !important;
+        min-height: 540px !important;
+    }
+
+    .gj-hero-content {
+        width: calc(100% - 58px) !important;
+    }
+
+    .gj-hero-content h1 {
+        font-size: 29px !important;
+    }
+
+    .gj-hero-actions .gj-btn {
+        min-height: 44px;
+        padding: 11px 15px !important;
+        font-size: 12px !important;
+    }
+
+    .gj-hero-features {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .gj-hero-features span:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .gj-stats-grid {
+        gap: 7px !important;
+    }
+
+    .gj-stat-card h3 {
+        font-size: 10px !important;
+    }
+
+    .gj-stat-card p {
+        display: none;
+    }
+}
+
+/* ---------- MOBILE PERFORMANCE ---------- */
+@media (max-width: 850px) {
+    /* Expensive desktop blur/shadow effects are toned down on phones. */
+    .gj-home .gj-hero-glow,
+    .gj-home .gj-visual-orbit {
+        pointer-events: none;
+    }
+
+    .gj-home .gj-hero-glow {
+        opacity: .45;
+    }
+
+    .gj-home .gj-image-shine,
+    .gj-home .gj-hero-grid {
+        pointer-events: none;
+    }
+
+    /* Keep animations GPU-friendly. */
+    .gj-home .reveal,
+    .gj-home .reveal-left,
+    .gj-home .reveal-right {
+        will-change: opacity, transform;
+    }
+}
+
+/* ---------- ACCESSIBILITY / REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .gj-home *,
+    .gj-home *::before,
+    .gj-home *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+    }
 }
