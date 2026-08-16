@@ -4,7 +4,7 @@ const router = express.Router();
 const Slider = require('../models/Slider');
 const About = require('../models/About');
 const SchoolInfo = require('../models/SchoolInfo');
-const Popup = require('../models/Popup');
+const Popup = require("../models/popup");
 
 
 // ============================
