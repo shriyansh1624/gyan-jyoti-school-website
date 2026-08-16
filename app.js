@@ -16,15 +16,20 @@ require('dotenv').config();
 // =========================================================
 // ROUTES
 // =========================================================
+const principalContactRouter =
+    require('./routes/principalContact');
 
-const feesRouter = require('./routes/fees');
+const paymentRouter =
+    require('./routes/payment');
+
+const feesRouter =
+    require('./routes/fees');
 
 const feesAdminRoutes =
     require('./routes/admin/fees');
 
-
 const eventsAdminRoutes =
-require('./routes/admin/events');
+    require('./routes/admin/events');
 
 const whatsappAdminRoutes =
     require('./routes/admin/whatsapp');
@@ -81,14 +86,16 @@ const auth =
 // MONGOOSE
 // =========================================================
 
-var mongoose = require('mongoose');
+var mongoose =
+    require('mongoose');
 
 
 // =========================================================
 // DNS
 // =========================================================
 
-const dns = require('dns');
+const dns =
+    require('dns');
 
 dns.setServers([
     '8.8.8.8',
@@ -100,17 +107,31 @@ dns.setServers([
 // APP
 // =========================================================
 
-var app = express();
+var app =
+    express();
 
 
 // =========================================================
 // PROXY
 // =========================================================
+//
+// IMPORTANT:
+// Localhost should NOT trust a proxy.
+// Production can trust the reverse proxy.
+//
+// =========================================================
 
-app.set(
-    'trust proxy',
-    1
-);
+if (
+    process.env.NODE_ENV ===
+    'production'
+) {
+
+    app.set(
+        'trust proxy',
+        1
+    );
+
+}
 
 
 // =========================================================
@@ -150,34 +171,35 @@ app.set(
     'ejs'
 );
 
+
 // =========================================================
 // GLOBAL RATE LIMITER
 // =========================================================
-//
-// Development mein disable rakha hai because browser
-// bahut saare requests karta hai while developing.
-//
-// Production mein 1000 requests / 15 minutes allowed.
-//
 
-if (process.env.NODE_ENV === 'production') {
+if (
+    process.env.NODE_ENV ===
+    'production'
+) {
 
-    const limiter = rateLimit({
+    const limiter =
+        rateLimit({
 
-        windowMs:
-            15 * 60 * 1000,
+            windowMs:
+                15 * 60 * 1000,
 
-        max: 1000,
+            max:
+                1000,
 
-        standardHeaders: true,
+            standardHeaders:
+                true,
 
-        legacyHeaders: false,
+            legacyHeaders:
+                false,
 
-        message:
-            'Too many requests. Please try again later.'
+            message:
+                'Too many requests. Please try again later.'
 
-    });
-
+        });
 
     app.use(
         limiter
@@ -196,11 +218,14 @@ const adminLoginLimiter =
         windowMs:
             15 * 60 * 1000,
 
-        max: 10,
+        max:
+            10,
 
-        standardHeaders: true,
+        standardHeaders:
+            true,
 
-        legacyHeaders: false,
+        legacyHeaders:
+            false,
 
         message:
             'Too many login attempts. Please try again later.'
@@ -214,14 +239,18 @@ const adminLoginLimiter =
 
 app.use(
     express.json({
-        limit: '1mb'
+        limit:
+            '1mb'
     })
 );
 
 app.use(
     express.urlencoded({
-        extended: false,
-        limit: '1mb'
+        extended:
+            false,
+
+        limit:
+            '1mb'
     })
 );
 
@@ -252,42 +281,85 @@ app.use(
 // SESSION
 // =========================================================
 
-if (!process.env.SESSION_SECRET) {
+if (
+    !process.env.SESSION_SECRET
+) {
 
     console.error(
         '❌ SESSION_SECRET is missing from .env'
     );
 
     process.exit(1);
+
 }
+
 
 app.use(
     session({
 
+        // A dedicated cookie name prevents an old/stale
+        // connect.sid from being reused by this application.
+        name:
+            'gj_admin_sid',
+
         secret:
             process.env.SESSION_SECRET,
 
-        resave: false,
+        resave:
+            false,
 
-        saveUninitialized: false,
+        // Keep this false for security. The admin login creates
+        // the authenticated session before protected routes run.
+        saveUninitialized:
+            false,
 
-        proxy: true,
+        // Only trust proxy in production.
+        proxy:
+            process.env.NODE_ENV ===
+            'production',
 
         cookie: {
 
-            httpOnly: true,
+            httpOnly:
+                true,
 
             secure:
-                process.env.NODE_ENV === 'production',
+                process.env.NODE_ENV ===
+                'production',
 
-            sameSite: 'lax',
+            sameSite:
+                'lax',
 
             maxAge:
-                24 * 60 * 60 * 1000
+                24 *
+                60 *
+                60 *
+                1000
 
         }
 
     })
+);
+
+
+// =========================================================
+// SESSION AVAILABILITY GUARD
+// =========================================================
+//
+// CSRF tokens used by the admin router are stored in the
+// express-session. This makes sure an existing session is
+// available before protected routes are reached.
+// =========================================================
+
+app.use(
+    function (req, res, next) {
+
+        if (req.session) {
+            req.session.touch();
+        }
+
+        next();
+    }
 );
 
 
@@ -331,6 +403,18 @@ app.use(
 
 
 // =========================================================
+// ADMIN POPUP MANAGER
+// =========================================================
+
+app.use(
+    '/admin/popup',
+    auth,
+    popupAdminRoutes
+);
+
+
+
+// =========================================================
 // ADMIN GENERAL ROUTES
 // =========================================================
 
@@ -338,6 +422,7 @@ app.use(
     '/admin',
     adminRouter
 );
+
 
 // =========================================================
 // ADMIN EVENTS MANAGER
@@ -348,6 +433,7 @@ app.use(
     auth,
     eventsAdminRoutes
 );
+
 
 // =========================================================
 // ADMIN FACULTY MANAGER
@@ -360,11 +446,16 @@ app.use(
 );
 
 
+// =========================================================
+// ADMIN FEES MANAGER
+// =========================================================
+
 app.use(
     '/admin/fees',
     auth,
     feesAdminRoutes
 );
+
 
 // =========================================================
 // ADMIN WHATSAPP ANNOUNCEMENT
@@ -399,19 +490,28 @@ app.use(
 );
 
 
-// =========================================================
-// ADMIN POPUP MANAGER
-// =========================================================
 
-app.use(
-    '/admin/popup',
-    auth,
-    popupAdminRoutes
-);
 
 
 // =========================================================
-// PUBLIC ROUTES
+// HOME / INDEX ROUTES
+// =========================================================
+//
+// IMPORTANT:
+//
+// indexRouter MUST come before eventsRouter.
+//
+// Express processes routes from top to bottom.
+//
+// GET /
+//     -> indexRouter
+//
+// GET /gallery
+//     -> eventsRouter
+//
+// GET /gallery/:id
+//     -> eventsRouter
+//
 // =========================================================
 
 app.use(
@@ -419,35 +519,84 @@ app.use(
     indexRouter
 );
 
+
+// =========================================================
+// PUBLIC EVENTS ROUTES
+// =========================================================
+
+app.use(
+    '/',
+    eventsRouter
+);
+
+
+// =========================================================
+// USERS
+// =========================================================
+
 app.use(
     '/users',
     usersRouter
 );
+
+
+// =========================================================
+// CONTACT
+// =========================================================
 
 app.use(
     '/contact',
     contactRouter
 );
 
+
+// =========================================================
+// ADMISSION
+// =========================================================
+
 app.use(
     '/admission',
     admissionRouter
 );
+
+
+// =========================================================
+// ENQUIRY
+// =========================================================
 
 app.use(
     '/enquiry',
     enquiryRouter
 );
 
+
+// =========================================================
+// EVENTS
+// =========================================================
+//
+// Existing /events/... URLs are preserved.
+//
+// =========================================================
+
 app.use(
     '/events',
     eventsRouter
 );
 
+
+// =========================================================
+// FACULTY
+// =========================================================
+
 app.use(
     '/faculty',
     facultyRouter
 );
+
+
+// =========================================================
+// ACADEMICS
+// =========================================================
 
 app.use(
     '/academics',
@@ -455,16 +604,51 @@ app.use(
 );
 
 app.use(
+    '/principal-contact',
+    principalContactRouter
+);
+// =========================================================
+// FEES
+// =========================================================
+
+app.use(
     '/fees',
     feesRouter
 );
+
+
+// =========================================================
+// PAYMENT
+// =========================================================
+
+app.use(
+    '/payment',
+    paymentRouter
+);
+
+// =========================================================
+// LEGAL PAGES
+// =========================================================
+
+app.get("/privacy-policy", (req, res) => {
+    res.render("privacy-policy");
+});
+
+app.get("/terms", (req, res) => {
+    res.render("terms");
+});
+
 
 // =========================================================
 // 404 HANDLER
 // =========================================================
 
 app.use(
-    function (req, res, next) {
+    function (
+        req,
+        res,
+        next
+    ) {
 
         console.log(
             '❌ 404 URL:',
@@ -481,29 +665,124 @@ app.use(
 
 
 // =========================================================
+// CSRF ERROR HANDLER
+// =========================================================
+//
+// This handles EBADCSRFTOKEN cleanly.
+// The actual CSRF verification is done inside
+// the admin router.
+//
+// =========================================================
+
+app.use(
+    function (
+        err,
+        req,
+        res,
+        next
+    ) {
+
+        if (
+            err &&
+            err.code ===
+            'EBADCSRFTOKEN'
+        ) {
+
+            console.error(
+                '❌ Invalid CSRF token:',
+                req.method,
+                req.originalUrl
+            );
+
+
+            if (
+                req.path ===
+                '/login' &&
+                req.method ===
+                'POST'
+            ) {
+
+                try {
+
+                    return res.status(403).render(
+                        'admin/login',
+                        {
+
+                            title:
+                                'Admin Login - Gyan Jyoti School',
+
+                            error:
+                                'Security token expired. Please refresh the login page and try again.',
+
+                            csrfToken:
+                                req.csrfToken()
+
+                        }
+                    );
+
+                } catch (
+                    csrfError
+                ) {
+
+                    console.error(
+                        '❌ Could not regenerate CSRF token:',
+                        csrfError
+                    );
+
+                }
+
+            }
+
+
+            // Never expose the expected/received CSRF token.
+            return res.status(403).send(
+                'Security token expired or invalid. Please refresh the page, sign in again, and retry.'
+            );
+
+        }
+
+
+        next(err);
+
+    }
+);
+
+
+// =========================================================
 // ERROR HANDLER
 // =========================================================
 
 app.use(
-    function (err, req, res, next) {
+    function (
+        err,
+        req,
+        res,
+        next
+    ) {
 
         console.error(
             'Application error:',
             err
         );
 
+
         res.locals.message =
             err.message ||
             'Something went wrong';
 
+
         res.locals.error =
-            req.app.get('env') === 'development'
+            req.app.get('env') ===
+            'development'
                 ? err
                 : {};
 
+
         res.status(
-            err.status || 500
+            err.status ||
+            500
         );
+
 
         res.render(
             'error'
@@ -544,4 +823,5 @@ mongoose
 // EXPORT
 // =========================================================
 
-module.exports = app;
+module.exports =
+    app;

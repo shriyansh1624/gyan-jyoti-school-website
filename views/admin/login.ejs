@@ -16,7 +16,9 @@
     >
 
     <title>
-        Admin Login - Gyan Jyoti School
+        <%= typeof title !== 'undefined' && title
+            ? title
+            : 'Admin Login - Gyan Jyoti School' %>
     </title>
 
 
@@ -1048,7 +1050,7 @@
                 <input
                     type="hidden"
                     name="_csrf"
-                    value="<%= csrfToken %>"
+                    value="<%= (typeof csrfToken !== 'undefined' && csrfToken) ? csrfToken : '' %>"
                 >
 
 

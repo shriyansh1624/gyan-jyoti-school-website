@@ -6,7 +6,7 @@ node_modules/
 
 # Uploaded files
 public/uploads/
-git status
+
 # Logs
 *.log
 

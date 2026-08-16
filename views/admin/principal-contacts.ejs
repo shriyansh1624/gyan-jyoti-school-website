@@ -1,0 +1,1053 @@
+<%
+// ============================================================
+// GYAN JYOTI — PRINCIPAL COMMUNICATION CONSOLE
+// View expected by routes/admin.js:
+//   principalContacts
+//   adminName
+// Existing server actions used here:
+//   POST /admin/principal-contacts/:id/read
+//   POST /admin/principal-contacts/:id/resolved
+// ============================================================
+const messages = Array.isArray(principalContacts) ? principalContacts : [];
+const safeAdminName = (typeof adminName !== 'undefined' && adminName) ? adminName : 'Administrator';
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= typeof title !== 'undefined' ? title : 'Principal Messages - Gyan Jyoti School' %></title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root{
+  --navy:#061b36;
+  --navy2:#0b315b;
+  --blue:#1268e8;
+  --blue2:#2e7bf4;
+  --blueSoft:#eaf2ff;
+  --gold:#f5c64b;
+  --green:#10a875;
+  --greenSoft:#e9faf3;
+  --orange:#f59b23;
+  --orangeSoft:#fff5e5;
+  --red:#dc4d5a;
+  --redSoft:#fff0f2;
+  --ink:#0b1f3a;
+  --muted:#7185a2;
+  --line:#dfe8f4;
+  --bg:#edf3fa;
+  --white:#fff;
+  --shadow:0 18px 50px rgba(8,39,75,.10);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 78% 2%,rgba(46,123,244,.10),transparent 27%),
+    linear-gradient(135deg,#f7faff 0%,var(--bg) 100%);
+  font-family:"DM Sans",Arial,sans-serif;
+}
+
+button,input,select{font:inherit}
+button{cursor:pointer}
+
+.shell{
+  min-height:100vh;
+  display:flex;
+}
+
+.sidebar{
+  width:292px;
+  flex:0 0 292px;
+  min-height:100vh;
+  position:sticky;
+  top:0;
+  background:linear-gradient(180deg,#061b36 0%,#08294d 52%,#0c3a68 100%);
+  color:#fff;
+  padding:28px 16px 22px;
+  box-shadow:18px 0 40px rgba(4,23,47,.12);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:0 10px 25px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+.brand-logo{
+  width:58px;height:58px;border-radius:18px;
+  display:grid;place-items:center;
+  background:#fff;color:var(--navy);
+  font-size:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,.14);
+}
+.brand strong{
+  display:block;
+  font-family:Manrope,sans-serif;
+  font-size:20px;
+  letter-spacing:-.5px;
+}
+.brand span{
+  display:block;
+  margin-top:4px;
+  color:#91a9c8;
+  font-size:10px;
+  letter-spacing:1.7px;
+  font-weight:700;
+}
+
+.side-label{
+  color:#7189a7;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.6px;
+  margin:23px 10px 9px;
+}
+
+.nav a{
+  color:#d5e1f1;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  min-height:47px;
+  padding:0 14px;
+  border-radius:13px;
+  margin:4px 0;
+  font-size:13px;
+  font-weight:700;
+  transition:.2s ease;
+}
+.nav a i{width:18px;text-align:center;color:#9dc2ee}
+.nav a:hover{background:rgba(255,255,255,.08);transform:translateX(2px)}
+.nav a.active{
+  color:#10243e;
+  background:linear-gradient(90deg,#ffd76c,#f5c64b);
+  box-shadow:0 10px 25px rgba(245,198,75,.18);
+}
+.nav a.active i{color:#10243e}
+
+.admin-box{
+  margin:26px 0 0;
+  padding:17px;
+  border:1px solid rgba(255,255,255,.09);
+  background:rgba(255,255,255,.055);
+  border-radius:16px;
+}
+.admin-box small{
+  display:block;color:#7189a7;font-size:9px;font-weight:800;
+  letter-spacing:1.2px;margin-bottom:7px;
+}
+.admin-box strong{font-size:13px}
+
+.main{
+  flex:1;
+  min-width:0;
+  padding:26px 30px 45px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  margin-bottom:18px;
+}
+.eyebrow{
+  color:var(--blue);
+  font-weight:800;
+  letter-spacing:2px;
+  font-size:11px;
+}
+.page-title{
+  margin:5px 0 0;
+  font-family:Manrope,sans-serif;
+  font-size:42px;
+  line-height:1.08;
+  letter-spacing:-1.8px;
+}
+.page-subtitle{
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:14px;
+}
+.top-actions{display:flex;gap:10px;align-items:center}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 16px;border-radius:999px;
+  background:#fff;border:1px solid var(--line);
+  box-shadow:0 8px 25px rgba(12,45,85,.07);
+  color:var(--blue);font-weight:800;font-size:12px;
+}
+.pill i{font-size:9px}
+.btn{
+  border:0;
+  border-radius:13px;
+  padding:12px 16px;
+  font-weight:800;
+  color:var(--ink);
+  background:#fff;
+  border:1px solid var(--line);
+  box-shadow:0 8px 22px rgba(12,45,85,.06);
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{
+  color:#fff;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  border-color:transparent;
+}
+.btn-gold{
+  background:linear-gradient(135deg,#ffd86f,#f5c64b);
+  border-color:transparent;
+}
+.btn-danger{color:var(--red);background:var(--redSoft);border-color:#ffd7dc}
+.btn-small{padding:9px 11px;font-size:11px}
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  border-radius:28px;
+  padding:32px 36px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 94% 8%,rgba(255,255,255,.25),transparent 25%),
+    linear-gradient(125deg,#061b36 0%,#0b3765 58%,#1268e8 100%);
+  box-shadow:0 25px 60px rgba(7,35,68,.18);
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  width:250px;height:250px;
+  right:-95px;bottom:-155px;
+  border:1px solid rgba(255,255,255,.17);
+  border-radius:50%;
+  box-shadow:0 0 0 38px rgba(255,255,255,.035),0 0 0 78px rgba(255,255,255,.025);
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 11px;border-radius:999px;
+  border:1px solid rgba(245,198,75,.45);
+  background:rgba(245,198,75,.09);
+  color:#ffd86f;font-size:9px;font-weight:900;letter-spacing:1px;
+}
+.hero h2{
+  margin:17px 0 7px;
+  font-family:Manrope,sans-serif;
+  font-size:31px;letter-spacing:-1px;
+}
+.hero p{margin:0;color:#c8d8eb;max-width:760px;font-size:13px;line-height:1.7}
+.hero-right{
+  position:absolute;right:34px;top:30px;
+  display:flex;gap:10px;
+}
+.hero-right .btn{background:#fff;color:var(--ink);border:0}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:15px;
+  margin:18px 0;
+}
+.stat{
+  position:relative;overflow:hidden;
+  min-height:145px;
+  padding:22px;
+  border-radius:22px;
+  background:#fff;
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+}
+.stat:after{
+  content:"";position:absolute;right:-35px;top:-40px;
+  width:115px;height:115px;border-radius:50%;
+  background:var(--blueSoft);
+}
+.stat.green:after{background:var(--greenSoft)}
+.stat.orange:after{background:var(--orangeSoft)}
+.stat.red:after{background:var(--redSoft)}
+.stat-icon{
+  width:42px;height:42px;border-radius:13px;
+  display:grid;place-items:center;
+  background:var(--blueSoft);color:var(--blue);
+  position:relative;z-index:1;
+}
+.stat.green .stat-icon{background:var(--greenSoft);color:var(--green)}
+.stat.orange .stat-icon{background:var(--orangeSoft);color:var(--orange)}
+.stat.red .stat-icon{background:var(--redSoft);color:var(--red)}
+.stat b{
+  display:block;margin-top:13px;
+  font-family:Manrope,sans-serif;font-size:29px;
+}
+.stat span{display:block;color:var(--muted);font-size:11px;margin-top:3px;font-weight:600}
+
+.workspace{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:25px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.workspace-head{
+  padding:25px 26px 19px;
+  border-bottom:1px solid var(--line);
+}
+.workspace-title{
+  display:flex;justify-content:space-between;gap:20px;align-items:flex-start;
+}
+.workspace-title h3{
+  margin:0;font-family:Manrope,sans-serif;font-size:19px;
+}
+.workspace-title p{margin:6px 0 0;color:var(--muted);font-size:12px}
+.count-badge{
+  padding:7px 11px;border-radius:999px;
+  background:var(--blueSoft);color:var(--blue);
+  font-size:10px;font-weight:900;
+}
+.filters{
+  display:grid;
+  grid-template-columns:minmax(250px,1fr) 165px 185px auto auto;
+  gap:10px;
+  margin-top:18px;
+}
+.input,.select{
+  height:48px;width:100%;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:0 14px;
+  outline:none;
+  background:#fbfdff;
+  color:var(--ink);
+}
+.input:focus,.select:focus{
+  border-color:#75a8ff;
+  box-shadow:0 0 0 4px rgba(18,104,232,.08);
+}
+.search-wrap{position:relative}
+.search-wrap i{
+  position:absolute;right:16px;top:16px;
+  color:#8aa0bc;font-size:13px;
+}
+.table-wrap{overflow:auto}
+.table{
+  width:100%;
+  min-width:1000px;
+  border-collapse:collapse;
+}
+.table th{
+  text-align:left;
+  padding:13px 18px;
+  color:#7890ad;
+  background:#fbfdff;
+  border-bottom:1px solid var(--line);
+  font-size:9px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+.table td{
+  padding:16px 18px;
+  border-bottom:1px solid #edf2f8;
+  vertical-align:middle;
+  font-size:12px;
+}
+.table tbody tr:hover{background:#f9fbff}
+.person{
+  display:flex;align-items:center;gap:11px;
+}
+.avatar{
+  width:40px;height:40px;border-radius:13px;
+  display:grid;place-items:center;
+  background:var(--blueSoft);color:var(--blue);
+  font-weight:900;
+}
+.person strong{display:block;font-size:12px}
+.person small{display:block;color:var(--muted);margin-top:3px;font-size:10px}
+.subject{
+  max-width:210px;
+  font-weight:800;
+  color:#1a2f4b;
+}
+.contact-line{
+  display:block;color:var(--muted);font-size:10px;
+  margin-top:3px;
+}
+.status{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 9px;border-radius:999px;
+  font-size:9px;font-weight:900;text-transform:uppercase;
+}
+.status.new{background:var(--orangeSoft);color:#b66a00}
+.status.read{background:var(--blueSoft);color:var(--blue)}
+.status.resolved{background:var(--greenSoft);color:#087c56}
+.status.failed{background:var(--redSoft);color:var(--red)}
+.notify{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:800;
+}
+.notify.sent{color:var(--green)}
+.notify.pending{color:var(--orange)}
+.notify.failed{color:var(--red)}
+.actions{display:flex;gap:6px}
+.icon-btn{
+  width:34px;height:34px;
+  border-radius:10px;border:1px solid var(--line);
+  background:#fff;color:var(--blue);
+  display:grid;place-items:center;
+}
+.icon-btn:hover{background:var(--blueSoft)}
+.empty{
+  padding:72px 25px;
+  text-align:center;
+}
+.empty-icon{
+  width:70px;height:70px;border-radius:21px;
+  display:grid;place-items:center;
+  margin:0 auto 17px;
+  color:var(--blue);background:var(--blueSoft);
+  font-size:24px;
+}
+.empty h3{margin:0;font-family:Manrope,sans-serif;font-size:18px}
+.empty p{margin:8px auto 0;color:var(--muted);font-size:12px;max-width:520px;line-height:1.7}
+
+.footer{
+  text-align:center;color:#8ca0ba;font-size:10px;
+  padding:20px;
+}
+
+/* Modal */
+.modal-backdrop{
+  position:fixed;inset:0;
+  background:rgba(3,20,40,.55);
+  backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;
+  padding:20px;z-index:1000;
+}
+.modal-backdrop.show{display:flex}
+.modal{
+  width:min(720px,100%);
+  max-height:90vh;overflow:auto;
+  background:#fff;border-radius:25px;
+  box-shadow:0 30px 90px rgba(0,0,0,.25);
+}
+.modal-head{
+  padding:24px 25px;
+  color:#fff;
+  background:linear-gradient(125deg,#061b36,#1268e8);
+  display:flex;justify-content:space-between;gap:20px;
+}
+.modal-head h3{margin:0;font-family:Manrope,sans-serif;font-size:20px}
+.modal-head p{margin:5px 0 0;color:#c9d9ed;font-size:11px}
+.close{
+  width:36px;height:36px;border:0;border-radius:10px;
+  color:#fff;background:rgba(255,255,255,.12);
+}
+.modal-body{padding:25px}
+.detail-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;
+}
+.detail{
+  padding:14px;border:1px solid var(--line);
+  border-radius:14px;background:#fbfdff;
+}
+.detail.full{grid-column:1/-1}
+.detail label{
+  display:block;color:#8a9db5;font-size:9px;
+  font-weight:900;text-transform:uppercase;letter-spacing:1px;
+  margin-bottom:6px;
+}
+.detail strong,.detail div{font-size:12px;line-height:1.6}
+.message-box{
+  white-space:pre-wrap;
+  background:#f5f8fc;
+  border-left:4px solid var(--blue);
+  border-radius:12px;
+  padding:16px;
+  color:#334a67;
+}
+.modal-actions{
+  display:flex;justify-content:flex-end;gap:9px;
+  margin-top:18px;
+}
+
+/* Toast */
+.toast{
+  position:fixed;right:22px;bottom:22px;
+  min-width:260px;max-width:380px;
+  background:#071d38;color:#fff;
+  padding:14px 16px;border-radius:14px;
+  box-shadow:0 18px 45px rgba(0,0,0,.2);
+  transform:translateY(25px);opacity:0;pointer-events:none;
+  transition:.25s;z-index:2000;
+  font-size:12px;font-weight:700;
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-left:4px solid var(--green)}
+.toast.error{border-left:4px solid var(--red)}
+
+@media(max-width:1180px){
+  .sidebar{width:235px;flex-basis:235px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .filters{grid-template-columns:1fr 1fr}
+}
+@media(max-width:800px){
+  .shell{display:block}
+  .sidebar{position:relative;width:100%;min-height:auto}
+  .nav{display:grid;grid-template-columns:1fr 1fr}
+  .admin-box{display:none}
+  .main{padding:18px}
+  .topbar{align-items:flex-start}
+  .top-actions{display:none}
+  .page-title{font-size:32px}
+  .hero{padding:26px}
+  .hero-right{position:static;margin-top:18px}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:540px){
+  .nav{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+  .filters{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:1fr}
+  .detail.full{grid-column:auto}
+}
+</style>
+</head>
+
+<body>
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo"><i class="fa-solid fa-school"></i></div>
+      <div>
+        <strong>Gyan Jyoti</strong>
+        <span>SCHOOL ADMINISTRATION</span>
+      </div>
+    </div>
+
+    <div class="side-label">MAIN MENU</div>
+    <nav class="nav">
+      <a href="/admin/dashboard"><i class="fa-solid fa-gauge-high"></i>Dashboard</a>
+      <a href="/admin/admissions"><i class="fa-solid fa-user-graduate"></i>Admissions</a>
+      <a href="/admin/enquiries"><i class="fa-solid fa-message"></i>Enquiries</a>
+      <a href="/admin/contacts"><i class="fa-solid fa-address-book"></i>Contacts</a>
+      <a href="/admin/principal-contacts" class="active"><i class="fa-solid fa-user-tie"></i>Principal Messages</a>
+      <a href="/admin/payments"><i class="fa-solid fa-indian-rupee-sign"></i>Fees &amp; Payments</a>
+      <a href="/admin/events"><i class="fa-solid fa-calendar-days"></i>Events</a>
+      <a href="/admin/faculty"><i class="fa-solid fa-chalkboard-user"></i>Faculty</a>
+    </nav>
+
+    <div class="side-label">SYSTEM</div>
+    <nav class="nav">
+      <a href="/admin/settings"><i class="fa-solid fa-gear"></i>Settings</a>
+      <a href="/admin/logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+    </nav>
+
+    <div class="admin-box">
+      <small>SIGNED IN AS</small>
+      <strong><%= safeAdminName %></strong>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <div class="topbar">
+      <div>
+        <div class="eyebrow"><i class="fa-solid fa-circle"></i> SCHOOL COMMUNICATION</div>
+        <h1 class="page-title">Principal Messages</h1>
+        <p class="page-subtitle">Manage, review and respond to communication received through the school website.</p>
+      </div>
+      <div class="top-actions">
+        <span class="pill"><i class="fa-solid fa-circle"></i> Admin Panel</span>
+        <button class="btn" type="button" onclick="location.reload()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <span class="hero-tag"><i class="fa-solid fa-shield-halved"></i> SECURE COMMUNICATION CONSOLE</span>
+      <h2>Principal Communication</h2>
+      <p>Review every enquiry sent to the principal, track notification delivery and move conversations from new to read and resolved — without changing your existing backend.</p>
+
+      <div class="hero-right">
+        <button class="btn" type="button" onclick="exportCSV()"><i class="fa-solid fa-file-csv"></i> Export</button>
+        <button class="btn" type="button" onclick="location.reload()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-icon"><i class="fa-solid fa-inbox"></i></div>
+        <b id="statTotal">0</b>
+        <span>Total Messages</span>
+      </div>
+
+      <div class="stat orange">
+        <div class="stat-icon"><i class="fa-solid fa-bell"></i></div>
+        <b id="statNew">0</b>
+        <span>New Messages</span>
+      </div>
+
+      <div class="stat green">
+        <div class="stat-icon"><i class="fa-solid fa-paper-plane"></i></div>
+        <b id="statSent">0</b>
+        <span>Emails Delivered</span>
+      </div>
+
+      <div class="stat red">
+        <div class="stat-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <b id="statFailed">0</b>
+        <span>Notification Failed</span>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <div class="workspace-head">
+        <div class="workspace-title">
+          <div>
+            <h3>Recent Principal Contacts</h3>
+            <p>Messages submitted from the public principal contact form.</p>
+          </div>
+          <span class="count-badge" id="resultCount"><%= messages.length %> messages</span>
+        </div>
+
+        <div class="filters">
+          <div class="search-wrap">
+            <input id="searchInput" class="input" type="search" placeholder="Search name, email, phone, subject..." autocomplete="off">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+
+          <select id="statusFilter" class="select">
+            <option value="all">All status</option>
+            <option value="new">New</option>
+            <option value="read">Read</option>
+            <option value="resolved">Resolved</option>
+          </select>
+
+          <select id="notifyFilter" class="select">
+            <option value="all">All notifications</option>
+            <option value="sent">Email sent</option>
+            <option value="pending">Pending</option>
+            <option value="failed">Failed</option>
+          </select>
+
+          <button class="btn btn-primary" type="button" onclick="applyFilters()"><i class="fa-solid fa-filter"></i> Apply</button>
+          <button class="btn" type="button" onclick="clearFilters()">Clear</button>
+        </div>
+      </div>
+
+      <div id="tableArea">
+        <% if (!messages.length) { %>
+          <div class="empty">
+            <div class="empty-icon"><i class="fa-regular fa-envelope"></i></div>
+            <h3>No principal messages yet</h3>
+            <p>When someone submits the principal contact form, the message will appear here. Email notifications are handled separately by the server.</p>
+          </div>
+        <% } else { %>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Visitor</th>
+                  <th>Subject</th>
+                  <th>Status</th>
+                  <th>Notification</th>
+                  <th>Received</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="messageRows">
+                <% messages.forEach(function(item){ 
+                    const statusValue = String(item.status || 'new').toLowerCase();
+                    const notifyValue = String(item.notificationStatus || 'pending').toLowerCase();
+                    const name = String(item.name || 'Unknown');
+                    const initial = name.trim().charAt(0).toUpperCase() || 'P';
+                %>
+                  <tr
+                    data-name="<%= name %>"
+                    data-email="<%= item.email || '' %>"
+                    data-phone="<%= item.phone || '' %>"
+                    data-subject="<%= item.subject || '' %>"
+                    data-message="<%= item.message || '' %>"
+                    data-status="<%= statusValue %>"
+                    data-notify="<%= notifyValue %>"
+                    data-id="<%= item._id %>"
+                  >
+                    <td>
+                      <div class="person">
+                        <div class="avatar"><%= initial %></div>
+                        <div>
+                          <strong><%= name %></strong>
+                          <small><%= item.email || 'No email' %></small>
+                          <span class="contact-line"><%= item.phone || 'No phone' %></span>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <div class="subject"><%= item.subject || 'No subject' %></div>
+                      <span class="contact-line"><%= String(item.message || '').slice(0, 70) %><%= String(item.message || '').length > 70 ? '…' : '' %></span>
+                    </td>
+
+                    <td>
+                      <span class="status <%= statusValue %>">
+                        <i class="fa-solid <%= statusValue === 'resolved' ? 'fa-check' : statusValue === 'read' ? 'fa-envelope-open' : 'fa-circle-exclamation' %>"></i>
+                        <%= statusValue %>
+                      </span>
+                    </td>
+
+                    <td>
+                      <span class="notify <%= notifyValue %>">
+                        <i class="fa-solid <%= notifyValue === 'sent' ? 'fa-circle-check' : notifyValue === 'failed' ? 'fa-circle-xmark' : 'fa-clock' %>"></i>
+                        <%= notifyValue === 'sent' ? 'Email sent' : notifyValue === 'failed' ? 'Failed' : 'Pending' %>
+                      </span>
+                    </td>
+
+                    <td>
+                      <strong style="font-size:11px;"><%= item.createdAt ? new Date(item.createdAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : '—' %></strong>
+                      <span class="contact-line"><%= item.createdAt ? new Date(item.createdAt).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}) : '' %></span>
+                    </td>
+
+                    <td>
+                      <div class="actions">
+                        <button class="icon-btn" type="button" title="View message"
+                          onclick="openMessage(this.closest('tr'))">
+                          <i class="fa-regular fa-eye"></i>
+                        </button>
+
+                        <% if (statusValue === 'new') { %>
+                          <button class="icon-btn" type="button" title="Mark as read"
+                            onclick="updateStatus('<%= item._id %>','read',this)">
+                            <i class="fa-regular fa-envelope-open"></i>
+                          </button>
+                        <% } %>
+
+                        <% if (statusValue !== 'resolved') { %>
+                          <button class="icon-btn" type="button" title="Mark resolved"
+                            onclick="updateStatus('<%= item._id %>','resolved',this)">
+                            <i class="fa-solid fa-check"></i>
+                          </button>
+                        <% } %>
+                      </div>
+                    </td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="noFilterResults" class="empty" style="display:none;padding:55px 20px;">
+            <div class="empty-icon"><i class="fa-solid fa-filter-circle-xmark"></i></div>
+            <h3>No matching messages</h3>
+            <p>Try a different search term or clear the filters.</p>
+          </div>
+        <% } %>
+      </div>
+    </section>
+
+    <div class="footer">Gyan Jyoti School • Principal Communication Management • Secure Admin Console</div>
+  </main>
+</div>
+
+<!-- MESSAGE MODAL -->
+<div id="messageModal" class="modal-backdrop" onclick="closeOnBackdrop(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h3 id="modalTitle">Principal Message</h3>
+        <p id="modalMeta">Message details</p>
+      </div>
+      <button class="close" type="button" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="modal-body">
+      <div class="detail-grid">
+        <div class="detail">
+          <label>Visitor</label>
+          <strong id="modalName">—</strong>
+        </div>
+        <div class="detail">
+          <label>Phone</label>
+          <div><a id="modalPhone" href="#" style="color:#1268e8;text-decoration:none;">—</a></div>
+        </div>
+        <div class="detail">
+          <label>Email</label>
+          <div><a id="modalEmail" href="#" style="color:#1268e8;text-decoration:none;">—</a></div>
+        </div>
+        <div class="detail">
+          <label>Status</label>
+          <div id="modalStatus">—</div>
+        </div>
+        <div class="detail full">
+          <label>Subject</label>
+          <strong id="modalSubject">—</strong>
+        </div>
+        <div class="detail full">
+          <label>Message</label>
+          <div class="message-box" id="modalMessage">—</div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="modalReadBtn" class="btn" type="button">Mark as read</button>
+        <button id="modalResolveBtn" class="btn btn-gold" type="button">Mark resolved</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const initialMessages = <%- JSON.stringify(messages.map(function(m){
+  return {
+    id: String(m._id || ''),
+    name: m.name || '',
+    email: m.email || '',
+    phone: m.phone || '',
+    subject: m.subject || '',
+    message: m.message || '',
+    status: m.status || 'new',
+    notificationStatus: m.notificationStatus || 'pending',
+    createdAt: m.createdAt || null
+  };
+})) %>;
+
+function $(id){ return document.getElementById(id); }
+
+function showToast(text, type='success'){
+  const toast = $('toast');
+  toast.textContent = text;
+  toast.className = 'toast show ' + type;
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(()=>toast.className='toast',3200);
+}
+
+function updateStats(){
+  $('statTotal').textContent = initialMessages.length;
+  $('statNew').textContent = initialMessages.filter(x => String(x.status).toLowerCase() === 'new').length;
+  $('statSent').textContent = initialMessages.filter(x => String(x.notificationStatus).toLowerCase() === 'sent').length;
+  $('statFailed').textContent = initialMessages.filter(x => String(x.notificationStatus).toLowerCase() === 'failed').length;
+}
+
+function applyFilters(){
+  const q = $('searchInput').value.trim().toLowerCase();
+  const status = $('statusFilter').value;
+  const notify = $('notifyFilter').value;
+  const rows = [...document.querySelectorAll('#messageRows tr')];
+
+  let visible = 0;
+
+  rows.forEach(row=>{
+    const text = [
+      row.dataset.name,
+      row.dataset.email,
+      row.dataset.phone,
+      row.dataset.subject,
+      row.dataset.message
+    ].join(' ').toLowerCase();
+
+    const okSearch = !q || text.includes(q);
+    const okStatus = status === 'all' || row.dataset.status === status;
+    const okNotify = notify === 'all' || row.dataset.notify === notify;
+
+    const show = okSearch && okStatus && okNotify;
+    row.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+
+  $('resultCount').textContent = visible + (visible === 1 ? ' message' : ' messages');
+
+  const noResults = $('noFilterResults');
+  if(noResults) noResults.style.display = visible ? 'none' : 'block';
+}
+
+function clearFilters(){
+  $('searchInput').value = '';
+  $('statusFilter').value = 'all';
+  $('notifyFilter').value = 'all';
+  applyFilters();
+}
+
+$('searchInput')?.addEventListener('input', applyFilters);
+$('statusFilter')?.addEventListener('change', applyFilters);
+$('notifyFilter')?.addEventListener('change', applyFilters);
+
+function openMessage(row){
+  if(!row) return;
+
+  const id = row.dataset.id;
+  const item = initialMessages.find(x=>x.id === id);
+  if(!item) return;
+
+  $('modalTitle').textContent = item.subject || 'Principal Message';
+  $('modalMeta').textContent = 'Received ' + (
+    item.createdAt
+      ? new Date(item.createdAt).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'})
+      : 'date unavailable'
+  );
+
+  $('modalName').textContent = item.name || '—';
+
+  const phone = item.phone || '';
+  $('modalPhone').textContent = phone || '—';
+  $('modalPhone').href = phone ? 'tel:' + phone : '#';
+
+  $('modalEmail').textContent = item.email || '—';
+  $('modalEmail').href = item.email ? 'mailto:' + item.email : '#';
+
+  $('modalSubject').textContent = item.subject || 'No subject';
+  $('modalMessage').textContent = item.message || 'No message';
+
+  $('modalStatus').innerHTML =
+    '<span class="status ' + escapeHtml(item.status) + '">' +
+    '<i class="fa-solid fa-circle"></i> ' +
+    escapeHtml(item.status) +
+    '</span>';
+
+  const readBtn = $('modalReadBtn');
+  const resolveBtn = $('modalResolveBtn');
+
+  readBtn.style.display = item.status === 'new' ? 'inline-block' : 'none';
+  resolveBtn.style.display = item.status === 'resolved' ? 'none' : 'inline-block';
+
+  readBtn.onclick = ()=>updateStatus(item.id,'read',readBtn,true);
+  resolveBtn.onclick = ()=>updateStatus(item.id,'resolved',resolveBtn,true);
+
+  $('messageModal').classList.add('show');
+}
+
+function closeModal(){
+  $('messageModal').classList.remove('show');
+}
+
+function closeOnBackdrop(e){
+  if(e.target.id === 'messageModal') closeModal();
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key === 'Escape') closeModal();
+});
+
+async function updateStatus(id,status,button,fromModal=false){
+  if(!id) return;
+
+  const endpoint =
+    status === 'resolved'
+      ? '/admin/principal-contacts/' + encodeURIComponent(id) + '/resolved'
+      : '/admin/principal-contacts/' + encodeURIComponent(id) + '/read';
+
+  if(button){
+    button.disabled = true;
+    button.style.opacity = '.6';
+  }
+
+  try{
+    const response = await fetch(endpoint,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      credentials:'same-origin'
+    });
+
+    const data = await response.json().catch(()=>({}));
+
+    if(!response.ok || data.success === false){
+      throw new Error(data.message || 'Unable to update message');
+    }
+
+    const item = initialMessages.find(x=>x.id === String(id));
+    if(item) item.status = status;
+
+    const row = document.querySelector('tr[data-id="' + CSS.escape(String(id)) + '"]');
+    if(row){
+      row.dataset.status = status;
+      const statusEl = row.querySelector('.status');
+      if(statusEl){
+        statusEl.className = 'status ' + status;
+        statusEl.innerHTML =
+          '<i class="fa-solid ' + (status === 'resolved' ? 'fa-check' : 'fa-envelope-open') + '"></i> ' +
+          status;
+      }
+
+      const actions = row.querySelector('.actions');
+      if(actions){
+        const view = actions.querySelector('.icon-btn');
+        actions.innerHTML = '';
+        if(view) actions.appendChild(view);
+
+        if(status !== 'resolved'){
+          const resolve = document.createElement('button');
+          resolve.className = 'icon-btn';
+          resolve.type = 'button';
+          resolve.title = 'Mark resolved';
+          resolve.innerHTML = '<i class="fa-solid fa-check"></i>';
+          resolve.onclick = ()=>updateStatus(String(id),'resolved',resolve);
+          actions.appendChild(resolve);
+        }
+      }
+    }
+
+    updateStats();
+    showToast(status === 'resolved' ? 'Message marked as resolved.' : 'Message marked as read.');
+
+    if(fromModal) openMessage(document.querySelector('tr[data-id="' + CSS.escape(String(id)) + '"]'));
+    else applyFilters();
+
+  }catch(error){
+    showToast(error.message || 'Something went wrong.','error');
+  }finally{
+    if(button){
+      button.disabled = false;
+      button.style.opacity = '1';
+    }
+  }
+}
+
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g,c=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+  }[c]));
+}
+
+function exportCSV(){
+  if(!initialMessages.length){
+    showToast('There are no principal messages to export.','error');
+    return;
+  }
+
+  const header = ['Name','Email','Phone','Subject','Message','Status','Notification','Created At'];
+
+  const rows = initialMessages.map(x=>[
+    x.name,x.email,x.phone,x.subject,x.message,x.status,x.notificationStatus,
+    x.createdAt ? new Date(x.createdAt).toLocaleString('en-IN') : ''
+  ]);
+
+  const csv = [header,...rows]
+    .map(row=>row.map(value=>'"' + String(value ?? '').replace(/"/g,'""') + '"').join(','))
+    .join('\n');
+
+  const blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+
+  a.href = url;
+  a.download = 'principal-messages-' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+
+  showToast('Principal messages exported successfully.');
+}
+
+updateStats();
+</script>
+</body>
+</html>

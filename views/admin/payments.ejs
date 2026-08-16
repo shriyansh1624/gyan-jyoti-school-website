@@ -1,0 +1,244 @@
+<%
+/*
+ * GYAN JYOTI SCHOOL
+ * ADMIN - PAYMENT MANAGEMENT
+ *
+ * Expected route:
+ * GET /admin/payments
+ *
+ * Expected view:
+ * views/admin/payment.ejs
+ *
+ * Safe defaults are intentionally used so this page does not throw
+ * EJS ReferenceError when an optional value is not supplied by admin.js.
+ */
+
+const safePayments =
+    (typeof payments !== 'undefined' && Array.isArray(payments))
+        ? payments
+        : [];
+
+const rawStats =
+    (typeof stats !== 'undefined' && stats)
+        ? stats
+        : {};
+
+const safeStats = {
+    total: Number(rawStats.total) || 0,
+    paid: Number(rawStats.paid) || 0,
+    pending: Number(rawStats.pending) || 0,
+    failed: Number(rawStats.failed) || 0,
+    cancelled: Number(rawStats.cancelled) || 0,
+    refunded: Number(rawStats.refunded) || 0,
+    revenue: Number(rawStats.revenue) || 0
+};
+
+const safePaidAmount =
+    Number(typeof paidAmount !== 'undefined' ? paidAmount : safeStats.revenue) || 0;
+
+const safePendingAmount =
+    Number(typeof pendingAmount !== 'undefined' ? pendingAmount : 0) || 0;
+
+const safeFailedAmount =
+    Number(typeof failedAmount !== 'undefined' ? failedAmount : 0) || 0;
+
+/*
+ * Sidebar counters.
+ * Each counter is declared exactly once.
+ * typeof prevents EJS ReferenceError when admin.js does not pass it.
+ */
+const safeAdmissionCount =
+    Number(typeof admissionCount !== 'undefined' ? admissionCount : 0) || 0;
+
+const safeEnquiryCount =
+    Number(typeof enquiryCount !== 'undefined' ? enquiryCount : 0) || 0;
+
+const safeContactCount =
+    Number(typeof contactCount !== 'undefined' ? contactCount : 0) || 0;
+
+const safeNotificationCount =
+    Number(typeof notificationCount !== 'undefined' ? notificationCount : 0) || 0;
+
+const safeKeyword =
+    typeof keyword !== 'undefined' ? keyword : '';
+
+const safeStatus =
+    typeof status !== 'undefined' ? status : '';
+
+const safeType =
+    typeof type !== 'undefined' ? type : '';
+
+const safeAdminName =
+    typeof adminName !== 'undefined'
+        ? adminName
+        : 'Administrator';
+
+const safeCsrf =
+    typeof csrfToken !== 'undefined'
+        ? csrfToken
+        : '';
+
+function money(value) {
+    return '₹' + Number(value || 0).toLocaleString('en-IN');
+}
+
+function formatDate(value) {
+    if (!value) return '-';
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) return '-';
+
+    return date.toLocaleString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+function paymentPerson(payment) {
+    if (
+        payment &&
+        payment.admission &&
+        payment.admission.studentName
+    ) {
+        return payment.admission.studentName;
+    }
+
+    if (
+        payment &&
+        payment.enquiry &&
+        payment.enquiry.name
+    ) {
+        return payment.enquiry.name;
+    }
+
+    return 'Unknown applicant';
+}
+
+function paymentPhone(payment) {
+    if (
+        payment &&
+        payment.admission &&
+        payment.admission.phone
+    ) {
+        return payment.admission.phone;
+    }
+
+    if (
+        payment &&
+        payment.enquiry &&
+        payment.enquiry.phone
+    ) {
+        return payment.enquiry.phone;
+    }
+
+    return '';
+}
+
+function methodLabel(method) {
+    const labels = {
+        online: 'Online',
+        upi: 'UPI',
+        netbanking: 'Net Banking',
+        card: 'Card',
+        cash: 'Cash'
+    };
+
+    return labels[method] || method || '-';
+}
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#061a33">
+<title><%= typeof title !== 'undefined' ? title : 'Payment Management - Gyan Jyoti School' %></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root{--navy:#061a33;--navy2:#0b315b;--blue:#1769e0;--gold:#f6c343;--gold2:#ffe08a;--green:#0f9f6e;--orange:#e98b2a;--red:#dc3f4d;--purple:#7357d8;--text:#142238;--muted:#728198;--line:#e6edf6;--surface:#fff;--page:#f4f7fb;--glass:rgba(255,255,255,.78);--shadow:0 18px 55px rgba(11,35,66,.10);--r:24px}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{min-height:100vh;font-family:Inter,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 75% 0%,rgba(23,105,224,.10),transparent 30%),radial-gradient(circle at 20% 20%,rgba(246,195,67,.08),transparent 25%),var(--page);overflow-x:hidden}body.dark{--text:#edf5ff;--muted:#9eb0c8;--line:#23364f;--surface:#0e1d31;--page:#06111f;--glass:rgba(14,29,49,.80);background:#06111f}a{text-decoration:none;color:inherit}button,input,select{font:inherit}button{cursor:pointer}
+/* ambient motion */
+.ambient{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:-1}.orb{position:absolute;border-radius:50%;filter:blur(2px);opacity:.18;animation:float 12s ease-in-out infinite}.orb.one{width:320px;height:320px;background:#1769e0;right:-80px;top:120px}.orb.two{width:240px;height:240px;background:#f6c343;left:210px;bottom:60px;animation-delay:-4s}.orb.three{width:180px;height:180px;background:#7357d8;right:30%;top:55%;animation-delay:-7s}@keyframes float{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-28px,0) scale(1.06)}}
+.app{min-height:100vh}.sidebar{position:fixed;z-index:1000;inset:0 auto 0 0;width:270px;padding:20px 15px;color:#fff;background:linear-gradient(180deg,#05162b,#092c51 62%,#0b3968);box-shadow:12px 0 40px rgba(0,0,0,.13);overflow:auto}.brand{display:flex;align-items:center;gap:12px;padding:8px 9px 21px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.10)}.brand-logo{width:55px;height:55px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(145deg,#fff,#eef5ff);color:var(--navy);font-size:22px;box-shadow:0 10px 28px rgba(0,0,0,.15)}.brand h2{font-size:19px;font-weight:900;letter-spacing:-.4px}.brand span{display:block;margin-top:4px;font-size:8px;letter-spacing:1.3px;text-transform:uppercase;color:rgba(255,255,255,.52)}.menu-label{margin:0 10px 8px;color:rgba(255,255,255,.42);font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}.menu{display:grid;gap:5px}.menu a{position:relative;display:flex;align-items:center;gap:12px;min-height:45px;padding:0 13px;border:1px solid transparent;border-radius:14px;color:rgba(255,255,255,.76);font-size:11px;font-weight:800;transition:.25s ease}.menu a i{width:20px;text-align:center;color:#8db8e6}.menu a:hover{color:#fff;background:rgba(255,255,255,.075);transform:translateX(3px);border-color:rgba(255,255,255,.06)}.menu a.active{color:#061a33;background:linear-gradient(135deg,var(--gold),var(--gold2));box-shadow:0 12px 28px rgba(246,195,67,.22)}.menu a.active i{color:#061a33}.menu-count{margin-left:auto;min-width:21px;height:21px;padding:0 5px;display:grid;place-items:center;border-radius:99px;background:#e34b58;color:#fff;font-size:9px;font-weight:900}.sidebar-footer{margin-top:25px;padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.045)}.sidebar-footer small{display:block;color:rgba(255,255,255,.42);font-size:8px;margin-bottom:5px}.sidebar-footer strong{font-size:11px}
+.main{width:calc(100% - 270px);margin-left:270px;min-height:100vh;padding:25px 28px 20px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}.breadcrumbs{font-size:11px;color:var(--muted);font-weight:700}.breadcrumbs strong{color:var(--text)}.top-actions{display:flex;gap:8px}.icon-btn{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:13px;background:var(--glass);backdrop-filter:blur(12px);color:var(--text);box-shadow:0 8px 25px rgba(0,0,0,.04);transition:.2s}.icon-btn:hover{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 10px 28px rgba(246,195,67,.16)}.mobile-menu{display:none}
+.hero{position:relative;isolation:isolate;overflow:hidden;min-height:215px;display:flex;align-items:center;justify-content:space-between;gap:25px;padding:34px;border-radius:30px;color:#fff;background:linear-gradient(135deg,#04172e 0%,#0b3968 58%,#1769e0 100%);box-shadow:0 25px 65px rgba(6,26,51,.22);margin-bottom:18px}.hero:before{content:"";position:absolute;width:420px;height:420px;right:-150px;top:-180px;border-radius:50%;background:radial-gradient(circle,rgba(246,195,67,.30),transparent 68%);animation:pulse 5s ease-in-out infinite}.hero:after{content:"";position:absolute;inset:0;opacity:.10;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(90deg,transparent,#000,transparent)}@keyframes pulse{50%{transform:scale(1.12);opacity:.75}}.hero-content,.hero-actions{position:relative;z-index:2}.eyebrow{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid rgba(246,195,67,.32);border-radius:99px;background:rgba(246,195,67,.11);color:var(--gold2);font-size:8px;font-weight:900;letter-spacing:1.3px;text-transform:uppercase}.hero h1{margin-top:12px;font-size:clamp(30px,3.2vw,46px);font-weight:900;letter-spacing:-1.3px}.hero p{max-width:680px;margin-top:9px;color:rgba(255,255,255,.70);font-size:12px;line-height:1.7}.hero-actions{display:flex;gap:9px;flex-wrap:wrap}.hero-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid rgba(255,255,255,.18);border-radius:13px;background:rgba(255,255,255,.96);color:var(--navy);font-size:10px;font-weight:900;box-shadow:0 12px 30px rgba(0,0,0,.13);transition:.22s}.hero-btn:hover{transform:translateY(-3px) scale(1.01)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}.kpi{position:relative;overflow:hidden;padding:20px;min-height:145px;border:1px solid var(--line);border-radius:21px;background:var(--glass);backdrop-filter:blur(14px);box-shadow:var(--shadow);transition:.28s}.kpi:after{content:"";position:absolute;width:90px;height:90px;right:-35px;bottom:-45px;border-radius:50%;background:var(--accent);opacity:.06}.kpi:hover{transform:translateY(-5px);box-shadow:0 24px 55px rgba(11,35,66,.13)}.kpi-icon{width:43px;height:43px;display:grid;place-items:center;margin-bottom:13px;border-radius:13px;background:var(--icon-bg);color:var(--accent);transition:.3s}.kpi:hover .kpi-icon{transform:rotate(-8deg) scale(1.08)}.kpi-value{font-size:27px;line-height:1;font-weight:900;color:var(--text)}.kpi-label{margin-top:8px;font-size:10px;font-weight:800}.kpi-sub{margin-top:4px;color:var(--muted);font-size:8px}
+.filter-card,.panel,.mini-card{border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(14px);box-shadow:var(--shadow)}.filter-card{padding:17px;border-radius:21px;margin-bottom:18px}.filter-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.filter-head h2{font-size:14px;font-weight:900}.filter-head h2 i{color:var(--blue);margin-right:5px}.filter-head span{display:block;margin-top:4px;color:var(--muted);font-size:9px}.result-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:99px;background:rgba(23,105,224,.09);color:var(--blue);font-size:8px;font-weight:900}.filters{display:grid;grid-template-columns:minmax(180px,1fr) 160px 160px auto auto;gap:9px}.field{position:relative}.field i{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#91a0b4;font-size:11px;pointer-events:none}.field input,.field select{width:100%;height:45px;padding:0 12px;border:1px solid var(--line);border-radius:12px;outline:none;background:var(--surface);color:var(--text);font-size:10px;font-weight:650}.field input{padding-left:36px}.field input:focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(23,105,224,.09)}.filter-btn,.clear-btn{height:45px;padding:0 16px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:9px;font-weight:900;transition:.2s}.filter-btn{border:0;background:linear-gradient(135deg,#061a33,#1769e0);color:#fff;box-shadow:0 10px 24px rgba(23,105,224,.18)}.clear-btn{border:1px solid var(--line);background:var(--surface);color:var(--text)}.filter-btn:hover,.clear-btn:hover{transform:translateY(-2px)}
+.content-grid{display:grid;grid-template-columns:minmax(0,1fr) 305px;gap:17px;align-items:start}.panel{border-radius:22px;overflow:hidden}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:19px;border-bottom:1px solid var(--line)}.panel-title{display:flex;align-items:center;gap:11px}.panel-title-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:rgba(23,105,224,.09);color:var(--blue)}.panel-head h2{font-size:14px;font-weight:900}.panel-head p{margin-top:3px;color:var(--muted);font-size:8px}.table-wrap{width:100%;overflow:auto}table{width:100%;min-width:930px;border-collapse:collapse}th{padding:12px 14px;background:rgba(127,127,127,.025);border-bottom:1px solid var(--line);color:var(--muted);font-size:8px;letter-spacing:.65px;font-weight:900;text-align:left;text-transform:uppercase}td{padding:14px;border-bottom:1px solid var(--line);font-size:9px;vertical-align:middle}tbody tr{transition:.18s}tbody tr:hover{background:rgba(23,105,224,.025)}.person{display:flex;align-items:center;gap:9px;min-width:175px}.avatar{width:38px;height:38px;flex:none;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,#eaf2ff,#dceaff);color:var(--blue);font-size:12px;font-weight:900}.person strong{display:block;max-width:170px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:10px}.person small{display:block;margin-top:3px;color:var(--muted);font-size:8px}.type-pill,.status-pill{display:inline-flex;align-items:center;gap:5px;padding:6px 8px;border-radius:99px;font-size:8px;font-weight:900;white-space:nowrap}.type-admission{background:#f2efff;color:var(--purple)}.type-enquiry{background:#fff4e5;color:var(--orange)}.status-paid{background:#e8f8f1;color:var(--green)}.status-pending{background:#fff4e5;color:var(--orange)}.status-failed,.status-cancelled{background:#fff0f1;color:var(--red)}.status-refunded{background:#f2efff;color:var(--purple)}.amount{font-size:11px;font-weight:900}.transaction{max-width:145px;overflow:hidden;color:var(--muted);font:8px ui-monospace,SFMono-Regular,Consolas,monospace;white-space:nowrap;text-overflow:ellipsis}.date{color:var(--muted);font-size:8px;white-space:nowrap}.actions{display:flex;align-items:center;gap:5px}.view-btn{width:32px;height:32px;display:grid;place-items:center;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--blue);transition:.2s}.view-btn:hover{background:var(--blue);color:#fff;transform:translateY(-2px)}.status-form select{height:32px;padding:0 7px;border:1px solid var(--line);border-radius:9px;outline:none;background:var(--surface);color:var(--text);font-size:8px;font-weight:800}.empty{padding:65px 20px!important;text-align:center}.empty-icon{width:62px;height:62px;margin:0 auto 13px;display:grid;place-items:center;border-radius:19px;background:rgba(23,105,224,.09);color:var(--blue);font-size:21px;animation:breathe 2.5s ease-in-out infinite}@keyframes breathe{50%{transform:translateY(-5px);box-shadow:0 15px 35px rgba(23,105,224,.12)}}.empty strong{display:block;font-size:13px}.empty span{display:block;margin-top:5px;color:var(--muted);font-size:9px}
+.side-stack{display:grid;gap:15px}.mini-card{padding:18px;border-radius:21px}.mini-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.mini-head h3{font-size:12px;font-weight:900}.mini-head i{color:var(--blue)}.revenue-box{position:relative;overflow:hidden;padding:18px;border-radius:17px;background:linear-gradient(135deg,#061a33,#0d5ba3);color:#fff}.revenue-box:after{content:"";position:absolute;width:120px;height:120px;right:-60px;top:-60px;border-radius:50%;border:1px solid rgba(246,195,67,.25)}.revenue-box small{display:block;color:rgba(255,255,255,.60);font-size:8px;font-weight:800}.revenue-box strong{display:block;margin-top:5px;color:var(--gold);font-size:25px;font-weight:900}.revenue-box span{display:block;margin-top:5px;color:rgba(255,255,255,.62);font-size:8px}.breakdown{display:grid;gap:12px}.breakdown-row{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:9px}.break-icon{width:32px;height:32px;display:grid;place-items:center;border-radius:9px}.break-icon.green{background:#e8f8f1;color:var(--green)}.break-icon.orange{background:#fff4e5;color:var(--orange)}.break-icon.red{background:#fff0f1;color:var(--red)}.break-icon.purple{background:#f2efff;color:var(--purple)}.break-label strong{display:block;font-size:9px}.break-label span{display:block;height:5px;overflow:hidden;margin-top:5px;border-radius:99px;background:var(--line)}.break-label span i{display:block;height:100%;border-radius:inherit;background:var(--bar);animation:grow .9s ease both}@keyframes grow{from{width:0!important}}.break-value{font-size:10px;font-weight:900}.amount-list{display:grid;gap:0}.amount-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);font-size:9px}.amount-row:last-child{border-bottom:0}.amount-row span{color:var(--muted)}.amount-row strong{font-size:10px}.quick-links{display:grid;gap:7px}.quick-link{display:flex;align-items:center;gap:9px;min-height:40px;padding:0 10px;border:1px solid var(--line);border-radius:11px;font-size:9px;font-weight:800;transition:.2s}.quick-link i{width:22px;text-align:center;color:var(--blue)}.quick-link:hover{transform:translateX(3px);border-color:var(--gold);background:rgba(246,195,67,.08)}.footer{text-align:center;padding:20px 2px 4px;color:var(--muted);font-size:8px}
+.reveal{animation:reveal .65s cubic-bezier(.2,.8,.2,1) both}.delay1{animation-delay:.06s}.delay2{animation-delay:.12s}.delay3{animation-delay:.18s}.delay4{animation-delay:.24s}@keyframes reveal{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(max-width:1200px){.kpis{grid-template-columns:repeat(2,1fr)}.content-grid{grid-template-columns:1fr}.side-stack{grid-template-columns:repeat(3,1fr)}.filters{grid-template-columns:1fr 1fr}.filter-btn,.clear-btn{width:100%}}
+@media(max-width:850px){.sidebar{width:240px;transform:translateX(-105%);transition:.25s}.sidebar-open .sidebar{transform:translateX(0)}.main{width:100%;margin-left:0;padding:17px}.mobile-menu{display:grid}.hero{align-items:flex-start;flex-direction:column;padding:26px}.side-stack{grid-template-columns:1fr}.topbar{margin-bottom:12px}}
+@media(max-width:620px){.main{padding:11px}.kpis{grid-template-columns:1fr}.filters{grid-template-columns:1fr}.filter-head{align-items:flex-start;flex-direction:column}.hero h1{font-size:29px}.hero p{font-size:10px}.hero-actions{width:100%}.hero-btn{flex:1}.panel-head{padding:15px}.mini-card{padding:15px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
+@media print{.sidebar,.topbar,.hero-actions,.filter-card,.side-stack,.status-form,.view-btn,.footer{display:none!important}.main{width:100%;margin:0;padding:0}.hero{box-shadow:none;border-radius:0}.panel{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="ambient"><span class="orb one"></span><span class="orb two"></span><span class="orb three"></span></div>
+<div class="app">
+<aside class="sidebar">
+<div class="brand"><div class="brand-logo"><i class="fas fa-school"></i></div><div><h2>Gyan Jyoti</h2><span>School Administration</span></div></div>
+<div class="menu-label">Main Menu</div>
+<nav class="menu">
+<a href="/admin/dashboard"><i class="fas fa-grid-2"></i><span>Dashboard</span></a>
+<a href="/admin/admissions"><i class="fas fa-user-graduate"></i><span>Admissions</span><% if(safeAdmissionCount>0){ %><b class="menu-count"><%= safeAdmissionCount %></b><% } %></a>
+<a href="/admin/enquiries><i class="fas fa-message"></i><span>Enquiries</span><% if(safeEnquiryCount>0){ %><b class="menu-count"><%= safeEnquiryCount %></b><% } %></a>
+<a href="/admin/contacts"><i class="fas fa-address-book"></i><span>Contacts</span><% if(safeContactCount>0){ %><b class="menu-count"><%= safeContactCount %></b><% } %></a>
+<a href="/admin/payments" class="active"><i class="fas fa-wallet"></i><span>Fees & Payments</span></a>
+<a href="/admin/events"><i class="fas fa-calendar-days"></i><span>Events</span></a>
+<a href="/admin/faculty"><i class="fas fa-chalkboard-user"></i><span>Faculty</span></a>
+</nav>
+<div class="menu-label" style="margin-top:24px">System</div>
+<nav class="menu"><a href="/admin/settings"><i class="fas fa-gear"></i><span>Settings</span></a><a href="/admin/logout"><i class="fas fa-right-from-bracket"></i><span>Logout</span></a></nav>
+<div class="sidebar-footer"><small>SIGNED IN AS</small><strong><%= safeAdminName %></strong></div>
+</aside>
+<main class="main">
+<div class="topbar reveal"><div class="breadcrumbs">Admin <span>/</span> <strong>Fees & Payments</strong></div><div class="top-actions"><button class="icon-btn mobile-menu" type="button" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button><a href="/admin/dashboard" class="icon-btn" title="Dashboard"><i class="fas fa-house"></i></a><button type="button" class="icon-btn" onclick="toggleTheme()" title="Toggle theme"><i class="fas fa-moon"></i></button></div></div>
+<section class="hero reveal delay1"><div class="hero-content"><div class="eyebrow"><i class="fas fa-shield-halved"></i> Secure Finance Console</div><h1>Fees & Payments</h1><p>Manage school payment activity with a clean, premium finance workspace. Track collections, monitor pending amounts, search transactions and update payment status without changing your existing backend.</p></div><div class="hero-actions"><a href="/admin/dashboard" class="hero-btn"><i class="fas fa-arrow-left"></i> Dashboard</a><button type="button" class="hero-btn" onclick="window.print()"><i class="fas fa-print"></i> Print Report</button></div></section>
+<section class="kpis">
+<article class="kpi reveal delay1" style="--accent:#1769e0;--icon-bg:#eaf2ff"><div class="kpi-icon"><i class="fas fa-receipt"></i></div><div class="kpi-value counter" data-value="<%= safeStats.total %>">0</div><div class="kpi-label">Total Transactions</div><div class="kpi-sub">All payment records</div></article>
+<article class="kpi reveal delay2" style="--accent:#0f9f6e;--icon-bg:#e8f8f1"><div class="kpi-icon"><i class="fas fa-circle-check"></i></div><div class="kpi-value counter" data-value="<%= safeStats.paid %>">0</div><div class="kpi-label">Successful Payments</div><div class="kpi-sub">Successfully collected</div></article>
+<article class="kpi reveal delay3" style="--accent:#e98b2a;--icon-bg:#fff4e5"><div class="kpi-icon"><i class="fas fa-clock"></i></div><div class="kpi-value counter" data-value="<%= safeStats.pending %>">0</div><div class="kpi-label">Pending Payments</div><div class="kpi-sub">Awaiting completion</div></article>
+<article class="kpi reveal delay4" style="--accent:#f6c343;--icon-bg:#fff6d8"><div class="kpi-icon"><i class="fas fa-indian-rupee-sign"></i></div><div class="kpi-value"><%= money(safePaidAmount) %></div><div class="kpi-label">Collected Revenue</div><div class="kpi-sub">From paid transactions</div></article>
+</section>
+<section class="filter-card reveal"><div class="filter-head"><div><h2><i class="fas fa-sliders"></i> Transaction Search</h2><span>Filter payments by applicant, status or type</span></div><% if(safeNotificationCount>0){ %><span class="result-pill"><i class="fas fa-bell"></i><%= safeNotificationCount %> notifications</span><% } %></div>
+<form class="filters" method="GET" action="/admin/payments"><div class="field"><i class="fas fa-magnifying-glass"></i><input type="search" name="search" value="<%= safeKeyword %>" placeholder="Search student, parent, phone, order ID..." autocomplete="off"></div><div class="field"><select name="status"><option value="">All Status</option><option value="paid" <%= safeStatus==='paid'?'selected':'' %>>Paid</option><option value="pending" <%= safeStatus==='pending'?'selected':'' %>>Pending</option><option value="failed" <%= safeStatus==='failed'?'selected':'' %>>Failed</option><option value="cancelled" <%= safeStatus==='cancelled'?'selected':'' %>>Cancelled</option><option value="refunded" <%= safeStatus==='refunded'?'selected':'' %>>Refunded</option></select></div><div class="field"><select name="type"><option value="">All Types</option><option value="admission" <%= safeType==='admission'?'selected':'' %>>Admission</option><option value="enquiry" <%= safeType==='enquiry'?'selected':'' %>>Enquiry</option></select></div><button class="filter-btn" type="submit"><i class="fas fa-search"></i> Apply</button><a href="/admin/payments" class="clear-btn"><i class="fas fa-rotate-left"></i> Reset</a></form></section>
+<div class="content-grid">
+<section class="panel reveal delay2"><div class="panel-head"><div class="panel-title"><div class="panel-title-icon"><i class="fas fa-money-check-dollar"></i></div><div><h2>Payment Transactions</h2><p>Review and manage all recorded payments</p></div></div><span class="result-pill"><%= safePayments.length %> shown</span></div>
+<div class="table-wrap"><table><thead><tr><th>Applicant</th><th>Type</th><th>Amount</th><th>Method</th><th>Status</th><th>Transaction</th><th>Date</th><th>Action</th></tr></thead><tbody>
+<% if(safePayments.length>0){ safePayments.forEach(payment=>{ const person=paymentPerson(payment); const phone=paymentPhone(payment); const initial=person.charAt(0).toUpperCase(); const paymentType=payment.type==='admission'?'Admission':'Enquiry'; const statusValue=payment.status||'pending'; %>
+<tr><td><div class="person"><div class="avatar"><%= initial||'?' %></div><div><strong><%= person %></strong><small><%= phone||'No phone available' %></small></div></div></td>
+<td><span class="type-pill <%= payment.type==='admission'?'type-admission':'type-enquiry' %>"><i class="fas <%= payment.type==='admission'?'fa-user-graduate':'fa-message' %>"></i><%= paymentType %></span></td>
+<td><span class="amount"><%= money(payment.amount) %></span></td><td><span style="color:var(--text);font-size:9px;font-weight:750"><%= methodLabel(payment.method) %></span></td>
+<td><span class="status-pill status-<%= statusValue %>"><i class="fas <%= statusValue==='paid'?'fa-circle-check':statusValue==='pending'?'fa-clock':statusValue==='refunded'?'fa-rotate-left':'fa-circle-xmark' %>"></i><%= String(statusValue).replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()) %></span></td>
+<td><div class="transaction"><%= payment.transactionId||payment.orderId||payment.receiptNumber||'-' %></div></td><td><span class="date"><%= formatDate(payment.createdAt) %></span></td>
+<td><div class="actions"><a href="/admin/payment/<%= payment._id %>" class="view-btn" title="View payment"><i class="fas fa-eye"></i></a><form class="status-form" method="POST" action="/admin/payment/<%= payment._id %>/status"><% if(safeCsrf){ %><input type="hidden" name="_csrf" value="<%= safeCsrf %>"><% } %><select name="status" onchange="confirmStatusChange(this)" title="Change payment status"><option value="pending" <%= statusValue==='pending'?'selected':'' %>>Pending</option><option value="paid" <%= statusValue==='paid'?'selected':'' %>>Paid</option><option value="failed" <%= statusValue==='failed'?'selected':'' %>>Failed</option><option value="cancelled" <%= statusValue==='cancelled'?'selected':'' %>>Cancelled</option><option value="refunded" <%= statusValue==='refunded'?'selected':'' %>>Refunded</option></select></form></div></td></tr>
+<% }); } else { %><tr><td colspan="8" class="empty"><div class="empty-icon"><i class="fas fa-wallet"></i></div><strong>No payment records found</strong><span>Try changing your search or filters.</span></td></tr><% } %>
+</tbody></table></div></section>
+<aside class="side-stack">
+<section class="mini-card reveal delay3"><div class="mini-head"><h3>Revenue Summary</h3><i class="fas fa-chart-line"></i></div><div class="revenue-box"><small>TOTAL COLLECTED</small><strong><%= money(safePaidAmount) %></strong><span>From successful payments</span></div></section>
+<section class="mini-card reveal delay4"><div class="mini-head"><h3>Status Breakdown</h3><i class="fas fa-chart-pie"></i></div><div class="breakdown">
+<% const statusRows=[['green','fa-check','Paid',safeStats.paid],['orange','fa-clock','Pending',safeStats.pending],['red','fa-xmark','Failed',safeStats.failed],['purple','fa-rotate-left','Refunded',safeStats.refunded]]; statusRows.forEach(r=>{ const pct=safeStats.total?Math.min(100,(Number(r[3])||0)/safeStats.total*100):0; %><div class="breakdown-row"><div class="break-icon <%= r[0] %>"><i class="fas <%= r[1] %>"></i></div><div class="break-label"><strong><%= r[2] %></strong><span><i style="width:<%= pct %>%;--bar:<%= r[0]==='green'?'#0f9f6e':r[0]==='orange'?'#e98b2a':r[0]==='red'?'#dc3f4d':'#7357d8' %>"></i></span></div><div class="break-value"><%= r[3] %></div></div><% }); %>
+</div></section>
+<section class="mini-card reveal"><div class="mini-head"><h3>Amount Overview</h3><i class="fas fa-hourglass-half"></i></div><div class="amount-list"><div class="amount-row"><span>Pending</span><strong style="color:var(--orange)"><%= money(safePendingAmount) %></strong></div><div class="amount-row"><span>Failed</span><strong style="color:var(--red)"><%= money(safeFailedAmount) %></strong></div><div class="amount-row"><span>Collected</span><strong style="color:var(--green)"><%= money(safePaidAmount) %></strong></div></div></section>
+<section class="mini-card reveal"><div class="mini-head"><h3>Quick Navigation</h3><i class="fas fa-bolt"></i></div><div class="quick-links"><a class="quick-link" href="/admin/dashboard"><i class="fas fa-grid-2"></i>Dashboard</a><a class="quick-link" href="/admin/admissions"><i class="fas fa-user-graduate"></i>Admissions</a><a class="quick-link" href="/admin/enquiries"><i class="fas fa-message"></i>Enquiries</a><a class="quick-link" href="/admin/contacts"><i class="fas fa-address-book"></i>Contacts</a></div></section>
+</aside></div>
+<footer class="footer">Gyan Jyoti School Admin Panel • Secure Payment Management</footer>
+</main></div>
+<script>
+function toggleTheme(){document.body.classList.toggle('dark');localStorage.setItem('adminPaymentTheme',document.body.classList.contains('dark')?'dark':'light')}
+function toggleSidebar(){document.body.classList.toggle('sidebar-open')}
+function confirmStatusChange(select){const form=select.closest('form');if(!form)return;const newStatus=select.value;if(window.confirm('Change this payment status to "'+newStatus.replace(/-/g,' ')+'"?'))form.submit();else window.location.reload()}
+document.addEventListener('click',e=>{const s=document.querySelector('.sidebar'),b=document.querySelector('.mobile-menu');if(innerWidth<=850&&document.body.classList.contains('sidebar-open')&&s&&!s.contains(e.target)&&b&&!b.contains(e.target))document.body.classList.remove('sidebar-open')});
+(function(){if(localStorage.getItem('adminPaymentTheme')==='dark')document.body.classList.add('dark');document.querySelectorAll('.counter').forEach(el=>{const target=Number(el.dataset.value)||0;let start=0;const duration=700;const t0=performance.now();function tick(t){const p=Math.min(1,(t-t0)/duration);const eased=1-Math.pow(1-p,3);el.textContent=Math.round(start+(target-start)*eased).toLocaleString('en-IN');if(p<1)requestAnimationFrame(tick)}requestAnimationFrame(tick)})})();
+</script>
+</body></html>

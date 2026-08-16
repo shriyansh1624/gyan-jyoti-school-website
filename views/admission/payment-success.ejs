@@ -1,0 +1,1810 @@
+<%- include('../partials/header') %>
+
+<style>
+
+/* =========================================================
+   GYAN JYOTI — PAYMENT SUCCESS
+========================================================= */
+
+.payment-success-page{
+
+    --navy:#001f3f;
+    --navy-2:#003b6b;
+    --blue:#075c98;
+    --gold:#ffc300;
+
+    --green:#10a968;
+    --green-dark:#08794b;
+    --green-light:#eafaf2;
+
+    --text:#102b43;
+    --muted:#718096;
+    --border:#dce7ef;
+
+    min-height:100vh;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 8% 15%,
+            rgba(16,169,104,.12),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 92% 80%,
+            rgba(255,195,0,.14),
+            transparent 27%
+        ),
+        linear-gradient(
+            135deg,
+            #edf5f1,
+            #ffffff 50%,
+            #eef5fa
+        );
+
+    color:var(--text);
+
+    font-family:
+        "Nunito",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.payment-success-page::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:520px;
+    height:520px;
+
+    right:-220px;
+    top:-260px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(16,169,104,.10);
+
+    box-shadow:
+        0 0 0 45px
+        rgba(16,169,104,.025),
+        0 0 0 90px
+        rgba(16,169,104,.018);
+
+    animation:
+        successOrbit 18s linear infinite;
+
+    pointer-events:none;
+}
+
+
+.payment-success-page::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(16,169,104,.25) 1.5px,
+            transparent 1.5px
+        );
+
+    background-size:90px 90px;
+
+    opacity:.20;
+
+    animation:
+        successDots 20s linear infinite;
+
+    pointer-events:none;
+}
+
+
+@keyframes successOrbit{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+
+@keyframes successDots{
+
+    from{
+        transform:translateY(0);
+    }
+
+    to{
+        transform:translateY(-90px);
+    }
+
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.success-container{
+
+    width:
+        min(920px, calc(100% - 28px));
+
+    margin:auto;
+
+    position:relative;
+
+    z-index:5;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.success-main{
+
+    padding:
+        70px 0 90px;
+}
+
+
+/* =========================================================
+   SUCCESS CARD
+========================================================= */
+
+.success-card{
+
+    background:
+        rgba(255,255,255,.97);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        32px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 30px 90px
+        rgba(0,31,63,.13);
+
+    text-align:center;
+
+    animation:
+        successReveal .75s
+        cubic-bezier(.2,.8,.2,1)
+        both;
+}
+
+
+@keyframes successReveal{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(30px)
+            scale(.97);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   TOP BAND
+========================================================= */
+
+.success-top{
+
+    padding:
+        42px 25px 34px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--navy),
+            var(--navy-2)
+        );
+
+    color:white;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+
+.success-top::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:260px;
+
+    height:260px;
+
+    right:-120px;
+
+    top:-150px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+}
+
+
+.success-top::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:140px;
+
+    height:140px;
+
+    left:-70px;
+
+    bottom:-80px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,195,0,.08);
+}
+
+
+/* =========================================================
+   SUCCESS ICON
+========================================================= */
+
+.success-icon-wrap{
+
+    width:105px;
+
+    height:105px;
+
+    margin:0 auto 20px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        rgba(16,169,104,.13);
+
+    border:
+        1px solid
+        rgba(16,169,104,.35);
+
+    position:relative;
+
+    z-index:2;
+
+    animation:
+        iconFloat 3s ease-in-out infinite;
+}
+
+
+.success-icon{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #19bd78,
+            var(--green)
+        );
+
+    color:white;
+
+    font-size:31px;
+
+    box-shadow:
+        0 15px 35px
+        rgba(16,169,104,.28);
+}
+
+
+@keyframes iconFloat{
+
+    0%,
+    100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-6px);
+    }
+
+}
+
+
+.success-top h1{
+
+    position:relative;
+
+    z-index:2;
+
+    color:white;
+
+    font-size:
+        clamp(31px,5vw,50px);
+
+    line-height:1.05;
+
+    font-weight:950;
+
+    letter-spacing:-1.5px;
+}
+
+
+.success-top h1 span{
+
+    color:var(--gold);
+}
+
+
+.success-top p{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:650px;
+
+    margin:13px auto 0;
+
+    color:
+        rgba(255,255,255,.70);
+
+    font-size:12px;
+
+    line-height:1.75;
+
+    font-weight:600;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.success-body{
+
+    padding:
+        32px;
+}
+
+
+/* =========================================================
+   VERIFIED BADGE
+========================================================= */
+
+.verified-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:
+        9px 15px;
+
+    border-radius:40px;
+
+    background:
+        var(--green-light);
+
+    border:
+        1px solid
+        #ccebdc;
+
+    color:
+        var(--green-dark);
+
+    font-size:9px;
+
+    font-weight:950;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+    margin-bottom:25px;
+}
+
+
+.verified-badge i{
+
+    font-size:11px;
+
+}
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.details-heading{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    color:var(--navy);
+
+    font-size:14px;
+
+    font-weight:950;
+
+    margin-bottom:16px;
+}
+
+
+.details-heading i{
+
+    color:var(--gold);
+
+}
+
+
+.success-details{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0,1fr));
+
+    gap:11px;
+
+    text-align:left;
+}
+
+
+.detail-item{
+
+    padding:
+        15px;
+
+    border:
+        1px solid
+        #e1eaf1;
+
+    border-radius:
+        14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fbfdff,
+            #f5f9fc
+        );
+
+    transition:.25s;
+}
+
+
+.detail-item:hover{
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(0,31,63,.06);
+
+    border-color:
+        #cbdde9;
+}
+
+
+.detail-label{
+
+    display:block;
+
+    color:#8a9baa;
+
+    font-size:8px;
+
+    font-weight:950;
+
+    text-transform:uppercase;
+
+    letter-spacing:.8px;
+
+    margin-bottom:5px;
+}
+
+
+.detail-value{
+
+    color:var(--text);
+
+    font-size:12px;
+
+    font-weight:900;
+
+    word-break:break-word;
+}
+
+
+/* =========================================================
+   TRANSACTION BOX
+========================================================= */
+
+.transaction-box{
+
+    margin-top:22px;
+
+    padding:
+        20px;
+
+    border-radius:
+        18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #edf9f3,
+            #f8fdfb
+        );
+
+    border:
+        1px solid
+        #cdebdc;
+
+    text-align:left;
+}
+
+
+.transaction-heading{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:
+        var(--green-dark);
+
+    font-size:11px;
+
+    font-weight:950;
+
+    margin-bottom:13px;
+}
+
+
+.transaction-heading i{
+
+    color:var(--green);
+}
+
+
+.transaction-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:10px;
+}
+
+
+.transaction-item{
+
+    padding:
+        10px 12px;
+
+    border-radius:
+        11px;
+
+    background:
+        rgba(255,255,255,.75);
+
+    border:
+        1px solid
+        rgba(16,169,104,.10);
+}
+
+
+.transaction-item span{
+
+    display:block;
+
+    color:#82978c;
+
+    font-size:7px;
+
+    font-weight:950;
+
+    text-transform:uppercase;
+
+    letter-spacing:.7px;
+
+    margin-bottom:4px;
+}
+
+
+.transaction-item strong{
+
+    color:#164a35;
+
+    font-size:10px;
+
+    font-weight:900;
+
+    word-break:break-word;
+}
+
+
+/* =========================================================
+   AMOUNT
+========================================================= */
+
+.paid-amount{
+
+    margin-top:22px;
+
+    padding:
+        20px;
+
+    border-radius:
+        18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff9df,
+            #fff2bc
+        );
+
+    border:
+        1px solid
+        #f1d77b;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+}
+
+
+.paid-amount-label{
+
+    color:#846a00;
+
+    font-size:9px;
+
+    font-weight:950;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+}
+
+
+.paid-amount-note{
+
+    margin-top:4px;
+
+    color:#9a8550;
+
+    font-size:8px;
+
+    font-weight:600;
+}
+
+
+.paid-amount-value{
+
+    color:var(--navy);
+
+    font-size:30px;
+
+    font-weight:950;
+
+    white-space:nowrap;
+}
+
+
+/* =========================================================
+   NEXT STEPS
+========================================================= */
+
+.next-steps{
+
+    margin-top:28px;
+
+    padding-top:25px;
+
+    border-top:
+        1px solid
+        #e6edf2;
+}
+
+
+.next-steps h3{
+
+    color:var(--navy);
+
+    font-size:14px;
+
+    font-weight:950;
+
+    margin-bottom:14px;
+}
+
+
+.steps-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:10px;
+}
+
+
+.step{
+
+    padding:
+        15px 12px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        15px;
+
+    background:white;
+
+    text-align:center;
+}
+
+
+.step-number{
+
+    width:31px;
+
+    height:31px;
+
+    margin:0 auto 9px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:
+        var(--gold-light);
+
+    color:var(--navy);
+
+    font-size:10px;
+
+    font-weight:950;
+}
+
+
+.step h4{
+
+    color:var(--navy);
+
+    font-size:10px;
+
+    font-weight:950;
+
+    margin-bottom:4px;
+}
+
+
+.step p{
+
+    color:var(--muted);
+
+    font-size:8px;
+
+    line-height:1.55;
+
+    font-weight:600;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.success-actions{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:11px;
+
+    margin-top:28px;
+}
+
+
+.success-btn{
+
+    min-height:48px;
+
+    padding:
+        0 21px;
+
+    border-radius:
+        13px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    text-decoration:none;
+
+    font-family:inherit;
+
+    font-size:10px;
+
+    font-weight:950;
+
+    transition:.3s;
+}
+
+
+.success-btn-primary{
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--navy),
+            var(--blue)
+        );
+
+    color:white;
+
+    box-shadow:
+        0 12px 28px
+        rgba(0,31,63,.16);
+}
+
+
+.success-btn-primary:hover{
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 18px 35px
+        rgba(0,31,63,.22);
+
+}
+
+
+.success-btn-secondary{
+
+    background:
+        white;
+
+    color:var(--navy);
+
+    border:
+        1px solid
+        var(--border);
+}
+
+
+.success-btn-secondary:hover{
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        #b9cfde;
+
+    box-shadow:
+        0 12px 25px
+        rgba(0,31,63,.07);
+}
+
+
+/* =========================================================
+   FOOT NOTE
+========================================================= */
+
+.success-note{
+
+    margin-top:22px;
+
+    color:#8a98a5;
+
+    font-size:8px;
+
+    line-height:1.7;
+
+    font-weight:600;
+}
+
+
+.success-note i{
+
+    color:var(--green);
+
+    margin-right:4px;
+}
+
+
+/* =========================================================
+   CONFETTI
+========================================================= */
+
+.confetti{
+
+    position:absolute;
+
+    width:8px;
+
+    height:14px;
+
+    border-radius:2px;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    z-index:10;
+
+    animation:
+        confettiFall 3.5s ease-out forwards;
+}
+
+
+@keyframes confettiFall{
+
+    0%{
+
+        opacity:1;
+
+        transform:
+            translateY(-20px)
+            rotate(0deg);
+
+    }
+
+    100%{
+
+        opacity:0;
+
+        transform:
+            translateY(500px)
+            rotate(720deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:700px){
+
+    .success-main{
+
+        padding:
+            45px 0 65px;
+    }
+
+
+    .success-top{
+
+        padding:
+            34px 20px 29px;
+    }
+
+
+    .success-icon-wrap{
+
+        width:90px;
+
+        height:90px;
+    }
+
+
+    .success-icon{
+
+        width:62px;
+
+        height:62px;
+
+        font-size:27px;
+    }
+
+
+    .success-body{
+
+        padding:
+            22px;
+    }
+
+
+    .success-details{
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .transaction-grid{
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .steps-grid{
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .paid-amount{
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+    }
+
+
+    .success-actions{
+
+        flex-direction:
+            column;
+    }
+
+
+    .success-btn{
+
+        width:100%;
+    }
+
+}
+
+
+@media(max-width:420px){
+
+    .success-container{
+
+        width:
+            calc(100% - 16px);
+    }
+
+
+    .success-top h1{
+
+        font-size:30px;
+    }
+
+
+    .success-top p{
+
+        font-size:10px;
+    }
+
+
+    .success-body{
+
+        padding:
+            18px;
+    }
+
+
+    .paid-amount-value{
+
+        font-size:27px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    .payment-success-page *,
+    .payment-success-page *::before,
+    .payment-success-page *::after{
+
+        animation:none !important;
+
+        transition:none !important;
+    }
+
+}
+
+</style>
+
+
+<div class="payment-success-page">
+
+
+    <main class="success-main">
+
+
+        <div class="success-container">
+
+
+            <section class="success-card">
+
+
+                <!-- =================================================
+                     SUCCESS HEADER
+                ================================================== -->
+
+                <div class="success-top">
+
+
+                    <div class="success-icon-wrap">
+
+                        <div class="success-icon">
+
+                            <i class="fas fa-check"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <h1>
+
+                        Payment
+                        <span>Successful!</span>
+
+                    </h1>
+
+
+                    <p>
+
+                        Thank you for completing your payment.
+                        Your application has been successfully
+                        recorded with Gyan Jyoti English Medium School.
+
+                    </p>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     BODY
+                ================================================== -->
+
+                <div class="success-body">
+
+
+                    <div class="verified-badge">
+
+                        <i class="fas fa-shield-check"></i>
+
+                        Payment Verified
+
+                    </div>
+
+
+                    <!-- =================================================
+                         APPLICATION DETAILS
+                    ================================================== -->
+
+                    <div class="details-heading">
+
+                        <i class="fas fa-file-circle-check"></i>
+
+                        Application Information
+
+                    </div>
+
+
+                    <div class="success-details">
+
+
+                        <% if (
+                            payment &&
+                            payment.type === 'admission' &&
+                            payment.admission
+                        ) { %>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    Student Name
+                                </span>
+
+                                <span class="detail-value">
+                                    <%= payment.admission.studentName || '—' %>
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    Class
+                                </span>
+
+                                <span class="detail-value">
+                                    <%= payment.admission.class || '—' %>
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    Parent / Guardian
+                                </span>
+
+                                <span class="detail-value">
+                                    <%= payment.admission.parentName || '—' %>
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    Mobile Number
+                                </span>
+
+                                <span class="detail-value">
+                                    <%= payment.admission.phone || '—' %>
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    Application Type
+                                </span>
+
+                                <span class="detail-value">
+                                    Admission Registration
+                                </span>
+
+                            </div>
+
+
+                        <% } else if (
+                            payment &&
+                            payment.type === 'enquiry' &&
+                            payment.enquiry
+                        ) { %>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    Applicant Name
+                                </span>
+
+                                <span class="detail-value">
+                                    <%= payment.enquiry.name || '—' %>
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    Mobile Number
+                                </span>
+
+                                <span class="detail-value">
+                                    <%= payment.enquiry.phone || '—' %>
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    Application Type
+                                </span>
+
+                                <span class="detail-value">
+                                    School Enquiry
+                                </span>
+
+                            </div>
+
+
+                        <% } else { %>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    Application Type
+                                </span>
+
+                                <span class="detail-value">
+
+                                    <%= payment &&
+                                        payment.type === 'admission'
+                                        ? 'Admission Registration'
+                                        : 'School Enquiry'
+                                    %>
+
+                                </span>
+
+                            </div>
+
+
+                        <% } %>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         TRANSACTION DETAILS
+                    ================================================== -->
+
+                    <div class="transaction-box">
+
+
+                        <div class="transaction-heading">
+
+                            <i class="fas fa-receipt"></i>
+
+                            Transaction Details
+
+                        </div>
+
+
+                        <div class="transaction-grid">
+
+
+                            <div class="transaction-item">
+
+                                <span>
+                                    Transaction ID
+                                </span>
+
+                                <strong>
+
+                                    <%= payment &&
+                                        payment.transactionId
+                                        ? payment.transactionId
+                                        : 'Not available'
+                                    %>
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="transaction-item">
+
+                                <span>
+                                    Order ID
+                                </span>
+
+                                <strong>
+
+                                    <%= payment &&
+                                        payment.orderId
+                                        ? payment.orderId
+                                        : 'Not available'
+                                    %>
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="transaction-item">
+
+                                <span>
+                                    Payment Method
+                                </span>
+
+                                <strong>
+
+                                    <%= payment &&
+                                        payment.method
+                                        ? payment.method.toUpperCase()
+                                        : 'ONLINE'
+                                    %>
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="transaction-item">
+
+                                <span>
+                                    Gateway
+                                </span>
+
+                                <strong>
+
+                                    <%= payment &&
+                                        payment.gateway
+                                        ? payment.gateway
+                                        : 'Payment Gateway'
+                                    %>
+
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         AMOUNT
+                    ================================================== -->
+
+                    <div class="paid-amount">
+
+
+                        <div>
+
+                            <div class="paid-amount-label">
+
+                                Amount Paid
+
+                            </div>
+
+
+                            <div class="paid-amount-note">
+
+                                Successfully received in INR
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="paid-amount-value">
+
+                            ₹<%= Number(
+                                payment &&
+                                payment.amount || 0
+                            ).toLocaleString('en-IN') %>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         NEXT STEPS
+                    ================================================== -->
+
+                    <div class="next-steps">
+
+
+                        <h3>
+                            What Happens Next?
+                        </h3>
+
+
+                        <div class="steps-grid">
+
+
+                            <div class="step">
+
+                                <div class="step-number">
+                                    01
+                                </div>
+
+                                <h4>
+                                    Application Received
+                                </h4>
+
+                                <p>
+                                    Your application details have been
+                                    recorded successfully.
+                                </p>
+
+                            </div>
+
+
+                            <div class="step">
+
+                                <div class="step-number">
+                                    02
+                                </div>
+
+                                <h4>
+                                    Verification
+                                </h4>
+
+                                <p>
+                                    The school admission team will
+                                    review the submitted information.
+                                </p>
+
+                            </div>
+
+
+                            <div class="step">
+
+                                <div class="step-number">
+                                    03
+                                </div>
+
+                                <h4>
+                                    Further Communication
+                                </h4>
+
+                                <p>
+                                    The school may contact you regarding
+                                    the next admission steps.
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         ACTIONS
+                    ================================================== -->
+
+                    <div class="success-actions">
+
+
+                        <a
+                            href="/"
+                            class="success-btn success-btn-primary"
+                        >
+
+                            <i class="fas fa-house"></i>
+
+                            Back to Home
+
+                        </a>
+
+
+                        <a
+                            href="/admission/process"
+                            class="success-btn success-btn-secondary"
+                        >
+
+                            <i class="fas fa-arrow-right"></i>
+
+                            Admission Process
+
+                        </a>
+
+
+                    </div>
+
+
+                    <div class="success-note">
+
+                        <i class="fas fa-lock"></i>
+
+                        Please keep your transaction details for
+                        future reference. Never share your OTP,
+                        UPI PIN or banking credentials with anyone.
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+<script>
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function(){
+
+        /*
+         * Lightweight success animation.
+         * No payment logic is handled on the client.
+         */
+
+        const card =
+            document.querySelector(
+                '.success-card'
+            );
+
+
+        if (!card) {
+            return;
+        }
+
+
+        /*
+         * Small celebration particles.
+         */
+
+        const colors = [
+            '#ffc300',
+            '#10a968',
+            '#075c98',
+            '#001f3f'
+        ];
+
+
+        for (
+            let i = 0;
+            i < 24;
+            i++
+        ){
+
+            const piece =
+                document.createElement(
+                    'span'
+                );
+
+
+            piece.className =
+                'confetti';
+
+
+            piece.style.left =
+                Math.random() * 100 + '%';
+
+
+            piece.style.top =
+                '8%';
+
+
+            piece.style.background =
+                colors[
+                    Math.floor(
+                        Math.random() *
+                        colors.length
+                    )
+                ];
+
+
+            piece.style.animationDelay =
+                Math.random() * .7 + 's';
+
+
+            piece.style.transform =
+                `rotate(${Math.random() * 360}deg)`;
+
+
+            card.appendChild(
+                piece
+            );
+
+
+            setTimeout(
+                () => {
+
+                    piece.remove();
+
+                },
+                4500
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+<%- include('../partials/footer') %>

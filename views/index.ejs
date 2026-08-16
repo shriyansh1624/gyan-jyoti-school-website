@@ -5579,6 +5579,685 @@
 
 }
 
+
+
+/* =========================================================
+   GYAN JYOTI — CLIENT PRESENTATION ENHANCEMENT PACK
+   Frontend-only. Existing backend, variables and links untouched.
+========================================================= */
+
+.gj-home {
+    position: relative;
+    isolation: isolate;
+    background:
+        radial-gradient(circle at 8% 12%, rgba(255,195,0,.055), transparent 24%),
+        radial-gradient(circle at 92% 58%, rgba(0,85,143,.055), transparent 28%),
+        #fff;
+}
+
+.gj-home::selection {
+    background: var(--gj-gold);
+    color: var(--gj-navy);
+}
+
+/* Premium ambient motion */
+.gj-hero::after {
+    content: "";
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    right: -170px;
+    top: 15%;
+    border: 1px solid rgba(255,195,0,.12);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 35px rgba(255,195,0,.025),
+        0 0 0 85px rgba(255,195,0,.018);
+    animation: gjOrbitGlow 12s linear infinite;
+    pointer-events: none;
+    z-index: 8;
+}
+
+.gj-hero-grid {
+    animation: gjGridDrift 18s linear infinite;
+}
+
+.gj-hero-glow {
+    animation: gjGlowFloat 7s ease-in-out infinite;
+}
+
+.gj-glow-two {
+    animation-delay: -3.5s;
+}
+
+/* Hero entrance */
+.gj-hero-slide.is-active .gj-eyebrow {
+    animation: gjHeroIn .8s .08s both;
+}
+
+.gj-hero-slide.is-active h1 {
+    animation: gjHeroIn .9s .16s both;
+}
+
+.gj-hero-slide.is-active .gj-title-accent {
+    animation: gjHeroIn .75s .25s both;
+}
+
+.gj-hero-slide.is-active .gj-hero-subtitle {
+    animation: gjHeroIn .8s .32s both;
+}
+
+.gj-hero-slide.is-active .gj-hero-actions {
+    animation: gjHeroIn .8s .4s both;
+}
+
+.gj-hero-slide.is-active .gj-hero-features {
+    animation: gjHeroIn .8s .48s both;
+}
+
+/* Glassy quick navigation */
+.gj-quick-strip {
+    position: relative;
+}
+
+.gj-quick-strip::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg,
+            transparent,
+            rgba(255,195,0,.08),
+            transparent);
+    transform: translateX(-100%);
+    animation: gjSweep 8s ease-in-out infinite;
+}
+
+/* Section headings get a premium underline */
+.gj-section-kicker {
+    position: relative;
+}
+
+.gj-section-kicker span {
+    box-shadow: 0 0 14px rgba(255,195,0,.35);
+}
+
+/* About image cinematic hover */
+.gj-image-frame {
+    transform: translateZ(0);
+    transition:
+        transform .5s cubic-bezier(.2,.8,.2,1),
+        box-shadow .5s ease;
+}
+
+.gj-image-frame:hover {
+    transform: translateY(-8px) rotateX(1deg);
+    box-shadow:
+        0 45px 100px rgba(0,31,63,.23),
+        0 0 0 1px rgba(255,195,0,.14);
+}
+
+.gj-floating-card {
+    animation: gjFloat 5s ease-in-out infinite;
+}
+
+/* Stat cards */
+.gj-stat-card {
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
+}
+
+.gj-stat-card::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -90px;
+    top: -90px;
+    border-radius: 50%;
+    background: rgba(255,195,0,.12);
+    transition: transform .5s ease;
+    pointer-events: none;
+}
+
+.gj-stat-card:hover {
+    transform: translateY(-10px);
+    box-shadow:
+        0 25px 55px rgba(0,31,63,.14);
+}
+
+.gj-stat-card:hover::before {
+    transform: scale(1.7);
+}
+
+/* Feature cards */
+.gj-feature-card {
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
+}
+
+.gj-feature-card::after {
+    content: "";
+    position: absolute;
+    left: -120%;
+    top: 0;
+    width: 70%;
+    height: 100%;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.55),
+            transparent
+        );
+    transform: skewX(-18deg);
+    transition: left .8s ease;
+    pointer-events: none;
+}
+
+.gj-feature-card:hover::after {
+    left: 150%;
+}
+
+.gj-feature-card:hover {
+    transform: translateY(-10px);
+}
+
+/* Gallery cinematic hover */
+.gj-gallery-item {
+    overflow: hidden;
+}
+
+.gj-gallery-item img {
+    transition:
+        transform 1s cubic-bezier(.2,.75,.2,1),
+        filter .7s ease;
+}
+
+.gj-gallery-item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            110deg,
+            transparent 20%,
+            rgba(255,255,255,.2) 45%,
+            transparent 70%
+        );
+    transform: translateX(-120%);
+    transition: transform .9s ease;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.gj-gallery-item:hover img {
+    transform: scale(1.09);
+    filter: saturate(1.08) contrast(1.04);
+}
+
+.gj-gallery-item:hover::after {
+    transform: translateX(120%);
+}
+
+/* Discover cards */
+.gj-discover-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.gj-discover-card::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: var(--mx, 50%);
+    top: var(--my, 50%);
+    border-radius: 50%;
+    background: rgba(255,195,0,.12);
+    transform: translate(-50%, -50%);
+    transition:
+        width .55s ease,
+        height .55s ease;
+    pointer-events: none;
+}
+
+.gj-discover-card:hover::before {
+    width: 420px;
+    height: 420px;
+}
+
+.gj-discover-card > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Admission CTA breathing glow */
+.gj-admission {
+    position: relative;
+    overflow: hidden;
+}
+
+.gj-admission::before,
+.gj-admission::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.gj-admission::before {
+    width: 420px;
+    height: 420px;
+    right: -180px;
+    top: -180px;
+    border: 1px solid rgba(255,195,0,.22);
+    box-shadow:
+        0 0 0 40px rgba(255,195,0,.04),
+        0 0 0 90px rgba(255,195,0,.025);
+    animation: gjOrbitGlow 10s linear infinite reverse;
+}
+
+.gj-admission::after {
+    width: 180px;
+    height: 180px;
+    left: -90px;
+    bottom: -90px;
+    background: rgba(255,195,0,.08);
+    filter: blur(4px);
+}
+
+/* Buttons feel more premium */
+.gj-btn,
+.gj-text-btn,
+.gj-outline-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.gj-btn::before,
+.gj-outline-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            110deg,
+            transparent 30%,
+            rgba(255,255,255,.35),
+            transparent 70%
+        );
+    transform: translateX(-120%);
+    transition: transform .7s ease;
+    pointer-events: none;
+}
+
+.gj-btn:hover::before,
+.gj-outline-btn:hover::before {
+    transform: translateX(120%);
+}
+
+.gj-btn > *,
+.gj-outline-btn > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Popup = floating advertisement card, NOT full-screen modal */
+#gjPopupOverlay {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 99999 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: flex-end !important;
+    padding: 0 !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    pointer-events: none !important;
+}
+
+#gjPopupOverlay.is-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+#gjPopupOverlay .gj-popup {
+    pointer-events: auto;
+    width: min(420px, calc(100vw - 40px)) !important;
+    height: 500px !important;
+    margin: 0 28px 28px 0;
+    border-radius: 26px !important;
+    background: #fff !important;
+    border: 1px solid rgba(0,31,63,.12) !important;
+    box-shadow:
+        0 30px 90px rgba(0,15,35,.28),
+        0 10px 30px rgba(0,31,63,.12),
+        0 0 0 1px rgba(255,195,0,.08);
+    overflow: hidden;
+    transform: translateY(35px) scale(.94) !important;
+    transition:
+        transform .65s cubic-bezier(.16,1,.3,1),
+        box-shadow .35s ease;
+}
+
+#gjPopupOverlay.is-visible .gj-popup {
+    transform: translateY(0) scale(1) !important;
+}
+
+#gjPopupOverlay .gj-popup::before {
+    content: "";
+    position: absolute;
+    z-index: 25;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background:
+        linear-gradient(
+            90deg,
+            var(--gj-navy),
+            var(--gj-gold),
+            #fff0a8,
+            var(--gj-gold),
+            var(--gj-navy)
+        );
+    background-size: 220% 100%;
+    animation: gjPopupShine 4s linear infinite;
+}
+
+#gjPopupOverlay .gj-popup-slides,
+#gjPopupOverlay .gj-popup-slide {
+    inset: 0;
+}
+
+#gjPopupOverlay .gj-popup-slide {
+    background: #fff;
+}
+
+#gjPopupOverlay .gj-popup-image {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 255px !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    transform: scale(1.02);
+    transition: transform 7s ease;
+}
+
+#gjPopupOverlay .gj-popup-slide.is-active .gj-popup-image {
+    transform: scale(1.08);
+}
+
+/* This selector targets the overlay INSIDE the slide */
+#gjPopupOverlay .gj-popup-slide > .gj-popup-overlay {
+    position: absolute;
+    inset: 0 0 auto 0 !important;
+    height: 255px !important;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(0,31,63,.08),
+            transparent 52%,
+            rgba(0,31,63,.28)
+        ) !important;
+    z-index: 2;
+}
+
+#gjPopupOverlay .gj-popup-content {
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 245px !important;
+    box-sizing: border-box;
+    padding: 20px 24px 20px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    color: var(--gj-ink) !important;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.96),
+            #fff 30%
+        ) !important;
+    z-index: 10;
+}
+
+#gjPopupOverlay .gj-popup-badge {
+    margin-bottom: 10px !important;
+    padding: 7px 10px !important;
+    background: #fff4c9 !important;
+    color: #8b6500 !important;
+    border: 1px solid rgba(255,195,0,.28);
+    font-size: 9px !important;
+    letter-spacing: 1.1px;
+}
+
+#gjPopupOverlay .gj-popup-content h2 {
+    margin: 0 0 8px !important;
+    color: var(--gj-navy) !important;
+    font-size: clamp(25px, 4vw, 34px) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -.8px !important;
+}
+
+#gjPopupOverlay .gj-popup-content p {
+    margin: 0 0 15px !important;
+    color: #68798b !important;
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#gjPopupOverlay .gj-popup-button {
+    padding: 11px 17px !important;
+    gap: 9px;
+    background:
+        linear-gradient(135deg, var(--gj-gold), var(--gj-gold-2));
+    color: var(--gj-navy) !important;
+    box-shadow: 0 10px 25px rgba(255,195,0,.25);
+    font-size: 11px !important;
+}
+
+#gjPopupOverlay .gj-popup-button:hover {
+    transform: translateY(-3px) scale(1.02);
+}
+
+#gjPopupOverlay .gj-popup-close,
+#gjPopupOverlay .gj-popup-arrow {
+    width: 38px !important;
+    height: 38px !important;
+    background: rgba(0,31,63,.68) !important;
+    border-color: rgba(255,255,255,.35) !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,.18);
+    backdrop-filter: blur(12px);
+}
+
+#gjPopupOverlay .gj-popup-close {
+    top: 13px !important;
+    right: 13px !important;
+}
+
+#gjPopupOverlay .gj-popup-close:hover,
+#gjPopupOverlay .gj-popup-arrow:hover {
+    background: var(--gj-gold) !important;
+    color: var(--gj-navy) !important;
+}
+
+#gjPopupOverlay .gj-popup-prev {
+    left: 12px !important;
+    top: 127px !important;
+}
+
+#gjPopupOverlay .gj-popup-next {
+    right: 12px !important;
+    top: 127px !important;
+}
+
+#gjPopupOverlay .gj-popup-footer {
+    left: 24px !important;
+    right: 24px !important;
+    bottom: 12px !important;
+    z-index: 40;
+}
+
+#gjPopupOverlay .gj-popup-progress {
+    background: #e8edf2 !important;
+}
+
+#gjPopupOverlay .gj-popup-progress span {
+    background: var(--gj-gold) !important;
+}
+
+/* Mobile ad card */
+@media (max-width: 620px) {
+    #gjPopupOverlay {
+        align-items: flex-end !important;
+        justify-content: center !important;
+    }
+
+    #gjPopupOverlay .gj-popup {
+        width: calc(100vw - 24px) !important;
+        max-width: 420px;
+        height: 440px !important;
+        margin: 0 0 12px 0;
+        border-radius: 22px !important;
+    }
+
+    #gjPopupOverlay .gj-popup-image {
+        height: 215px !important;
+    }
+
+    #gjPopupOverlay .gj-popup-slide > .gj-popup-overlay {
+        height: 215px !important;
+    }
+
+    #gjPopupOverlay .gj-popup-content {
+        height: 225px !important;
+        padding: 17px 19px 18px !important;
+    }
+
+    #gjPopupOverlay .gj-popup-content h2 {
+        font-size: 26px !important;
+    }
+
+    #gjPopupOverlay .gj-popup-content p {
+        font-size: 12px !important;
+    }
+
+    #gjPopupOverlay .gj-popup-prev {
+        left: 9px !important;
+        top: 107px !important;
+    }
+
+    #gjPopupOverlay .gj-popup-next {
+        right: 9px !important;
+        top: 107px !important;
+    }
+}
+
+/* Premium keyframes */
+@keyframes gjHeroIn {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+        filter: blur(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes gjOrbitGlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes gjGlowFloat {
+    0%, 100% {
+        transform: translate3d(0,0,0) scale(1);
+    }
+    50% {
+        transform: translate3d(0,18px,0) scale(1.04);
+    }
+}
+
+@keyframes gjGridDrift {
+    from {
+        background-position: 0 0, 0 0;
+    }
+    to {
+        background-position: 70px 70px, -70px 70px;
+    }
+}
+
+@keyframes gjSweep {
+    0%, 55%, 100% {
+        transform: translateX(-100%);
+    }
+    72% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes gjPopupShine {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 220% 0;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .gj-hero::after,
+    .gj-hero-grid,
+    .gj-hero-glow,
+    .gj-quick-strip::before,
+    .gj-floating-card,
+    .gj-admission::before,
+    #gjPopupOverlay .gj-popup::before {
+        animation: none !important;
+    }
+}
+
+/* Smaller screens: tone down heavy effects */
+@media (max-width: 850px) {
+    .gj-hero::after {
+        opacity: .45;
+        width: 360px;
+        height: 360px;
+    }
+}
+
+@media (max-width: 620px) {
+    .gj-hero::after {
+        display: none;
+    }
+
+    .gj-image-frame:hover {
+        transform: none;
+    }
+}
+
 </style>
 
 
@@ -6350,8 +7029,8 @@
                 'false'
             );
 
-            document.body.style.overflow =
-                'hidden';
+            // Floating ad: keep the homepage scrollable.
+            document.body.style.overflow = '';
 
             showPopupSlide(0);
 
@@ -6371,8 +7050,7 @@
                 'true'
             );
 
-            document.body.style.overflow =
-                '';
+            document.body.style.overflow = '';
 
             if (popupTimer) {
 
@@ -6519,7 +7197,7 @@
                     );
 
                 },
-                1400
+                2200
             );
 
         }
@@ -6576,6 +7254,128 @@
             }
         );
 
+
+
+
+    /* =====================================================
+       PREMIUM MICRO-INTERACTIONS
+       Frontend only — no backend dependency.
+    ====================================================== */
+
+    // Keep the page scrollable while the floating advertisement is open.
+    if (popupOverlay) {
+        // The popup is an advertisement card, not a blocking modal.
+        // Existing open/close functions remain responsible for visibility.
+    }
+
+    // Hide carousel arrows when there is only one advertisement.
+    if (popupOverlay) {
+        const adSlides =
+            popupOverlay.querySelectorAll('.gj-popup-slide');
+
+        if (adSlides.length <= 1) {
+            const adPrev =
+                document.getElementById('gjPopupPrev');
+
+            const adNext =
+                document.getElementById('gjPopupNext');
+
+            if (adPrev) {
+                adPrev.style.display = 'none';
+            }
+
+            if (adNext) {
+                adNext.style.display = 'none';
+            }
+        }
+    }
+
+    // Lightweight pointer spotlight for premium cards.
+    if (window.matchMedia('(pointer:fine)').matches) {
+
+        document
+            .querySelectorAll('.gj-discover-card')
+            .forEach(function (card) {
+
+                card.addEventListener(
+                    'pointermove',
+                    function (event) {
+
+                        const rect =
+                            card.getBoundingClientRect();
+
+                        const x =
+                            event.clientX - rect.left;
+
+                        const y =
+                            event.clientY - rect.top;
+
+                        card.style.setProperty(
+                            '--mx',
+                            x + 'px'
+                        );
+
+                        card.style.setProperty(
+                            '--my',
+                            y + 'px'
+                        );
+
+                    }
+                );
+
+            });
+
+
+        // Subtle 3D tilt on feature/stat cards.
+        document
+            .querySelectorAll(
+                '.gj-feature-card, .gj-stat-card'
+            )
+            .forEach(function (card) {
+
+                card.addEventListener(
+                    'pointermove',
+                    function (event) {
+
+                        const rect =
+                            card.getBoundingClientRect();
+
+                        const px =
+                            (event.clientX - rect.left)
+                            / rect.width;
+
+                        const py =
+                            (event.clientY - rect.top)
+                            / rect.height;
+
+                        const rotateY =
+                            (px - .5) * 5;
+
+                        const rotateX =
+                            (.5 - py) * 5;
+
+                        card.style.transform =
+                            'translateY(-8px) perspective(700px) rotateX(' +
+                            rotateX +
+                            'deg) rotateY(' +
+                            rotateY +
+                            'deg)';
+
+                    }
+                );
+
+                card.addEventListener(
+                    'pointerleave',
+                    function () {
+
+                        card.style.transform = '';
+
+                    }
+                );
+
+            });
+
+    }
 
 })();
 </script>

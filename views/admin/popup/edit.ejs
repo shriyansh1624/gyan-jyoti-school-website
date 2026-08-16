@@ -59,13 +59,21 @@
           action="/admin/popup/edit/<%= popup._id %>"
           method="POST"
           enctype="multipart/form-data"
-          novalidate>
+          novalidate autocomplete="off">
 
           <!-- CSRF PROTECTION -->
           <input
             type="hidden"
             name="_csrf"
             value="<%= csrfToken %>"
+          >
+
+          <!-- Tracks an intentional removal of the existing image -->
+          <input
+            type="hidden"
+            id="removeImageFlag"
+            name="removeImage"
+            value="false"
           >
 
           <!-- BASIC INFORMATION -->
@@ -171,7 +179,7 @@
             </div>
 
 
-            <div class="existing-image-note" <%= popup.image ? '' : 'hidden' %>>
+            <div class="existing-image-note" <%= popup.image ? "" : "hidden" %>>
               <i class="fas fa-circle-info"></i>
               Existing image is currently active. Upload a new image only if you want to replace it.
             </div>
@@ -1796,6 +1804,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
   function showImage(file){
 
+    const removeImageFlag = document.getElementById('removeImageFlag');
+    if(removeImageFlag) removeImageFlag.value = 'false';
+
     const allowed = [
       'image/jpeg',
       'image/jpg',
@@ -1862,6 +1873,8 @@ document.addEventListener('DOMContentLoaded', function(){
   removeImage.addEventListener('click', function(){
 
     imageInput.value = '';
+    const removeImageFlag = document.getElementById('removeImageFlag');
+    if(removeImageFlag) removeImageFlag.value = 'true';
 
     imagePreview.src = '';
 
@@ -2027,7 +2040,14 @@ document.addEventListener('DOMContentLoaded', function(){
      FORM VALIDATION
   ======================================================= */
 
-  form.addEventListener('submit', function(e){
+  /* =======================================================
+     CSRF-SAFE SUBMIT
+     Refresh the edit page token immediately before submit.
+     This prevents an old/stale token from the browser history
+     from being posted after the admin session changes.
+  ======================================================= */
+
+  form.addEventListener('submit', async function(e){
 
     if(!title.value.trim()){
 
@@ -2077,6 +2097,113 @@ document.addEventListener('DOMContentLoaded', function(){
 
     }
 
+    /*
+     * The backend uses csurf with a session secret.
+     * Fetch the edit page again so the hidden token is always
+     * generated from the current admin session.
+     */
+    e.preventDefault();
+
+    const submitButton =
+      form.querySelector('button[type="submit"]');
+
+    const csrfInput =
+      form.querySelector('input[name="_csrf"]');
+
+    const originalButtonHTML =
+      submitButton ? submitButton.innerHTML : '';
+
+    try {
+
+      if(submitButton){
+
+        submitButton.disabled = true;
+
+        submitButton.innerHTML =
+          '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+      }
+
+      const response =
+        await fetch(
+          window.location.href,
+          {
+            method: 'GET',
+            credentials: 'same-origin',
+            cache: 'no-store',
+            headers: {
+              'Accept': 'text/html'
+            }
+          }
+        );
+
+      if(!response.ok){
+
+        throw new Error(
+          'Unable to refresh CSRF token.'
+        );
+
+      }
+
+      const html =
+        await response.text();
+
+      const parser =
+        new DOMParser();
+
+      const doc =
+        parser.parseFromString(
+          html,
+          'text/html'
+        );
+
+      const freshToken =
+        doc.querySelector(
+          'input[name="_csrf"]'
+        );
+
+      if(
+        !freshToken ||
+        !freshToken.value
+      ){
+
+        throw new Error(
+          'Fresh CSRF token was not found.'
+        );
+
+      }
+
+      csrfInput.value =
+        freshToken.value;
+
+      /*
+       * Native submit bypasses this submit event,
+       * preventing an infinite submit/fetch loop.
+       */
+      HTMLFormElement.prototype.submit.call(form);
+
+    } catch(error){
+
+      console.error(
+        'CSRF refresh failed:',
+        error
+      );
+
+      alert(
+        'Security token refresh failed. Please refresh this page and try again.'
+      );
+
+      if(submitButton){
+
+        submitButton.disabled = false;
+
+        submitButton.innerHTML =
+          originalButtonHTML;
+
+      }
+
+    }
+
   });
 
 
@@ -2094,6 +2221,8 @@ document.addEventListener('DOMContentLoaded', function(){
     modalImage.style.display = 'none';
   }
 
+  subtitleCount.textContent = subtitle.value.length + ' / 300';
+  if (startDate.value) endDate.min = startDate.value;
   updatePreview();
 
 });

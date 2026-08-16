@@ -1,46 +1,146 @@
 const mongoose = require('mongoose');
 
-const admissionSchema = new mongoose.Schema({
-  studentName: {
-    type: String,
-    required: true,
-    trim: true
-  },
+const admissionSchema = new mongoose.Schema(
+    {
+        // =====================================================
+        // STUDENT DETAILS
+        // =====================================================
 
-  class: {
-    type: String,
-    required: true,
-    trim: true
-  },
+        studentName: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-  parentName: {
-    type: String,
-    required: true,
-    trim: true
-  },
+        class: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-  phone: {
-    type: String,
-    required: true,
-    trim: true
-  },
+        // =====================================================
+        // PARENT DETAILS
+        // =====================================================
 
-  email: {
-    type: String,
-    trim: true,
-    lowercase: true
-  },
+        parentName: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-  address: {
-    type: String,
-    trim: true
-  },
+        phone: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-  document: {
-    type: String
-  }
-}, {
-  timestamps: true
+        email: {
+            type: String,
+            trim: true,
+            lowercase: true,
+            default: ''
+        },
+
+        address: {
+            type: String,
+            trim: true,
+            default: ''
+        },
+
+        // =====================================================
+        // DOCUMENT
+        // =====================================================
+
+        document: {
+            type: String,
+            default: null
+        },
+
+        // =====================================================
+        // PAYMENT
+        // =====================================================
+
+        paymentStatus: {
+            type: String,
+            enum: [
+                'pending',
+                'paid',
+                'failed',
+                'cancelled',
+                'refunded'
+            ],
+            default: 'pending',
+            index: true
+        },
+
+        payment: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Payment',
+            default: null
+        },
+
+        paymentAmount: {
+            type: Number,
+            min: 0,
+            default: 0
+        },
+
+        paymentMethod: {
+            type: String,
+            enum: [
+                'online',
+                'upi',
+                'netbanking',
+                'card',
+                'cash'
+            ],
+            default: 'online'
+        },
+
+        // =====================================================
+        // APPLICATION STATUS
+        // =====================================================
+
+        applicationStatus: {
+            type: String,
+            enum: [
+                'pending',
+                'under-review',
+                'approved',
+                'rejected'
+            ],
+            default: 'pending',
+            index: true
+        }
+    },
+
+    {
+        timestamps: true
+    }
+);
+
+
+// =========================================================
+// INDEXES
+// =========================================================
+// paymentStatus and applicationStatus already have
+// index:true above, so DON'T define them again here.
+
+admissionSchema.index({
+    createdAt: -1
 });
 
-module.exports = mongoose.model('Admission', admissionSchema);
+admissionSchema.index({
+    phone: 1
+});
+
+
+// =========================================================
+// EXPORT
+// =========================================================
+
+module.exports =
+    mongoose.model(
+        'Admission',
+        admissionSchema
+    );

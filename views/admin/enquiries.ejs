@@ -1,0 +1,144 @@
+<%
+const currentAdminName = (typeof adminName !== 'undefined' && adminName) ? adminName : 'Administrator';
+const safeAdmissionCount = Number((typeof admissionCount !== 'undefined' ? admissionCount : 0)) || 0;
+const safeEnquiryCount = Number((typeof enquiryCount !== 'undefined' ? enquiryCount : 0)) || 0;
+const safeContactCount = Number((typeof contactCount !== 'undefined' ? contactCount : 0)) || 0;
+const data = (typeof enquiries !== 'undefined' && Array.isArray(enquiries)) ? enquiries : [];
+function safeText(value, fallback='—') {
+    return value === undefined || value === null || value === '' ? fallback : String(value);
+}
+function formatDate(value) {
+    if(!value) return '—';
+    const d = new Date(value);
+    return Number.isNaN(d.getTime()) ? '—' : d.toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'});
+}
+%>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Enquiries — Gyan Jyoti School</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"><style>
+:root{
+--navy:#061a33;--navy2:#0b3764;--blue:#1b6eea;--gold:#f6c343;
+--bg:#f3f7fc;--card:#fff;--card2:#f8fbff;--text:#10223b;--muted:#73849b;
+--line:#e3eaf3;--green:#0ca678;--red:#df4655;--purple:#7957e8;
+--shadow:0 20px 55px rgba(5,28,56,.09)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+body:before{content:"";position:fixed;width:420px;height:420px;border-radius:50%;background:rgba(246,195,67,.1);left:210px;bottom:-180px;pointer-events:none}
+body:after{content:"";position:fixed;width:330px;height:330px;border-radius:50%;background:rgba(121,87,232,.08);right:-110px;top:100px;pointer-events:none}
+a{text-decoration:none;color:inherit}button,input{font:inherit}
+.sidebar{position:fixed;inset:0 auto 0 0;width:270px;padding:20px 16px;background:linear-gradient(180deg,#04172d,#0a3560);color:#fff;z-index:50;overflow:auto}
+.brand{display:flex;align-items:center;gap:13px;padding:7px 10px 23px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:20px}
+.brand-logo{width:55px;height:55px;border-radius:18px;background:#fff;color:var(--navy);display:grid;place-items:center;font-size:23px;box-shadow:0 10px 25px rgba(0,0,0,.12)}
+.brand h2{font-size:18px;font-weight:900}.brand span{display:block;font-size:8px;letter-spacing:1.5px;color:#9db0c7;text-transform:uppercase;margin-top:3px}
+.menu-label{font-size:9px;font-weight:900;letter-spacing:1.7px;color:#7f96af;margin:0 10px 8px}.menu{display:grid;gap:5px}
+.menu a{min-height:45px;padding:0 13px;border-radius:14px;display:flex;align-items:center;gap:12px;color:#c5d4e4;font-size:11px;font-weight:800;transition:.22s}
+.menu a i{width:20px;text-align:center;color:#8db9e6}.menu a:hover{background:rgba(255,255,255,.075);transform:translateX(2px)}
+.menu a.active{background:linear-gradient(135deg,var(--gold),#ffdc72);color:#061a33;box-shadow:0 14px 32px rgba(246,195,67,.22)}
+.menu a.active i{color:#061a33}.menu-count{margin-left:auto;min-width:21px;height:21px;border-radius:50%;display:grid;place-items:center;background:#e84c5c;color:#fff;font-size:9px}
+.sidebar-footer{margin-top:25px;padding:14px;border:1px solid rgba(255,255,255,.09);border-radius:16px;background:rgba(255,255,255,.05)}
+.sidebar-footer small{display:block;color:#7f94ad;font-size:8px;margin-bottom:5px}.sidebar-footer strong{font-size:11px}
+.main{margin-left:270px;padding:26px;min-height:100vh;position:relative;z-index:1}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.crumb{font-size:11px;color:var(--muted);font-weight:700}
+.crumb span{padding:0 6px}.crumb strong{color:var(--text)}.top-actions{display:flex;gap:8px}
+.icon-btn{width:42px;height:42px;border:1px solid var(--line);border-radius:13px;background:var(--card);display:grid;place-items:center;color:var(--text);cursor:pointer;transition:.2s;box-shadow:0 8px 20px rgba(8,35,65,.05)}
+.icon-btn:hover{transform:translateY(-2px);color:var(--blue)}.mobile-menu{display:none}
+.hero{position:relative;overflow:hidden;padding:31px 32px;border-radius:28px;background:radial-gradient(circle at 88% 15%,rgba(246,195,67,.24),transparent 25%),linear-gradient(135deg,#04182f,#0b5da6);color:#fff;box-shadow:0 25px 55px rgba(6,26,51,.19);margin-bottom:18px;animation:rise .55s ease both}
+.hero:after{content:"";position:absolute;inset:0;opacity:.07;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:22px 22px}
+.eyebrow{position:relative;z-index:2;color:#ffd966;font-size:8px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase}
+.hero h1{position:relative;z-index:2;font-size:34px;font-weight:900;margin-top:9px;letter-spacing:-.8px}
+.hero p{position:relative;z-index:2;color:#bfd0e4;font-size:11px;margin-top:7px;line-height:1.65;max-width:720px}
+.hero-actions{position:absolute;right:25px;bottom:25px;z-index:3;display:flex;gap:8px}.hero-btn{border:0;border-radius:11px;padding:11px 14px;background:#fff;color:var(--navy);font-size:9px;font-weight:900;cursor:pointer;transition:.2s}.hero-btn:hover{transform:translateY(-2px)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:17px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:19px;padding:17px;box-shadow:var(--shadow);display:flex;align-items:center;gap:12px;animation:rise .5s ease both}
+.stat:nth-child(2){animation-delay:.06s}.stat:nth-child(3){animation-delay:.12s}.stat:nth-child(4){animation-delay:.18s}
+.stat-icon{width:43px;height:43px;border-radius:13px;background:#eaf2ff;color:var(--blue);display:grid;place-items:center}.stat b{display:block;font-size:22px}.stat span{font-size:8px;color:var(--muted);font-weight:700}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden;animation:rise .55s .12s ease both}
+.panel-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px}
+.panel-head h2{font-size:14px;font-weight:900}.panel-head p{font-size:9px;color:var(--muted);margin-top:4px}.search-box{position:relative;min-width:290px}
+.search-box i{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#91a1b5;font-size:10px}
+.search{height:40px;width:100%;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:0 12px 0 34px;outline:0;font-size:10px;transition:.2s}
+.search:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(27,110,234,.1)}
+.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:900px}
+.table th{padding:12px 15px;background:var(--card2);text-align:left;color:var(--muted);font-size:8px;letter-spacing:.8px;text-transform:uppercase;white-space:nowrap}
+.table td{padding:14px 15px;border-top:1px solid var(--line);font-size:10px;vertical-align:middle}.table tbody tr{transition:.2s}.table tbody tr:hover{background:#fbfdff}
+.primary{font-weight:900}.secondary{display:block;color:var(--muted);font-size:8px;margin-top:4px;max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pill{display:inline-flex;padding:6px 9px;border-radius:99px;background:#eef4fc;color:var(--blue);font-size:8px;font-weight:900;white-space:nowrap}
+.pill.green{background:#e8f8f1;color:var(--green)}.pill.gold{background:#fff5d5;color:#9a6c00}
+.actions-cell{display:flex;gap:6px}.action{width:32px;height:32px;border:1px solid var(--line);border-radius:9px;background:var(--card2);display:grid;place-items:center;color:var(--blue);cursor:pointer;transition:.2s}
+.action:hover{transform:translateY(-2px);box-shadow:0 7px 15px rgba(8,35,65,.1)}.action.danger{color:var(--red)}
+.empty{padding:58px;text-align:center;color:var(--muted);font-size:11px}.empty i{font-size:31px;display:block;margin-bottom:11px;color:#b8c5d5}
+.footer{text-align:center;color:var(--muted);font-size:8px;padding:20px}
+.modal{position:fixed;inset:0;background:rgba(3,17,34,.62);backdrop-filter:blur(7px);display:none;place-items:center;z-index:100}.modal.show{display:grid;animation:fade .2s ease}
+.modal-box{width:min(700px,calc(100% - 25px));max-height:86vh;overflow:auto;border-radius:23px;background:var(--card);box-shadow:0 30px 90px rgba(0,0,0,.28);animation:pop .25s ease}
+.modal-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-head h3{font-size:15px}.modal-head p{font-size:8px;color:var(--muted);margin-top:4px}
+.close{width:35px;height:35px;border:0;border-radius:10px;background:var(--card2);cursor:pointer}.modal-body{padding:20px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.detail{padding:13px;border:1px solid var(--line);border-radius:14px;background:var(--card2)}.detail.full{grid-column:1/-1}.detail small{display:block;color:var(--muted);font-size:8px;text-transform:uppercase;font-weight:900;margin-bottom:5px}.detail strong{font-size:10px;line-height:1.65;word-break:break-word}
+body.dark{--bg:#071426;--card:#0d1d31;--card2:#10243c;--text:#edf4ff;--muted:#91a5be;--line:#1c334d;--shadow:0 20px 55px rgba(0,0,0,.24)}
+body.dark .table tbody tr:hover{background:#10253c}body.dark .search{color:#edf4ff}body.dark .icon-btn{color:#edf4ff}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@keyframes fade{from{opacity:0}to{opacity:1}}@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+@media(max-width:950px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:none}.main{margin-left:0;padding:15px}.mobile-menu{display:grid}.stats{grid-template-columns:1fr 1fr}.hero-actions{position:static;margin-top:16px}.panel-head{align-items:stretch;flex-direction:column}.search-box{min-width:0;width:100%}}
+@media(max-width:560px){.stats{grid-template-columns:1fr}.detail-grid{grid-template-columns:1fr}.detail.full{grid-column:auto}.hero h1{font-size:28px}.main{padding:10px}.hero{padding:25px 21px}}
+</style></head>
+<body><div class="app">
+<aside class="sidebar" id="sidebar">
+<div class="brand"><div class="brand-logo"><i class="fas fa-school"></i></div><div><h2>Gyan Jyoti</h2><span>School Administration</span></div></div>
+<div class="menu-label">Main Menu</div><nav class="menu">
+<a href="/admin/dashboard"><i class="fas fa-grid-2"></i><span>Dashboard</span></a>
+<a href="/admin/admissions" class=""><i class="fas fa-user-graduate"></i><span>Admissions</span><% if(admissionCount>0){ %><b class="menu-count"><%= admissionCount %></b><% } %></a>
+<a href="/admin/enquiries" class="active"><i class="fas fa-message"></i><span>Enquiries</span><% if(enquiryCount>0){ %><b class="menu-count"><%= enquiryCount %></b><% } %></a>
+<a href="/admin/contacts" class=""><i class="fas fa-address-book"></i><span>Contacts</span><% if(contactCount>0){ %><b class="menu-count"><%= contactCount %></b><% } %></a>
+<a href="/admin/payments"><i class="fas fa-wallet"></i><span>Fees & Payments</span></a>
+<a href="/admin/events"><i class="fas fa-calendar-days"></i><span>Events</span></a>
+<a href="/admin/faculty"><i class="fas fa-chalkboard-user"></i><span>Faculty</span></a>
+</nav>
+<div class="menu-label" style="margin-top:24px">System</div><nav class="menu">
+<a href="/admin/settings"><i class="fas fa-gear"></i><span>Settings</span></a>
+<a href="/admin/logout"><i class="fas fa-right-from-bracket"></i><span>Logout</span></a>
+</nav>
+<div class="sidebar-footer"><small>SIGNED IN AS</small><strong><%= currentAdminName %></strong></div>
+</aside>
+
+<main class="main">
+<div class="topbar"><div class="crumb">Admin <span>/</span> <strong>Enquiries</strong></div><div class="top-actions">
+<button class="icon-btn mobile-menu" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+<a class="icon-btn" href="/admin/dashboard" title="Dashboard"><i class="fas fa-house"></i></a>
+<button class="icon-btn" onclick="toggleTheme()" title="Theme"><i class="fas fa-moon"></i></button></div></div>
+<section class="hero"><div class="eyebrow"><i class="fas fa-message"></i> Gyan Jyoti Administration</div>
+<h1>Enquiries</h1><p>Manage school enquiries with contact details, messages, status and quick inspection.</p><div class="hero-actions"><a class="hero-btn" href="/admin/dashboard"><i class="fas fa-arrow-left"></i> Dashboard</a>
+<button class="hero-btn" onclick="location.reload()"><i class="fas fa-rotate"></i> Refresh</button></div></section>
+<section class="stats">
+<div class="stat"><div class="stat-icon"><i class="fas fa-database"></i></div><div><b><%= data.length %></b><span>Total Records</span></div></div>
+<div class="stat"><div class="stat-icon"><i class="fas fa-clock"></i></div><div><b><%= data.filter(x=>x.createdAt && (Date.now()-new Date(x.createdAt).getTime())<604800000).length %></b><span>Last 7 Days</span></div></div>
+<div class="stat"><div class="stat-icon"><i class="fas fa-calendar"></i></div><div><b><%= data.filter(x=>x.createdAt && new Date(x.createdAt).getMonth()===new Date().getMonth() && new Date(x.createdAt).getFullYear()===new Date().getFullYear()).length %></b><span>This Month</span></div></div>
+<div class="stat"><div class="stat-icon"><i class="fas fa-bolt"></i></div><div><b><%= data.filter(x=>!x.status || ['new','pending'].includes(String(x.status).toLowerCase())).length %></b><span>Needs Attention</span></div></div>
+</section>
+<section class="panel"><div class="panel-head"><div><h2>All Enquiries</h2><p>Search, inspect and manage records using the existing backend routes.</p></div>
+<div class="search-box"><i class="fas fa-search"></i><input id="search" class="search" autocomplete="off" placeholder="Search records..." oninput="filterRows(this.value)"></div></div>
+<div class="table-wrap"><table class="table"><thead><tr><th>Applicant</th><th>Phone</th><th>Message</th><th>Received</th><th>Status</th><th>Action</th></tr></thead><tbody id="rows"><% if(!data.length){ %><tr><td colspan="6"><div class="empty"><i class="fas fa-message"></i>No enquiry records found.</div></td></tr><% } %>
+<% data.forEach(e=>{ %><tr>
+<td><span class="primary"><%= safeText(e.name) %></span><span class="secondary"><%= safeText(e.email) %></span></td><td><%= safeText(e.phone) %></td>
+<td><span class="secondary"><%= safeText(e.message) %></span></td><td><%= formatDate(e.createdAt) %></td>
+<td><span class="pill gold"><%= safeText(e.status,'New') %></span></td>
+<td><div class="actions-cell"><button class="action" onclick="openModal(this)" title="View"><i class="fas fa-eye"></i></button>
+<a class="action" href="/admin/enquiry/edit/<%= e._id %>" title="Edit"><i class="fas fa-pen"></i></a>
+<a class="action danger" href="/admin/enquiry/delete/<%= e._id %>" title="Delete" onclick="return confirm('Delete this enquiry permanently?')"><i class="fas fa-trash"></i></a></div></td>
+</tr><% }) %></tbody></table></div></section>
+<div class="footer">Gyan Jyoti School Admin Panel • Secure Enquiries Management</div>
+</main></div>
+<div class="modal" id="modal"><div class="modal-box"><div class="modal-head"><div><h3 id="modalTitle">Record Details</h3><p>Complete information from the current database record</p></div>
+<button class="close" onclick="closeModal()"><i class="fas fa-xmark"></i></button></div><div class="modal-body"><div class="detail-grid" id="details"></div></div></div></div>
+<script>
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function toggleTheme(){document.body.classList.toggle('dark');localStorage.setItem('gj-admin-theme',document.body.classList.contains('dark')?'dark':'light')}
+if(localStorage.getItem('gj-admin-theme')==='dark')document.body.classList.add('dark');
+function filterRows(q){q=String(q||'').toLowerCase().trim();document.querySelectorAll('#rows tr').forEach(r=>r.style.display=r.innerText.toLowerCase().includes(q)?'':'none')}
+function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+function labelize(k){return k.replace(/([A-Z])/g,' $1').replace(/_/g,' ').replace(/^./,s=>s.toUpperCase())}
+function openModal(btn){const d=btn.closest('tr').children;let title=d[0]?d[0].innerText:'Record Details';document.getElementById('modalTitle').textContent=title;let h='';Array.from(d).forEach((cell,i)=>{h+=`<div class="detail ${i===2?'full':''}"><small>Field ${i+1}</small><strong>${escapeHtml(cell.innerText.trim())}</strong></div>`});document.getElementById('details').innerHTML=h;document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+</script></body></html>

@@ -16,7 +16,12 @@ const upload = require("../config/multerPopup");
 // =========================================================
 
 const csrfProtection = csrf({
-    cookie: false
+    cookie: {
+        key: 'gj_popup_csrf',
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production'
+    }
 });
 
 
@@ -52,6 +57,45 @@ function safeNumber(value, defaultValue = 0) {
 
 
 // =========================================================
+// CHECKBOX HELPER
+// =========================================================
+//
+// Popup forms use:
+//
+// hidden input  -> false
+// checkbox      -> true
+//
+// Express can therefore receive either:
+// "true"
+// "false"
+// or an array like ["false", "true"]
+// =========================================================
+
+function checkboxValue(value) {
+
+    if (Array.isArray(value)) {
+
+        return value.some(
+            (item) =>
+                item === true ||
+                item === "true" ||
+                item === "on" ||
+                item === "1"
+        );
+
+    }
+
+    return (
+        value === true ||
+        value === "true" ||
+        value === "on" ||
+        value === "1"
+    );
+
+}
+
+
+// =========================================================
 // MULTIPART CSRF PROTECTION
 // =========================================================
 //
@@ -64,7 +108,9 @@ function safeNumber(value, defaultValue = 0) {
 
 function multipartCsrf(req, res, next) {
 
-    csrfProtection(
+    // multer has already parsed the multipart form, so req.body._csrf
+    // is now available to csurf.
+    return csrfProtection(
         req,
         res,
         function (err) {
@@ -82,6 +128,22 @@ function multipartCsrf(req, res, next) {
                     );
 
                 }
+
+                console.error(
+                    "❌ Popup CSRF validation failed:",
+                    req.method,
+                    req.originalUrl,
+                    "bodyTokenPresent:",
+                    Boolean(
+                        req.body &&
+                        req.body._csrf
+                    ),
+                    "csrfCookiePresent:",
+                    Boolean(
+                        req.cookies &&
+                        req.cookies.gj_popup_csrf
+                    )
+                );
 
                 return next(err);
 
@@ -103,6 +165,7 @@ function multipartCsrf(req, res, next) {
 router.get(
     "/",
     auth,
+    csrfProtection,
     async (req, res) => {
 
         try {
@@ -122,11 +185,18 @@ router.get(
             );
 
 
+            // Generate CSRF token for the popup manager page.
+            // This token is required by the Delete forms.
+            const csrfToken =
+                req.csrfToken();
+
+
             return res.render(
                 "admin/popup/index",
                 {
                     title: "Popup Manager",
-                    popups
+                    popups,
+                    csrfToken
                 }
             );
 
@@ -160,12 +230,16 @@ router.get(
     csrfProtection,
     (req, res) => {
 
+        const csrfToken =
+            req.csrfToken();
+
+
         return res.render(
             "admin/popup/add",
             {
                 title: "Add Popup",
                 active: "popup",
-                csrfToken: req.csrfToken()
+                csrfToken
             }
         );
 
@@ -354,11 +428,20 @@ router.post(
 
                     buttonLink,
 
+
+                    // FIX:
+                    // Checkbox sends "true", not "on".
                     enabled:
-                        req.body.enabled === "on",
+                        checkboxValue(
+                            req.body.enabled
+                        ),
+
 
                     showOnce:
-                        req.body.showOnce === "on",
+                        checkboxValue(
+                            req.body.showOnce
+                        ),
+
 
                     delay,
 
@@ -446,12 +529,16 @@ router.get(
             }
 
 
+            const csrfToken =
+                req.csrfToken();
+
+
             return res.render(
                 "admin/popup/edit",
                 {
                     title: "Edit Popup",
                     popup,
-                    csrfToken: req.csrfToken()
+                    csrfToken
                 }
             );
 
@@ -665,11 +752,20 @@ router.post(
 
                 buttonLink,
 
+
+                // FIX:
+                // Checkbox sends "true", not "on".
                 enabled:
-                    req.body.enabled === "on",
+                    checkboxValue(
+                        req.body.enabled
+                    ),
+
 
                 showOnce:
-                    req.body.showOnce === "on",
+                    checkboxValue(
+                        req.body.showOnce
+                    ),
+
 
                 delay,
 

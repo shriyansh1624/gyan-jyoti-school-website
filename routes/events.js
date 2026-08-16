@@ -1,22 +1,116 @@
 const express = require('express');
 const router = express.Router();
 
+const mongoose = require('mongoose');
+
 const Event = require('../models/Event');
 const SchoolInfo = require('../models/SchoolInfo');
 
+
 // =========================================================
-// HELPER
+// HELPERS
 // =========================================================
 
 async function getSchoolInfo() {
-
     return await SchoolInfo.findOne().lean();
+}
+
+
+function isValidObjectId(id) {
+    return mongoose.Types.ObjectId.isValid(id);
+}
+
+
+// =========================================================
+// RENDER EVENT DETAILS
+// =========================================================
+
+async function renderEventDetails(req, res, eventId) {
+
+    try {
+
+        // -------------------------------------------------
+        // VALIDATE ID
+        // -------------------------------------------------
+
+        if (!isValidObjectId(eventId)) {
+
+            return res.status(404).send(
+                'Event not found'
+            );
+
+        }
+
+
+        // -------------------------------------------------
+        // FIND PUBLISHED EVENT
+        // -------------------------------------------------
+
+        const event = await Event.findOne({
+
+            _id: eventId,
+
+            published: true
+
+        }).lean();
+
+
+        if (!event) {
+
+            return res.status(404).send(
+                'Event not found'
+            );
+
+        }
+
+
+        // -------------------------------------------------
+        // SCHOOL INFO
+        // -------------------------------------------------
+
+        const schoolInfo =
+            await getSchoolInfo();
+
+
+        // -------------------------------------------------
+        // DETAILS PAGE
+        // -------------------------------------------------
+
+        return res.render(
+            'events/details',
+            {
+
+                event,
+
+                schoolInfo,
+
+                title:
+                    event.title,
+
+                active:
+                    'events'
+
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            '❌ Error loading event details:',
+            error
+        );
+
+        return res.status(500).send(
+            'Error loading event'
+        );
+
+    }
 
 }
 
 
 // =========================================================
-// DEFAULT EVENTS ROUTE
+// DEFAULT EVENTS
 // GET /events
 // =========================================================
 
@@ -81,7 +175,6 @@ router.get(
                 }
             );
 
-
         } catch (error) {
 
             console.error(
@@ -89,10 +182,7 @@ router.get(
                 error
             );
 
-
-            return res.status(
-                500
-            ).send(
+            return res.status(500).send(
                 'Error loading Fun & Fiesta'
             );
 
@@ -154,7 +244,6 @@ router.get(
                 }
             );
 
-
         } catch (error) {
 
             console.error(
@@ -162,10 +251,7 @@ router.get(
                 error
             );
 
-
-            return res.status(
-                500
-            ).send(
+            return res.status(500).send(
                 'Error loading Sports'
             );
 
@@ -195,7 +281,9 @@ router.get(
 
                             'republic-day',
 
-                            'independence-day'
+                            'independence-day',
+
+                            'national-celebration'
 
                         ]
 
@@ -236,7 +324,6 @@ router.get(
                 }
             );
 
-
         } catch (error) {
 
             console.error(
@@ -244,10 +331,7 @@ router.get(
                 error
             );
 
-
-            return res.status(
-                500
-            ).send(
+            return res.status(500).send(
                 'Error loading National Celebrations'
             );
 
@@ -309,7 +393,6 @@ router.get(
                 }
             );
 
-
         } catch (error) {
 
             console.error(
@@ -317,10 +400,7 @@ router.get(
                 error
             );
 
-
-            return res.status(
-                500
-            ).send(
+            return res.status(500).send(
                 'Error loading Old Memories'
             );
 
@@ -331,12 +411,22 @@ router.get(
 
 
 // =========================================================
-// SINGLE EVENT DETAILS
-// GET /events/event/:id
+// GALLERY
+// GET /gallery
+// =========================================================
+//
+// Opens the latest published event.
+//
+// /gallery
+//      ↓
+// latest published event
+//      ↓
+// events/details.ejs
+//
 // =========================================================
 
 router.get(
-    '/event/:id',
+    '/gallery',
     async (req, res) => {
 
         try {
@@ -344,11 +434,17 @@ router.get(
             const event =
                 await Event.findOne({
 
-                    _id:
-                        req.params.id,
-
                     published:
                         true
+
+                })
+                .sort({
+
+                    priority: 1,
+
+                    date: -1,
+
+                    createdAt: -1
 
                 })
                 .lean();
@@ -356,10 +452,8 @@ router.get(
 
             if (!event) {
 
-                return res.status(
-                    404
-                ).send(
-                    'Event not found'
+                return res.status(404).send(
+                    'No published events found'
                 );
 
             }
@@ -386,22 +480,74 @@ router.get(
                 }
             );
 
-
         } catch (error) {
 
             console.error(
-                '❌ Error loading event details:',
+                '❌ Error loading Gallery:',
                 error
             );
 
-
-            return res.status(
-                500
-            ).send(
-                'Error loading event'
+            return res.status(500).send(
+                'Error loading Gallery'
             );
 
         }
+
+    }
+);
+
+
+// =========================================================
+// SPECIFIC EVENT GALLERY
+// GET /gallery/:id
+// =========================================================
+//
+// Example:
+//
+// /gallery/665f123456789
+//
+//      ↓
+//
+// events/details.ejs
+//
+// =========================================================
+
+router.get(
+    '/gallery/:id',
+    async (req, res) => {
+
+        return renderEventDetails(
+            req,
+            res,
+            req.params.id
+        );
+
+    }
+);
+
+
+// =========================================================
+// SINGLE EVENT DETAILS
+// GET /events/event/:id
+// =========================================================
+//
+// Existing URL preserved.
+//
+// /events/event/:id
+//      ↓
+// events/details.ejs
+//
+// =========================================================
+
+router.get(
+    '/event/:id',
+    async (req, res) => {
+
+        return renderEventDetails(
+            req,
+            res,
+            req.params.id
+        );
 
     }
 );

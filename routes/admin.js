@@ -9,10 +9,49 @@ const Contact = require('../models/Contact');
 const Admin = require('../models/Admin');
 const Enquiry = require('../models/Enquiry');
 const Admission = require('../models/Admission');
-const Event = require('../models/Event');
-const FeeStructure = require('../models/FeeStructure');
+const Payment = require('../models/Payment');
+const PrincipalContact = require('../models/PrincipalContact');
+
 
 const auth = require('../middleware/auth');
+
+
+// =========================================================
+// CSRF PROTECTION
+// =========================================================
+
+const csrfProtection = csrf({
+    cookie: false
+});
+
+router.use(csrfProtection);
+
+
+// =========================================================
+// GLOBAL CSRF TOKEN
+// =========================================================
+
+router.use((req, res, next) => {
+
+    try {
+
+        res.locals.csrfToken =
+            req.csrfToken();
+
+        next();
+
+    } catch (error) {
+
+        console.error(
+            'CSRF token generation error:',
+            error
+        );
+
+        next(error);
+
+    }
+
+});
 
 
 // =========================================================
@@ -46,7 +85,7 @@ function isValidId(id) {
 }
 
 
-function safeRegex(value) {
+function escapeRegex(value) {
 
     return String(value || '')
         .replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -55,49 +94,7 @@ function safeRegex(value) {
 
 
 // =========================================================
-// CSRF PROTECTION
-// =========================================================
-
-const csrfProtection = csrf({
-    cookie: false
-});
-
-
-router.use(csrfProtection);
-
-
-// =========================================================
-// GLOBAL CSRF TOKEN
-// =========================================================
-
-router.use(
-    (req, res, next) => {
-
-        try {
-
-            res.locals.csrfToken =
-                req.csrfToken();
-
-            next();
-
-        } catch (error) {
-
-            console.error(
-                'CSRF token generation error:',
-                error
-            );
-
-            next(error);
-
-        }
-
-    }
-);
-
-
-// =========================================================
 // ADMIN LOGIN PAGE
-// =========================================================
 // GET /admin/login
 // =========================================================
 
@@ -141,7 +138,6 @@ router.get(
                 error
             );
 
-
             return res.status(500).send(
                 'Unable to load admin login page'
             );
@@ -153,8 +149,8 @@ router.get(
 
 
 // =========================================================
-// ADMIN LOGIN
 // =========================================================
+// ADMIN LOGIN
 // POST /admin/login
 // =========================================================
 
@@ -162,255 +158,196 @@ router.post(
     '/login',
     async (req, res) => {
 
+        const renderLogin = (statusCode, error) => {
+            return res.status(statusCode).render(
+                'admin/login',
+                {
+                    title: 'Admin Login - Gyan Jyoti School',
+                    error: error,
+                    csrfToken:
+                        typeof req.csrfToken === 'function'
+                            ? req.csrfToken()
+                            : ''
+                }
+            );
+        };
+
         try {
 
             const email =
-                String(
-                    req.body.email || ''
-                )
-                    .trim()
-                    .toLowerCase();
-
+                validator.normalizeEmail(
+                    String(req.body.email || '').trim()
+                ) || '';
 
             const password =
-                String(
-                    req.body.password || ''
+                String(req.body.password || '');
+
+            if (!email || !password) {
+                return renderLogin(
+                    400,
+                    'Email and password are required.'
                 );
-
-
-            // =================================================
-            // VALIDATION
-            // =================================================
-
-            if (
-                !email ||
-                !password
-            ) {
-
-                return res.status(400).render(
-                    'admin/login',
-                    {
-
-                        title:
-                            'Admin Login - Gyan Jyoti School',
-
-                        error:
-                            'Email and password are required.',
-
-                        csrfToken:
-                            req.csrfToken()
-
-                    }
-                );
-
             }
 
-
-            if (
-                !validator.isEmail(email)
-            ) {
-
-                return res.status(400).render(
-                    'admin/login',
-                    {
-
-                        title:
-                            'Admin Login - Gyan Jyoti School',
-
-                        error:
-                            'Please enter a valid email address.',
-
-                        csrfToken:
-                            req.csrfToken()
-
-                    }
+            if (!validator.isEmail(email)) {
+                return renderLogin(
+                    400,
+                    'Please enter a valid email address.'
                 );
-
             }
-
-
-            // =================================================
-            // FIND ADMIN
-            // =================================================
 
             const admin =
-                await Admin.findOne({
+                await Admin.findOne({ email });
+
+            if (!admin) {
+                console.log(
+                    'ADMIN LOGIN FAILED: Admin not found:',
                     email
-                });
-
-
-            // =================================================
-            // PASSWORD CHECK
-            // =================================================
-
-            if (
-                !admin ||
-                typeof admin.comparePassword !==
-                    'function' ||
-                !(await admin.comparePassword(password))
-            ) {
-
-                return res.status(401).render(
-                    'admin/login',
-                    {
-
-                        title:
-                            'Admin Login - Gyan Jyoti School',
-
-                        error:
-                            'Invalid email or password.',
-
-                        csrfToken:
-                            req.csrfToken()
-
-                    }
                 );
 
+                return renderLogin(
+                    401,
+                    'Invalid email or password.'
+                );
             }
 
+            // Prefer the Admin model's comparePassword().
+            // Fallback to bcryptjs/bcrypt for older Admin models.
+            let passwordMatch = false;
 
-            // =================================================
-            // SESSION FIXATION PROTECTION
-            // =================================================
+            if (
+                typeof admin.comparePassword === 'function'
+            ) {
+                passwordMatch =
+                    await admin.comparePassword(password);
+            } else {
+                let bcrypt = null;
+
+                try {
+                    bcrypt = require('bcryptjs');
+                } catch (e) {
+                    try {
+                        bcrypt = require('bcrypt');
+                    } catch (e2) {
+                        bcrypt = null;
+                    }
+                }
+
+                if (bcrypt && admin.password) {
+                    passwordMatch =
+                        await bcrypt.compare(
+                            password,
+                            admin.password
+                        );
+                } else {
+                    // Legacy plaintext fallback only when the stored
+                    // password is actually plaintext.
+                    passwordMatch =
+                        String(admin.password || '') === password;
+                }
+            }
+
+            if (!passwordMatch) {
+                console.log(
+                    'ADMIN LOGIN FAILED: Wrong password for:',
+                    email
+                );
+
+                return renderLogin(
+                    401,
+                    'Invalid email or password.'
+                );
+            }
+
+            // Regenerate the session after authentication.
+            if (!req.session) {
+                return renderLogin(
+                    500,
+                    'Login session is unavailable. Restart the server and try again.'
+                );
+            }
 
             return req.session.regenerate(
                 (sessionError) => {
 
                     if (sessionError) {
-
                         console.error(
-                            'Session regeneration error:',
+                            'SESSION REGENERATION ERROR:',
                             sessionError
                         );
 
-
-                        return res.status(500).render(
-                            'admin/login',
-                            {
-
-                                title:
-                                    'Admin Login - Gyan Jyoti School',
-
-                                error:
-                                    'Unable to create login session.',
-
-                                csrfToken:
-                                    req.csrfToken()
-
-                            }
+                        return renderLogin(
+                            500,
+                            'Unable to create login session. Please try again.'
                         );
-
                     }
 
-
-                    // =================================================
-                    // STORE ADMIN SESSION
-                    // =================================================
-
                     req.session.admin = {
-
                         id:
-                            admin._id.toString(),
+                            String(admin._id),
 
                         name:
                             String(
-                                admin.name ||
-                                'Admin'
-                            ),
+                                admin.name || 'Admin'
+                            ).slice(0, 100),
 
                         email:
                             String(
-                                admin.email ||
-                                email
-                            ),
+                                admin.email || email
+                            ).slice(0, 254),
 
                         role:
                             String(
-                                admin.role ||
-                                'admin'
+                                admin.role || 'admin'
                             )
-
                     };
-
-
-                    // =================================================
-                    // SAVE SESSION
-                    // =================================================
 
                     return req.session.save(
                         (saveError) => {
 
                             if (saveError) {
-
                                 console.error(
-                                    'Session save error:',
+                                    'SESSION SAVE ERROR:',
                                     saveError
                                 );
 
-
-                                return res.status(500).render(
-                                    'admin/login',
-                                    {
-
-                                        title:
-                                            'Admin Login - Gyan Jyoti School',
-
-                                        error:
-                                            'Unable to save login session.',
-
-                                        csrfToken:
-                                            req.csrfToken()
-
-                                    }
+                                return renderLogin(
+                                    500,
+                                    'Unable to save login session. Please try again.'
                                 );
-
                             }
 
+                            console.log(
+                                'ADMIN LOGIN SUCCESS:',
+                                email
+                            );
 
                             return res.redirect(
                                 '/admin/dashboard'
                             );
-
                         }
                     );
-
                 }
             );
-
 
         } catch (error) {
 
             console.error(
-                'Admin login error:',
+                'ADMIN LOGIN ERROR:',
                 error
             );
 
-
-            return res.status(500).render(
-                'admin/login',
-                {
-
-                    title:
-                        'Admin Login - Gyan Jyoti School',
-
-                    error:
-                        'Something went wrong. Please try again.',
-
-                    csrfToken:
-                        req.csrfToken()
-
-                }
+            return renderLogin(
+                500,
+                'Server error while logging in. Please try again.'
             );
-
         }
-
     }
 );
 
 
 // =========================================================
-// ADMIN DASHBOARD
-// =========================================================
+// ADMIN DASHBOARD + SEARCH
 // GET /admin/dashboard
 // =========================================================
 
@@ -421,30 +358,16 @@ router.get(
 
         try {
 
-            // =================================================
-            // ADMIN NAME
-            // =================================================
-
-            const adminName =
-                req.session &&
-                req.session.admin &&
-                req.session.admin.name
-                    ? req.session.admin.name
-                    : 'Administrator';
-
-
-            // =================================================
-            // SEARCH
-            // =================================================
-
             const keyword =
                 String(
                     req.query.keyword || ''
                 ).trim();
 
 
-            const searchValue =
-                safeRegex(keyword);
+            const searchRegex =
+                keyword
+                    ? escapeRegex(keyword)
+                    : '';
 
 
             // =================================================
@@ -454,39 +377,37 @@ router.get(
             const contactQuery =
                 keyword
                     ? {
-
                         $or: [
 
                             {
                                 name: {
-                                    $regex: searchValue,
+                                    $regex: searchRegex,
                                     $options: 'i'
                                 }
                             },
 
                             {
                                 email: {
-                                    $regex: searchValue,
+                                    $regex: searchRegex,
                                     $options: 'i'
                                 }
                             },
 
                             {
                                 phone: {
-                                    $regex: searchValue,
+                                    $regex: searchRegex,
                                     $options: 'i'
                                 }
                             },
 
                             {
                                 subject: {
-                                    $regex: searchValue,
+                                    $regex: searchRegex,
                                     $options: 'i'
                                 }
                             }
 
                         ]
-
                     }
                     : {};
 
@@ -498,39 +419,37 @@ router.get(
             const enquiryQuery =
                 keyword
                     ? {
-
                         $or: [
 
                             {
                                 name: {
-                                    $regex: searchValue,
+                                    $regex: searchRegex,
                                     $options: 'i'
                                 }
                             },
 
                             {
                                 email: {
-                                    $regex: searchValue,
+                                    $regex: searchRegex,
                                     $options: 'i'
                                 }
                             },
 
                             {
                                 phone: {
-                                    $regex: searchValue,
+                                    $regex: searchRegex,
                                     $options: 'i'
                                 }
                             },
 
                             {
                                 message: {
-                                    $regex: searchValue,
+                                    $regex: searchRegex,
                                     $options: 'i'
                                 }
                             }
 
                         ]
-
                     }
                     : {};
 
@@ -542,52 +461,50 @@ router.get(
             const admissionQuery =
                 keyword
                     ? {
-
                         $or: [
 
                             {
                                 studentName: {
-                                    $regex: searchValue,
+                                    $regex: searchRegex,
                                     $options: 'i'
                                 }
                             },
 
                             {
                                 parentName: {
-                                    $regex: searchValue,
+                                    $regex: searchRegex,
                                     $options: 'i'
                                 }
                             },
 
                             {
                                 phone: {
-                                    $regex: searchValue,
+                                    $regex: searchRegex,
                                     $options: 'i'
                                 }
                             },
 
                             {
                                 email: {
-                                    $regex: searchValue,
+                                    $regex: searchRegex,
                                     $options: 'i'
                                 }
                             },
 
                             {
                                 class: {
-                                    $regex: searchValue,
+                                    $regex: searchRegex,
                                     $options: 'i'
                                 }
                             }
 
                         ]
-
                     }
                     : {};
 
 
             // =================================================
-            // FILTERED RECORDS
+            // FETCH DATA
             // =================================================
 
             const contacts =
@@ -618,7 +535,7 @@ router.get(
 
 
             // =================================================
-            // ALL RECORDS
+            // ALL DATA
             // =================================================
 
             const allContacts =
@@ -640,113 +557,87 @@ router.get(
 
 
             // =================================================
+            // PAYMENT STATISTICS
+            // =================================================
+
+            const totalPayments =
+                await Payment.countDocuments();
+
+
+            const paidPayments =
+                await Payment.countDocuments({
+                    status: 'paid'
+                });
+
+
+            const pendingPayments =
+                await Payment.countDocuments({
+                    status: 'pending'
+                });
+
+
+            const failedPayments =
+                await Payment.countDocuments({
+                    status: 'failed'
+                });
+
+
+            const cancelledPayments =
+                await Payment.countDocuments({
+                    status: 'cancelled'
+                });
+
+
+            const refundedPayments =
+                await Payment.countDocuments({
+                    status: 'refunded'
+                });
+
+
+            const revenueResult =
+                await Payment.aggregate([
+
+                    {
+                        $match: {
+                            status: 'paid'
+                        }
+                    },
+
+                    {
+                        $group: {
+
+                            _id: null,
+
+                            total: {
+                                $sum: '$amount'
+                            }
+
+                        }
+                    }
+
+                ]);
+
+
+            const totalRevenue =
+                revenueResult.length
+                    ? revenueResult[0].total
+                    : 0;
+
+
+            // =================================================
             // COUNTS
             // =================================================
 
-            const contactCount =
-                allContacts.length;
-
-
-            const enquiryCount =
-                allEnquiries.length;
-
-
-            const admissionCount =
-                allAdmissions.length;
-
-
             const totalCount =
-                contactCount +
-                enquiryCount +
-                admissionCount;
+                allContacts.length +
+                allEnquiries.length +
+                allAdmissions.length;
 
 
             const notificationCount =
                 contacts.length +
                 enquiries.length +
                 admissions.length;
-
-
-            // =================================================
-            // EVENTS STATISTICS
-            // =================================================
-
-            const totalEvents =
-                await Event.countDocuments();
-
-
-            const publishedEvents =
-                await Event.countDocuments({
-                    published: true
-                });
-
-
-            const draftEvents =
-                await Event.countDocuments({
-                    published: false
-                });
-
-
-            const funFiestaCount =
-                await Event.countDocuments({
-                    category: 'fun-fiesta'
-                });
-
-
-            const sportsCount =
-                await Event.countDocuments({
-                    category: 'sports'
-                });
-
-
-            // =================================================
-            // NATIONAL DAYS
-            // =================================================
-            // Current system supports both old and new category
-            // structures.
-
-            const nationalCount =
-                await Event.countDocuments({
-                    category: {
-                        $in: [
-                            'national-celebration',
-                            'republic-day',
-                            'independence-day'
-                        ]
-                    }
-                });
-
-
-            const oldMemoryCount =
-                await Event.countDocuments({
-                    category: 'old-memory'
-                });
-
-
-            // =================================================
-            // FEES STATISTICS
-            // =================================================
-
-            const totalFeeStructures =
-                await FeeStructure.countDocuments();
-
-
-            const publishedFeeStructures =
-                await FeeStructure.countDocuments({
-                    published: true
-                });
-
-
-            const hiddenFeeStructures =
-                await FeeStructure.countDocuments({
-                    published: false
-                });
-
-
-            const feeSessions =
-                await FeeStructure.distinct(
-                    'session'
-                );
 
 
             // =================================================
@@ -761,7 +652,6 @@ router.get(
                 const d =
                     new Date(date);
 
-
                 return d.toLocaleString(
                     'en-IN',
                     {
@@ -773,12 +663,8 @@ router.get(
             }
 
 
-            // =================================================
-            // ADMISSION MONTHLY DATA
-            // =================================================
-
             allAdmissions.forEach(
-                (admission) => {
+                admission => {
 
                     const key =
                         monthKey(
@@ -799,19 +685,14 @@ router.get(
                     }
 
 
-                    monthMap[key]
-                        .admissions++;
+                    monthMap[key].admissions++;
 
                 }
             );
 
 
-            // =================================================
-            // ENQUIRY MONTHLY DATA
-            // =================================================
-
             allEnquiries.forEach(
-                (enquiry) => {
+                enquiry => {
 
                     const key =
                         monthKey(
@@ -832,108 +713,29 @@ router.get(
                     }
 
 
-                    monthMap[key]
-                        .enquiries++;
+                    monthMap[key].enquiries++;
 
                 }
             );
 
 
-            // =================================================
-            // LAST 6 MONTHS
-            // =================================================
-
-            const now =
-                new Date();
+            const monthlyLabels =
+                Object.keys(monthMap)
+                    .slice(-6);
 
 
-            const monthlyStats = [];
+            const monthlyAdmissions =
+                monthlyLabels.map(
+                    month =>
+                        monthMap[month].admissions
+                );
 
 
-            for (
-                let i = 5;
-                i >= 0;
-                i--
-            ) {
-
-                const date =
-                    new Date(
-                        now.getFullYear(),
-                        now.getMonth() - i,
-                        1
-                    );
-
-
-                const key =
-                    date.toLocaleString(
-                        'en-IN',
-                        {
-                            month: 'short',
-                            year: '2-digit'
-                        }
-                    );
-
-
-                monthlyStats.push({
-
-                    month:
-                        key,
-
-                    admissions:
-                        monthMap[key]
-                            ? monthMap[key].admissions
-                            : 0,
-
-                    enquiries:
-                        monthMap[key]
-                            ? monthMap[key].enquiries
-                            : 0
-
-                });
-
-            }
-
-
-            // =================================================
-            // RECENT CONTACTS
-            // =================================================
-
-            const recentContacts =
-                await Contact
-                    .find()
-                    .sort({
-                        createdAt: -1
-                    })
-                    .limit(5)
-                    .lean();
-
-
-            // =================================================
-            // RECENT ENQUIRIES
-            // =================================================
-
-            const recentEnquiries =
-                await Enquiry
-                    .find()
-                    .sort({
-                        createdAt: -1
-                    })
-                    .limit(5)
-                    .lean();
-
-
-            // =================================================
-            // RECENT ADMISSIONS
-            // =================================================
-
-            const recentAdmissions =
-                await Admission
-                    .find()
-                    .sort({
-                        createdAt: -1
-                    })
-                    .limit(5)
-                    .lean();
+            const monthlyEnquiries =
+                monthlyLabels.map(
+                    month =>
+                        monthMap[month].enquiries
+                );
 
 
             // =================================================
@@ -944,74 +746,52 @@ router.get(
                 'admin/dashboard',
                 {
 
-                    title:
-                        'Admin Dashboard - Gyan Jyoti School',
-
-                    active:
-                        'dashboard',
-
-                    keyword,
-
-                    // ADMIN
-                    adminName,
-
-
-                    // COUNTS
-                    contactCount,
-
-                    enquiryCount,
-
-                    admissionCount,
-
-                    totalCount,
-
-                    notificationCount,
-
-
-                    // RECORDS
                     contacts,
 
                     enquiries,
 
                     admissions,
 
+                    keyword,
 
-                    // RECENT RECORDS
-                    recentContacts,
+                    totalCount,
 
-                    recentEnquiries,
+                    contactCount:
+                        allContacts.length,
 
-                    recentAdmissions,
+                    enquiryCount:
+                        allEnquiries.length,
 
+                    admissionCount:
+                        allAdmissions.length,
 
-                    // CHART DATA
-                    monthlyStats,
+                    notificationCount,
 
+                    monthlyLabels,
 
-                    // EVENTS
-                    totalEvents,
+                    monthlyAdmissions,
 
-                    publishedEvents,
+                    monthlyEnquiries,
 
-                    draftEvents,
+                    totalPayments,
 
-                    funFiestaCount,
+                    paidPayments,
 
-                    sportsCount,
+                    pendingPayments,
 
-                    nationalCount,
+                    failedPayments,
 
-                    oldMemoryCount,
+                    cancelledPayments,
 
+                    refundedPayments,
 
-                    // FEES
-                    totalFeeStructures,
+                    totalRevenue,
 
-                    publishedFeeStructures,
+                    adminName:
+                        req.session.admin.name,
 
-                    hiddenFeeStructures,
-
-                    feeSessions
+                    title:
+                        'Admin Dashboard - Gyan Jyoti School'
 
                 }
             );
@@ -1024,9 +804,8 @@ router.get(
                 error
             );
 
-
             return res.status(500).send(
-                'Error loading dashboard'
+                'Dashboard loading error'
             );
 
         }
@@ -1036,8 +815,7 @@ router.get(
 
 
 // =========================================================
-// EDIT ADMISSION
-// GET /admin/admission/edit/:id
+// EDIT ADMISSION PAGE
 // =========================================================
 
 router.get(
@@ -1084,7 +862,10 @@ router.get(
                     title:
                         'Edit Admission - Admin',
 
-                    admission
+                    admission,
+
+                    csrfToken:
+                        req.csrfToken()
 
                 }
             );
@@ -1096,7 +877,6 @@ router.get(
                 'Edit admission page error:',
                 error
             );
-
 
             return res.status(500).send(
                 'Error loading admission'
@@ -1110,7 +890,6 @@ router.get(
 
 // =========================================================
 // UPDATE ADMISSION
-// POST /admin/admission/edit/:id
 // =========================================================
 
 router.post(
@@ -1162,10 +941,8 @@ router.post(
 
             const email =
                 validator.normalizeEmail(
-                    String(
-                        req.body.email || ''
-                    )
-                );
+                    req.body.email || ''
+                ) || '';
 
 
             const address =
@@ -1174,10 +951,6 @@ router.post(
                     300
                 );
 
-
-            // =================================================
-            // VALIDATION
-            // =================================================
 
             if (
                 !/^[A-Za-z\s.]{3,60}$/.test(
@@ -1218,50 +991,32 @@ router.post(
             }
 
 
-            // =================================================
-            // UPDATE
-            // =================================================
+            await Admission.findByIdAndUpdate(
+                req.params.id,
+                {
 
-            const updatedAdmission =
-                await Admission.findByIdAndUpdate(
+                    studentName,
 
-                    req.params.id,
+                    class:
+                        className,
 
-                    {
+                    parentName,
 
-                        studentName,
+                    phone,
 
-                        class:
-                            className,
+                    email,
 
-                        parentName,
+                    address
 
-                        phone,
+                },
+                {
 
-                        email,
+                    new: true,
 
-                        address
+                    runValidators: true
 
-                    },
-
-                    {
-
-                        new: true,
-
-                        runValidators: true
-
-                    }
-
-                );
-
-
-            if (!updatedAdmission) {
-
-                return res.status(404).send(
-                    'Admission not found'
-                );
-
-            }
+                }
+            );
 
 
             return res.redirect(
@@ -1275,7 +1030,6 @@ router.post(
                 'Update admission error:',
                 error
             );
-
 
             return res.status(500).send(
                 'Error updating admission'
@@ -1328,7 +1082,6 @@ router.get(
                 error
             );
 
-
             return res.status(500).send(
                 'Error deleting admission'
             );
@@ -1340,7 +1093,7 @@ router.get(
 
 
 // =========================================================
-// EDIT ENQUIRY
+// EDIT ENQUIRY PAGE
 // =========================================================
 
 router.get(
@@ -1387,7 +1140,10 @@ router.get(
                     title:
                         'Edit Enquiry - Admin',
 
-                    enquiry
+                    enquiry,
+
+                    csrfToken:
+                        req.csrfToken()
 
                 }
             );
@@ -1399,7 +1155,6 @@ router.get(
                 'Edit enquiry page error:',
                 error
             );
-
 
             return res.status(500).send(
                 'Error loading enquiry'
@@ -1450,10 +1205,8 @@ router.post(
 
             const email =
                 validator.normalizeEmail(
-                    String(
-                        req.body.email || ''
-                    )
-                );
+                    req.body.email || ''
+                ) || '';
 
 
             const message =
@@ -1462,10 +1215,6 @@ router.post(
                     500
                 );
 
-
-            // =================================================
-            // VALIDATION
-            // =================================================
 
             if (
                 !/^[A-Za-z\s.]{3,60}$/.test(
@@ -1493,45 +1242,27 @@ router.post(
             }
 
 
-            // =================================================
-            // UPDATE
-            // =================================================
+            await Enquiry.findByIdAndUpdate(
+                req.params.id,
+                {
 
-            const updatedEnquiry =
-                await Enquiry.findByIdAndUpdate(
+                    name,
 
-                    req.params.id,
+                    phone,
 
-                    {
+                    email,
 
-                        name,
+                    message
 
-                        phone,
+                },
+                {
 
-                        email,
+                    new: true,
 
-                        message
+                    runValidators: true
 
-                    },
-
-                    {
-
-                        new: true,
-
-                        runValidators: true
-
-                    }
-
-                );
-
-
-            if (!updatedEnquiry) {
-
-                return res.status(404).send(
-                    'Enquiry not found'
-                );
-
-            }
+                }
+            );
 
 
             return res.redirect(
@@ -1545,7 +1276,6 @@ router.post(
                 'Update enquiry error:',
                 error
             );
-
 
             return res.status(500).send(
                 'Error updating enquiry'
@@ -1598,7 +1328,6 @@ router.get(
                 error
             );
 
-
             return res.status(500).send(
                 'Error deleting enquiry'
             );
@@ -1650,7 +1379,6 @@ router.get(
                 error
             );
 
-
             return res.status(500).send(
                 'Error deleting contact'
             );
@@ -1662,40 +1390,1166 @@ router.get(
 
 
 // =========================================================
-// LOGOUT
+// PRINCIPAL CONTACT MANAGEMENT
+// Completely isolated from existing /admin/contacts
+// =========================================================
+
+// GET /admin/principal-contacts
+router.get('/principal-contacts', auth, async (req, res) => {
+    try {
+        const keyword = String(req.query.search || '').trim();
+
+        const search = keyword
+            ? keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+            : '';
+
+        const query = keyword
+            ? {
+                $or: [
+                    { name: { $regex: search, $options: 'i' } },
+                    { email: { $regex: search, $options: 'i' } },
+                    { phone: { $regex: search, $options: 'i' } },
+                    { subject: { $regex: search, $options: 'i' } },
+                    { message: { $regex: search, $options: 'i' } }
+                ]
+            }
+            : {};
+
+        const principalContacts = await PrincipalContact
+            .find(query)
+            .sort({ createdAt: -1 })
+            .lean();
+
+        return res.render('admin/principal-contacts', {
+            title: 'Principal Messages - Gyan Jyoti School',
+            principalContacts,
+            adminName:
+                req.session &&
+                req.session.admin
+                    ? String(
+                        req.session.admin.name ||
+                        'Administrator'
+                    )
+                    : 'Administrator'
+        });
+
+    } catch (error) {
+
+        console.error(
+            'Principal contacts page error:',
+            error
+        );
+
+        return res
+            .status(500)
+            .send('Error loading principal messages');
+    }
+});
+
+
+// =========================================================
+// MARK PRINCIPAL MESSAGE AS READ
+// POST /admin/principal-contacts/:id/read
+// =========================================================
+
+router.post(
+    '/principal-contacts/:id/read',
+    auth,
+    async (req, res) => {
+
+        try {
+
+            const updated =
+                await PrincipalContact.findByIdAndUpdate(
+                    req.params.id,
+                    {
+                        status: 'read',
+                        updatedAt: new Date()
+                    },
+                    {
+                        returnDocument: 'after'
+                    }
+                );
+
+            if (!updated) {
+                return res
+                    .status(404)
+                    .json({
+                        success: false,
+                        message: 'Principal message not found'
+                    });
+            }
+
+            return res.json({
+                success: true,
+                message: 'Message marked as read'
+            });
+
+        } catch (error) {
+
+            console.error(
+                'Principal message read error:',
+                error
+            );
+
+            return res
+                .status(500)
+                .json({
+                    success: false,
+                    message: 'Unable to update message'
+                });
+        }
+    }
+);
+
+
+// =========================================================
+// MARK PRINCIPAL MESSAGE AS RESOLVED
+// POST /admin/principal-contacts/:id/resolved
+// =========================================================
+
+router.post(
+    '/principal-contacts/:id/resolved',
+    auth,
+    async (req, res) => {
+
+        try {
+
+            const updated =
+                await PrincipalContact.findByIdAndUpdate(
+                    req.params.id,
+                    {
+                        status: 'resolved',
+                        updatedAt: new Date()
+                    },
+                    {
+                        returnDocument: 'after'
+                    }
+                );
+
+            if (!updated) {
+                return res
+                    .status(404)
+                    .json({
+                        success: false,
+                        message: 'Principal message not found'
+                    });
+            }
+
+            return res.json({
+                success: true,
+                message: 'Message marked as resolved'
+            });
+
+        } catch (error) {
+
+            console.error(
+                'Principal message resolve error:',
+                error
+            );
+
+            return res
+                .status(500)
+                .json({
+                    success: false,
+                    message: 'Unable to resolve message'
+                });
+        }
+    }
+);
+
+// =========================================================
+// PAYMENT MANAGEMENT
+// GET /admin/payments
 // =========================================================
 
 router.get(
-    '/logout',
-    (req, res) => {
+    '/payments',
+    auth,
+    async (req, res) => {
 
-        req.session.destroy(
-            (error) => {
+        try {
 
-                if (error) {
-
-                    console.error(
-                        'Logout error:',
-                        error
-                    );
-
-                }
+            const status =
+                String(
+                    req.query.status || ''
+                ).trim();
 
 
-                return res.redirect(
-                    '/'
-                );
+            const type =
+                String(
+                    req.query.type || ''
+                ).trim();
+
+
+            const keyword =
+                String(
+                    req.query.search || ''
+                ).trim();
+
+
+            const query = {};
+
+
+            const allowedStatuses = [
+
+                'pending',
+
+                'paid',
+
+                'failed',
+
+                'cancelled',
+
+                'refunded'
+
+            ];
+
+
+            if (
+                status &&
+                allowedStatuses.includes(
+                    status
+                )
+            ) {
+
+                query.status = status;
 
             }
-        );
+
+
+            if (
+                type === 'admission' ||
+                type === 'enquiry'
+            ) {
+
+                query.type = type;
+
+            }
+
+
+            // =================================================
+            // PAYMENT SEARCH
+            // =================================================
+
+            if (keyword) {
+
+                const regex =
+                    new RegExp(
+                        escapeRegex(keyword),
+                        'i'
+                    );
+
+
+                const matchingAdmissions =
+                    await Admission
+                        .find({
+                            $or: [
+
+                                {
+                                    studentName:
+                                        regex
+                                },
+
+                                {
+                                    parentName:
+                                        regex
+                                },
+
+                                {
+                                    phone:
+                                        regex
+                                },
+
+                                {
+                                    email:
+                                        regex
+                                }
+
+                            ]
+                        })
+                        .select('_id')
+                        .lean();
+
+
+                const matchingEnquiries =
+                    await Enquiry
+                        .find({
+                            $or: [
+
+                                {
+                                    name:
+                                        regex
+                                },
+
+                                {
+                                    phone:
+                                        regex
+                                },
+
+                                {
+                                    email:
+                                        regex
+                                },
+
+                                {
+                                    message:
+                                        regex
+                                }
+
+                            ]
+                        })
+                        .select('_id')
+                        .lean();
+
+
+                query.$or = [
+
+                    {
+                        orderId:
+                            regex
+                    },
+
+                    {
+                        transactionId:
+                            regex
+                    },
+
+                    {
+                        admission: {
+                            $in:
+                                matchingAdmissions.map(
+                                    item =>
+                                        item._id
+                                )
+                        }
+                    },
+
+                    {
+                        enquiry: {
+                            $in:
+                                matchingEnquiries.map(
+                                    item =>
+                                        item._id
+                                )
+                        }
+                    }
+
+                ];
+
+            }
+
+
+            // =================================================
+            // FETCH PAYMENTS
+            // =================================================
+
+            const payments =
+                await Payment
+                    .find(query)
+
+                    .populate(
+                        'admission',
+                        'studentName parentName phone email class'
+                    )
+
+                    .populate(
+                        'enquiry',
+                        'name phone email message'
+                    )
+
+                    .sort({
+                        createdAt: -1
+                    })
+
+                    .lean();
+
+
+            // =================================================
+            // PAYMENT STATS
+            // =================================================
+
+            const paymentStats =
+                await Payment.aggregate([
+
+                    {
+                        $group: {
+
+                            _id:
+                                '$status',
+
+                            count: {
+                                $sum: 1
+                            },
+
+                            amount: {
+                                $sum: '$amount'
+                            }
+
+                        }
+                    }
+
+                ]);
+
+
+            const stats = {
+
+                total: 0,
+
+                paid: 0,
+
+                pending: 0,
+
+                failed: 0,
+
+                cancelled: 0,
+
+                refunded: 0,
+
+                revenue: 0
+
+            };
+
+
+            paymentStats.forEach(
+                item => {
+
+                    stats.total +=
+                        item.count;
+
+
+                    if (
+                        stats[item._id]
+                        !== undefined
+                    ) {
+
+                        stats[item._id] =
+                            item.count;
+
+                    }
+
+
+                    if (
+                        item._id === 'paid'
+                    ) {
+
+                        stats.revenue =
+                            item.amount;
+
+                    }
+
+                }
+            );
+
+
+            return res.render(
+                'admin/payments',
+                {
+
+                    title:
+                        'Payment Management - Admin',
+
+                    active:
+                        'payments',
+
+                    adminName:
+                        req.session
+                            ?.admin
+                            ?.name ||
+                        'Administrator',
+
+                    payments,
+
+                    stats,
+
+                    status,
+
+                    type,
+
+                    keyword,
+
+                    csrfToken:
+                        req.csrfToken()
+
+                }
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Payment management error:',
+                error
+            );
+
+            return res.status(500).send(
+                'Error loading payments'
+            );
+
+        }
 
     }
 );
 
 
 // =========================================================
+// PAYMENT DETAILS
+// GET /admin/payment/:id
+// =========================================================
+
+router.get(
+    '/payment/:id',
+    auth,
+    async (req, res) => {
+
+        try {
+
+            if (
+                !isValidId(
+                    req.params.id
+                )
+            ) {
+
+                return res.redirect(
+                    '/admin/payments'
+                );
+
+            }
+
+
+            const payment =
+                await Payment
+                    .findById(
+                        req.params.id
+                    )
+
+                    .populate(
+                        'admission',
+                        'studentName parentName phone email class address document'
+                    )
+
+                    .populate(
+                        'enquiry',
+                        'name phone email message'
+                    )
+
+                    .lean();
+
+
+            if (!payment) {
+
+                return res.status(404).send(
+                    'Payment not found'
+                );
+
+            }
+
+
+            return res.render(
+                'admin/payment-details',
+                {
+
+                    title:
+                        'Payment Details - Admin',
+
+                    active:
+                        'payments',
+
+                    adminName:
+                        req.session
+                            ?.admin
+                            ?.name ||
+                        'Administrator',
+
+                    payment,
+
+                    csrfToken:
+                        req.csrfToken()
+
+                }
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Payment details error:',
+                error
+            );
+
+            return res.status(500).send(
+                'Error loading payment details'
+            );
+
+        }
+
+    }
+);
+
+
+// =========================================================
+// UPDATE PAYMENT STATUS
+// =========================================================
+
+router.post(
+    '/payment/:id/status',
+    auth,
+    async (req, res) => {
+
+        try {
+
+            if (
+                !isValidId(
+                    req.params.id
+                )
+            ) {
+
+                return res.redirect(
+                    '/admin/payments'
+                );
+
+            }
+
+
+            const status =
+                String(
+                    req.body.status || ''
+                ).trim();
+
+
+            const allowedStatuses = [
+
+                'pending',
+
+                'paid',
+
+                'failed',
+
+                'cancelled',
+
+                'refunded'
+
+            ];
+
+
+            if (
+                !allowedStatuses.includes(
+                    status
+                )
+            ) {
+
+                return res.status(400).send(
+                    'Invalid payment status'
+                );
+
+            }
+
+
+            const payment =
+                await Payment.findById(
+                    req.params.id
+                );
+
+
+            if (!payment) {
+
+                return res.status(404).send(
+                    'Payment not found'
+                );
+
+            }
+
+
+            // =================================================
+            // UPDATE PAYMENT
+            // =================================================
+
+            payment.status =
+                status;
+
+
+            if (
+                status === 'paid'
+            ) {
+
+                payment.paidAt =
+                    payment.paidAt ||
+                    new Date();
+
+            } else {
+
+                payment.paidAt =
+                    null;
+
+            }
+
+
+            await payment.save();
+
+
+            // =================================================
+            // SYNC ADMISSION
+            // =================================================
+
+            if (
+                payment.type === 'admission' &&
+                payment.admission
+            ) {
+
+                await Admission.findByIdAndUpdate(
+                    payment.admission,
+                    {
+
+                        paymentStatus:
+                            status,
+
+                        payment:
+                            payment._id,
+
+                        paymentAmount:
+                            payment.amount,
+
+                        paymentMethod:
+                            payment.method
+
+                    }
+                );
+
+            }
+
+
+            // =================================================
+            // SYNC ENQUIRY
+            // =================================================
+
+            if (
+                payment.type === 'enquiry' &&
+                payment.enquiry
+            ) {
+
+                await Enquiry.findByIdAndUpdate(
+                    payment.enquiry,
+                    {
+
+                        paymentStatus:
+                            status,
+
+                        payment:
+                            payment._id,
+
+                        paymentAmount:
+                            payment.amount,
+
+                        paymentMethod:
+                            payment.method
+
+                    }
+                );
+
+            }
+
+
+            return res.redirect(
+                `/admin/payment/${payment._id}`
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                'Update payment status error:',
+                error
+            );
+
+            return res.status(500).send(
+                'Error updating payment status'
+            );
+
+        }
+
+    }
+);
+
+
+// =========================================================
+// LOGOUT
+// GET /admin/logout
+// =========================================================
+
+router.get(
+    '/logout',
+    (req, res) => {
+
+        if (!req.session) {
+            return res.redirect('/admin/login');
+        }
+
+        req.session.destroy(
+            (error) => {
+
+                if (error) {
+                    console.error(
+                        'Logout error:',
+                        error
+                    );
+
+                    return res
+                        .status(500)
+                        .send('Logout failed');
+                }
+
+                res.clearCookie(
+                    'connect.sid',
+                    {
+                        httpOnly: true,
+                        secure:
+                            process.env.COOKIE_SECURE === 'true',
+                        sameSite: 'lax'
+                    }
+                );
+
+                return res.redirect(
+                    '/admin/login'
+                );
+            }
+        );
+    }
+);
+// =========================================================
+// ADMISSIONS MANAGEMENT PAGE
+// GET /admin/admissions
+// =========================================================
+
+router.get('/admissions', auth, async (req, res) => {
+    try {
+        const keyword = String(req.query.search || '').trim();
+
+        const search = keyword
+            ? keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+            : '';
+
+        const query = keyword
+            ? {
+                $or: [
+                    { name: { $regex: search, $options: 'i' } },
+                    { phone: { $regex: search, $options: 'i' } },
+                    { email: { $regex: search, $options: 'i' } },
+                    { class: { $regex: search, $options: 'i' } }
+                ]
+            }
+            : {};
+
+        const [
+            admissions,
+            allAdmissions,
+            allEnquiries,
+            allContacts
+        ] = await Promise.all([
+            Admission.find(query)
+                .sort({ createdAt: -1 })
+                .lean(),
+
+            Admission.find()
+                .select('_id')
+                .lean(),
+
+            Enquiry.find()
+                .select('_id')
+                .lean(),
+
+            Contact.find()
+                .select('_id')
+                .lean()
+        ]);
+
+        return res.render('admin/admissions', {
+            title: 'Admissions - Gyan Jyoti School',
+
+            admissions,
+
+            admissionCount: allAdmissions.length,
+
+            enquiryCount: allEnquiries.length,
+
+            contactCount: allContacts.length,
+
+            adminName:
+                req.session &&
+                req.session.admin
+                    ? String(
+                        req.session.admin.name ||
+                        'Administrator'
+                    )
+                    : 'Administrator'
+        });
+
+    } catch (error) {
+        console.error(
+            'Admissions page error:',
+            error
+        );
+
+        return res
+            .status(500)
+            .send('Error loading admissions');
+    }
+});
+
+
+// =========================================================
+// ENQUIRIES MANAGEMENT PAGE
+// GET /admin/enquiries
+// =========================================================
+
+router.get('/enquiries', auth, async (req, res) => {
+    try {
+        const keyword =
+            String(req.query.search || '').trim();
+
+        const search = keyword
+            ? keyword.replace(
+                /[.*+?^${}()|[\]\\]/g,
+                '\\$&'
+            )
+            : '';
+
+        const query = keyword
+            ? {
+                $or: [
+                    {
+                        name: {
+                            $regex: search,
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        phone: {
+                            $regex: search,
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        email: {
+                            $regex: search,
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        subject: {
+                            $regex: search,
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        message: {
+                            $regex: search,
+                            $options: 'i'
+                        }
+                    }
+                ]
+            }
+            : {};
+
+        const [
+            enquiries,
+            allAdmissions,
+            allEnquiries,
+            allContacts
+        ] = await Promise.all([
+            Enquiry.find(query)
+                .sort({ createdAt: -1 })
+                .lean(),
+
+            Admission.find()
+                .select('_id')
+                .lean(),
+
+            Enquiry.find()
+                .select('_id')
+                .lean(),
+
+            Contact.find()
+                .select('_id')
+                .lean()
+        ]);
+
+        return res.render('admin/enquiries', {
+            title: 'Enquiries - Gyan Jyoti School',
+
+            enquiries,
+
+            admissionCount: allAdmissions.length,
+
+            enquiryCount: allEnquiries.length,
+
+            contactCount: allContacts.length,
+
+            adminName:
+                req.session &&
+                req.session.admin
+                    ? String(
+                        req.session.admin.name ||
+                        'Administrator'
+                    )
+                    : 'Administrator'
+        });
+
+    } catch (error) {
+        console.error(
+            'Enquiries page error:',
+            error
+        );
+
+        return res
+            .status(500)
+            .send('Error loading enquiries');
+    }
+});
+
+
+// =========================================================
+// CONTACT MANAGEMENT PAGE
+// GET /admin/contacts
+// =========================================================
+
+router.get('/contacts', auth, async (req, res) => {
+    try {
+        const keyword =
+            String(req.query.search || '').trim();
+
+        const search = keyword
+            ? keyword.replace(
+                /[.*+?^${}()|[\]\\]/g,
+                '\\$&'
+            )
+            : '';
+
+        const query = keyword
+            ? {
+                $or: [
+                    {
+                        name: {
+                            $regex: search,
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        email: {
+                            $regex: search,
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        phone: {
+                            $regex: search,
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        category: {
+                            $regex: search,
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        subject: {
+                            $regex: search,
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        message: {
+                            $regex: search,
+                            $options: 'i'
+                        }
+                    }
+                ]
+            }
+            : {};
+
+        const [
+            contacts,
+            allAdmissions,
+            allEnquiries,
+            allContacts
+        ] = await Promise.all([
+            Contact.find(query)
+                .sort({ createdAt: -1 })
+                .lean(),
+
+            Admission.find()
+                .select('_id')
+                .lean(),
+
+            Enquiry.find()
+                .select('_id')
+                .lean(),
+
+            Contact.find()
+                .select('_id')
+                .lean()
+        ]);
+
+        return res.render('admin/contacts', {
+            title: 'Contacts - Gyan Jyoti School',
+
+            contacts,
+
+            admissionCount: allAdmissions.length,
+
+            enquiryCount: allEnquiries.length,
+
+            contactCount: allContacts.length,
+
+            adminName:
+                req.session &&
+                req.session.admin
+                    ? String(
+                        req.session.admin.name ||
+                        'Administrator'
+                    )
+                    : 'Administrator'
+        });
+
+    } catch (error) {
+        console.error(
+            'Contacts page error:',
+            error
+        );
+
+        return res
+            .status(500)
+            .send('Error loading contacts');
+    }
+});
+// ============================================================
+// ADMIN SETTINGS
+// ============================================================
+
+router.get('/settings', auth, async (req, res) => {
+    try {
+        return res.render('admin/settings', {
+            title: 'Admin Settings'
+        });
+
+    } catch (error) {
+        console.error(
+            '❌ ADMIN SETTINGS ERROR:',
+            error.message
+        );
+
+        return res
+            .status(500)
+            .send('Unable to load settings page.');
+    }
+});
+
+// =========================================================
 // CSRF ERROR HANDLER
 // =========================================================
+// A stale browser page can submit an old token. Instead of showing
+// a confusing 403/500 page, send the user back to login so a fresh
+// session + fresh token is created.
 
 router.use(
     (err, req, res, next) => {
@@ -1706,37 +2560,43 @@ router.use(
         ) {
 
             console.error(
-                '❌ Invalid CSRF token:',
+                '❌ CSRF TOKEN EXPIRED/INVALID:',
                 req.method,
                 req.originalUrl
             );
 
+            if (
+                req.path === '/login' ||
+                req.originalUrl === '/admin/login'
+            ) {
+                return res.status(403).render(
+                    'admin/login',
+                    {
+                        title:
+                            'Admin Login - Gyan Jyoti School',
 
-            return res.status(403).render(
-                'error',
-                {
+                        error:
+                            'Security token expired. Refresh the page and login again.',
 
-                    message:
-                        'Security token expired. Please refresh the page and try again.',
+                        csrfToken:
+                            typeof req.csrfToken === 'function'
+                                ? req.csrfToken()
+                                : ''
+                    }
+                );
+            }
 
-                    error:
-                        process.env.NODE_ENV ===
-                        'development'
-                            ? err
-                            : {}
-
-                }
+            return res.redirect(
+                '/admin/login?error=session'
             );
-
         }
 
-
         return next(err);
-
     }
 );
 
 
+// =========================================================
 // =========================================================
 // EXPORT
 // =========================================================

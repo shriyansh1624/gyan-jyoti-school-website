@@ -1,0 +1,1532 @@
+<%
+/*
+  Gyan Jyoti — Premium Payment Details
+  File: views/admin/payment-details.ejs
+
+  Backend contract:
+  res.render('admin/payment-details', { payment });
+
+  This view is intentionally defensive so older payment records
+  with missing fields do not crash the EJS page.
+*/
+
+const p = payment || {};
+
+const applicantName =
+  p.applicantName || p.studentName || p.name || 'Unknown Applicant';
+
+const applicantPhone =
+  p.phone || p.mobile || p.contact || '';
+
+const applicantEmail =
+  p.email || p.parentEmail || '';
+
+const amount =
+  Number(p.amount ?? p.totalAmount ?? 0);
+
+const currency =
+  p.currency || 'INR';
+
+const paymentType =
+  p.type || p.paymentType || 'enquiry';
+
+const paymentMethod =
+  p.method || p.paymentMethod || 'online';
+
+const gateway =
+  p.gateway || p.provider || p.gatewayName || 'demo';
+
+const transactionId =
+  p.transactionId || p.orderId || p.transaction || '';
+
+const paymentId =
+  String(p.paymentId || p._id || '');
+
+const status =
+  String(p.status || 'pending').toLowerCase();
+
+const createdAt =
+  p.createdAt ? new Date(p.createdAt) : null;
+
+const updatedAt =
+  p.updatedAt ? new Date(p.updatedAt) : null;
+
+const failureReason =
+  p.failureReason || p.errorMessage || p.error || '';
+
+const description =
+  p.description || p.note || 'No additional description provided.';
+
+const statusLabel =
+  status.charAt(0).toUpperCase() + status.slice(1);
+
+const statusTone =
+  ['paid','success','successful','completed'].includes(status)
+    ? 'success'
+    : ['failed','failure','cancelled','canceled'].includes(status)
+      ? 'danger'
+      : status === 'refunded'
+        ? 'purple'
+        : 'warning';
+
+const formatDate = (date) => {
+  if (!date || Number.isNaN(date.getTime())) return '—';
+  return date.toLocaleDateString('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric'
+  });
+};
+
+const formatDateTime = (date) => {
+  if (!date || Number.isNaN(date.getTime())) return '—';
+  return date.toLocaleString('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+};
+
+const formatAmount = (value) => {
+  try {
+    return new Intl.NumberFormat('en-IN', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    }).format(value);
+  } catch (_) {
+    return String(value);
+  }
+};
+
+const safe = (value) =>
+  String(value || '')
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'");
+
+const safePaymentId = safe(paymentId);
+const safeTransactionId = safe(transactionId);
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071c36">
+<title>Payment Details • Gyan Jyoti Admin</title>
+
+<style>
+/* ============================================================
+   GYAN JYOTI — PREMIUM FINANCE CONSOLE
+   Dark navy shell + electric blue accents + warm gold details.
+   Deliberately NOT a white-only dashboard.
+   ============================================================ */
+
+:root{
+  --navy-1:#031326;
+  --navy-2:#061d38;
+  --navy-3:#0b315d;
+  --blue:#1769ff;
+  --blue-2:#4b8cff;
+  --cyan:#56b6ff;
+  --gold:#f6c94d;
+
+  --page:#e9f0f8;
+  --panel:#ffffff;
+  --panel-2:#f7faff;
+  --ink:#0a1b34;
+  --muted:#6f83a0;
+  --line:#dbe6f3;
+
+  --green:#0ca878;
+  --green-bg:#e8faf4;
+  --red:#e5485d;
+  --red-bg:#fff0f2;
+  --orange:#e8941e;
+  --orange-bg:#fff5e5;
+  --purple:#7656df;
+  --purple-bg:#f1edff;
+
+  --shadow-sm:0 10px 28px rgba(6,35,70,.08);
+  --shadow:0 24px 65px rgba(6,35,70,.12);
+  --shadow-lg:0 35px 100px rgba(4,25,53,.20);
+
+  --radius-xl:30px;
+  --radius-lg:22px;
+  --radius-md:16px;
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 4% 8%,rgba(23,105,255,.12),transparent 25%),
+    radial-gradient(circle at 96% 12%,rgba(246,201,77,.09),transparent 22%),
+    linear-gradient(135deg,#e7eef7 0%,#f1f5fa 48%,#e5edf7 100%);
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.18;
+  background-image:radial-gradient(#52749b .65px,transparent .65px);
+  background-size:24px 24px;
+  mask-image:linear-gradient(to bottom,#000,transparent 75%);
+}
+
+a{text-decoration:none;color:inherit}
+button,a{font:inherit}
+
+.shell{
+  width:min(1540px,calc(100% - 44px));
+  margin:auto;
+  padding:20px 0 72px;
+  position:relative;
+  z-index:1;
+}
+
+/* ========================= TOP NAV ========================= */
+
+.topnav{
+  min-height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:18px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.brand-logo{
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  color:white;
+  font-size:23px;
+  background:
+    linear-gradient(145deg,#0a3564,#176be0);
+  box-shadow:
+    0 10px 28px rgba(9,55,105,.24),
+    inset 0 1px rgba(255,255,255,.18);
+}
+
+.brand-name{
+  font-size:17px;
+  font-weight:950;
+  letter-spacing:-.025em;
+}
+
+.brand-sub{
+  margin-top:3px;
+  color:#6d829f;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.16em;
+}
+
+.top-actions{
+  display:flex;
+  gap:9px;
+}
+
+.top-btn{
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:0 16px;
+  border:1px solid #d7e2ef;
+  border-radius:14px;
+  background:rgba(255,255,255,.82);
+  color:var(--ink);
+  font-size:13px;
+  font-weight:900;
+  box-shadow:0 8px 22px rgba(7,37,70,.06);
+  transition:.25s ease;
+}
+
+.top-btn:hover{
+  transform:translateY(-2px);
+  border-color:#bcd2ee;
+  box-shadow:0 14px 30px rgba(7,37,70,.12);
+}
+
+/* ========================= HERO ========================= */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  min-height:255px;
+  border-radius:var(--radius-xl);
+  padding:34px 38px;
+  color:white;
+  background:
+    radial-gradient(circle at 82% 22%,rgba(82,157,255,.55),transparent 24%),
+    radial-gradient(circle at 70% 115%,rgba(23,105,255,.55),transparent 38%),
+    linear-gradient(118deg,#031326 0%,#082b53 52%,#1768d7 100%);
+  box-shadow:var(--shadow-lg);
+  isolation:isolate;
+}
+
+.hero:before{
+  content:"";
+  position:absolute;
+  width:600px;
+  height:600px;
+  right:-245px;
+  top:-360px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:
+    0 0 0 90px rgba(255,255,255,.025),
+    0 0 0 180px rgba(255,255,255,.018);
+  animation:orbit 13s ease-in-out infinite;
+}
+
+.hero:after{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  right:18%;
+  bottom:-180px;
+  border-radius:50%;
+  background:rgba(83,157,255,.18);
+  filter:blur(4px);
+}
+
+@keyframes orbit{
+  50%{transform:translate(-12px,20px) rotate(4deg)}
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:900px;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 13px;
+  border-radius:999px;
+  border:1px solid rgba(246,201,77,.45);
+  background:rgba(246,201,77,.09);
+  color:#ffd85d;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+  font-size:10px;
+  font-weight:950;
+  backdrop-filter:blur(10px);
+}
+
+.eyebrow-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#ffd85d;
+  box-shadow:0 0 14px #ffd85d;
+  animation:pulse 1.8s infinite;
+}
+
+@keyframes pulse{
+  50%{transform:scale(1.55);opacity:.45}
+}
+
+.hero h1{
+  margin:18px 0 8px;
+  font-size:clamp(38px,5vw,64px);
+  line-height:.98;
+  letter-spacing:-.055em;
+  font-weight:950;
+}
+
+.hero-copy{
+  margin:0;
+  max-width:820px;
+  color:rgba(255,255,255,.76);
+  font-size:14px;
+  line-height:1.8;
+}
+
+.hero-actions{
+  position:absolute;
+  right:34px;
+  top:34px;
+  display:flex;
+  gap:9px;
+  z-index:4;
+}
+
+.hero-btn{
+  min-height:46px;
+  padding:0 17px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.96);
+  color:#071c36;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 12px 30px rgba(0,0,0,.12);
+  transition:.25s ease;
+}
+
+.hero-btn.primary{
+  background:linear-gradient(135deg,#2e7cff,#1559d6);
+  color:white;
+  border-color:rgba(255,255,255,.2);
+}
+
+.hero-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 36px rgba(0,0,0,.18);
+}
+
+/* ========================= STATUS ========================= */
+
+.statusbar{
+  margin-top:18px;
+  min-height:88px;
+  padding:18px 22px;
+  border-radius:22px;
+  border:1px solid rgba(213,226,241,.95);
+  background:rgba(255,255,255,.86);
+  box-shadow:var(--shadow-sm);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+}
+
+.status-main{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.status-icon{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  display:grid;
+  place-items:center;
+  font-size:20px;
+  font-weight:950;
+}
+
+.status-icon.success{background:var(--green-bg);color:var(--green)}
+.status-icon.danger{background:var(--red-bg);color:var(--red)}
+.status-icon.warning{background:var(--orange-bg);color:var(--orange)}
+.status-icon.purple{background:var(--purple-bg);color:var(--purple)}
+
+.status-title{
+  font-size:17px;
+  font-weight:950;
+  letter-spacing:-.025em;
+}
+
+.status-sub{
+  margin-top:4px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.status-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:9px 13px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.status-pill.success{color:#087b5a;background:var(--green-bg)}
+.status-pill.danger{color:#c52e43;background:var(--red-bg)}
+.status-pill.warning{color:#bd6b08;background:var(--orange-bg)}
+.status-pill.purple{color:#6543c7;background:var(--purple-bg)}
+
+.status-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:currentColor;
+  box-shadow:0 0 11px currentColor;
+}
+
+/* ========================= KPI STRIP ========================= */
+
+.kpis{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+
+.kpi{
+  position:relative;
+  overflow:hidden;
+  padding:19px 20px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:linear-gradient(145deg,#fff,#f5f9fe);
+  box-shadow:var(--shadow-sm);
+}
+
+.kpi:after{
+  content:"";
+  position:absolute;
+  width:110px;
+  height:110px;
+  right:-58px;
+  bottom:-62px;
+  border-radius:50%;
+  background:rgba(23,105,255,.07);
+}
+
+.kpi-label{
+  color:#7890ad;
+  font-size:10px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+
+.kpi-value{
+  margin-top:7px;
+  font-size:18px;
+  font-weight:950;
+  letter-spacing:-.025em;
+}
+
+/* ========================= CONTENT ========================= */
+
+.content{
+  display:grid;
+  grid-template-columns:minmax(0,1.72fr) minmax(320px,.72fr);
+  gap:18px;
+  margin-top:18px;
+  align-items:start;
+}
+
+.column{
+  display:grid;
+  gap:18px;
+}
+
+.card{
+  border:1px solid rgba(215,227,241,.96);
+  border-radius:var(--radius-lg);
+  background:rgba(255,255,255,.94);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.card-head{
+  padding:23px 25px 19px;
+  border-bottom:1px solid #e5edf6;
+  background:linear-gradient(180deg,#fff,#fbfdff);
+}
+
+.card-title{
+  margin:0;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-size:18px;
+  font-weight:950;
+  letter-spacing:-.035em;
+}
+
+.card-title:before{
+  content:"";
+  width:4px;
+  height:24px;
+  border-radius:9px;
+  background:linear-gradient(#1769ff,#58a2ff);
+  box-shadow:0 5px 16px rgba(23,105,255,.28);
+}
+
+.card-subtitle{
+  margin:7px 0 0 15px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
+
+.info{
+  min-height:92px;
+  padding:18px 25px;
+  border-bottom:1px solid #e5edf6;
+  transition:background .2s ease;
+}
+
+.info:nth-child(odd){
+  border-right:1px solid #e5edf6;
+}
+
+.info:hover{background:#f8fbff}
+
+.label{
+  color:#7890ad;
+  font-size:10px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.11em;
+}
+
+.value{
+  margin-top:7px;
+  color:var(--ink);
+  font-size:14px;
+  font-weight:900;
+  line-height:1.45;
+  word-break:break-word;
+}
+
+.value.amount{
+  color:var(--blue);
+  font-size:21px;
+}
+
+.value a{
+  color:#1267e8;
+}
+
+.mono{
+  font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  font-size:12px;
+  letter-spacing:-.02em;
+}
+
+.copy-line{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.copy-btn{
+  flex:none;
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  border:1px solid #d7e4f3;
+  border-radius:10px;
+  background:#f7faff;
+  color:#1769ff;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.copy-btn:hover{
+  transform:translateY(-2px);
+  background:#eaf3ff;
+  border-color:#bcd4f3;
+}
+
+.copy-btn.copied{
+  color:#078e67;
+  background:#e9faf4;
+  border-color:#bfe8d9;
+}
+
+.description{
+  margin:20px 25px 24px;
+  padding:17px 18px;
+  border:1px solid #e1eaf4;
+  border-left:4px solid var(--blue);
+  border-radius:15px;
+  background:#f7faff;
+  color:#526984;
+  font-size:13px;
+  line-height:1.75;
+}
+
+.failure{
+  margin:0 25px 24px;
+  padding:16px 18px;
+  border-radius:15px;
+  border:1px solid #ffd2d9;
+  background:linear-gradient(135deg,#fff4f5,#fffafb);
+}
+
+.failure-title{
+  color:#c83247;
+  font-size:12px;
+  font-weight:950;
+}
+
+.failure-text{
+  margin-top:7px;
+  color:#7f3a46;
+  font-size:13px;
+  line-height:1.65;
+}
+
+/* ========================= AMOUNT CARD ========================= */
+
+.amount-card{
+  position:relative;
+  overflow:hidden;
+  min-height:270px;
+  padding:26px;
+  border-radius:var(--radius-lg);
+  color:white;
+  background:
+    radial-gradient(circle at 95% 5%,rgba(89,157,255,.5),transparent 27%),
+    radial-gradient(circle at 20% 120%,rgba(19,106,255,.36),transparent 35%),
+    linear-gradient(145deg,#04162c,#0a3563 63%,#176be0);
+  box-shadow:0 28px 72px rgba(4,31,65,.27);
+}
+
+.amount-card:before{
+  content:"₹";
+  position:absolute;
+  right:-16px;
+  bottom:-78px;
+  font-size:245px;
+  line-height:1;
+  font-weight:950;
+  color:rgba(255,255,255,.055);
+  transform:rotate(-8deg);
+}
+
+.amount-card:after{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  right:-160px;
+  top:-170px;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:50%;
+  box-shadow:0 0 0 55px rgba(255,255,255,.025);
+}
+
+.amount-content{position:relative;z-index:2}
+
+.amount-label{
+  color:rgba(255,255,255,.65);
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-size:10px;
+  font-weight:950;
+}
+
+.amount{
+  margin-top:10px;
+  font-size:clamp(45px,5vw,68px);
+  line-height:1;
+  letter-spacing:-.065em;
+  font-weight:950;
+  text-shadow:0 12px 35px rgba(0,0,0,.2);
+}
+
+.amount-meta{
+  margin-top:10px;
+  color:rgba(255,255,255,.68);
+  font-size:12px;
+}
+
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:22px;
+}
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  min-height:30px;
+  padding:0 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.09);
+  color:rgba(255,255,255,.86);
+  font-size:10px;
+  font-weight:900;
+  backdrop-filter:blur(10px);
+}
+
+/* ========================= APPLICANT ========================= */
+
+.applicant-top{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:23px 25px;
+  border-bottom:1px solid #e5edf6;
+}
+
+.avatar{
+  width:52px;
+  height:52px;
+  flex:none;
+  display:grid;
+  place-items:center;
+  border-radius:17px;
+  color:#1769ff;
+  background:linear-gradient(145deg,#eaf3ff,#dceaff);
+  font-size:18px;
+  font-weight:950;
+  border:1px solid #cfe0f6;
+}
+
+.applicant-name{
+  font-size:17px;
+  font-weight:950;
+}
+
+.applicant-meta{
+  margin-top:4px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* ========================= TIMELINE ========================= */
+
+.timeline{
+  padding:23px 25px;
+  position:relative;
+}
+
+.timeline:before{
+  content:"";
+  position:absolute;
+  left:39px;
+  top:32px;
+  bottom:32px;
+  width:2px;
+  background:linear-gradient(#9fc5ff,#e1eaf5);
+}
+
+.timeline-item{
+  position:relative;
+  min-height:72px;
+  padding-left:50px;
+}
+
+.timeline-item + .timeline-item{margin-top:6px}
+
+.timeline-dot{
+  position:absolute;
+  left:29px;
+  top:2px;
+  width:21px;
+  height:21px;
+  border:5px solid white;
+  border-radius:50%;
+  background:#dceaff;
+  box-shadow:0 0 0 1px #a9c8ef,0 7px 18px rgba(23,105,255,.18);
+}
+
+.timeline-dot.current{
+  background:#1769ff;
+  box-shadow:0 0 0 5px rgba(23,105,255,.09),0 7px 22px rgba(23,105,255,.28);
+  animation:timelinePulse 2s infinite;
+}
+
+.timeline-dot.red{
+  background:#e5485d;
+  box-shadow:0 0 0 5px rgba(229,72,93,.08),0 7px 20px rgba(229,72,93,.2);
+}
+
+@keyframes timelinePulse{
+  50%{box-shadow:0 0 0 8px rgba(23,105,255,.035),0 7px 22px rgba(23,105,255,.28)}
+}
+
+.timeline-title{
+  font-size:13px;
+  font-weight:950;
+}
+
+.timeline-date{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* ========================= QUICK ACTIONS ========================= */
+
+.actions{
+  padding:22px;
+}
+
+.action{
+  width:100%;
+  min-height:50px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin-top:9px;
+  padding:0 14px;
+  border:1px solid #dce7f3;
+  border-radius:15px;
+  background:#fff;
+  color:var(--ink);
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.25s ease;
+}
+
+.action:first-child{margin-top:0}
+
+.action:hover{
+  transform:translateX(3px);
+  border-color:#b9d2f2;
+  background:#f6faff;
+  box-shadow:0 10px 25px rgba(8,46,91,.08);
+}
+
+.action-icon{
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:#eaf3ff;
+  color:#1769ff;
+  flex:none;
+}
+
+.action.primary{
+  color:white;
+  border-color:#1769ff;
+  background:linear-gradient(135deg,#1769ff,#0b4fc7);
+  box-shadow:0 13px 30px rgba(23,105,255,.22);
+}
+
+.action.primary .action-icon{
+  color:white;
+  background:rgba(255,255,255,.13);
+}
+
+.action.primary:hover{
+  background:linear-gradient(135deg,#2677ff,#0c57d2);
+}
+
+/* ========================= FOOTER ========================= */
+
+.footer{
+  margin-top:20px;
+  padding:18px 0;
+  text-align:center;
+  color:#7890ad;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.04em;
+}
+
+/* ========================= TOAST ========================= */
+
+.toast{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-width:220px;
+  padding:14px 17px;
+  border-radius:15px;
+  color:white;
+  background:#061a35;
+  box-shadow:0 20px 55px rgba(0,0,0,.24);
+  font-size:12px;
+  font-weight:900;
+  transform:translateY(25px);
+  opacity:0;
+  pointer-events:none;
+  transition:.3s ease;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+.toast-icon{
+  width:25px;
+  height:25px;
+  display:grid;
+  place-items:center;
+  border-radius:8px;
+  color:#07223e;
+  background:#72d9b6;
+}
+
+/* ========================= ENTRANCE MOTION ========================= */
+
+.reveal{
+  opacity:0;
+  transform:translateY(14px);
+  animation:reveal .6s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+.reveal:nth-child(2){animation-delay:.05s}
+.reveal:nth-child(3){animation-delay:.1s}
+.reveal:nth-child(4){animation-delay:.15s}
+
+@keyframes reveal{
+  to{opacity:1;transform:none}
+}
+
+/* ========================= RESPONSIVE ========================= */
+
+@media(max-width:1050px){
+  .content{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .hero{min-height:280px}
+  .hero-actions{position:static;margin-top:24px}
+}
+
+@media(max-width:700px){
+  .shell{width:min(100% - 22px,1540px);padding-top:11px}
+  .topnav{min-height:58px}
+  .brand-sub{display:none}
+  .top-btn{padding:0 11px;font-size:11px}
+  .hero{padding:25px 22px;border-radius:23px;min-height:320px}
+  .hero h1{font-size:40px}
+  .hero-actions{gap:8px}
+  .hero-btn{flex:1}
+  .statusbar{align-items:flex-start;flex-direction:column}
+  .status-pill{align-self:flex-start}
+  .kpis{grid-template-columns:1fr}
+  .info-grid{grid-template-columns:1fr}
+  .info:nth-child(odd){border-right:0}
+  .info{min-height:80px;padding:16px 20px}
+  .card-head{padding:20px}
+  .description,.failure{margin-left:20px;margin-right:20px}
+  .amount-card{min-height:245px}
+}
+
+@media print{
+  body{background:#fff!important}
+  body:before,.topnav,.hero-actions,.action,.toast{display:none!important}
+  .shell{width:100%;padding:0}
+  .hero,.card,.statusbar,.amount-card{box-shadow:none!important;break-inside:avoid}
+  .hero{border-radius:0}
+  .content{grid-template-columns:1fr}
+  .amount-card{color:#000;background:#fff!important;border:1px solid #ddd}
+  .amount-card:before,.amount-card:after{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<div class="shell">
+
+  <!-- TOP NAV -->
+  <header class="topnav reveal">
+    <a href="/admin" class="brand">
+      <div class="brand-logo">🏫</div>
+      <div>
+        <div class="brand-name">Gyan Jyoti</div>
+        <div class="brand-sub">SCHOOL ADMINISTRATION</div>
+      </div>
+    </a>
+
+    <div class="top-actions">
+      <a href="/admin/payments" class="top-btn">← Payments</a>
+      <a href="/admin" class="top-btn"><span style="color:#1769ff">●</span> Admin</a>
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero reveal">
+
+    <div class="hero-content">
+
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        Secure Finance Console
+      </div>
+
+      <h1>Payment Details</h1>
+
+      <p class="hero-copy">
+        A complete financial snapshot of this payment record —
+        applicant identity, collection amount, gateway information,
+        transaction identifiers, status history and administrative actions.
+      </p>
+
+      <div class="hero-actions">
+        <a href="/admin/payments" class="hero-btn">← Dashboard</a>
+        <button type="button" class="hero-btn primary" onclick="window.print()">
+          ▣ Print Report
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- STATUS -->
+  <section class="statusbar reveal">
+
+    <div class="status-main">
+
+      <div class="status-icon <%= statusTone %>">
+        <% if (statusTone === 'success') { %>✓
+        <% } else if (statusTone === 'danger') { %>!
+        <% } else if (statusTone === 'purple') { %>↻
+        <% } else { %>!
+        <% } %>
+      </div>
+
+      <div>
+        <div class="status-title">Payment <%= statusLabel %></div>
+        <div class="status-sub">
+          <%= paymentType %> • Created <%= formatDateTime(createdAt) %>
+        </div>
+      </div>
+
+    </div>
+
+    <span class="status-pill <%= statusTone %>">
+      <span class="status-dot"></span>
+      <%= statusLabel %>
+    </span>
+
+  </section>
+
+
+  <!-- KPI STRIP -->
+  <section class="kpis">
+
+    <div class="kpi reveal">
+      <div class="kpi-label">Collection</div>
+      <div class="kpi-value">₹<%= formatAmount(amount) %></div>
+    </div>
+
+    <div class="kpi reveal">
+      <div class="kpi-label">Payment Type</div>
+      <div class="kpi-value"><%= paymentType %></div>
+    </div>
+
+    <div class="kpi reveal">
+      <div class="kpi-label">Provider</div>
+      <div class="kpi-value"><%= gateway %></div>
+    </div>
+
+    <div class="kpi reveal">
+      <div class="kpi-label">Received</div>
+      <div class="kpi-value"><%= formatDate(createdAt) %></div>
+    </div>
+
+  </section>
+
+
+  <!-- CONTENT -->
+  <section class="content">
+
+    <!-- LEFT COLUMN -->
+    <div class="column">
+
+      <!-- TRANSACTION CARD -->
+      <article class="card reveal">
+
+        <div class="card-head">
+          <h2 class="card-title">Transaction Information</h2>
+          <p class="card-subtitle">
+            Core payment, gateway and transaction information.
+          </p>
+        </div>
+
+        <div class="info-grid">
+
+          <div class="info">
+            <div class="label">Amount</div>
+            <div class="value amount">₹<%= formatAmount(amount) %></div>
+          </div>
+
+          <div class="info">
+            <div class="label">Currency</div>
+            <div class="value"><%= currency %></div>
+          </div>
+
+          <div class="info">
+            <div class="label">Payment Type</div>
+            <div class="value"><%= paymentType %></div>
+          </div>
+
+          <div class="info">
+            <div class="label">Payment Method</div>
+            <div class="value"><%= paymentMethod %></div>
+          </div>
+
+          <div class="info">
+            <div class="label">Gateway / Provider</div>
+            <div class="value"><%= gateway %></div>
+          </div>
+
+          <div class="info">
+            <div class="label">Transaction / Order ID</div>
+
+            <% if (transactionId) { %>
+              <div class="copy-line">
+                <span class="value mono"><%= transactionId %></span>
+                <button
+                  type="button"
+                  class="copy-btn"
+                  title="Copy transaction ID"
+                  data-copy="<%= safeTransactionId %>">⧉</button>
+              </div>
+            <% } else { %>
+              <div class="value">Not available</div>
+            <% } %>
+          </div>
+
+          <div class="info">
+            <div class="label">Payment ID</div>
+
+            <% if (paymentId) { %>
+              <div class="copy-line">
+                <span class="value mono"><%= paymentId %></span>
+                <button
+                  type="button"
+                  class="copy-btn"
+                  title="Copy payment ID"
+                  data-copy="<%= safePaymentId %>">⧉</button>
+              </div>
+            <% } else { %>
+              <div class="value">Not available</div>
+            <% } %>
+          </div>
+
+          <div class="info">
+            <div class="label">Last Updated</div>
+            <div class="value"><%= formatDateTime(updatedAt || createdAt) %></div>
+          </div>
+
+        </div>
+
+        <div class="description">
+          <div class="label">Description</div>
+          <div style="margin-top:7px"><%= description %></div>
+        </div>
+
+        <% if (failureReason) { %>
+          <div class="failure">
+            <div class="failure-title">⚠ Payment Failure Reason</div>
+            <div class="failure-text"><%= failureReason %></div>
+          </div>
+        <% } %>
+
+      </article>
+
+
+      <!-- APPLICANT CARD -->
+      <article class="card reveal">
+
+        <div class="applicant-top">
+
+          <div class="avatar">
+            <%= applicantName.charAt(0).toUpperCase() %>
+          </div>
+
+          <div>
+            <div class="applicant-name"><%= applicantName %></div>
+            <div class="applicant-meta">
+              Applicant associated with this payment record
+            </div>
+          </div>
+
+        </div>
+
+        <div class="info-grid">
+
+          <div class="info">
+            <div class="label">Applicant</div>
+            <div class="value"><%= applicantName %></div>
+          </div>
+
+          <div class="info">
+            <div class="label">Phone</div>
+            <div class="value">
+              <% if (applicantPhone) { %>
+                <a href="tel:<%= applicantPhone %>"><%= applicantPhone %></a>
+              <% } else { %>
+                Not provided
+              <% } %>
+            </div>
+          </div>
+
+          <div class="info">
+            <div class="label">Email</div>
+            <div class="value">
+              <% if (applicantEmail) { %>
+                <a href="mailto:<%= applicantEmail %>"><%= applicantEmail %></a>
+              <% } else { %>
+                Not provided
+              <% } %>
+            </div>
+          </div>
+
+          <div class="info">
+            <div class="label">Record Updated</div>
+            <div class="value"><%= formatDateTime(updatedAt || createdAt) %></div>
+          </div>
+
+        </div>
+
+      </article>
+
+    </div>
+
+
+    <!-- RIGHT COLUMN -->
+    <aside class="column">
+
+      <!-- AMOUNT CARD -->
+      <article class="amount-card reveal">
+
+        <div class="amount-content">
+
+          <div class="amount-label">Payment Amount</div>
+
+          <div class="amount">
+            ₹<%= formatAmount(amount) %>
+          </div>
+
+          <div class="amount-meta">
+            <%= currency %> • <%= paymentType %>
+          </div>
+
+          <div class="chips">
+            <span class="chip">● <%= status %></span>
+            <span class="chip"><%= gateway %></span>
+            <span class="chip"><%= paymentMethod %></span>
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- TIMELINE -->
+      <article class="card reveal">
+
+        <div class="card-head">
+          <h2 class="card-title">Payment Timeline</h2>
+          <p class="card-subtitle">
+            Important timestamps associated with this record.
+          </p>
+        </div>
+
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-title">Payment record created</div>
+              <div class="timeline-date"><%= formatDateTime(createdAt) %></div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot current"></div>
+            <div>
+              <div class="timeline-title">
+                Current status: <%= statusLabel %>
+              </div>
+              <div class="timeline-date">
+                <%= formatDateTime(updatedAt || createdAt) %>
+              </div>
+            </div>
+          </div>
+
+          <% if (failureReason) { %>
+            <div class="timeline-item">
+              <div class="timeline-dot red"></div>
+              <div>
+                <div class="timeline-title">Failure information recorded</div>
+                <div class="timeline-date">Review the failure reason in the transaction card.</div>
+              </div>
+            </div>
+          <% } %>
+
+        </div>
+
+      </article>
+
+
+      <!-- QUICK ACTIONS -->
+      <article class="card reveal">
+
+        <div class="card-head">
+          <h2 class="card-title">Quick Actions</h2>
+          <p class="card-subtitle">
+            Fast administrative controls for this payment.
+          </p>
+        </div>
+
+        <div class="actions">
+
+          <% if (paymentId) { %>
+            <button
+              type="button"
+              class="action"
+              data-copy="<%= safePaymentId %>">
+              <span class="action-icon">⧉</span>
+              Copy Payment ID
+            </button>
+          <% } %>
+
+          <% if (transactionId) { %>
+            <button
+              type="button"
+              class="action"
+              data-copy="<%= safeTransactionId %>">
+              <span class="action-icon">⌁</span>
+              Copy Transaction ID
+            </button>
+          <% } %>
+
+          <% if (applicantEmail) { %>
+            <a class="action" href="mailto:<%= applicantEmail %>">
+              <span class="action-icon">✉</span>
+              Contact Applicant
+            </a>
+          <% } %>
+
+          <% if (applicantPhone) { %>
+            <a class="action" href="tel:<%= applicantPhone %>">
+              <span class="action-icon">☎</span>
+              Call Applicant
+            </a>
+          <% } %>
+
+          <button type="button" class="action" onclick="window.print()">
+            <span class="action-icon">▣</span>
+            Print Payment Report
+          </button>
+
+          <a href="/admin/payments" class="action primary">
+            <span class="action-icon">←</span>
+            Back to Payments
+          </a>
+
+        </div>
+
+      </article>
+
+    </aside>
+
+  </section>
+
+
+  <footer class="footer">
+    Gyan Jyoti School Administration • Secure Finance Console
+  </footer>
+
+</div>
+
+
+<!-- TOAST -->
+<div id="toast" class="toast">
+  <span class="toast-icon">✓</span>
+  <span id="toastText">Copied successfully.</span>
+</div>
+
+
+<script>
+(function(){
+
+  const toast = document.getElementById('toast');
+  const toastText = document.getElementById('toastText');
+
+  function showToast(message){
+    toastText.textContent = message;
+    toast.classList.add('show');
+
+    clearTimeout(window.__gyanToastTimer);
+
+    window.__gyanToastTimer = setTimeout(function(){
+      toast.classList.remove('show');
+    },2200);
+  }
+
+  async function copyText(value){
+    try{
+      await navigator.clipboard.writeText(String(value));
+      showToast('Copied to clipboard.');
+      return;
+    }catch(e){}
+
+    try{
+      const textarea = document.createElement('textarea');
+      textarea.value = String(value);
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+      showToast('Copied to clipboard.');
+    }catch(e){
+      showToast('Copy failed. Please copy it manually.');
+    }
+  }
+
+  document.querySelectorAll('[data-copy]').forEach(function(button){
+
+    button.addEventListener('click',function(){
+
+      const value = this.getAttribute('data-copy') || '';
+
+      copyText(value);
+
+      const old = this.innerHTML;
+
+      if(this.classList.contains('copy-btn')){
+        this.classList.add('copied');
+        this.innerHTML = '✓';
+
+        setTimeout(function(){
+          button.classList.remove('copied');
+          button.innerHTML = old;
+        },1500);
+      }
+
+    });
+
+  });
+
+})();
+</script>
+
+</body>
+</html>
