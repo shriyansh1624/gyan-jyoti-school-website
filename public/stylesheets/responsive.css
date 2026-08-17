@@ -2456,3 +2456,92 @@ body {
         border-radius: 18px !important;
     }
 }
+
+/* FINAL PREMIUM DEVICE / TOUCH / PERFORMANCE OVERRIDES */
+html,body{width:100%!important;max-width:none!important;min-width:0!important;overflow-x:auto!important;overflow-y:auto!important;touch-action:pan-x pan-y pinch-zoom!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior:auto!important;scroll-behavior:auto!important}
+body.menu-open{overflow:auto!important;height:auto!important;touch-action:pan-x pan-y pinch-zoom!important}
+.gj-home{width:100%!important;max-width:none!important;overflow:visible!important;touch-action:pan-x pan-y pinch-zoom!important}
+.gj-home .gj-hero{touch-action:pan-x pan-y!important;overflow:hidden!important}
+.gj-home .gj-hero-bg,.gj-home .gj-hero-grid,.gj-home .gj-hero-glow,.gj-home .gj-hero-overlay,.gj-home .gj-hero-number,.gj-home .gj-hero::before,.gj-home .gj-hero::after{pointer-events:none!important}
+.gj-home .gj-hero-glow{display:none!important}
+.gj-home .gj-hero-slide{pointer-events:none!important;transform:none!important;transition:opacity .18s linear!important;will-change:opacity}
+.gj-home .gj-hero-slide.is-active{pointer-events:auto!important}
+.gj-home .gj-hero-content{z-index:100!important;pointer-events:auto!important}
+.gj-home .gj-hero-actions{z-index:110!important;pointer-events:auto!important}
+.gj-home .gj-hero-actions a,.gj-home .gj-hero-arrow,.gj-home .gj-hero-dot{z-index:120!important;pointer-events:auto!important;touch-action:manipulation!important;cursor:pointer!important}
+@media(hover:none),(pointer:coarse){.gj-home *,.gj-home *::before,.gj-home *::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}.gj-home .gj-image-shine{display:none!important}}
+#gjPopupOverlay,.gj-popup-overlay,#popupOverlay{pointer-events:none!important;background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;align-items:flex-end!important;justify-content:flex-end!important;padding:0 10px 10px 0!important;touch-action:pan-x pan-y pinch-zoom!important}
+#gjPopupOverlay .gj-popup,.gj-popup-overlay .gj-popup,#popupOverlay .homepage-popup{pointer-events:auto!important;width:250px!important;height:145px!important;max-width:calc(100vw - 20px)!important;max-height:calc(100dvh - 20px)!important;margin:0!important;border-radius:12px!important;box-shadow:0 8px 24px rgba(0,0,0,.28)!important;transform:translate3d(8px,8px,0)!important;transition:opacity .14s ease,transform .14s ease!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+#gjPopupOverlay.is-visible .gj-popup,.gj-popup-overlay.is-visible .gj-popup,#popupOverlay.show .homepage-popup{transform:translate3d(0,0,0)!important}
+@media(max-width:600px){#gjPopupOverlay,.gj-popup-overlay,#popupOverlay{padding:0 6px 6px 0!important}#gjPopupOverlay .gj-popup,.gj-popup-overlay .gj-popup,#popupOverlay .homepage-popup{width:185px!important;height:108px!important;max-width:calc(100vw - 12px)!important;border-radius:10px!important}}
+@media(max-width:380px){#gjPopupOverlay .gj-popup,.gj-popup-overlay .gj-popup,#popupOverlay .homepage-popup{width:170px!important;height:100px!important}}
+
+
+/* =========================================================
+   FINAL SITE-WIDE TOUCH / PERFORMANCE OVERRIDES
+   Backend-safe. These are intentionally last so they win over
+   older responsive rules without changing routes or structure.
+========================================================= */
+html,body{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    overflow-x:auto!important;
+    overflow-y:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior:auto!important;
+    scroll-behavior:auto!important;
+}
+body.menu-open{
+    overflow:auto!important;
+    height:auto!important;
+    touch-action:pan-x pan-y pinch-zoom!important;
+}
+.gj-home{width:100%!important;max-width:none!important;min-width:0!important;overflow:visible!important;}
+.gj-home .gj-hero{position:relative!important;overflow:hidden!important;isolation:isolate!important;touch-action:pan-y!important;}
+.gj-home .gj-hero-bg,.gj-home .gj-hero-grid,.gj-home .gj-hero-glow,.gj-home .gj-hero-overlay,.gj-home .gj-hero-number,.gj-home .gj-hero::before,.gj-home .gj-hero::after{pointer-events:none!important;}
+.gj-home .gj-hero-glow{display:none!important;}
+.gj-home .gj-hero-slide{pointer-events:none!important;transform:none!important;transition:opacity .18s linear!important;will-change:auto!important;}
+.gj-home .gj-hero-slide.is-active{pointer-events:auto!important;}
+.gj-home .gj-hero-content{position:relative!important;z-index:100!important;pointer-events:auto!important;}
+.gj-home .gj-hero-actions{position:relative!important;z-index:150!important;pointer-events:auto!important;}
+.gj-home .gj-hero-actions a,.gj-home .gj-hero-arrow,.gj-home .gj-hero-dot{position:relative!important;z-index:200!important;pointer-events:auto!important;touch-action:manipulation!important;cursor:pointer!important;}
+.gj-home .gj-hero-arrow{position:absolute!important;top:50%!important;width:56px!important;height:56px!important;margin:0!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;transform:translateY(-50%)!important;z-index:250!important;}
+.gj-home .gj-arrow-left{left:24px!important;right:auto!important;}
+.gj-home .gj-arrow-right{right:24px!important;left:auto!important;}
+@media(hover:none),(pointer:coarse){
+    .gj-home *,.gj-home *::before,.gj-home *::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
+    .gj-home .gj-image-shine,.gj-home .gj-hero-glow{display:none!important;}
+    .gj-home .gj-btn:hover{transform:none!important;}
+}
+#gjPopupOverlay{position:fixed!important;inset:0!important;display:flex!important;align-items:flex-end!important;justify-content:flex-end!important;padding:0 14px 14px 0!important;background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;pointer-events:none!important;touch-action:pan-x pan-y pinch-zoom!important;z-index:999999!important;}
+#gjPopupOverlay .gj-popup{pointer-events:auto!important;width:240px!important;height:138px!important;max-width:calc(100vw - 20px)!important;max-height:calc(100dvh - 20px)!important;margin:0!important;border-radius:14px!important;box-shadow:0 10px 28px rgba(0,0,0,.25)!important;transform:translate3d(8px,8px,0)!important;transition:opacity .14s ease,transform .14s ease!important;overflow:hidden!important;will-change:opacity,transform!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
+#gjPopupOverlay.is-visible .gj-popup{transform:translate3d(0,0,0)!important;}
+#gjPopupOverlay .gj-popup-slide-overlay{pointer-events:none!important;}
+#gjPopupOverlay .gj-popup-content{left:14px!important;right:14px!important;bottom:12px!important;width:auto!important;}
+#gjPopupOverlay .gj-popup-content h2{font-size:17px!important;line-height:1!important;margin:0 0 5px!important;}
+#gjPopupOverlay .gj-popup-content p{font-size:8px!important;line-height:1.25!important;margin:0 0 7px!important;}
+#gjPopupOverlay .gj-popup-badge,#gjPopupOverlay .gj-popup-footer{display:none!important;}
+#gjPopupOverlay .gj-popup-button{padding:6px 10px!important;font-size:8px!important;gap:5px!important;touch-action:manipulation!important;}
+#gjPopupOverlay .gj-popup-close,#gjPopupOverlay .gj-popup-arrow{width:26px!important;height:26px!important;font-size:9px!important;padding:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;touch-action:manipulation!important;}
+#gjPopupOverlay .gj-popup-close{top:6px!important;right:6px!important;}
+#gjPopupOverlay .gj-popup-prev{left:6px!important;}
+#gjPopupOverlay .gj-popup-next{right:6px!important;}
+@media(max-width:900px){.gj-home .gj-hero-arrow{width:48px!important;height:48px!important;}.gj-home .gj-arrow-left{left:14px!important;}.gj-home .gj-arrow-right{right:14px!important;}}
+@media(max-width:620px){
+    .gj-home .gj-hero{min-height:610px!important;height:clamp(610px,82svh,720px)!important;}
+    .gj-home .gj-hero-content{width:88%!important;margin:0 auto!important;padding-left:0!important;padding-right:0!important;}
+    .gj-home .gj-hero-content h1{font-size:clamp(38px,10vw,54px)!important;line-height:1.04!important;}
+    .gj-home .gj-hero-actions{flex-direction:column!important;align-items:center!important;gap:10px!important;}
+    .gj-home .gj-hero-actions a{width:min(92%,360px)!important;min-height:50px!important;}
+    .gj-home .gj-hero-arrow{width:46px!important;height:46px!important;top:52%!important;}
+    .gj-home .gj-arrow-left{left:9px!important;}.gj-home .gj-arrow-right{right:9px!important;}
+    #gjPopupOverlay{padding:0 7px 7px 0!important;}
+    #gjPopupOverlay .gj-popup{width:180px!important;height:104px!important;max-width:calc(100vw - 12px)!important;border-radius:10px!important;}
+    #gjPopupOverlay .gj-popup-content{left:9px!important;right:9px!important;bottom:8px!important;}
+    #gjPopupOverlay .gj-popup-content h2{font-size:13px!important;}
+    #gjPopupOverlay .gj-popup-content p{display:none!important;}
+    #gjPopupOverlay .gj-popup-close,#gjPopupOverlay .gj-popup-arrow{width:20px!important;height:20px!important;font-size:8px!important;}
+}
+@media(max-width:380px){.gj-home .gj-hero-arrow{width:42px!important;height:42px!important;}.gj-home .gj-arrow-left{left:6px!important;}.gj-home .gj-arrow-right{right:6px!important;}#gjPopupOverlay .gj-popup{width:168px!important;height:96px!important;}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}

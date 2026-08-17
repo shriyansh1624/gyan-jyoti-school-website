@@ -1418,7 +1418,7 @@
                             draggable="false"
                         >
 
-                        <div class="gj-popup-overlay"></div>
+                        <div class="gj-popup-slide-overlay"></div>
 
                         <div class="gj-popup-content">
 
@@ -4760,7 +4760,7 @@
 }
 
 
-.gj-popup-overlay {
+.gj-popup-slide-overlay {
 
     position: absolute;
 
@@ -5583,1002 +5583,661 @@
 
 
 <script>
+(function(){
+'use strict';
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 
 /* =========================================================
-   GYAN JYOTI PREMIUM HOMEPAGE JS
+   PREMIUM HERO — LIGHTWEIGHT + TOUCH SAFE
+   Normal backend links are left completely untouched.
 ========================================================= */
+const hero=$('.gj-hero');
+const slides=$$('.gj-hero-slide');
+const dots=$('#gjHeroDots');
+const prev=$('#gjHeroPrev');
+const next=$('#gjHeroNext');
+const progress=$('#gjHeroProgress');
+let index=0, timer=null, startX=0, startY=0, tracking=false;
+const DELAY=5600;
 
-(function () {
-
-    'use strict';
-
-
-    /* =====================================================
-       HERO CAROUSEL
-    ====================================================== */
-
-    const heroSlides =
-        Array.from(
-            document.querySelectorAll('.gj-hero-slide')
-        );
-
-    const heroDots =
-        document.getElementById('gjHeroDots');
-
-    const heroPrev =
-        document.getElementById('gjHeroPrev');
-
-    const heroNext =
-        document.getElementById('gjHeroNext');
-
-    const heroProgress =
-        document.getElementById('gjHeroProgress');
-
-    let heroIndex = 0;
-
-    let heroTimer = null;
-
-    const HERO_DELAY = 5600;
-
-
-    function buildHeroDots() {
-
-        if (!heroDots || heroSlides.length <= 1) {
-            return;
-        }
-
-        heroDots.innerHTML = '';
-
-        heroSlides.forEach(function (_, index) {
-
-            const button =
-                document.createElement('button');
-
-            button.type = 'button';
-
-            button.className =
-                'gj-hero-dot' +
-                (index === 0 ? ' is-active' : '');
-
-            button.setAttribute(
-                'aria-label',
-                'Go to slide ' + (index + 1)
-            );
-
-            button.addEventListener(
-                'click',
-                function () {
-
-                    showHeroSlide(index);
-
-                    restartHeroTimer();
-
-                }
-            );
-
-            heroDots.appendChild(button);
-
-        });
-
+function updateHeroUI(){
+    slides.forEach((slide,i)=>slide.classList.toggle('is-active',i===index));
+    if(dots){
+        $$('.gj-hero-dot',dots).forEach((dot,i)=>dot.classList.toggle('is-active',i===index));
     }
-
-
-    function updateHeroDots() {
-
-        if (!heroDots) {
-            return;
-        }
-
-        const dots =
-            heroDots.querySelectorAll('.gj-hero-dot');
-
-        dots.forEach(function (dot, index) {
-
-            dot.classList.toggle(
-                'is-active',
-                index === heroIndex
-            );
-
-        });
-
-    }
-
-
-    function animateHeroProgress() {
-
-        if (!heroProgress) {
-            return;
-        }
-
-        heroProgress.style.transition = 'none';
-
-        heroProgress.style.width = '0%';
-
-        requestAnimationFrame(function () {
-
-            requestAnimationFrame(function () {
-
-                heroProgress.style.transition =
-                    'width ' + HERO_DELAY + 'ms linear';
-
-                heroProgress.style.width = '100%';
-
+    if(progress){
+        progress.style.transition='none';
+        progress.style.width='0%';
+        if(!document.hidden){
+            requestAnimationFrame(()=>{
+                progress.style.transition=`width ${DELAY}ms linear`;
+                progress.style.width='100%';
             });
+        }
+    }
+}
 
+function restartHero(){
+    if(timer) clearTimeout(timer);
+    timer=null;
+    if(slides.length>1 && !document.hidden){
+        timer=setTimeout(()=>showHero(index+1),DELAY);
+    }
+}
+
+function showHero(nextIndex){
+    if(!slides.length) return;
+    index=(nextIndex+slides.length)%slides.length;
+    updateHeroUI();
+    restartHero();
+}
+
+if(dots && slides.length>1){
+    dots.replaceChildren();
+    slides.forEach((_,i)=>{
+        const button=document.createElement('button');
+        button.type='button';
+        button.className='gj-hero-dot'+(i===0?' is-active':'');
+        button.setAttribute('aria-label','Go to slide '+(i+1));
+        button.addEventListener('click',()=>showHero(i));
+        dots.appendChild(button);
+    });
+}
+
+if(slides.length) showHero(0);
+
+if(next) next.addEventListener('click',(event)=>{
+    event.preventDefault();
+    event.stopPropagation();
+    showHero(index+1);
+});
+
+if(prev) prev.addEventListener('click',(event)=>{
+    event.preventDefault();
+    event.stopPropagation();
+    showHero(index-1);
+});
+
+/* Horizontal swipe changes slides; vertical movement stays page scroll. */
+if(hero){
+    hero.addEventListener('pointerdown',(event)=>{
+        if(event.pointerType==='mouse') return;
+        startX=event.clientX;
+        startY=event.clientY;
+        tracking=true;
+    },{passive:true});
+
+    hero.addEventListener('pointerup',(event)=>{
+        if(!tracking || event.pointerType==='mouse') return;
+        tracking=false;
+        const dx=event.clientX-startX;
+        const dy=event.clientY-startY;
+        if(Math.abs(dx)<55 || Math.abs(dx)<=Math.abs(dy)) return;
+        showHero(dx<0 ? index+1 : index-1);
+    },{passive:true});
+
+    hero.addEventListener('pointercancel',()=>{tracking=false;},{passive:true});
+    hero.addEventListener('mouseenter',()=>{if(timer) clearTimeout(timer);timer=null;});
+    hero.addEventListener('mouseleave',restartHero);
+}
+
+document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){
+        if(timer) clearTimeout(timer);
+        timer=null;
+    }else{
+        restartHero();
+    }
+});
+
+document.addEventListener('keydown',(event)=>{
+    if(event.key==='ArrowLeft') showHero(index-1);
+    if(event.key==='ArrowRight') showHero(index+1);
+});
+
+/* =========================================================
+   REVEALS — IntersectionObserver only, no scroll listener.
+========================================================= */
+const reveals=$$('.reveal,.reveal-left,.reveal-right');
+if('IntersectionObserver' in window){
+    const observer=new IntersectionObserver((entries,obs)=>{
+        entries.forEach(entry=>{
+            if(entry.isIntersecting){
+                entry.target.classList.add('is-visible');
+                obs.unobserve(entry.target);
+            }
         });
+    },{threshold:.08,rootMargin:'0px 0px -30px'});
+    reveals.forEach(el=>observer.observe(el));
+}else{
+    reveals.forEach(el=>el.classList.add('is-visible'));
+}
 
+/* =========================================================
+   COUNTERS — only animate when visible.
+========================================================= */
+const counters=$$('.gj-counter');
+function animateCounter(el){
+    if(el.dataset.counted==='true') return;
+    el.dataset.counted='true';
+    const target=Number(el.dataset.target||0);
+    const start=performance.now();
+    const duration=700;
+    function frame(now){
+        const progress=Math.min((now-start)/duration,1);
+        const eased=1-Math.pow(1-progress,3);
+        el.textContent=Math.floor(target*eased);
+        if(progress<1) requestAnimationFrame(frame);
+        else el.textContent=target;
     }
-
-
-    function showHeroSlide(index) {
-
-        if (!heroSlides.length) {
-            return;
-        }
-
-        if (index < 0) {
-            index = heroSlides.length - 1;
-        }
-
-        if (index >= heroSlides.length) {
-            index = 0;
-        }
-
-        heroIndex = index;
-
-        heroSlides.forEach(function (slide, i) {
-
-            slide.classList.toggle(
-                'is-active',
-                i === heroIndex
-            );
-
+    requestAnimationFrame(frame);
+}
+if('IntersectionObserver' in window){
+    const counterObserver=new IntersectionObserver((entries,obs)=>{
+        entries.forEach(entry=>{
+            if(entry.isIntersecting){
+                animateCounter(entry.target);
+                obs.unobserve(entry.target);
+            }
         });
+    },{threshold:.35});
+    counters.forEach(el=>counterObserver.observe(el));
+}else{
+    counters.forEach(animateCounter);
+}
 
-        updateHeroDots();
+/* =========================================================
+   FLOATING POPUP — never locks page scrolling.
+   IMPORTANT: only #gjPopupOverlay is the outer popup container.
+========================================================= */
+const popup=$('#gjPopupOverlay');
+if(popup){
+    const popupSlides=$$('.gj-popup-slide',popup);
+    const popupDots=$('#gjPopupDots');
+    const popupProgress=$('#gjPopupProgress');
+    const popupNext=$('#gjPopupNext');
+    const popupPrev=$('#gjPopupPrev');
+    const popupClose=$('#gjPopupClose');
+    let popupIndex=0;
+    let popupTimer=null;
+    const POPUP_DELAY=5200;
 
-        animateHeroProgress();
-
+    function updatePopup(){
+        popupSlides.forEach((slide,i)=>slide.classList.toggle('is-active',i===popupIndex));
+        if(popupDots){
+            $$('.gj-popup-dot',popupDots).forEach((dot,i)=>dot.classList.toggle('is-active',i===popupIndex));
+        }
+        if(popupProgress){
+            popupProgress.style.transition='none';
+            popupProgress.style.width='0%';
+            if(!document.hidden){
+                requestAnimationFrame(()=>{
+                    popupProgress.style.transition=`width ${POPUP_DELAY}ms linear`;
+                    popupProgress.style.width='100%';
+                });
+            }
+        }
     }
 
-
-    function nextHero() {
-
-        showHeroSlide(heroIndex + 1);
-
+    function showPopup(nextIndex){
+        if(!popupSlides.length) return;
+        popupIndex=(nextIndex+popupSlides.length)%popupSlides.length;
+        updatePopup();
     }
 
-
-    function previousHero() {
-
-        showHeroSlide(heroIndex - 1);
-
+    function restartPopup(){
+        if(popupTimer) clearTimeout(popupTimer);
+        popupTimer=null;
+        if(popupSlides.length>1 && popup.classList.contains('is-visible') && !document.hidden){
+            popupTimer=setTimeout(()=>{
+                showPopup(popupIndex+1);
+                restartPopup();
+            },POPUP_DELAY);
+        }
     }
 
-
-    function restartHeroTimer() {
-
-        if (heroTimer) {
-            clearInterval(heroTimer);
-        }
-
-        if (heroSlides.length > 1) {
-
-            heroTimer =
-                setInterval(
-                    nextHero,
-                    HERO_DELAY
-                );
-
-        }
-
+    function openPopup(){
+        popup.classList.add('is-visible');
+        popup.setAttribute('aria-hidden','false');
+        /* Never modify document/body overflow here. */
+        showPopup(0);
+        restartPopup();
     }
 
-
-    if (heroSlides.length) {
-
-        buildHeroDots();
-
-        showHeroSlide(0);
-
-        restartHeroTimer();
-
+    function closePopup(){
+        popup.classList.remove('is-visible');
+        popup.setAttribute('aria-hidden','true');
+        if(popupTimer) clearTimeout(popupTimer);
+        popupTimer=null;
     }
 
-
-    if (heroNext) {
-
-        heroNext.addEventListener(
-            'click',
-            function () {
-
-                nextHero();
-
-                restartHeroTimer();
-
-            }
-        );
-
+    if(popupSlides.length<=1){
+        if(popupNext) popupNext.hidden=true;
+        if(popupPrev) popupPrev.hidden=true;
+        if(popupDots) popupDots.hidden=true;
     }
 
-
-    if (heroPrev) {
-
-        heroPrev.addEventListener(
-            'click',
-            function () {
-
-                previousHero();
-
-                restartHeroTimer();
-
-            }
-        );
-
+    if(popupDots && popupSlides.length>1){
+        popupDots.replaceChildren();
+        popupSlides.forEach((_,i)=>{
+            const button=document.createElement('button');
+            button.type='button';
+            button.className='gj-popup-dot'+(i===0?' is-active':'');
+            button.setAttribute('aria-label','Popup '+(i+1));
+            button.addEventListener('click',(event)=>{
+                event.preventDefault();
+                event.stopPropagation();
+                showPopup(i);
+                restartPopup();
+            });
+            popupDots.appendChild(button);
+        });
     }
 
-
-    const hero =
-        document.querySelector('.gj-hero');
-
-
-    if (hero) {
-
-        hero.addEventListener(
-            'mouseenter',
-            function () {
-
-                if (heroTimer) {
-                    clearInterval(heroTimer);
-                }
-
-            }
-        );
-
-
-        hero.addEventListener(
-            'mouseleave',
-            function () {
-
-                restartHeroTimer();
-
-            }
-        );
-
-    }
-
-
-    /* Keyboard controls */
-
-    document.addEventListener(
-        'keydown',
-        function (event) {
-
-            if (event.key === 'ArrowLeft') {
-
-                previousHero();
-
-                restartHeroTimer();
-
-            }
-
-            if (event.key === 'ArrowRight') {
-
-                nextHero();
-
-                restartHeroTimer();
-
-            }
-
-        }
-    );
-
-
-    /* =====================================================
-       REVEAL ON SCROLL
-    ====================================================== */
-
-    const revealItems =
-        document.querySelectorAll(
-            '.reveal, .reveal-left, .reveal-right'
-        );
-
-
-    if ('IntersectionObserver' in window) {
-
-        const revealObserver =
-            new IntersectionObserver(
-                function (entries, observer) {
-
-                    entries.forEach(function (entry) {
-
-                        if (entry.isIntersecting) {
-
-                            entry.target.classList.add(
-                                'is-visible'
-                            );
-
-                            observer.unobserve(
-                                entry.target
-                            );
-
-                        }
-
-                    });
-
-                },
-                {
-                    threshold: 0.12,
-                    rootMargin: '0px 0px -45px 0px'
-                }
-            );
-
-
-        revealItems.forEach(
-            function (element) {
-
-                revealObserver.observe(element);
-
-            }
-        );
-
-    } else {
-
-        revealItems.forEach(
-            function (element) {
-
-                element.classList.add(
-                    'is-visible'
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       STATS COUNTERS
-    ====================================================== */
-
-    const counters =
-        document.querySelectorAll(
-            '.gj-counter'
-        );
-
-
-    function runCounter(element) {
-
-        if (
-            element.dataset.counted === 'true'
-        ) {
-            return;
-        }
-
-        element.dataset.counted = 'true';
-
-        const target =
-            Number(
-                element.dataset.target || 0
-            );
-
-        const duration = 1400;
-
-        const start =
-            performance.now();
-
-
-        function update(now) {
-
-            const progress =
-                Math.min(
-                    (now - start) / duration,
-                    1
-                );
-
-
-            const eased =
-                1 - Math.pow(
-                    1 - progress,
-                    3
-                );
-
-
-            element.textContent =
-                Math.floor(
-                    target * eased
-                );
-
-
-            if (progress < 1) {
-
-                requestAnimationFrame(
-                    update
-                );
-
-            } else {
-
-                element.textContent =
-                    target;
-
-            }
-
-        }
-
-
-        requestAnimationFrame(update);
-
-    }
-
-
-    if ('IntersectionObserver' in window) {
-
-        const counterObserver =
-            new IntersectionObserver(
-                function (entries, observer) {
-
-                    entries.forEach(function (entry) {
-
-                        if (entry.isIntersecting) {
-
-                            runCounter(
-                                entry.target
-                            );
-
-                            observer.unobserve(
-                                entry.target
-                            );
-
-                        }
-
-                    });
-
-                },
-                {
-                    threshold: .5
-                }
-            );
-
-
-        counters.forEach(
-            function (counter) {
-
-                counterObserver.observe(
-                    counter
-                );
-
-            }
-        );
-
-    } else {
-
-        counters.forEach(
-            runCounter
-        );
-
-    }
-
-
-    /* =====================================================
-       IMAGE LAZY LOAD POLISH
-    ====================================================== */
-
-    const lazyImages =
-        document.querySelectorAll(
-            'img[loading="lazy"]'
-        );
-
-
-    lazyImages.forEach(
-        function (image) {
-
-            image.addEventListener(
-                'error',
-                function () {
-
-                    image.style.opacity = '.35';
-
-                },
-                {
-                    once: true
-                }
-            );
-
-        }
-    );
-
-
-    /* =====================================================
-       POPUP
-    ====================================================== */
-
-    const popupOverlay =
-        document.getElementById(
-            'gjPopupOverlay'
-        );
-
-
-    if (popupOverlay) {
-
-        const popupSlides =
-            Array.from(
-                popupOverlay.querySelectorAll(
-                    '.gj-popup-slide'
-                )
-            );
-
-        const popupDots =
-            document.getElementById(
-                'gjPopupDots'
-            );
-
-        const popupProgress =
-            document.getElementById(
-                'gjPopupProgress'
-            );
-
-        const popupNext =
-            document.getElementById(
-                'gjPopupNext'
-            );
-
-        const popupPrev =
-            document.getElementById(
-                'gjPopupPrev'
-            );
-
-        const popupClose =
-            document.getElementById(
-                'gjPopupClose'
-            );
-
-
-        let popupIndex = 0;
-
-        let popupTimer = null;
-
-        const POPUP_DELAY = 5200;
-
-
-        function buildPopupDots() {
-
-            if (!popupDots) {
-                return;
-            }
-
-            popupDots.innerHTML = '';
-
-
-            popupSlides.forEach(
-                function (_, index) {
-
-                    const dot =
-                        document.createElement(
-                            'button'
-                        );
-
-                    dot.type = 'button';
-
-                    dot.className =
-                        'gj-popup-dot' +
-                        (index === 0
-                            ? ' is-active'
-                            : ''
-                        );
-
-                    dot.setAttribute(
-                        'aria-label',
-                        'Popup ' + (index + 1)
-                    );
-
-
-                    dot.addEventListener(
-                        'click',
-                        function () {
-
-                            showPopupSlide(
-                                index
-                            );
-
-                            restartPopup();
-
-                        }
-                    );
-
-
-                    popupDots.appendChild(
-                        dot
-                    );
-
-                }
-            );
-
-        }
-
-
-        function updatePopupDots() {
-
-            if (!popupDots) {
-                return;
-            }
-
-            popupDots
-                .querySelectorAll(
-                    '.gj-popup-dot'
-                )
-                .forEach(
-                    function (dot, index) {
-
-                        dot.classList.toggle(
-                            'is-active',
-                            index === popupIndex
-                        );
-
-                    }
-                );
-
-        }
-
-
-        function animatePopupProgress() {
-
-            if (!popupProgress) {
-                return;
-            }
-
-            popupProgress.style.transition =
-                'none';
-
-            popupProgress.style.width =
-                '0%';
-
-
-            requestAnimationFrame(
-                function () {
-
-                    requestAnimationFrame(
-                        function () {
-
-                            popupProgress.style.transition =
-                                'width ' +
-                                POPUP_DELAY +
-                                'ms linear';
-
-                            popupProgress.style.width =
-                                '100%';
-
-                        }
-                    );
-
-                }
-            );
-
-        }
-
-
-        function showPopupSlide(index) {
-
-            if (!popupSlides.length) {
-                return;
-            }
-
-            if (index < 0) {
-                index =
-                    popupSlides.length - 1;
-            }
-
-            if (
-                index >= popupSlides.length
-            ) {
-                index = 0;
-            }
-
-            popupIndex = index;
-
-
-            popupSlides.forEach(
-                function (slide, i) {
-
-                    slide.classList.toggle(
-                        'is-active',
-                        i === popupIndex
-                    );
-
-                }
-            );
-
-
-            updatePopupDots();
-
-            animatePopupProgress();
-
-        }
-
-
-        function nextPopup() {
-
-            showPopupSlide(
-                popupIndex + 1
-            );
-
-        }
-
-
-        function previousPopup() {
-
-            showPopupSlide(
-                popupIndex - 1
-            );
-
-        }
-
-
-        function restartPopup() {
-
-            if (popupTimer) {
-
-                clearInterval(
-                    popupTimer
-                );
-
-            }
-
-
-            if (
-                popupSlides.length > 1
-            ) {
-
-                popupTimer =
-                    setInterval(
-                        nextPopup,
-                        POPUP_DELAY
-                    );
-
-            }
-
-        }
-
-
-        function openPopup() {
-
-            popupOverlay.classList.add(
-                'is-visible'
-            );
-
-            popupOverlay.setAttribute(
-                'aria-hidden',
-                'false'
-            );
-
-            /* Popup is non-blocking: keep the document scrollable on all devices. */
-            document.body.style.overflow = '';
-
-            showPopupSlide(0);
-
+    if(popupNext) popupNext.addEventListener('click',(event)=>{
+        event.preventDefault();
+        event.stopPropagation();
+        showPopup(popupIndex+1);
+        restartPopup();
+    });
+
+    if(popupPrev) popupPrev.addEventListener('click',(event)=>{
+        event.preventDefault();
+        event.stopPropagation();
+        showPopup(popupIndex-1);
+        restartPopup();
+    });
+
+    if(popupClose) popupClose.addEventListener('click',(event)=>{
+        event.preventDefault();
+        event.stopPropagation();
+        closePopup();
+    });
+
+    popup.addEventListener('click',(event)=>{
+        if(event.target===popup) closePopup();
+    });
+
+    document.addEventListener('keydown',(event)=>{
+        if(!popup.classList.contains('is-visible')) return;
+        if(event.key==='Escape') closePopup();
+        if(event.key==='ArrowRight'){
+            showPopup(popupIndex+1);
             restartPopup();
-
         }
+        if(event.key==='ArrowLeft'){
+            showPopup(popupIndex-1);
+            restartPopup();
+        }
+    });
 
-
-        function closePopup() {
-
-            popupOverlay.classList.remove(
-                'is-visible'
-            );
-
-            popupOverlay.setAttribute(
-                'aria-hidden',
-                'true'
-            );
-
-            document.body.style.overflow =
-                '';
-
-            if (popupTimer) {
-
-                clearInterval(
-                    popupTimer
-                );
-
+    if(!sessionStorage.getItem('gjHomepagePopupSeen')){
+        window.setTimeout(()=>{
+            if(!document.hidden){
+                openPopup();
+                sessionStorage.setItem('gjHomepagePopupSeen','1');
             }
-
-        }
-
-
-        buildPopupDots();
-
-
-        if (popupNext) {
-
-            popupNext.addEventListener(
-                'click',
-                function () {
-
-                    nextPopup();
-
-                    restartPopup();
-
-                }
-            );
-
-        }
-
-
-        if (popupPrev) {
-
-            popupPrev.addEventListener(
-                'click',
-                function () {
-
-                    previousPopup();
-
-                    restartPopup();
-
-                }
-            );
-
-        }
-
-
-        if (popupClose) {
-
-            popupClose.addEventListener(
-                'click',
-                closePopup
-            );
-
-        }
-
-
-        popupOverlay.addEventListener(
-            'click',
-            function (event) {
-
-                if (
-                    event.target ===
-                    popupOverlay
-                ) {
-
-                    closePopup();
-
-                }
-
-            }
-        );
-
-
-        document.addEventListener(
-            'keydown',
-            function (event) {
-
-                if (
-                    event.key === 'Escape' &&
-                    popupOverlay.classList.contains(
-                        'is-visible'
-                    )
-                ) {
-
-                    closePopup();
-
-                }
-
-                if (
-                    event.key === 'ArrowRight' &&
-                    popupOverlay.classList.contains(
-                        'is-visible'
-                    )
-                ) {
-
-                    nextPopup();
-
-                    restartPopup();
-
-                }
-
-                if (
-                    event.key === 'ArrowLeft' &&
-                    popupOverlay.classList.contains(
-                        'is-visible'
-                    )
-                ) {
-
-                    previousPopup();
-
-                    restartPopup();
-
-                }
-
-            }
-        );
-
-
-        /*
-         * Keep the existing behaviour:
-         * popup appears after a short delay.
-         *
-         * It uses sessionStorage instead of localStorage so
-         * closing it does not permanently disable the popup.
-         */
-
-        const popupSeen =
-            sessionStorage.getItem(
-                'gjHomepagePopupSeen'
-            );
-
-
-        if (!popupSeen) {
-
-            window.setTimeout(
-                function () {
-
-                    openPopup();
-
-                    sessionStorage.setItem(
-                        'gjHomepagePopupSeen',
-                        '1'
-                    );
-
-                },
-                3200
-            );
-
-        }
-
+        },3200);
     }
+}
 
-
-    /* =====================================================
-       SMOOTH SCROLL
-    ====================================================== */
-
-    document
-        .querySelectorAll(
-            'a[href^="#"]'
-        )
-        .forEach(
-            function (link) {
-
-                link.addEventListener(
-                    'click',
-                    function (event) {
-
-                        const targetId =
-                            link.getAttribute(
-                                'href'
-                            );
-
-                        if (
-                            !targetId ||
-                            targetId === '#'
-                        ) {
-                            return;
-                        }
-
-                        const target =
-                            document.querySelector(
-                                targetId
-                            );
-
-                        if (!target) {
-                            return;
-                        }
-
-                        event.preventDefault();
-
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-
-                    }
-                );
-
-            }
-        );
-
-
+/* Same-page anchors only. Normal backend routes remain native. */
+document.addEventListener('click',(event)=>{
+    const link=event.target.closest('a[href^="#"]');
+    if(!link) return;
+    const id=link.getAttribute('href');
+    if(!id || id==='#') return;
+    const target=document.querySelector(id);
+    if(!target) return;
+    event.preventDefault();
+    target.scrollIntoView({behavior:'smooth',block:'start'});
+});
 })();
 </script>
 
 
 <%- include('partials/footer') %>
+
+<style id="gj-final-premium-patch">
+/* =========================================================
+   FINAL DEVICE + TOUCH + PERFORMANCE PATCH
+   Frontend only. Backend routes/data are untouched.
+========================================================= */
+html,body{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    overflow-x:auto!important;
+    overflow-y:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior:auto!important;
+    scroll-behavior:auto!important;
+}
+
+body.menu-open{
+    overflow:auto!important;
+    height:auto!important;
+    touch-action:pan-x pan-y pinch-zoom!important;
+}
+
+.gj-home{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    overflow:visible!important;
+}
+
+/* HERO: visual layers never steal taps or scroll gestures. */
+.gj-home .gj-hero{
+    position:relative!important;
+    overflow:hidden!important;
+    isolation:isolate!important;
+    touch-action:pan-y!important;
+}
+
+.gj-home .gj-hero-bg,
+.gj-home .gj-hero-grid,
+.gj-home .gj-hero-glow,
+.gj-home .gj-hero-overlay,
+.gj-home .gj-hero-number,
+.gj-home .gj-hero::before,
+.gj-home .gj-hero::after{
+    pointer-events:none!important;
+}
+
+.gj-home .gj-hero-glow{
+    display:none!important;
+}
+
+.gj-home .gj-hero-grid{
+    opacity:.035!important;
+}
+
+.gj-home .gj-hero-slide{
+    pointer-events:none!important;
+    transform:none!important;
+    transition:opacity .18s linear!important;
+    will-change:auto!important;
+    backface-visibility:hidden!important;
+}
+
+.gj-home .gj-hero-slide.is-active{
+    pointer-events:auto!important;
+}
+
+.gj-home .gj-hero-content{
+    position:relative!important;
+    z-index:100!important;
+    pointer-events:auto!important;
+}
+
+.gj-home .gj-hero-actions{
+    position:relative!important;
+    z-index:150!important;
+    pointer-events:auto!important;
+}
+
+.gj-home .gj-hero-actions a,
+.gj-home .gj-hero-arrow,
+.gj-home .gj-hero-dot{
+    position:relative!important;
+    z-index:200!important;
+    pointer-events:auto!important;
+    touch-action:manipulation!important;
+    cursor:pointer!important;
+}
+
+.gj-home .gj-hero-actions a{
+    user-select:none;
+    -webkit-user-select:none;
+    -webkit-touch-callout:none;
+}
+
+/* Desktop arrows: stable, symmetrical and never clipped. */
+.gj-home .gj-hero-arrow{
+    position:absolute!important;
+    top:50%!important;
+    width:56px!important;
+    height:56px!important;
+    margin:0!important;
+    padding:0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    transform:translateY(-50%)!important;
+    z-index:250!important;
+}
+
+.gj-home .gj-arrow-left{
+    left:24px!important;
+    right:auto!important;
+}
+
+.gj-home .gj-arrow-right{
+    right:24px!important;
+    left:auto!important;
+}
+
+/* Prevent hover effects from causing mobile repaints. */
+@media (hover:none),(pointer:coarse){
+    .gj-home *,.gj-home *::before,.gj-home *::after{
+        backdrop-filter:none!important;
+        -webkit-backdrop-filter:none!important;
+    }
+    .gj-home .gj-image-shine,
+    .gj-home .gj-hero-glow{
+        display:none!important;
+    }
+    .gj-home .gj-btn:hover,
+    .gj-home .gj-hero-arrow:hover{
+        transform:translateY(-50%)!important;
+    }
+    .gj-home .gj-btn{
+        transition:background-color .15s ease,box-shadow .15s ease!important;
+    }
+}
+
+/* Lightweight reveal: opacity only, no transform/layout animation. */
+.gj-home .reveal,
+.gj-home .reveal-left,
+.gj-home .reveal-right{
+    transition:opacity .25s ease!important;
+    transform:none!important;
+}
+.gj-home .reveal:not(.is-visible),
+.gj-home .reveal-left:not(.is-visible),
+.gj-home .reveal-right:not(.is-visible){
+    opacity:0;
+}
+.gj-home .reveal.is-visible,
+.gj-home .reveal-left.is-visible,
+.gj-home .reveal-right.is-visible{
+    opacity:1;
+}
+
+/* =========================================================
+   POPUP — only the outer ID is targeted.
+   The slide's dark image overlay is .gj-popup-slide-overlay.
+   This avoids the old class collision that could cover the page.
+========================================================= */
+#gjPopupOverlay{
+    position:fixed!important;
+    inset:0!important;
+    display:flex!important;
+    align-items:flex-end!important;
+    justify-content:flex-end!important;
+    padding:0 14px 14px 0!important;
+    background:transparent!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+    pointer-events:none!important;
+    touch-action:pan-x pan-y pinch-zoom!important;
+    z-index:999999!important;
+}
+
+#gjPopupOverlay .gj-popup{
+    pointer-events:auto!important;
+    width:240px!important;
+    height:138px!important;
+    max-width:calc(100vw - 20px)!important;
+    max-height:calc(100dvh - 20px)!important;
+    margin:0!important;
+    border-radius:14px!important;
+    box-shadow:0 10px 28px rgba(0,0,0,.25)!important;
+    transform:translate3d(8px,8px,0)!important;
+    transition:opacity .14s ease,transform .14s ease!important;
+    overflow:hidden!important;
+    will-change:opacity,transform;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+}
+
+#gjPopupOverlay.is-visible .gj-popup{
+    transform:translate3d(0,0,0)!important;
+}
+
+#gjPopupOverlay .gj-popup-slide{
+    transform:none!important;
+    transition:opacity .16s linear!important;
+    will-change:opacity;
+}
+
+#gjPopupOverlay .gj-popup-slide-overlay{
+    pointer-events:none!important;
+}
+
+#gjPopupOverlay .gj-popup-content{
+    left:14px!important;
+    right:14px!important;
+    bottom:12px!important;
+    width:auto!important;
+}
+
+#gjPopupOverlay .gj-popup-content h2{
+    font-size:17px!important;
+    line-height:1!important;
+    margin:0 0 5px!important;
+}
+
+#gjPopupOverlay .gj-popup-content p{
+    font-size:8px!important;
+    line-height:1.25!important;
+    margin:0 0 7px!important;
+}
+
+#gjPopupOverlay .gj-popup-badge,
+#gjPopupOverlay .gj-popup-footer{
+    display:none!important;
+}
+
+#gjPopupOverlay .gj-popup-button{
+    padding:6px 10px!important;
+    font-size:8px!important;
+    gap:5px!important;
+    touch-action:manipulation!important;
+}
+
+#gjPopupOverlay .gj-popup-close,
+#gjPopupOverlay .gj-popup-arrow{
+    width:26px!important;
+    height:26px!important;
+    font-size:9px!important;
+    padding:0!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+    touch-action:manipulation!important;
+}
+
+#gjPopupOverlay .gj-popup-close{
+    top:6px!important;
+    right:6px!important;
+}
+
+#gjPopupOverlay .gj-popup-prev{left:6px!important;}
+#gjPopupOverlay .gj-popup-next{right:6px!important;}
+
+@media(max-width:900px){
+    .gj-home .gj-hero-arrow{
+        width:48px!important;
+        height:48px!important;
+    }
+    .gj-home .gj-arrow-left{left:14px!important;}
+    .gj-home .gj-arrow-right{right:14px!important;}
+}
+
+@media(max-width:620px){
+    .gj-home .gj-hero{
+        min-height:610px!important;
+        height:clamp(610px,82svh,720px)!important;
+    }
+    .gj-home .gj-hero-content{
+        width:88%!important;
+        margin-left:auto!important;
+        margin-right:auto!important;
+        padding-left:0!important;
+        padding-right:0!important;
+    }
+    .gj-home .gj-hero-content h1{
+        font-size:clamp(38px,10vw,54px)!important;
+        line-height:1.04!important;
+    }
+    .gj-home .gj-hero-actions{
+        flex-direction:column!important;
+        align-items:center!important;
+        gap:10px!important;
+    }
+    .gj-home .gj-hero-actions a{
+        width:min(92%,360px)!important;
+        min-height:50px!important;
+    }
+    .gj-home .gj-hero-arrow{
+        width:46px!important;
+        height:46px!important;
+        top:52%!important;
+    }
+    .gj-home .gj-arrow-left{left:9px!important;}
+    .gj-home .gj-arrow-right{right:9px!important;}
+    #gjPopupOverlay{padding:0 7px 7px 0!important;}
+    #gjPopupOverlay .gj-popup{
+        width:180px!important;
+        height:104px!important;
+        max-width:calc(100vw - 12px)!important;
+        border-radius:10px!important;
+    }
+    #gjPopupOverlay .gj-popup-content{
+        left:9px!important;
+        right:9px!important;
+        bottom:8px!important;
+    }
+    #gjPopupOverlay .gj-popup-content h2{font-size:13px!important;}
+    #gjPopupOverlay .gj-popup-content p{display:none!important;}
+    #gjPopupOverlay .gj-popup-close,
+    #gjPopupOverlay .gj-popup-arrow{
+        width:20px!important;
+        height:20px!important;
+        font-size:8px!important;
+    }
+}
+
+@media(max-width:380px){
+    .gj-home .gj-hero-arrow{
+        width:42px!important;
+        height:42px!important;
+    }
+    .gj-home .gj-arrow-left{left:6px!important;}
+    .gj-home .gj-arrow-right{right:6px!important;}
+    #gjPopupOverlay .gj-popup{
+        width:168px!important;
+        height:96px!important;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        animation:none!important;
+        transition:none!important;
+        scroll-behavior:auto!important;
+    }
+}
+</style>
