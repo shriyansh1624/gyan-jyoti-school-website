@@ -1751,6 +1751,85 @@
 
         }
 
+
+        /* =====================================================
+           PREMIUM SEARCH / LIGHTWEIGHT PERFORMANCE
+           Frontend-only: backend routes and EJS flow untouched.
+        ===================================================== */
+
+        .search-filter-wrap{position:relative;min-width:0;}
+        .search-filter-wrap .search-filter{width:100%;padding-left:42px;padding-right:42px;}
+        .search-filter-icon{
+            position:absolute;left:15px;top:50%;z-index:2;
+            transform:translateY(-50%);color:#64748b;
+            pointer-events:none;font-size:12px;
+        }
+        .clear-search{
+            position:absolute;right:8px;top:50%;z-index:3;
+            width:28px;height:28px;display:grid;place-items:center;
+            transform:translateY(-50%);border:0;border-radius:8px;
+            background:transparent;color:#64748b;cursor:pointer;
+        }
+        .clear-search:hover{background:#eaf0f7;color:var(--navy);}
+        .search-filter-wrap:focus-within .search-filter-icon{color:var(--blue);}
+        .filter{min-width:0;transition:border-color .16s ease,box-shadow .16s ease,background-color .16s ease;}
+        .filter:hover,.filter:focus{background:#fff;}
+        .filter:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,195,0,.12);}
+        .filtered-empty{grid-column:1/-1;width:100%;padding:58px 20px;}
+        .filtered-empty[hidden]{display:none;}
+        .faculty-card.is-hidden{display:none !important;}
+        .action,.submit-btn,.back-btn,.dashboard-btn,.clear-search{
+            -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+        }
+        .faculty-card{contain:layout paint;}
+        .faculty-card:hover{transform:translateY(-3px);}
+        .faculty-card:hover .faculty-image img{transform:scale(1.035);}
+
+        @media (prefers-reduced-motion:reduce){
+            *,*::before,*::after{
+                animation-duration:.001ms !important;
+                animation-iteration-count:1 !important;
+                transition-duration:.001ms !important;
+                scroll-behavior:auto !important;
+            }
+        }
+
+        @media (max-width:900px){
+            .page{padding:16px;}
+            .faculty-grid{grid-template-columns:1fr;}
+        }
+
+        @media (max-width:680px){
+            .page{padding:12px;}
+            .topbar{gap:10px;margin-bottom:14px;}
+            .hero{min-height:190px;padding:24px;margin-bottom:14px;}
+            .stats{gap:10px;margin-bottom:14px;}
+            .stat{padding:17px;border-radius:17px;}
+            .management-grid{gap:14px;}
+            .form-card,.list-card{border-radius:18px;}
+            .list-header{padding:16px;}
+            .filters{grid-template-columns:1fr;gap:9px;}
+            .filter{height:46px;font-size:12px;}
+            .faculty-grid{padding:14px;gap:10px;}
+            .faculty-card{gap:11px;padding:12px;border-radius:15px;}
+            .faculty-image{width:72px;height:90px;border-radius:12px;}
+            .faculty-name{font-size:14px;padding-right:72px;}
+            .action{width:38px;height:38px;border-radius:10px;}
+            .toast{left:12px;right:12px;bottom:12px;justify-content:center;}
+        }
+
+        @media (max-width:420px){
+            .topbar{flex-direction:column;}
+            .top-right{width:100%;}
+            .dashboard-btn{width:100%;}
+            .hero{padding:20px;}
+            .stats{grid-template-columns:1fr 1fr;}
+            .stat{padding:14px;}
+            .stat h3{font-size:24px;}
+            .faculty-card{display:grid;grid-template-columns:72px minmax(0,1fr);}
+            .faculty-actions{grid-column:1/-1;width:100%;margin-top:4px;}
+        }
+
     </style>
 
 </head>
@@ -2380,12 +2459,23 @@
                 <div class="filters">
 
 
-                    <input
-                        type="text"
-                        id="searchInput"
-                        class="filter"
-                        placeholder="Search faculty..."
-                    >
+                    <div class="search-filter-wrap">
+                        <i class="fas fa-magnifying-glass search-filter-icon" aria-hidden="true"></i>
+                        <input
+                            type="text"
+                            id="searchInput"
+                            class="filter search-filter"
+                            placeholder="Search name, role, subject, department or WhatsApp..."
+                            autocomplete="off"
+                            spellcheck="false"
+                            inputmode="search"
+                            aria-label="Search faculty"
+                        >
+                        <button type="button" id="clearSearch" class="clear-search"
+                                aria-label="Clear search" title="Clear search" hidden>
+                            <i class="fas fa-xmark"></i>
+                        </button>
+                    </div>
 
 
                     <select
@@ -2454,6 +2544,11 @@
                 class="faculty-grid"
                 id="facultyGrid"
             >
+                <div class="empty filtered-empty" id="filteredEmpty" hidden>
+                    <i class="fas fa-magnifying-glass"></i>
+                    <strong>No matching faculty found</strong>
+                    <span>Try another name, role, subject, department or filter.</span>
+                </div>
 
 
                 <% if (faculties && faculties.length > 0) { %>
@@ -2472,6 +2567,16 @@
                             data-category="<%= faculty.category || '' %>"
 
                             data-section="<%= faculty.section || 'general' %>"
+                        
+                            data-search="<%= [
+                                faculty.name,
+                                faculty.role,
+                                faculty.specialization,
+                                faculty.department,
+                                faculty.whatsappNumber,
+                                faculty.section,
+                                ...(Array.isArray(faculty.qualities) ? faculty.qualities : [])
+                            ].filter(Boolean).join(' ').toLowerCase() %>"
                         >
 
 
@@ -2879,520 +2984,211 @@
 
 
 <script>
+(() => {
+    'use strict';
 
-    /* =====================================================
-       ELEMENTS
-    ===================================================== */
+    const cards = Array.from(document.querySelectorAll('.faculty-card'));
+    const searchInput = document.getElementById('searchInput');
+    const clearSearch = document.getElementById('clearSearch');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const sectionFilter = document.getElementById('sectionFilter');
+    const visibleCount = document.getElementById('visibleCount');
+    const filteredEmpty = document.getElementById('filteredEmpty');
 
-    const cards =
-        [
-            ...document.querySelectorAll(
-                '.faculty-card'
-            )
-        ];
+    function animateCounter(element, target){
+        if (!element) return;
 
-
-    const searchInput =
-        document.getElementById(
-            'searchInput'
-        );
-
-
-    const categoryFilter =
-        document.getElementById(
-            'categoryFilter'
-        );
-
-
-    const sectionFilter =
-        document.getElementById(
-            'sectionFilter'
-        );
-
-
-    const visibleCount =
-        document.getElementById(
-            'visibleCount'
-        );
-
-
-    /* =====================================================
-       COUNTS
-    ===================================================== */
-
-    const total =
-        cards.length;
-
-
-    const top =
-        cards.filter(
-            card =>
-                card.dataset.category ===
-                'top-faculty'
-        ).length;
-
-
-    const incharge =
-        cards.filter(
-            card =>
-                card.dataset.category ===
-                'incharge'
-        ).length;
-
-
-    const library =
-        cards.filter(
-            card =>
-                card.dataset.category ===
-                'library-computing'
-        ).length;
-
-
-    animateCounter(
-        document.getElementById(
-            'totalCount'
-        ),
-        total
-    );
-
-
-    animateCounter(
-        document.getElementById(
-            'topCount'
-        ),
-        top
-    );
-
-
-    animateCounter(
-        document.getElementById(
-            'inchargeCount'
-        ),
-        incharge
-    );
-
-
-    animateCounter(
-        document.getElementById(
-            'libraryCount'
-        ),
-        library
-    );
-
-
-    /* =====================================================
-       COUNTER
-    ===================================================== */
-
-    function animateCounter(
-        element,
-        target
-    ) {
-
-        if (!element) {
+        if (
+            target === 0 ||
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ){
+            element.textContent = String(target);
             return;
         }
 
+        const duration = 420;
+        const start = performance.now();
 
-        const duration = 700;
+        function frame(now){
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            element.textContent = String(Math.floor(target * eased));
 
-
-        const start =
-            performance.now();
-
-
-        function update(now) {
-
-            const progress =
-                Math.min(
-                    (now - start) /
-                    duration,
-                    1
-                );
-
-
-            const eased =
-                1 -
-                Math.pow(
-                    1 - progress,
-                    3
-                );
-
-
-            element.textContent =
-                Math.floor(
-                    target * eased
-                );
-
-
-            if (
-                progress < 1
-            ) {
-
-                requestAnimationFrame(
-                    update
-                );
-
-            } else {
-
-                element.textContent =
-                    target;
-
+            if (progress < 1){
+                requestAnimationFrame(frame);
+            }else{
+                element.textContent = String(target);
             }
-
         }
 
-
-        requestAnimationFrame(
-            update
-        );
-
+        requestAnimationFrame(frame);
     }
 
+    const total = cards.length;
+    const top = cards.filter(c => c.dataset.category === 'top-faculty').length;
+    const incharge = cards.filter(c => c.dataset.category === 'incharge').length;
+    const library = cards.filter(c => c.dataset.category === 'library-computing').length;
 
-    /* =====================================================
-       FILTER FACULTY
-    ===================================================== */
+    animateCounter(document.getElementById('totalCount'), total);
+    animateCounter(document.getElementById('topCount'), top);
+    animateCounter(document.getElementById('inchargeCount'), incharge);
+    animateCounter(document.getElementById('libraryCount'), library);
 
-    function filterFaculty() {
+    /* Fast browser-side search:
+       name, role, subject, department, WhatsApp, section, qualities. */
+    let filterFrame = 0;
 
-        const search =
-            searchInput.value
-                .trim()
-                .toLowerCase();
+    function updateClearButton(){
+        if (!clearSearch || !searchInput) return;
+        clearSearch.hidden = searchInput.value.trim() === '';
+    }
 
+    function filterFaculty(){
+        filterFrame = 0;
 
-        const category =
-            categoryFilter.value;
-
-
-        const section =
-            sectionFilter.value;
-
+        const search = (searchInput?.value || '').trim().toLowerCase();
+        const category = categoryFilter?.value || 'all';
+        const section = sectionFilter?.value || 'all';
 
         let visible = 0;
 
+        for (const card of cards){
+            const searchable = card.dataset.search || [
+                card.dataset.name || '',
+                card.dataset.role || '',
+                card.dataset.category || '',
+                card.dataset.section || ''
+            ].join(' ');
 
-        cards.forEach(
-            card => {
+            const show =
+                (!search || searchable.includes(search)) &&
+                (category === 'all' || card.dataset.category === category) &&
+                (section === 'all' || card.dataset.section === section);
 
+            card.classList.toggle('is-hidden', !show);
+            if (show) visible++;
+        }
 
-                const name =
-                    card.dataset.name ||
-                    '';
-
-
-                const role =
-                    card.dataset.role ||
-                    '';
-
-
-                const cardCategory =
-                    card.dataset.category ||
-                    '';
-
-
-                const cardSection =
-                    card.dataset.section ||
-                    '';
-
-
-                const matchesSearch =
-                    !search ||
-                    name.includes(search) ||
-                    role.includes(search);
-
-
-                const matchesCategory =
-                    category === 'all' ||
-                    cardCategory === category;
-
-
-                const matchesSection =
-                    section === 'all' ||
-                    cardSection === section;
-
-
-                if (
-                    matchesSearch &&
-                    matchesCategory &&
-                    matchesSection
-                ) {
-
-                    card.style.display =
-                        'flex';
-
-                    visible++;
-
-                } else {
-
-                    card.style.display =
-                        'none';
-
-                }
-
-            }
-        );
-
-
-        visibleCount.textContent =
-            visible;
-
+        if (visibleCount) visibleCount.textContent = String(visible);
+        if (filteredEmpty) filteredEmpty.hidden = visible !== 0 || cards.length === 0;
+        updateClearButton();
     }
 
+    function scheduleFilter(){
+        if (filterFrame) return;
+        filterFrame = requestAnimationFrame(filterFaculty);
+    }
 
-    searchInput.addEventListener(
-        'input',
-        filterFaculty
-    );
+    searchInput?.addEventListener('input', scheduleFilter, {passive:true});
+    categoryFilter?.addEventListener('change', filterFaculty);
+    sectionFilter?.addEventListener('change', filterFaculty);
 
-
-    categoryFilter.addEventListener(
-        'change',
-        filterFaculty
-    );
-
-
-    sectionFilter.addEventListener(
-        'change',
-        filterFaculty
-    );
-
+    clearSearch?.addEventListener('click', () => {
+        searchInput.value = '';
+        filterFaculty();
+        searchInput.focus({preventScroll:true});
+    });
 
     filterFaculty();
 
+    /* Faster image preview using an object URL instead of base64. */
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+    const previewImage = document.getElementById('previewImage');
 
-    /* =====================================================
-       IMAGE PREVIEW
-    ===================================================== */
+    imageInput?.addEventListener('change', function(){
+        const file = this.files?.[0];
 
-    const imageInput =
-        document.getElementById(
-            'imageInput'
-        );
-
-
-    const imagePreview =
-        document.getElementById(
-            'imagePreview'
-        );
-
-
-    const previewImage =
-        document.getElementById(
-            'previewImage'
-        );
-
-
-    imageInput.addEventListener(
-        'change',
-        function () {
-
-            const file =
-                this.files[0];
-
-
-            if (!file) {
-
-                imagePreview.style.display =
-                    'none';
-
-                return;
-
-            }
-
-
-            /* ---------------------------------------------
-               SIZE VALIDATION
-            --------------------------------------------- */
-
-            if (
-                file.size >
-                5 * 1024 * 1024
-            ) {
-
-                alert(
-                    'Image must be smaller than 5MB.'
-                );
-
-
-                this.value = '';
-
-
-                imagePreview.style.display =
-                    'none';
-
-                return;
-
-            }
-
-
-            /* ---------------------------------------------
-               TYPE VALIDATION
-            --------------------------------------------- */
-
-            const allowed =
-                [
-                    'image/jpeg',
-                    'image/jpg',
-                    'image/png',
-                    'image/webp'
-                ];
-
-
-            if (
-                !allowed.includes(
-                    file.type
-                )
-            ) {
-
-                alert(
-                    'Only JPG, JPEG, PNG and WEBP images are allowed.'
-                );
-
-
-                this.value = '';
-
-
-                imagePreview.style.display =
-                    'none';
-
-                return;
-
-            }
-
-
-            /* ---------------------------------------------
-               PREVIEW
-            --------------------------------------------- */
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                function (event) {
-
-                    previewImage.src =
-                        event.target.result;
-
-
-                    imagePreview.style.display =
-                        'block';
-
-                };
-
-
-            reader.readAsDataURL(
-                file
-            );
-
+        if (!file){
+            imagePreview.style.display = 'none';
+            previewImage.removeAttribute('src');
+            return;
         }
-    );
 
-
-    /* =====================================================
-       WHATSAPP NUMBER
-       DIGITS ONLY
-    ===================================================== */
-
-    const whatsappInput =
-        document.getElementById(
-            'whatsappNumber'
-        );
-
-
-    whatsappInput.addEventListener(
-        'input',
-        function () {
-
-            this.value =
-                this.value
-                    .replace(
-                        /\D/g,
-                        ''
-                    )
-                    .slice(
-                        0,
-                        15
-                    );
-
+        if (file.size > 5 * 1024 * 1024){
+            alert('Image must be smaller than 5MB.');
+            this.value = '';
+            imagePreview.style.display = 'none';
+            return;
         }
-    );
 
+        const allowed = ['image/jpeg','image/jpg','image/png','image/webp'];
 
-    /* =====================================================
-       FORM SUBMIT LOADING
-    ===================================================== */
+        if (!allowed.includes(file.type)){
+            alert('Only JPG, JPEG, PNG and WEBP images are allowed.');
+            this.value = '';
+            imagePreview.style.display = 'none';
+            return;
+        }
 
-    const addForm =
-        document.getElementById(
-            'addFacultyForm'
-        );
+        const objectUrl = URL.createObjectURL(file);
+        previewImage.src = objectUrl;
+        imagePreview.style.display = 'block';
+        previewImage.onload = () => URL.revokeObjectURL(objectUrl);
+    });
 
+    /* WhatsApp digits only. */
+    const whatsappInput = document.getElementById('whatsappNumber');
 
-    addForm.addEventListener(
-        'submit',
-        function (event) {
+    whatsappInput?.addEventListener('input', function(){
+        this.value = this.value.replace(/\D/g, '').slice(0, 15);
+    }, {passive:true});
 
-            const button =
-                this.querySelector(
-                    '.submit-btn'
-                );
+    /* Existing backend action is untouched:
+       POST /admin/faculty/add */
+    const addForm = document.getElementById('addFacultyForm');
 
+    addForm?.addEventListener('submit', function(event){
+        const button = this.querySelector('.submit-btn');
+        const number = whatsappInput?.value.trim() || '';
 
-            /* ---------------------------------------------
-               WHATSAPP VALIDATION
-            --------------------------------------------- */
+        if (number && !/^\d{10,15}$/.test(number)){
+            event.preventDefault();
+            alert('WhatsApp number must contain 10 to 15 digits only.');
+            whatsappInput?.focus();
+            return;
+        }
 
-            const number =
-                whatsappInput.value.trim();
+        if (!button) return;
 
+        button.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Adding Faculty...';
+        button.disabled = true;
+    });
 
-            if (
-                number &&
-                !/^\d{10,15}$/.test(
-                    number
-                )
-            ) {
+    /* Existing backend delete route is untouched:
+       POST /admin/faculty/delete/:id */
+    for (const form of document.querySelectorAll(
+        'form[action*="/admin/faculty/delete/"]'
+    )){
+        const button = form.querySelector('button[type="submit"]');
+        const nameElement = form.closest('.faculty-card')?.querySelector('.faculty-name');
 
+        if (button && nameElement){
+            button.dataset.facultyName = nameElement.textContent.trim();
+        }
+
+        form.addEventListener('submit', function(event){
+            if (this.dataset.confirmed === 'true') return;
+
+            const name = button?.dataset.facultyName || 'this faculty member';
+
+            if (!window.confirm(
+                `Are you sure you want to permanently delete ${name}?`
+            )){
                 event.preventDefault();
-
-
-                alert(
-                    'WhatsApp number must contain 10 to 15 digits only.'
-                );
-
-
-                whatsappInput.focus();
-
                 return;
-
             }
 
+            this.dataset.confirmed = 'true';
 
-            /* ---------------------------------------------
-               LOADING STATE
-            --------------------------------------------- */
-
-            button.innerHTML = `
-
-                <i
-                    class="fas fa-spinner fa-spin"
-                ></i>
-
-                Adding Faculty...
-
-            `;
-
-
-            button.disabled =
-                true;
-
-        }
-    );
-
-
+            if (button){
+                button.disabled = true;
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            }
+        });
+    }
+})();
 </script>
 
 
