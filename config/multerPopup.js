@@ -2,22 +2,40 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
+/*
+=========================================================
+POPUP UPLOAD DIRECTORY
+=========================================================
 
-// =========================================================
-// POPUP UPLOAD DIRECTORY
-// =========================================================
+IMPORTANT:
+app.js serves:
+
+/uploads
+    ->
+/uploads folder
+
+So popup images MUST be physically stored in:
+
+uploads/popups
+
+NOT:
+
+public/uploads/popups
+*/
 
 const uploadDir = path.join(
-    process.cwd(),
-    "public",
+    __dirname,
+    "..",
     "uploads",
     "popups"
 );
 
 
-// =========================================================
-// CREATE DIRECTORY IF NOT EXISTS
-// =========================================================
+/*
+=========================================================
+CREATE DIRECTORY
+=========================================================
+*/
 
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, {
@@ -26,9 +44,11 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 
-// =========================================================
-// STORAGE
-// =========================================================
+/*
+=========================================================
+MULTER STORAGE
+=========================================================
+*/
 
 const storage = multer.diskStorage({
 
@@ -38,19 +58,25 @@ const storage = multer.diskStorage({
 
     },
 
+
     filename: (req, file, cb) => {
+
+        const extension =
+            path.extname(
+                file.originalname
+            ).toLowerCase();
 
         const uniqueName =
             Date.now() +
             "-" +
-            Math.round(Math.random() * 1E9);
-
-        const extension =
-            path.extname(file.originalname).toLowerCase();
+            Math.round(
+                Math.random() * 1E9
+            ) +
+            extension;
 
         cb(
             null,
-            uniqueName + extension
+            uniqueName
         );
 
     }
@@ -58,41 +84,73 @@ const storage = multer.diskStorage({
 });
 
 
-// =========================================================
-// FILE FILTER
-// =========================================================
+/*
+=========================================================
+FILE FILTER
+=========================================================
+*/
 
 const fileFilter = (req, file, cb) => {
 
     const allowedTypes = [
+
         "image/jpeg",
         "image/jpg",
         "image/png",
         "image/webp"
+
     ];
 
-    if (allowedTypes.includes(file.mimetype)) {
 
-        cb(null, true);
+    const allowedExtensions = [
 
-    } else {
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".webp"
 
-        cb(
-            new Error(
-                "Only JPG, PNG and WEBP images are allowed"
-            )
+    ];
+
+
+    const extension =
+        path.extname(
+            file.originalname
+        ).toLowerCase();
+
+
+    if (
+        allowedTypes.includes(
+            file.mimetype
+        ) &&
+        allowedExtensions.includes(
+            extension
+        )
+    ) {
+
+        return cb(
+            null,
+            true
         );
 
     }
 
+
+    return cb(
+        new Error(
+            "Only JPG, JPEG, PNG and WEBP images are allowed"
+        )
+    );
+
 };
 
 
-// =========================================================
-// MULTER
-// =========================================================
+/*
+=========================================================
+MULTER
+=========================================================
+*/
 
-module.exports = multer({
+const upload = multer({
 
     storage,
 
@@ -100,8 +158,14 @@ module.exports = multer({
 
     limits: {
 
-        fileSize: 5 * 1024 * 1024
+        fileSize:
+            5 * 1024 * 1024,
+
+        files: 1
 
     }
 
 });
+
+
+module.exports = upload;
