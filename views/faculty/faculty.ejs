@@ -742,112 +742,29 @@
 
 
 /* =========================================================
-   LIBRARY
+   LIBRARY & COMPUTING — PREMIUM CARDS
 ========================================================= */
 
-.library-section{
-    padding:70px 0 100px;
-}
-
-
-.library-box{
-    position:relative;
-    overflow:hidden;
-    padding:40px;
-    border-radius:28px;
-    color:#fff;
-
-    background:
-        linear-gradient(
-            135deg,
-            #00264c,
-            #004f91
-        );
-
-    box-shadow:
-        0 22px 60px rgba(0,31,63,.16);
-}
-
-
-.library-box::after{
-    content:"";
-    position:absolute;
-    width:260px;
-    height:260px;
-    right:-80px;
-    top:-100px;
-    border-radius:50%;
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,193,7,.28),
-            transparent 68%
-        );
-}
-
-
-.library-box h2{
-    position:relative;
-    z-index:2;
-    color:#fff;
-    font-size:32px;
-    font-weight:950;
-}
-
-
-.library-box p{
-    position:relative;
-    z-index:2;
-    max-width:700px;
-    margin-top:9px;
-    color:#ffffffb8;
-    font-size:13px;
-    line-height:1.7;
-}
-
-
-.library-grid{
-    position:relative;
-    z-index:2;
-
-    display:grid;
-    grid-template-columns:
-        repeat(3,minmax(0,1fr));
-
-    gap:14px;
-    margin-top:25px;
-}
-
-
-.library-card{
-    padding:20px;
-    border-radius:17px;
-    border:1px solid rgba(255,255,255,.12);
-    background:rgba(255,255,255,.07);
-    backdrop-filter:blur(10px);
-}
-
-
-.library-card i{
-    color:var(--gold);
-    font-size:22px;
-}
-
-
-.library-card h4{
-    margin-top:10px;
-    color:#fff;
-    font-size:12px;
-}
-
-
-.library-card span{
-    display:block;
-    margin-top:4px;
-    color:#ffffff9e;
-    font-size:9px;
-}
-
+.library-section{padding:70px 0 100px;}
+.library-box{position:relative;overflow:hidden;padding:42px;border-radius:30px;color:#fff;background:radial-gradient(circle at 88% 8%,rgba(255,193,7,.22),transparent 24%),radial-gradient(circle at 5% 100%,rgba(0,128,255,.18),transparent 30%),linear-gradient(135deg,#00264c,#004f91);box-shadow:0 24px 70px rgba(0,31,63,.18);isolation:isolate;}
+.library-box::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.09;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:26px 26px;z-index:-1;}
+.library-box::after{content:"";position:absolute;width:300px;height:300px;right:-95px;top:-120px;border-radius:50%;background:radial-gradient(circle,rgba(255,193,7,.30),transparent 68%);filter:blur(2px);pointer-events:none;z-index:-1;}
+.library-box h2{position:relative;z-index:2;color:#fff;font-size:clamp(28px,3vw,40px);font-weight:950;letter-spacing:-1.2px;}
+.library-box p{position:relative;z-index:2;max-width:760px;margin-top:10px;color:rgba(255,255,255,.74);font-size:14px;line-height:1.75;}
+.library-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:28px;}
+.library-card{position:relative;overflow:hidden;min-width:0;min-height:260px;display:flex;flex-direction:column;justify-content:flex-end;border-radius:22px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.07);box-shadow:0 16px 38px rgba(0,0,0,.13);isolation:isolate;transform:translateY(18px);opacity:0;animation:libraryCardIn .65s cubic-bezier(.22,.61,.36,1) forwards;transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease;}
+.library-card:nth-child(2){animation-delay:.08s}.library-card:nth-child(3){animation-delay:.16s}.library-card:nth-child(4){animation-delay:.24s}.library-card:nth-child(5){animation-delay:.32s}.library-card:nth-child(6){animation-delay:.40s}
+.library-card:hover{transform:translateY(-7px);border-color:rgba(255,193,7,.55);box-shadow:0 24px 50px rgba(0,0,0,.22);}
+.library-card-image{position:absolute;inset:0;z-index:-2;overflow:hidden;background:#0b2f52;}
+.library-card-image::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,18,42,.08) 15%,rgba(0,18,42,.30) 42%,rgba(0,18,42,.94) 100%);}
+.library-card-image img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;transition:transform .55s cubic-bezier(.22,.61,.36,1);}
+.library-card:hover .library-card-image img{transform:scale(1.07);}
+.library-card-content{position:relative;z-index:2;padding:24px 22px 21px;}
+.library-card-icon{width:40px;height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;border-radius:12px;color:#00264c;background:var(--gold);box-shadow:0 10px 25px rgba(255,193,7,.25);}
+.library-card h4{margin:0;color:#fff;font-size:16px;font-weight:950;letter-spacing:-.2px;}
+.library-card span{display:block;margin-top:6px;color:rgba(255,255,255,.78);font-size:10px;line-height:1.5;font-weight:700;}
+@keyframes libraryCardIn{to{opacity:1;transform:translateY(0);}}
+@media(prefers-reduced-motion:reduce){.library-card{animation:none;opacity:1;transform:none;transition:none}.library-card-image img{transition:none}}
 
 /* =========================================================
    RESPONSIVE
@@ -907,10 +824,8 @@
             repeat(2,1fr);
     }
 
-    .library-grid{
-        grid-template-columns:
-            repeat(2,1fr);
-    }
+    .library-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .library-card{min-height:250px;}
 
 }
 
@@ -975,13 +890,10 @@
         margin-top:8px;
     }
 
-    .library-box{
-        padding:28px;
-    }
-
-    .library-grid{
-        grid-template-columns:1fr;
-    }
+    .library-box{padding:28px 20px;border-radius:24px;}
+    .library-grid{grid-template-columns:1fr;}
+    .library-card{min-height:245px;}
+    .library-card-content{padding:21px 18px 18px;}
 
 }
 
@@ -1839,19 +1751,35 @@
 
                 <% libraryComputing.forEach(faculty => { %>
 
-                    <div class="library-card">
+                    <%
+                        const rawLibraryImage = String(faculty.image || '').trim();
+                        const libraryImage = rawLibraryImage
+                            ? (rawLibraryImage.startsWith('/') || rawLibraryImage.startsWith('http')
+                                ? rawLibraryImage
+                                : '/' + rawLibraryImage.replace(/^public\//, ''))
+                            : '/images/logo.png';
+                    %>
 
-                        <i class="fas fa-laptop-code"></i>
+                    <article class="library-card">
+                        <div class="library-card-image">
+                            <img
+                                src="<%= libraryImage %>"
+                                alt="<%= faculty.name %>"
+                                loading="lazy"
+                                decoding="async"
+                                onerror="this.onerror=null;this.src='/images/logo.png';"
+                            >
+                        </div>
 
-                        <h4>
-                            <%= faculty.name %>
-                        </h4>
+                        <div class="library-card-content">
+                            <div class="library-card-icon" aria-hidden="true">
+                                <i class="fas <%= /librar/i.test(faculty.role || '') ? 'fa-book-open-reader' : 'fa-laptop-code' %>"></i>
+                            </div>
 
-                        <span>
-                            <%= faculty.role %>
-                        </span>
-
-                    </div>
+                            <h4><%= faculty.name %></h4>
+                            <span><%= faculty.role %></span>
+                        </div>
+                    </article>
 
                 <% }) %>
 

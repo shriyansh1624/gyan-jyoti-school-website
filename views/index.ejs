@@ -6241,3 +6241,606 @@ body.menu-open{
     }
 }
 </style>
+
+<!-- Instagram URL override: keeps existing header/footer icons and only updates their destination -->
+<script>
+(function () {
+    const instagramUrl = 'https://www.instagram.com/gyanjyoti.nainpur?stkn=b2R2bWR2YnYwZjVn';
+
+    document.querySelectorAll('a').forEach(function (link) {
+        const icon = link.querySelector('.fa-instagram');
+        const label = (link.getAttribute('aria-label') || '').toLowerCase();
+
+        if (icon || label === 'instagram') {
+            link.href = instagramUrl;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+        }
+    });
+})();
+</script>
+
+
+
+<style id="gj-production-enhancement-layer">
+/* =========================================================
+   GYAN JYOTI — CLIENT DELIVERY ENHANCEMENT LAYER
+   Frontend only. Existing EJS data, routes and forms untouched.
+========================================================= */
+
+:root{
+    --gj-ease:cubic-bezier(.22,1,.36,1);
+    --gj-ease-soft:cubic-bezier(.16,1,.3,1);
+    --gj-shadow:0 24px 70px rgba(0,31,63,.12);
+    --gj-shadow-hover:0 30px 90px rgba(0,31,63,.18);
+}
+
+html{
+    scroll-behavior:smooth!important;
+    overflow-x:clip!important;
+}
+
+body{
+    overflow-x:clip!important;
+    background:#f7f9fc;
+}
+
+.gj-home{
+    overflow:visible!important;
+    isolation:isolate;
+    background:linear-gradient(180deg,#fff 0%,#f8fafc 48%,#fff 100%);
+}
+
+/* ---------- GLOBAL SCROLL PROGRESS ---------- */
+.gj-page-progress{
+    position:fixed;
+    inset:0 0 auto 0;
+    width:100%;
+    height:3px;
+    z-index:1000000;
+    pointer-events:none;
+    background:rgba(0,31,63,.06);
+}
+.gj-page-progress span{
+    display:block;
+    width:0;
+    height:100%;
+    transform-origin:left center;
+    background:linear-gradient(90deg,#ffc300,#ffdf67,#00558f);
+    box-shadow:0 0 16px rgba(255,195,0,.55);
+    will-change:width;
+}
+
+/* ---------- HERO ---------- */
+.gj-home .gj-hero{
+    min-height:clamp(650px,88svh,900px);
+    height:min(900px,92svh);
+    isolation:isolate;
+    perspective:1200px;
+}
+.gj-home .gj-hero-bg,
+.gj-home .gj-hero-grid,
+.gj-home .gj-hero-glow{
+    pointer-events:none!important;
+}
+.gj-home .gj-hero-bg{
+    animation:gjHeroAmbient 18s ease-in-out infinite alternate;
+}
+.gj-home .gj-hero-grid{
+    animation:gjGridDrift 20s linear infinite;
+    opacity:.42;
+}
+.gj-home .gj-glow-one{animation:gjGlowOne 8s ease-in-out infinite alternate;}
+.gj-home .gj-glow-two{animation:gjGlowTwo 11s ease-in-out infinite alternate;}
+
+.gj-home .gj-hero-slide{
+    transform:scale(1.025);
+    transition:opacity 1s ease,transform 7s var(--gj-ease-soft),filter 1s ease;
+    filter:saturate(.94) brightness(.9);
+}
+.gj-home .gj-hero-slide.is-active{
+    transform:scale(1.055);
+    filter:saturate(1.05) brightness(1);
+}
+.gj-home .gj-hero-overlay{
+    background:
+        linear-gradient(90deg,rgba(0,18,39,.91) 0%,rgba(0,25,53,.72) 43%,rgba(0,31,63,.20) 100%),
+        linear-gradient(0deg,rgba(0,15,32,.58),transparent 45%,rgba(0,0,0,.12));
+}
+.gj-home .gj-hero-content > *{
+    opacity:0;
+    transform:translateY(24px);
+}
+.gj-home .gj-hero-slide.is-active .gj-hero-content > *{
+    animation:gjHeroIn .85s var(--gj-ease) forwards;
+}
+.gj-home .gj-hero-slide.is-active .gj-eyebrow{animation-delay:.08s;}
+.gj-home .gj-hero-slide.is-active h1{animation-delay:.18s;}
+.gj-home .gj-hero-slide.is-active .gj-title-accent{animation-delay:.27s;}
+.gj-home .gj-hero-slide.is-active .gj-hero-subtitle{animation-delay:.35s;}
+.gj-home .gj-hero-slide.is-active .gj-hero-actions{animation-delay:.44s;}
+.gj-home .gj-hero-slide.is-active .gj-hero-features{animation-delay:.54s;}
+.gj-home .gj-eyebrow-dot{animation:gjDotPulse 1.8s ease-in-out infinite;}
+.gj-home .gj-title-accent i{animation:gjStarSpin 7s linear infinite;}
+.gj-home .gj-hero-number span{animation:gjFloat 4s ease-in-out infinite;}
+.gj-home .gj-scroll i{animation:gjScrollHint 1.8s ease-in-out infinite;}
+
+/* ---------- PREMIUM BUTTONS ---------- */
+.gj-home .gj-btn,
+.gj-home .gj-text-btn,
+.gj-home .gj-outline-btn{
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+    transform:translateZ(0);
+    transition:transform .35s var(--gj-ease),box-shadow .35s var(--gj-ease),background-color .35s ease,border-color .35s ease;
+}
+.gj-home .gj-btn::before,
+.gj-home .gj-text-btn::before,
+.gj-home .gj-outline-btn::before{
+    content:"";
+    position:absolute;
+    top:-60%;
+    left:-120%;
+    width:65%;
+    height:220%;
+    background:linear-gradient(105deg,transparent,rgba(255,255,255,.42),transparent);
+    transform:rotate(18deg);
+    transition:left .75s ease;
+    pointer-events:none;
+    z-index:-1;
+}
+.gj-home .gj-btn:hover,
+.gj-home .gj-text-btn:hover,
+.gj-home .gj-outline-btn:hover{
+    transform:translateY(-5px);
+}
+.gj-home .gj-btn:hover::before,
+.gj-home .gj-text-btn:hover::before,
+.gj-home .gj-outline-btn:hover::before{left:135%;}
+.gj-home .gj-btn:active,
+.gj-home .gj-text-btn:active,
+.gj-home .gj-outline-btn:active{transform:translateY(-1px) scale(.985);}
+.gj-ripple{
+    position:absolute;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:rgba(255,255,255,.5);
+    transform:translate(-50%,-50%) scale(0);
+    animation:gjRipple .65s ease-out forwards;
+    pointer-events:none;
+    z-index:5;
+}
+
+/* ---------- QUICK ACCESS ---------- */
+.gj-home .gj-quick-strip{
+    position:relative;
+    z-index:8;
+    background:rgba(255,255,255,.96);
+    box-shadow:0 20px 55px rgba(0,31,63,.09);
+    border-bottom:1px solid rgba(0,31,63,.07);
+}
+.gj-home .gj-quick-inner{min-height:96px;}
+.gj-home .gj-quick-links a{
+    position:relative;
+    transition:transform .35s var(--gj-ease),color .3s ease,background .3s ease;
+}
+.gj-home .gj-quick-links a::after{
+    content:"";
+    position:absolute;
+    left:18%;
+    right:18%;
+    bottom:-9px;
+    height:2px;
+    border-radius:99px;
+    background:var(--gj-gold);
+    transform:scaleX(0);
+    transition:transform .35s var(--gj-ease);
+}
+.gj-home .gj-quick-links a:hover{transform:translateY(-4px);}
+.gj-home .gj-quick-links a:hover::after{transform:scaleX(1);}
+
+/* ---------- SECTION HEADINGS ---------- */
+.gj-home .gj-section-kicker,
+.gj-home .gj-heading-center .gj-section-kicker{
+    position:relative;
+}
+.gj-home .gj-heading-center h2,
+.gj-home .gj-stats-heading h2,
+.gj-home .gj-discover-heading h2{
+    text-wrap:balance;
+}
+.gj-home .gj-heading-center::after,
+.gj-home .gj-stats-heading::after,
+.gj-home .gj-discover-heading::after{
+    content:"";
+    display:block;
+    width:68px;
+    height:3px;
+    margin:20px auto 0;
+    border-radius:99px;
+    background:linear-gradient(90deg,transparent,#ffc300,transparent);
+    animation:gjLineGlow 3s ease-in-out infinite;
+}
+.gj-home .gj-stats-heading::after{margin-left:0;margin-right:auto;}
+.gj-home .gj-discover-heading::after{margin-left:0;margin-right:auto;}
+
+/* ---------- REVEAL UPGRADE ---------- */
+.gj-home .reveal,
+.gj-home .reveal-left,
+.gj-home .reveal-right{
+    will-change:opacity,transform;
+    transition:opacity .85s var(--gj-ease),transform .85s var(--gj-ease)!important;
+}
+.gj-home .reveal:not(.is-visible){transform:translateY(42px)!important;}
+.gj-home .reveal-left:not(.is-visible){transform:translateX(-52px)!important;}
+.gj-home .reveal-right:not(.is-visible){transform:translateX(52px)!important;}
+
+/* ---------- CARDS / 3D DEPTH ---------- */
+.gj-home .gj-feature-card,
+.gj-home .gj-stat-card,
+.gj-home .gj-discover-card,
+.gj-home .gj-testimonial,
+.gj-home .gj-gallery-item{
+    position:relative;
+    transform:translateZ(0);
+    transition:transform .5s var(--gj-ease),box-shadow .5s var(--gj-ease),border-color .4s ease;
+    will-change:transform;
+}
+.gj-home .gj-feature-card::before,
+.gj-home .gj-stat-card::before,
+.gj-home .gj-discover-card::before,
+.gj-home .gj-testimonial::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    background:linear-gradient(120deg,rgba(255,255,255,.22),transparent 35%);
+    opacity:0;
+    transition:opacity .45s ease;
+    pointer-events:none;
+}
+.gj-home .gj-feature-card:hover,
+.gj-home .gj-stat-card:hover,
+.gj-home .gj-discover-card:hover,
+.gj-home .gj-testimonial:hover{
+    transform:translateY(-10px) rotateX(1deg);
+    box-shadow:var(--gj-shadow-hover);
+}
+.gj-home .gj-feature-card:hover::before,
+.gj-home .gj-stat-card:hover::before,
+.gj-home .gj-discover-card:hover::before,
+.gj-home .gj-testimonial:hover::before{opacity:1;}
+.gj-home .gj-feature-icon,
+.gj-home .gj-stat-icon,
+.gj-home .gj-discover-icon{
+    transition:transform .45s var(--gj-ease),box-shadow .45s ease;
+}
+.gj-home .gj-feature-card:hover .gj-feature-icon,
+.gj-home .gj-stat-card:hover .gj-stat-icon,
+.gj-home .gj-discover-card:hover .gj-discover-icon{
+    transform:translateY(-4px) scale(1.08) rotate(-4deg);
+}
+
+/* ---------- ABOUT VISUAL ---------- */
+.gj-home .gj-image-frame,
+.gj-home .gj-academic-image-main,
+.gj-home .gj-admission-image{
+    transform:translateZ(0);
+    box-shadow:var(--gj-shadow);
+}
+.gj-home .gj-image-frame img,
+.gj-home .gj-academic-image-main img,
+.gj-home .gj-admission-image img{
+    transition:transform 1s var(--gj-ease),filter .7s ease;
+}
+.gj-home .gj-image-frame:hover img,
+.gj-home .gj-academic-image-main:hover img,
+.gj-home .gj-admission-image:hover img{
+    transform:scale(1.055);
+    filter:saturate(1.08) contrast(1.03);
+}
+.gj-home .gj-floating-card{animation:gjFloatCard 5s ease-in-out infinite;}
+.gj-home .gj-visual-orbit{animation:gjOrbit 16s linear infinite;}
+.gj-home .orbit-two{animation-direction:reverse;animation-duration:21s;}
+
+/* ---------- STATS ---------- */
+.gj-home .gj-stats{
+    position:relative;
+    overflow:hidden;
+}
+.gj-home .gj-stats-bg{animation:gjStatsMove 18s ease-in-out infinite alternate;}
+.gj-home .gj-stat-value{font-variant-numeric:tabular-nums;}
+.gj-home .gj-counter{display:inline-block;min-width:1ch;}
+
+/* ---------- GALLERY ---------- */
+.gj-home .gj-gallery-item{overflow:hidden;}
+.gj-home .gj-gallery-item img{
+    transition:transform 1s var(--gj-ease),filter .8s ease;
+}
+.gj-home .gj-gallery-item:hover img{
+    transform:scale(1.09);
+    filter:saturate(1.1) contrast(1.04);
+}
+.gj-home .gj-gallery-overlay{
+    transform:translateY(18px);
+    opacity:.2;
+    transition:transform .45s var(--gj-ease),opacity .45s ease;
+}
+.gj-home .gj-gallery-item:hover .gj-gallery-overlay{transform:translateY(0);opacity:1;}
+
+/* ---------- DISCOVER ---------- */
+.gj-home .gj-discover-card{
+    overflow:hidden;
+}
+.gj-home .gj-discover-card::after{
+    content:"";
+    position:absolute;
+    width:170px;
+    height:170px;
+    right:-80px;
+    top:-80px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(255,195,0,.22),transparent 68%);
+    transition:transform .6s var(--gj-ease);
+    pointer-events:none;
+}
+.gj-home .gj-discover-card:hover::after{transform:scale(1.45);}
+.gj-home .gj-discover-arrow{transition:transform .4s var(--gj-ease);}
+.gj-home .gj-discover-card:hover .gj-discover-arrow{transform:translateX(8px);}
+
+/* ---------- ADMISSION CTA ---------- */
+.gj-home .gj-admission{isolation:isolate;overflow:hidden;}
+.gj-home .gj-admission::before{
+    content:"";
+    position:absolute;
+    inset:-30%;
+    background:radial-gradient(circle at 25% 35%,rgba(255,195,0,.16),transparent 27%),radial-gradient(circle at 75% 65%,rgba(0,85,143,.20),transparent 28%);
+    animation:gjCtaAura 12s ease-in-out infinite alternate;
+    pointer-events:none;
+}
+.gj-home .gj-admission-shape{animation:gjFloat 8s ease-in-out infinite;}
+
+/* ---------- TESTIMONIAL ---------- */
+.gj-home .gj-stars i{animation:gjStarPulse 2.8s ease-in-out infinite;}
+.gj-home .gj-stars i:nth-child(2){animation-delay:.12s;}
+.gj-home .gj-stars i:nth-child(3){animation-delay:.24s;}
+.gj-home .gj-stars i:nth-child(4){animation-delay:.36s;}
+.gj-home .gj-stars i:nth-child(5){animation-delay:.48s;}
+
+/* ---------- BACK TO TOP ---------- */
+.gj-back-top{
+    position:fixed;
+    right:24px;
+    bottom:24px;
+    width:48px;
+    height:48px;
+    display:grid;
+    place-items:center;
+    border:1px solid rgba(255,255,255,.24);
+    border-radius:50%;
+    color:#001f3f;
+    background:rgba(255,255,255,.94);
+    box-shadow:0 16px 35px rgba(0,31,63,.18);
+    cursor:pointer;
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(14px) scale(.88);
+    transition:opacity .35s ease,visibility .35s ease,transform .35s var(--gj-ease),background .3s ease;
+    z-index:999990;
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+}
+.gj-back-top.is-visible{opacity:1;visibility:visible;transform:translateY(0) scale(1);}
+.gj-back-top:hover{background:#ffc300;transform:translateY(-4px) scale(1.04);}
+.gj-back-top i{font-size:15px;}
+
+/* ---------- DESKTOP CURSOR AURA ---------- */
+.gj-cursor-aura{
+    position:fixed;
+    left:0;
+    top:0;
+    width:170px;
+    height:170px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:999980;
+    opacity:0;
+    background:radial-gradient(circle,rgba(255,195,0,.12),rgba(0,85,143,.035) 45%,transparent 70%);
+    transform:translate3d(-50%,-50%,0);
+    transition:opacity .25s ease;
+    mix-blend-mode:multiply;
+}
+.gj-cursor-aura.is-active{opacity:1;}
+
+/* ---------- ACCESSIBILITY ---------- */
+.gj-home a:focus-visible,
+.gj-home button:focus-visible,
+.gj-back-top:focus-visible{
+    outline:3px solid #ffc300!important;
+    outline-offset:4px!important;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:900px){
+    .gj-home .gj-hero{height:auto;min-height:650px;}
+    .gj-home .gj-hero-slide.is-active{transform:scale(1.025);}
+    .gj-home .gj-feature-card:hover,
+    .gj-home .gj-stat-card:hover,
+    .gj-home .gj-discover-card:hover,
+    .gj-home .gj-testimonial:hover{transform:translateY(-5px);}
+    .gj-cursor-aura{display:none!important;}
+}
+
+@media(max-width:620px){
+    .gj-home .gj-section{padding:76px 0;}
+    .gj-home .gj-heading-center{margin-bottom:38px;}
+    .gj-home .gj-heading-center h2,
+    .gj-home .gj-stats-heading h2,
+    .gj-home .gj-discover-heading h2{letter-spacing:-1px;}
+    .gj-home .gj-btn:hover,
+    .gj-home .gj-text-btn:hover,
+    .gj-home .gj-outline-btn:hover{transform:none;}
+    .gj-home .gj-gallery-item:hover img,
+    .gj-home .gj-image-frame:hover img,
+    .gj-home .gj-academic-image-main:hover img,
+    .gj-home .gj-admission-image:hover img{transform:none;}
+    .gj-back-top{right:14px;bottom:14px;width:44px;height:44px;}
+}
+
+@media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto!important;}
+    .gj-home *,
+    .gj-home *::before,
+    .gj-home *::after{
+        animation-duration:.001ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.001ms!important;
+    }
+    .gj-page-progress,.gj-cursor-aura{display:none!important;}
+}
+
+@keyframes gjHeroAmbient{0%{transform:scale(1.02) translate3d(0,0,0);}100%{transform:scale(1.08) translate3d(-1.5%,1%,0);}}
+@keyframes gjGridDrift{from{background-position:0 0;}to{background-position:120px 80px;}}
+@keyframes gjGlowOne{from{transform:translate3d(-8%,0,0) scale(.9);opacity:.45;}to{transform:translate3d(8%,12%,0) scale(1.1);opacity:.75;}}
+@keyframes gjGlowTwo{from{transform:translate3d(10%,8%,0) scale(.9);opacity:.4;}to{transform:translate3d(-8%,-8%,0) scale(1.12);opacity:.7;}}
+@keyframes gjHeroIn{to{opacity:1;transform:translateY(0);}}
+@keyframes gjDotPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,195,0,.45);}50%{box-shadow:0 0 0 8px rgba(255,195,0,0);}}
+@keyframes gjStarSpin{to{transform:rotate(360deg);}}
+@keyframes gjScrollHint{0%,100%{transform:translateY(0);}50%{transform:translateY(7px);}}
+@keyframes gjFloatCard{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-9px) rotate(-1deg);}}
+@keyframes gjOrbit{to{transform:rotate(360deg);}}
+@keyframes gjStatsMove{from{transform:scale(1.03) translate3d(-1%,0,0);}to{transform:scale(1.09) translate3d(1%,1%,0);}}
+@keyframes gjLineGlow{0%,100%{opacity:.65;transform:scaleX(.82);}50%{opacity:1;transform:scaleX(1.12);}}
+@keyframes gjCtaAura{from{transform:translate3d(-2%,-1%,0) scale(.96);}to{transform:translate3d(3%,2%,0) scale(1.05);}}
+@keyframes gjStarPulse{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-2px) scale(1.1);}}
+@keyframes gjRipple{to{transform:translate(-50%,-50%) scale(18);opacity:0;}}
+
+</style>
+
+<script id="gj-production-enhancement-script">
+/* =========================================================
+   GYAN JYOTI — INTERACTION ENHANCEMENT LAYER
+   Existing navigation, backend routes and popup logic untouched.
+========================================================= */
+(function(){
+    'use strict';
+
+    const home = document.querySelector('.gj-home');
+    if(!home) return;
+
+    /* ---------- Scroll progress + back-to-top ---------- */
+    const progressWrap = document.createElement('div');
+    progressWrap.className = 'gj-page-progress';
+    progressWrap.setAttribute('aria-hidden','true');
+    progressWrap.innerHTML = '<span></span>';
+    document.body.appendChild(progressWrap);
+    const progressBar = progressWrap.querySelector('span');
+
+    const backTop = document.createElement('button');
+    backTop.type = 'button';
+    backTop.className = 'gj-back-top';
+    backTop.setAttribute('aria-label','Back to top');
+    backTop.innerHTML = '<i class="fas fa-arrow-up" aria-hidden="true"></i>';
+    document.body.appendChild(backTop);
+
+    let scrollTick = false;
+    function updateScrollUI(){
+        const doc = document.documentElement;
+        const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+        const pct = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+        progressBar.style.width = pct + '%';
+        backTop.classList.toggle('is-visible', window.scrollY > 520);
+        scrollTick = false;
+    }
+    window.addEventListener('scroll',function(){
+        if(!scrollTick){
+            scrollTick = true;
+            requestAnimationFrame(updateScrollUI);
+        }
+    },{passive:true});
+    updateScrollUI();
+    backTop.addEventListener('click',function(){
+        window.scrollTo({top:0,behavior:'smooth'});
+    });
+
+    /* ---------- Scroll reveal stagger ---------- */
+    const revealGroups = document.querySelectorAll(
+        '.gj-feature-grid .reveal,' +
+        '.gj-stats-grid .reveal,' +
+        '.gj-discover-grid .reveal,' +
+        '.gj-testimonial-grid .reveal,' +
+        '.gj-gallery-grid .reveal'
+    );
+    revealGroups.forEach(function(el,i){
+        el.style.transitionDelay = Math.min(i * 70, 420) + 'ms';
+    });
+
+    /* ---------- Premium pointer aura on desktop ---------- */
+    const finePointer = window.matchMedia('(hover:hover) and (pointer:fine)');
+    if(finePointer.matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+        const aura = document.createElement('div');
+        aura.className = 'gj-cursor-aura';
+        aura.setAttribute('aria-hidden','true');
+        document.body.appendChild(aura);
+
+        let mx = -200, my = -200, ax = mx, ay = my, active = false;
+        window.addEventListener('pointermove',function(e){
+            mx = e.clientX;
+            my = e.clientY;
+            if(!active){ active = true; aura.classList.add('is-active'); }
+        },{passive:true});
+        window.addEventListener('pointerleave',function(){
+            active = false;
+            aura.classList.remove('is-active');
+        },{passive:true});
+        function moveAura(){
+            ax += (mx-ax)*.16;
+            ay += (my-ay)*.16;
+            aura.style.transform = 'translate3d(' + ax + 'px,' + ay + 'px,0) translate(-50%,-50%)';
+            requestAnimationFrame(moveAura);
+        }
+        requestAnimationFrame(moveAura);
+    }
+
+    /* ---------- Subtle 3D card tilt on real pointer devices ---------- */
+    if(finePointer.matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+        const tiltCards = document.querySelectorAll(
+            '.gj-feature-card,.gj-stat-card,.gj-discover-card,.gj-testimonial'
+        );
+        tiltCards.forEach(function(card){
+            card.addEventListener('pointermove',function(e){
+                const r = card.getBoundingClientRect();
+                const x = (e.clientX-r.left)/r.width-.5;
+                const y = (e.clientY-r.top)/r.height-.5;
+                card.style.transform = 'perspective(900px) rotateX(' + (-y*3) + 'deg) rotateY(' + (x*3) + 'deg) translateY(-8px)';
+            });
+            card.addEventListener('pointerleave',function(){
+                card.style.transform = '';
+            });
+        });
+    }
+
+    /* ---------- Ripple feedback; hrefs/actions remain untouched ---------- */
+    const rippleTargets = document.querySelectorAll('.gj-btn,.gj-text-btn,.gj-outline-btn,.gj-quick-links a');
+    rippleTargets.forEach(function(target){
+        target.addEventListener('click',function(e){
+            if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const rect = target.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            ripple.className = 'gj-ripple';
+            ripple.style.left = (e.clientX-rect.left) + 'px';
+            ripple.style.top = (e.clientY-rect.top) + 'px';
+            target.appendChild(ripple);
+            window.setTimeout(function(){ ripple.remove(); },700);
+        });
+    });
+
+    /* ---------- Hero pause when user prefers reduced motion ---------- */
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+        home.classList.add('gj-reduced-motion');
+    }
+})();
+
+</script>
