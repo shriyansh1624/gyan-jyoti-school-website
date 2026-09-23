@@ -6844,3 +6844,649 @@ body{
 })();
 
 </script>
+
+
+<!-- =========================================================
+     GYAN JYOTI — UNIVERSAL MEDIA ZOOM + RESPONSIVE FINAL PATCH
+     Frontend-only. Existing EJS/backend routes and forms untouched.
+========================================================= -->
+<style id="gj-universal-media-patch">
+html{
+    width:100%;
+    min-width:0;
+    overflow-x:clip;
+    overflow-y:auto;
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+}
+body{
+    width:100%;
+    min-width:0;
+    max-width:100%;
+    overflow-x:clip;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+}
+.gj-home,
+.gj-home *{
+    box-sizing:border-box;
+}
+.gj-home{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    overflow-x:clip;
+}
+.gj-home img{
+    display:block;
+    max-width:100%;
+}
+.gj-home a,
+.gj-home button{
+    -webkit-tap-highlight-color:transparent;
+}
+
+/* ---------- HERO: stable on every viewport ---------- */
+.gj-home .gj-hero{
+    height:clamp(620px,82svh,820px);
+    min-height:620px;
+    max-height:900px;
+    width:100%;
+    overflow:hidden;
+    isolation:isolate;
+}
+.gj-home .gj-hero-slider,
+.gj-home .gj-hero-slide{
+    width:100%;
+    height:100%;
+    min-width:0;
+}
+.gj-home .gj-hero-slide{
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:center center;
+    will-change:opacity,transform,background-position;
+}
+.gj-home .gj-hero-slide.is-active{
+    animation:gjHeroKenBurns 7s cubic-bezier(.22,.61,.36,1) both;
+}
+.gj-home .gj-hero-content{
+    max-width:min(920px,calc(100% - 140px));
+}
+.gj-home .gj-hero-arrow{
+    touch-action:manipulation;
+    user-select:none;
+}
+.gj-home .gj-hero-slider{
+    touch-action:pan-y;
+}
+
+/* ---------- Image zoom wrappers ---------- */
+.gj-zoom-host{
+    position:relative !important;
+}
+.gj-zoom-host > img{
+    cursor:zoom-in;
+}
+.gj-zoom-control{
+    position:absolute;
+    right:14px;
+    bottom:14px;
+    z-index:30;
+    width:42px;
+    height:42px;
+    display:grid;
+    place-items:center;
+    padding:0;
+    border:1px solid rgba(255,255,255,.45);
+    border-radius:50%;
+    color:#fff;
+    background:rgba(0,20,40,.58);
+    box-shadow:0 10px 28px rgba(0,0,0,.22);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    cursor:zoom-in;
+    opacity:0;
+    transform:translateY(8px) scale(.92);
+    transition:opacity .28s ease,transform .28s ease,background .28s ease;
+    touch-action:manipulation;
+}
+.gj-zoom-host:hover .gj-zoom-control,
+.gj-zoom-control:focus-visible{
+    opacity:1;
+    transform:translateY(0) scale(1);
+}
+.gj-zoom-control:hover{
+    background:#ffc300;
+    color:#001f3f;
+}
+.gj-gallery-item .gj-zoom-control{
+    right:16px;
+    bottom:16px;
+}
+.gj-person .gj-zoom-control{
+    width:34px;
+    height:34px;
+    right:6px;
+    bottom:6px;
+    font-size:12px;
+}
+.gj-popup-slide .gj-zoom-control{
+    right:72px;
+    bottom:20px;
+}
+
+/* ---------- Hero zoom button ---------- */
+.gj-hero-zoom{
+    position:absolute;
+    right:28px;
+    top:28px;
+    z-index:35;
+    width:46px;
+    height:46px;
+    display:grid;
+    place-items:center;
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:50%;
+    color:#fff;
+    background:rgba(0,20,40,.4);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    cursor:zoom-in;
+    opacity:.82;
+    transition:.3s ease;
+    touch-action:manipulation;
+}
+.gj-hero-zoom:hover,
+.gj-hero-zoom:focus-visible{
+    color:#001f3f;
+    background:#ffc300;
+    transform:scale(1.08);
+}
+
+/* ---------- Universal lightbox ---------- */
+.gj-media-lightbox{
+    position:fixed;
+    inset:0;
+    z-index:1000000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:clamp(14px,3vw,42px);
+    background:rgba(0,8,20,.94);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity .3s ease,visibility .3s ease;
+    overscroll-behavior:contain;
+}
+.gj-media-lightbox.is-open{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+}
+.gj-media-lightbox::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        radial-gradient(circle at 50% 45%,rgba(255,195,0,.08),transparent 35%),
+        linear-gradient(180deg,rgba(0,31,63,.28),rgba(0,0,0,.55));
+    pointer-events:none;
+}
+.gj-media-lightbox-image{
+    position:relative;
+    z-index:2;
+    display:block;
+    width:auto;
+    height:auto;
+    max-width:calc(100vw - 80px);
+    max-height:calc(100svh - 90px);
+    object-fit:contain;
+    border-radius:12px;
+    box-shadow:0 30px 100px rgba(0,0,0,.55);
+    transform:scale(.94);
+    transition:transform .35s cubic-bezier(.22,.61,.36,1);
+    user-select:none;
+    -webkit-user-drag:none;
+    cursor:grab;
+    touch-action:none;
+}
+.gj-media-lightbox.is-open .gj-media-lightbox-image{
+    transform:scale(1);
+}
+.gj-media-lightbox-image.is-dragging{cursor:grabbing;}
+.gj-media-close{
+    position:absolute;
+    z-index:5;
+    top:18px;
+    right:18px;
+    width:48px;
+    height:48px;
+    display:grid;
+    place-items:center;
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:50%;
+    color:#fff;
+    background:rgba(0,31,63,.62);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    cursor:pointer;
+    font-size:18px;
+}
+.gj-media-close:hover{
+    color:#001f3f;
+    background:#ffc300;
+}
+.gj-media-toolbar{
+    position:absolute;
+    z-index:5;
+    left:50%;
+    bottom:20px;
+    transform:translateX(-50%);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:7px;
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:999px;
+    background:rgba(0,31,63,.72);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+}
+.gj-media-tool{
+    width:38px;
+    height:38px;
+    display:grid;
+    place-items:center;
+    border:0;
+    border-radius:50%;
+    color:#fff;
+    background:rgba(255,255,255,.09);
+    cursor:pointer;
+}
+.gj-media-tool:hover{
+    color:#001f3f;
+    background:#ffc300;
+}
+.gj-media-hint{
+    position:absolute;
+    left:50%;
+    top:20px;
+    transform:translateX(-50%);
+    z-index:4;
+    color:rgba(255,255,255,.72);
+    font-size:11px;
+    letter-spacing:.8px;
+    pointer-events:none;
+    white-space:nowrap;
+}
+
+/* ---------- Better touch targets ---------- */
+@media (hover:none) and (pointer:coarse){
+    .gj-zoom-control{
+        opacity:1;
+        transform:none;
+        width:44px;
+        height:44px;
+    }
+    .gj-home .gj-hero{
+        height:clamp(610px,82svh,760px);
+        min-height:610px;
+    }
+    .gj-home .gj-hero-content{
+        max-width:calc(100% - 112px);
+    }
+    .gj-home .gj-hero-slide.is-active{
+        animation:none;
+        transform:scale(1.015);
+    }
+    .gj-home .gj-gallery-item:hover img,
+    .gj-home .gj-image-frame:hover img,
+    .gj-home .gj-academic-image-main:hover img,
+    .gj-home .gj-admission-image:hover img{
+        transform:none;
+    }
+}
+@media (max-width:900px){
+    .gj-home .gj-hero-content{
+        margin-left:6%;
+        width:auto;
+    }
+    .gj-home .gj-hero-number{
+        right:4%;
+        top:24%;
+        font-size:90px;
+    }
+    .gj-home .gj-hero-arrow{
+        width:46px;
+        height:46px;
+    }
+    .gj-hero-zoom{
+        right:18px;
+        top:18px;
+    }
+}
+@media (max-width:620px){
+    .gj-home .gj-hero{
+        height:clamp(610px,86svh,720px);
+        min-height:610px;
+    }
+    .gj-home .gj-hero-content{
+        width:calc(100% - 92px);
+        max-width:none;
+        margin-left:46px;
+        padding-top:12px;
+    }
+    .gj-home .gj-hero-content h1{
+        font-size:clamp(39px,12vw,60px);
+        letter-spacing:-1.8px;
+    }
+    .gj-home .gj-hero-subtitle{
+        font-size:15px;
+        line-height:1.5;
+    }
+    .gj-home .gj-hero-actions{
+        gap:9px;
+    }
+    .gj-home .gj-btn{
+        min-height:48px;
+        padding:12px 17px;
+        font-size:11px;
+    }
+    .gj-home .gj-hero-features{
+        gap:8px 14px;
+        margin-top:22px;
+    }
+    .gj-home .gj-hero-features span{
+        font-size:9px;
+    }
+    .gj-home .gj-hero-number{
+        display:none;
+    }
+    .gj-home .gj-hero-bottom{
+        left:20px;
+        right:20px;
+        bottom:18px;
+        gap:10px;
+    }
+    .gj-home .gj-scroll{
+        display:none;
+    }
+    .gj-home .gj-hero-progress{
+        flex:1;
+        width:auto;
+    }
+    .gj-home .gj-hero-arrow{
+        width:40px;
+        height:40px;
+    }
+    .gj-arrow-left{left:10px;}
+    .gj-arrow-right{right:10px;}
+    .gj-hero-zoom{
+        width:42px;
+        height:42px;
+        right:12px;
+        top:12px;
+    }
+    .gj-media-lightbox{
+        padding:10px;
+    }
+    .gj-media-lightbox-image{
+        max-width:calc(100vw - 20px);
+        max-height:calc(100svh - 120px);
+        border-radius:8px;
+    }
+    .gj-media-close{
+        top:10px;
+        right:10px;
+        width:44px;
+        height:44px;
+    }
+    .gj-media-toolbar{
+        bottom:10px;
+    }
+    .gj-media-hint{
+        top:62px;
+        font-size:9px;
+    }
+}
+
+/* Prevent accidental layout expansion from long media URLs/content */
+.gj-home .gj-container,
+.gj-home .gj-hero-content,
+.gj-home .gj-about-content,
+.gj-home .gj-academic-content{
+    min-width:0;
+}
+.gj-home h1,.gj-home h2,.gj-home h3,.gj-home p{
+    overflow-wrap:anywhere;
+}
+.gj-home iframe,.gj-home video,.gj-home canvas{
+    max-width:100%;
+}
+@keyframes gjHeroKenBurns{
+    from{background-size:100% auto;background-position:center center;}
+    to{background-size:108% auto;background-position:center center;}
+}
+@media (prefers-reduced-motion:reduce){
+    .gj-home .gj-hero-slide.is-active{animation:none;}
+    .gj-media-lightbox-image{transition:none;}
+}
+</style>
+
+<script id="gj-universal-media-zoom">
+(function(){
+    'use strict';
+
+    function init(){
+        const home=document.querySelector('.gj-home');
+        if(!home) return;
+
+        /* ---------- Lightbox ---------- */
+        const lightbox=document.createElement('div');
+        lightbox.className='gj-media-lightbox';
+        lightbox.setAttribute('aria-hidden','true');
+        lightbox.innerHTML=
+            '<button type="button" class="gj-media-close" aria-label="Close image preview"><i class="fas fa-xmark"></i></button>'+
+            '<div class="gj-media-hint">PINCH / SCROLL TO ZOOM · DRAG TO MOVE</div>'+
+            '<img class="gj-media-lightbox-image" alt="">'+
+            '<div class="gj-media-toolbar" role="toolbar" aria-label="Image zoom controls">'+
+                '<button type="button" class="gj-media-tool" data-zoom="-1" aria-label="Zoom out"><i class="fas fa-minus"></i></button>'+
+                '<button type="button" class="gj-media-tool" data-zoom="1" aria-label="Zoom in"><i class="fas fa-plus"></i></button>'+
+                '<button type="button" class="gj-media-tool" data-reset="1" aria-label="Reset zoom"><i class="fas fa-compress"></i></button>'+
+            '</div>';
+        document.body.appendChild(lightbox);
+
+        const lbImg=lightbox.querySelector('.gj-media-lightbox-image');
+        const closeBtn=lightbox.querySelector('.gj-media-close');
+        let scale=1, tx=0, ty=0, startScale=1, pinchStart=0;
+        let dragStartX=0, dragStartY=0, baseX=0, baseY=0, dragging=false;
+
+        function applyTransform(){
+            lbImg.style.transform='translate3d('+tx+'px,'+ty+'px,0) scale('+scale+')';
+        }
+        function resetZoom(){
+            scale=1; tx=0; ty=0; applyTransform();
+        }
+        function open(src,alt){
+            if(!src) return;
+            lbImg.src=src;
+            lbImg.alt=alt||'';
+            resetZoom();
+            lightbox.classList.add('is-open');
+            lightbox.setAttribute('aria-hidden','false');
+            document.body.dataset.gjMediaOpen='1';
+        }
+        function close(){
+            lightbox.classList.remove('is-open');
+            lightbox.setAttribute('aria-hidden','true');
+            document.body.removeAttribute('data-gj-media-open');
+            window.setTimeout(function(){ if(!lightbox.classList.contains('is-open')) lbImg.removeAttribute('src'); },280);
+        }
+        function zoomBy(amount,centerX,centerY){
+            const old=scale;
+            scale=Math.max(1,Math.min(5,scale+amount));
+            if(scale===1){tx=0;ty=0;}
+            else if(centerX!=null){
+                const factor=scale/old;
+                tx=centerX-(centerX-tx)*factor;
+                ty=centerY-(centerY-ty)*factor;
+            }
+            applyTransform();
+        }
+
+        closeBtn.addEventListener('click',close);
+        lightbox.addEventListener('click',function(e){
+            if(e.target===lightbox) close();
+        });
+        lightbox.querySelectorAll('[data-zoom]').forEach(function(btn){
+            btn.addEventListener('click',function(){
+                zoomBy(Number(btn.dataset.zoom)*.5);
+            });
+        });
+        lightbox.querySelector('[data-reset]').addEventListener('click',resetZoom);
+
+        lightbox.addEventListener('wheel',function(e){
+            e.preventDefault();
+            const r=lbImg.getBoundingClientRect();
+            zoomBy(e.deltaY<0?.35:-.35,e.clientX-r.left,e.clientY-r.top);
+        },{passive:false});
+
+        lbImg.addEventListener('pointerdown',function(e){
+            if(e.pointerType==='mouse' && e.button!==0) return;
+            dragging=true;
+            dragStartX=e.clientX;
+            dragStartY=e.clientY;
+            baseX=tx;
+            baseY=ty;
+            lbImg.classList.add('is-dragging');
+            lbImg.setPointerCapture?.(e.pointerId);
+        });
+        lbImg.addEventListener('pointermove',function(e){
+            if(!dragging || scale<=1) return;
+            tx=baseX+(e.clientX-dragStartX);
+            ty=baseY+(e.clientY-dragStartY);
+            applyTransform();
+        });
+        ['pointerup','pointercancel','pointerleave'].forEach(function(type){
+            lbImg.addEventListener(type,function(){
+                dragging=false;
+                lbImg.classList.remove('is-dragging');
+            });
+        });
+
+        /* Touch pinch */
+        let touchA=null,touchB=null;
+        lbImg.addEventListener('touchstart',function(e){
+            if(e.touches.length===2){
+                touchA=e.touches[0];
+                touchB=e.touches[1];
+                pinchStart=Math.hypot(
+                    touchB.clientX-touchA.clientX,
+                    touchB.clientY-touchA.clientY
+                );
+                startScale=scale;
+            }
+        },{passive:true});
+        lbImg.addEventListener('touchmove',function(e){
+            if(e.touches.length!==2 || !pinchStart) return;
+            const a=e.touches[0],b=e.touches[1];
+            const dist=Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY);
+            scale=Math.max(1,Math.min(5,startScale*(dist/pinchStart)));
+            if(scale===1){tx=0;ty=0;}
+            applyTransform();
+            e.preventDefault();
+        },{passive:false});
+        lbImg.addEventListener('touchend',function(e){
+            if(e.touches.length<2) pinchStart=0;
+        },{passive:true});
+
+        document.addEventListener('keydown',function(e){
+            if(!lightbox.classList.contains('is-open')) return;
+            if(e.key==='Escape') close();
+            if(e.key==='+' || e.key==='=') zoomBy(.5);
+            if(e.key==='-' || e.key==='_') zoomBy(-.5);
+            if(e.key==='0') resetZoom();
+        });
+
+        /* ---------- Add zoom controls to real images ---------- */
+        const selectors=[
+            '.gj-image-frame',
+            '.gj-academic-image-main',
+            '.gj-academic-small',
+            '.gj-gallery-item',
+            '.gj-person',
+            '.gj-popup-slide'
+        ];
+
+        const hosts=[];
+        selectors.forEach(function(sel){
+            home.querySelectorAll(sel).forEach(function(host){
+                if(!host.querySelector('img') || hosts.indexOf(host)!==-1) return;
+                hosts.push(host);
+            });
+        });
+
+        hosts.forEach(function(host){
+            host.classList.add('gj-zoom-host');
+            const img=host.querySelector('img');
+            if(!img) return;
+            const button=document.createElement('button');
+            button.type='button';
+            button.className='gj-zoom-control';
+            button.setAttribute('aria-label','Open image zoom');
+            button.innerHTML='<i class="fas fa-magnifying-glass-plus" aria-hidden="true"></i>';
+            button.addEventListener('click',function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                open(img.currentSrc||img.src,img.alt);
+            });
+            host.appendChild(button);
+        });
+
+        /* ---------- Hero background zoom ---------- */
+        const hero=home.querySelector('.gj-hero');
+        const heroSlider=home.querySelector('.gj-hero-slider');
+        if(hero && heroSlider){
+            const heroZoom=document.createElement('button');
+            heroZoom.type='button';
+            heroZoom.className='gj-hero-zoom';
+            heroZoom.setAttribute('aria-label','Zoom current hero image');
+            heroZoom.innerHTML='<i class="fas fa-magnifying-glass-plus" aria-hidden="true"></i>';
+            hero.appendChild(heroZoom);
+
+            heroZoom.addEventListener('click',function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                const active=hero.querySelector('.gj-hero-slide.is-active');
+                if(!active) return;
+                const match=active.style.backgroundImage.match(/url\((['"]?)(.*?)\1\)/);
+                if(match && match[2]){
+                    open(match[2], 'Gyan Jyoti School');
+                }
+            });
+        }
+
+        /* ---------- Keep popup/hero media responsive after viewport changes ---------- */
+        let resizeTimer=0;
+        window.addEventListener('resize',function(){
+            window.clearTimeout(resizeTimer);
+            resizeTimer=window.setTimeout(function(){
+                if(scale===1){tx=0;ty=0;applyTransform();}
+            },120);
+        },{passive:true});
+
+        /* ---------- Prevent background page scroll only while lightbox is open ---------- */
+        const style=document.createElement('style');
+        style.textContent='body[data-gj-media-open="1"]{overflow:hidden!important;touch-action:none;}';
+        document.head.appendChild(style);
+    }
+
+    if(document.readyState==='loading'){
+        document.addEventListener('DOMContentLoaded',init,{once:true});
+    }else{
+        init();
+    }
+})();
+</script>
